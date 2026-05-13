@@ -5,6 +5,8 @@
     --color-main_color_alt: #88220f;
     --color-second_color: #51a2ff;
     --color-second_color_alt: #0d3b71;
+
+    --color-line_light : #d4d4d8
 }
 
 @layer components{
@@ -20,7 +22,7 @@
          @apply font-bold mb-1
      }
     .x-box{
-        @apply bg-slate-50 p-6 rounded-lg border-zinc-300 shadow-lg shadow-slate-400
+        @apply bg-slate-50 p-6 rounded-lg border-line_light shadow-lg shadow-slate-400
     }
     .tkicon{
         @apply fill-none stroke-current
@@ -29,10 +31,10 @@
         @apply stroke-main_color
     }
     .btn-stroke{
-        @apply px-3 py-2 border border-gray-300 rounded-lg shadow
+        @apply px-3 py-2 border border-line_light rounded-lg shadow
     }
     .input{
-        @apply border border-zinc-300 px-3 py-1 rounded focus:outline-2 focus:outline-blue-600 bg-transparent block w-full
+        @apply border border-line_light px-3 py-1 rounded focus:outline-2 focus:outline-blue-600 bg-transparent block w-full
     }
     table.tableData td{
         @apply p-2

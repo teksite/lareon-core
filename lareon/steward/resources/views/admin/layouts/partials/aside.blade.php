@@ -1,18 +1,15 @@
 <aside class="fixed xl:p-1 top-0 start-0 w-3/4 md:w-1/2 lg:w-1/3 xl:w-1/6 transition-all duration-100 " :class="sidebar ? '{{is_rtl() ? 'translate-x-full' : '-translate-x-full'}} xl:translate-x-0' : 'translate-x-0 {{is_rtl() ? 'xl:translate-x-full' :'xl:-translate-x-full'}}' ">
-    <div class="h-dvh relative x-box xl:border-none flex flex-col justify-between rounded-lg px-3">
-        <button class="font-bold text-red-700 absolute top-1 end-1 p-3" title="{{__('close')}}" type="button" role="button" @click="togglesSidebar()">X</button>
-        <div class=" overflow-auto flex flex-col gap-1">
-            <div class="mb-6 flex items-center gap-1 min-h-fit h-fit">
-                <div class="w-16">
-                    <x-lareon::logo/>
-                </div>
-                <div>
-                    <h1 class="text-3xl font-bold mb-1 capitalize">
+    <div class="h-dvh relative x-box xl:border-none flex flex-col justify-between px-3">
+        <div class="overflow-auto flex flex-col gap-1">
+            <div class="mb-6 min-h-fit h-fit">
+                <div class="flex items-center gap-1">
+                    <x-lareon::logo class="w-16"/>
+                    <h1 class="text-3xl font-bold capitalize">
                         LAREON
                     </h1>
-                    <span class="text-zinc-600 font-black text-sm">
-                        {{__('welcome :title' ,['title'=>auth()->user()->name])}}!
-                     </span>
+                </div>
+                <div class="text-center text-zinc-600 font-black text-sm py-2 border-y border-line_light mt-6">
+                    {{__('welcome :title' ,['title'=>auth()->user()->name])}}!
                 </div>
             </div>
             <nav class=" h-full overflow-y-auto" id="aside-menu-nav">

@@ -1,6 +1,3 @@
-import Alpine from 'alpinejs'
+import './bootstrap.js'
+import './general.js'
 
-window.Alpine = Alpine;
-import collapse from '@alpinejs/collapse';
-
-Alpine.plugin(collapse);
