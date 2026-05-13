@@ -1,1 +1,79 @@
-/* add your css file */
+@import "tailwindcss";
+@source "../views";
+@theme {
+    --color-main_color: #ff4c28;
+    --color-main_color_alt: #88220f;
+    --color-second_color: #51a2ff;
+    --color-second_color_alt: #0d3b71;
+}
+
+@layer components{
+    h1{
+        @apply text-5xl font-bold mb-1
+    }
+    h2{
+        @apply text-3xl font-bold mb-1
+    }
+    h3{
+        @apply text-lg font-bold mb-1
+    }h4{
+         @apply font-bold mb-1
+     }
+    .x-box{
+        @apply bg-slate-50 p-6 rounded-lg border-zinc-300 shadow
+    }
+    .tkicon{
+        @apply fill-none stroke-current
+    }
+    .tkicon.active{
+        @apply stroke-main_color
+    }
+    .btn-stroke{
+        @apply px-3 py-2 border border-gray-300 rounded-lg shadow
+    }
+    .input{
+        @apply border border-zinc-300 px-3 py-1 rounded focus:outline-2 focus:outline-blue-600 bg-transparent block w-full
+    }
+    table.tableData td{
+        @apply p-2
+    }
+    table.tableData tr .action{
+        @apply invisible flex gap-3 items-center justify-end
+    }
+    table.tableData tr:hover .action{
+        @apply visible
+    }
+    form .legend{
+        @apply p-3 font-bold text-xl
+    }
+
+    form .fieldset {
+        @apply border border-slate-400 rounded-lg p-3
+    }
+    .inner-container {
+        @apply w-11/12 md:w-3/4 max-w-7xl mx-auto
+    }
+
+    .badge-red{
+        @apply bg-red-100 text-red-600 text-xs font-semibold px-3 py-1 rounded-xl
+    }
+    .badge-green{
+        @apply bg-green-100 text-green-600 text-xs font-semibold px-3 py-1 rounded-xl
+    }
+    .badge-yellow{
+        @apply bg-yellow-100 text-yellow-600 text-xs font-semibold px-3 py-1 rounded-xl
+    }
+    .badge-blue{
+        @apply bg-cyan-100 text-cyan-600 text-xs font-semibold px-3 py-1 rounded-xl
+    }
+    .badge-gray{
+        @apply bg-gray-100 text-gray-600 text-xs font-semibold px-3 py-1 rounded-xl
+    }
+    .badge-violet{
+        @apply bg-violet-100 text-violet-600 text-xs font-semibold px-3 py-1 rounded-xl
+    }
+    .bordering{
+        @apply border border-slate-300
+    }
+
+}

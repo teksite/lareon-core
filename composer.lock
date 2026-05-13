@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6af033b4005eacfa7164fe2bd02ecbac",
+    "content-hash": "8a7cfa9609b205d2258dbe5ed809d1c0",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -6044,16 +6044,16 @@
         },
         {
             "name": "teksite/module",
-            "version": "3.0.0",
+            "version": "3.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/teksite/module.git",
-                "reference": "a4d4ee2a2c870fcfb1487753f15160b03cc4a227"
+                "reference": "347d0a8e4b8d94ead604ddb62528c3b027bf6cbc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/teksite/module/zipball/a4d4ee2a2c870fcfb1487753f15160b03cc4a227",
-                "reference": "a4d4ee2a2c870fcfb1487753f15160b03cc4a227",
+                "url": "https://api.github.com/repos/teksite/module/zipball/347d0a8e4b8d94ead604ddb62528c3b027bf6cbc",
+                "reference": "347d0a8e4b8d94ead604ddb62528c3b027bf6cbc",
                 "shasum": ""
             },
             "require": {
@@ -6105,9 +6105,9 @@
             ],
             "support": {
                 "issues": "https://github.com/teksite/module/issues",
-                "source": "https://github.com/teksite/module/tree/3.0.0"
+                "source": "https://github.com/teksite/module/tree/3.0.2"
             },
-            "time": "2026-05-12T11:29:21+00:00"
+            "time": "2026-05-13T13:01:24+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
