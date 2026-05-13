@@ -37,7 +37,7 @@
             "Lareon\\Steward\\Database\\Seeders\\": "database/seeders/"
         },
          "files": [
-
+           "helpers/menu_helper.php"
          ]
     },
     "require-dev": {

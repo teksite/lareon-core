@@ -78,12 +78,12 @@ class StewardServiceProvider extends ServiceProvider
 
     protected function loadViewComposers(): void
     {
-        view()->composer('steward::admin', function ($view) {
-            $view->with('menus', app(MenuService::class)->adminTree());
+        view()->composer('lareon::admin.layouts.partials.aside', function ($view) {
+            $view->with('menus', app(MenuService::class)->admin());
         });
 
         view()->composer('steward::user', function ($view) {
-            $view->with('menus', app(MenuService::class)->panelTree());
+            $view->with('menus', app(MenuService::class)->panel());
         });
     }
 
@@ -91,8 +91,8 @@ class StewardServiceProvider extends ServiceProvider
     {
         $this->app->booted(function () {
             try {
-                app(MenuService::class)->adminTree(true);
-                app(MenuService::class)->panelTree(true);
+                app(MenuService::class)->admin(true);
+                app(MenuService::class)->panel(true);
             } catch (\Throwable) {
                 // Silent fail
             }

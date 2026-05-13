@@ -31,9 +31,11 @@
     </div>
     <hr class="border-dotted border-gray-300 w-full md:my-0 my-1">
     <div class="w-full sm:min-w-fit sm:w-fit sm:max-fit inline-flex justify-between md:justify-end items-center gap-6 btn-stroke bg-slate-50">
-        <a href="{{route('admin.setlang')}}" class="justify-self-start">
-            Fa\En
-        </a>
+        @if(\Illuminate\Support\Facades\Route::has('admin.setlang'))
+            <a href="{{route('admin.setlang')}}" class="justify-self-start">
+                Fa\En
+            </a>
+        @endif
         <div class="flex items-center gap-1">
             <a href="/">
                 <i class="tkicon" data-icon="world"></i>

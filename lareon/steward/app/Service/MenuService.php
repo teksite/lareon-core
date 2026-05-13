@@ -2,23 +2,21 @@
 
 namespace Lareon\Steward\App\Service;
 
-use Illuminate\Support\Facades\Cache;
-use Lareon\Steward\App\Contracts\MenuRegisteringContract;
 use Lareon\Steward\App\Enums\MenuAreaType;
 use Lareon\Steward\App\Events\MenuRegisteringEvent;
 
 class MenuService
 {
-    public function __construct(protected MenuDiscoveryService $discovery) {}
+    public function __construct(protected MenuDiscoveryService $discovery)
+    {
+    }
 
     public function get(MenuAreaType $area, bool $fresh = false): array
     {
         $event = new MenuRegisteringEvent($area);
-
         foreach ($this->discovery->get($area, $fresh) as $provider) {
             $provider->register($event);
         }
-
         return $event->visible();
     }
 

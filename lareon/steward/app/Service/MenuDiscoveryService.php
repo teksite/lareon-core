@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Lareon\Steward\App\Contracts\MenuRegisteringContract;
 use Lareon\Steward\App\Enums\MenuAreaType;
-use Lareon\Steward\App\Events\AdminMenuRegisteringEvent;
 use Teksite\Module\Facade\Module;
 
 class MenuDiscoveryService
@@ -18,56 +17,50 @@ class MenuDiscoveryService
     {
         $key = self::CACHE_KEY . '_' . $area->value;
 
-        if (!$fresh && Cache::has($key)) {
-            return Cache::get($key);
-        }
-
         $all = $this->discover($fresh);
 
         $filtered = array_filter($all, fn($p) => in_array($area, $p->areas()));
         usort($filtered, fn($a, $b) => $a->priority() <=> $b->priority());
 
-        Cache::put($key, $filtered, $this->ttl);
 
         return $filtered;
     }
 
     protected function discover(bool $fresh = false): array
     {
-        if (!$fresh && Cache::has(self::CACHE_KEY)) {
-            return Cache::get(self::CACHE_KEY);
-        }
 
         $providers = [];
 
         $modules= ['Steward' , ...Module::enables(true)];
+
         foreach ($modules as $module) {
-            $menuDir = modulePath($module). DIRECTORY_SEPARATOR .'app'.DIRECTORY_SEPARATOR.'Menu';
+            $file =$this->resolveMenuProviderFile($module);
 
-            if ($menuDir && !File::exists($menuDir))   continue;
-
-
-            foreach (File::files($menuDir) as $file) {
-                $class = $this->resolveClass($file, basename($module));
+            if ($file && !File::exists($file))   continue;
+                $class = $this->resolveMenuProviderClass($module);
 
                 if ($class && class_exists($class) && is_subclass_of($class, MenuRegisteringContract::class)) {
                     $providers[] = app($class);
-                }
             }
         }
 
-        Cache::put(self::CACHE_KEY, $providers, $this->ttl);
 
         return $providers;
     }
 
-    protected function resolveClass($file, string $module): ?string
+    protected function resolveMenuProviderClass(string $module): ?string
     {
-        $path = str_replace(base_path($file), '', $file->getPathname());
-        $path = str_replace('/', '\\', $path);
-        $path = preg_replace('/\.php$/', '', $path);
+        return $module === 'Steward'
+            ? steward_namespace() . '\\App\\Providers\\MenuProvider'
+            : module_namespace($module) . '\\App\\Providers\\MenuProvider';
 
-        return $path ? "LAREON\\{$module}\\{$path}" : null;
+    }
+    protected function resolveMenuProviderFile(string $module): ?string
+    {
+        return $module === 'Steward'
+            ? steward_path('/app/Providers/MenuProvider.php')
+            : module_path($module , '/app/Providers/MenuProvider.php');
+
     }
 
     public function clear(): void

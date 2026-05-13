@@ -22,7 +22,7 @@ class MenuRegisteringEvent
      */
     protected array $items = [];
 
-    public function __construct(protected readonly MenuAreaType $area)
+    public function __construct(public readonly MenuAreaType $area)
     {
         $this->items[$this->area->value] = [];
     }
@@ -30,7 +30,7 @@ class MenuRegisteringEvent
     /**
      * Add a single menu item.
      *
-     * @param array{title: string, url: string, icon?: string|null, permission?: string|null, order?: int, parent?: string|null, active_pattern?: string|null, badge?: string|null} $item
+     * @param array{title: string, url: ?string, route: ?string, icon?: string|null, permission?: string|null, order?: int, parent?: string|null, active_pattern?: string|null, badge?: string|null} $item
      * @param string $module
      * @return $this
      */
@@ -65,7 +65,7 @@ class MenuRegisteringEvent
         }
 
         return $this;
-        }
+    }
 
     /**
      * Get all registered menu items sorted by order.
@@ -74,9 +74,9 @@ class MenuRegisteringEvent
      */
     public function all(): array
     {
-        $items = array_filter($this->items, fn($item) => $item['area'] === $this->area->value);
+        $items = $this->items;
+        $items = $items[$this->area->value] ?? [];
         usort($items, fn($a, $b) => ($a['order'] ?? 999) <=> ($b['order'] ?? 999));
-
         return array_values($items);
     }
 
@@ -107,8 +107,11 @@ class MenuRegisteringEvent
      */
     public function visible(): array
     {
-        return array_values(array_filter($this->all(), fn($item) =>
-            empty($item['permission']) || (auth()->check() && auth()->user()->can($item['permission']))
+        return array_values(array_filter($this->all(), function ($item) {
+            if (!isset($item['permission']) || is_null($item['permission']) === null) return true;
+
+            return auth()->check() && auth()->user()->can($item['permission']);
+        }
         ));
     }
 
