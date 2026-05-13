@@ -24,7 +24,6 @@
     </div>
 </main>
 @include('lareon::admin.layouts.partials.footer')
-<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 @stack('footerScripts')
 </body>
 </html>

@@ -20,7 +20,7 @@
          @apply font-bold mb-1
      }
     .x-box{
-        @apply bg-slate-50 p-6 rounded-lg border-zinc-300 shadow
+        @apply bg-slate-50 p-6 rounded-lg border-zinc-300 shadow-lg shadow-slate-400
     }
     .tkicon{
         @apply fill-none stroke-current
