@@ -1,0 +1,28 @@
+<?php
+
+namespace Lareon\Steward\App\Providers;
+
+use Illuminate\Console\Scheduling\Schedule;
+use Teksite\Module\Providers\Support\ModulesHeadquarterServiceProvider as ServiceProvider;
+
+
+class ModulesHeadquarterServiceProvider extends ServiceProvider
+{
+
+
+    /**
+     * Boot the application events.
+     */
+    public function boot(): void
+    {
+        parent::boot();
+    }
+
+    /**
+     * register the application events.
+     */
+    public function register(): void
+    {
+        parent::register();
+    }
+}

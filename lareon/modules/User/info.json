@@ -1,0 +1,10 @@
+{
+    "version":"1.0.0",
+    "id": "User",
+    "title": "User",
+    "alias": "user",
+    "description": "",
+    "keywords": [],
+    "providers": "Lareon\\Modules\\User\\App\\Providers\\UserServiceProvider"
+}
+

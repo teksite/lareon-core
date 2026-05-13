@@ -1,0 +1,51 @@
+{
+    "name": "teksite/steward",
+    "description": "This package is made for lareon (laravel)",
+    "keywords": ["laravel", "laravel" , "Steward"],
+
+    "authors": [
+        {
+            "name": "Sina Zangiband",
+            "email": "sina.zangiband@gmail.com",
+            "homepage": "https://teksite.net",
+            "role":"manager"
+        },
+        {
+            "name": "Sina zb",
+            "email": "sina.zangiband@laratek.ir",
+            "homepage": "https://laratek.ir",
+            "role": "developer"
+        }
+    ],
+    "require": {
+
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Lareon\\Steward\\App\\Providers\\StewardServiceProvider"
+            ],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Lareon\\Steward\\App\\": "app/",
+            "Lareon\\Steward\\Database\\Factories\\": "database/factories/",
+            "Lareon\\Steward\\Database\\Seeders\\": "database/seeders/"
+        },
+         "files": [
+
+         ]
+    },
+    "require-dev": {
+
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Lareon\\Steward\\Tests\\": "tests/"
+        }
+    }
+}

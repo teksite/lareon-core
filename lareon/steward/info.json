@@ -1,0 +1,10 @@
+{
+    "version":"1.0.0",
+    "id": "Steward",
+    "title": "Steward",
+    "alias": "steward",
+    "description": "",
+    "keywords": [],
+    "providers": "Lareon\\Steward\\App\\Providers\\StewardServiceProvider"
+}
+
