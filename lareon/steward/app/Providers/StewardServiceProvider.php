@@ -98,4 +98,22 @@ class StewardServiceProvider extends ServiceProvider
             }
         });
     }
+
+    /**
+     * boot translations.
+     */
+    protected function bootTranslations(): void
+    {
+        $langPath = resource_path('lang/modules/' . $this->lowerModuleName);
+
+        if (is_dir($langPath)) {
+            $this->loadTranslationsFrom($langPath, $this->lowerModuleName);
+            $this->loadJsonTranslationsFrom($langPath);
+        } else {
+            $moduleLangPath = steward_path(config('modules.steward.lang_path', 'lang'));
+
+            $this->loadTranslationsFrom($moduleLangPath ,$this->lowerModuleName);
+            $this->loadJsonTranslationsFrom($moduleLangPath);
+        }
+    }
 }

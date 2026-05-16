@@ -1,13 +1,10 @@
 <div class="p-0.5 mb-6 flex flex-col sm:flex-row items-center justify-between">
     <div class="w-full sm:min-w-fit sm:w-fit sm:max-fit flex items-center justify-between sm:justify-start gap-3">
-        <div>
-            <a href="{{route('admin.dashboard')}}" class="flex items-center gap-1 btn-stroke bg-slate-50">
-                <i class="tkicon" data-icon="gage"></i>
-                <span>
-                {{__('dashboard')}}
-           </span>
+        <ul class="flex items-center justify-start gap-1 text-slate-600 font-semibold text-sm">
+            <a href="{{route('admin.dashboard')}}" class="">
+                    {{__('dashboard')}}
             </a>
-        </div>
+        </ul>
         @if(isset($moduleData) && is_array($moduleData))
             <div class="flex items-center gap-3">
                 @foreach($moduleData as $data )

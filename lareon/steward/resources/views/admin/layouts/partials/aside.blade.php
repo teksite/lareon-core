@@ -9,10 +9,10 @@
                     </h1>
                 </div>
                 <div class="text-center text-zinc-600 font-black text-sm py-2 border-y border-line_light mt-6">
-                    {{__('welcome :title' ,['title'=>auth()->user()->name])}}!
+                    {{__('lareon::global.welcome' , ['title'=>auth()->user()->name])}}!
                 </div>
             </div>
-            <nav class=" h-full overflow-y-auto" id="aside-menu-nav">
+            <nav class="h-full overflow-y-auto" id="aside-menu-nav">
                 <ul class="px-3 menu space-y-6">
                     @foreach($menus as $menu)
                         <li>
@@ -34,7 +34,7 @@
             <button class="logoutBtn min-h-fit h-fit flex w-full items-center justify-between text-red-600 cursor-pointer">
                 <i class='tkicon stroke-red-600 stroke-2' data-icon='turn-off'></i>
                 <span>
-                    {{__('logout')}}
+                    {{__('lareon::global.logout')}}
                 </span>
             </button>
         </div>
