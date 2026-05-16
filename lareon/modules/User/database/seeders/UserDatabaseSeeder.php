@@ -4,6 +4,7 @@ namespace Lareon\Modules\User\Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Lareon\Modules\User\App\Models\User;
 
 class UserDatabaseSeeder extends Seeder
 {
@@ -14,6 +15,10 @@ class UserDatabaseSeeder extends Seeder
     {
         $this->call([
         //
+        ]);
+        User::factory()->create([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
         ]);
     }
 }

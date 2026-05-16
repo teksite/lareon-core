@@ -17,6 +17,7 @@ class ModulesHeadquarterServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+
         parent::boot();
         $this->loadViewComposers();
         $this->warmCache();
@@ -27,6 +28,7 @@ class ModulesHeadquarterServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+
         parent::register();
 
         $this->app->singleton(MenuDiscoveryService::class);

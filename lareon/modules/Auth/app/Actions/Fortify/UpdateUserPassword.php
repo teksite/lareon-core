@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Actions\Fortify;
+namespace Lareon\Modules\Auth\App\Actions\Fortify;
 
-use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Laravel\Fortify\Contracts\UpdatesUserPasswords;
+use Lareon\Modules\User\App\Models\User;
 
 class UpdateUserPassword implements UpdatesUserPasswords
 {
