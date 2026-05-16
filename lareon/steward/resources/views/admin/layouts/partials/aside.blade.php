@@ -1,7 +1,7 @@
 <aside class="fixed xl:p-1 top-0 start-0 w-3/4 md:w-1/2 lg:w-1/3 xl:w-1/6 transition-all duration-100 " :class="sidebar ? '{{is_rtl() ? 'translate-x-full' : '-translate-x-full'}} xl:translate-x-0' : 'translate-x-0 {{is_rtl() ? 'xl:translate-x-full' :'xl:-translate-x-full'}}' ">
     <div class="h-dvh relative x-box xl:border-none flex flex-col justify-between px-3">
         <div class="overflow-auto flex flex-col gap-1">
-            <div class="mb-6 min-h-fit h-fit">
+            <div class="mb-6 ">
                 <div class="flex items-center gap-1">
                     <x-lareon::logo class="w-16"/>
                     <h1 class="text-3xl font-bold capitalize">
@@ -30,8 +30,8 @@
                 </ul>
             </nav>
         </div>
-        <div class="px-3 pt-6 min-h-fit h-fit">
-            <button class="logoutBtn flex w-full items-center justify-between min-h-fit text-red-600 cursor-pointer">
+        <div class="px-3 pt-6">
+            <button class="logoutBtn min-h-fit h-fit flex w-full items-center justify-between text-red-600 cursor-pointer">
                 <i class='tkicon stroke-red-600 stroke-2' data-icon='turn-off'></i>
                 <span>
                     {{__('logout')}}
