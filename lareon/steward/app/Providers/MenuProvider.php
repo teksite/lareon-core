@@ -34,7 +34,7 @@ class MenuProvider implements MenuRegisteringContract
     {
 
         $event->add([
-            'title' => 'dashboard',
+            'title' => trans('dashboard'),
             'url'   => '/tkadmin',
             'route' => 'admin.dashboard',
             'icon'  => 'fas fa-blog',
