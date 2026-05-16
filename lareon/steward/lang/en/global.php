@@ -3,5 +3,5 @@
 return [
     'logout'         => 'Logout',
     'dashboard'      => 'Dashboard',
-    "Welcome :title" => "welcome :title",
+    "welcome_user" => "welcome :title",
 ];

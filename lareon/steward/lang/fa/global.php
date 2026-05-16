@@ -3,6 +3,6 @@
 return [
     'logout'         => 'خروج',
     'dashboard'      => 'داشبرد',
-    "welcome :title" => ":title خوش آمدید",
+    "welcome_user" => ":title خوش آمدید",
 
 ];
