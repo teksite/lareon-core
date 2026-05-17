@@ -1,12 +1,11 @@
 <?php
 
-namespace Lareon\Modules\User\Database\Seeders;
+namespace Lareon\Modules\Auth\Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Lareon\Modules\User\App\Models\User;
 
-class UserDatabaseSeeder extends Seeder
+class AuthDatabaseSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,8 +13,7 @@ class UserDatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            UserSeeder::class
+            PermissionsSeeder::class,
         ]);
-
     }
 }

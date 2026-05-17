@@ -16,9 +16,9 @@
                 <ul class="px-3 menu space-y-6">
                     @foreach($menus as $menu)
                         <li>
-                            <a href="{{ $menu['url'] }}" class="{{ request()->is($menu['active_pattern'] ?? '') ? 'active' : '' }}">
+                            <a href="{{ $menu['url'] ?? route($menu['route']) ?? '' }}" class="flex items-center justify-between {{ request()->is($menu['active_pattern'] ?? '') ? 'active' : '' }}">
                                 @if($menu['icon'] ?? false)
-                                    <i class="{{ $menu['icon'] }}"></i>
+                                 <x-icon icon="{{$menu['icon']}}" type="outline"/>
                                 @endif
                                 <span>{{ $menu['title'] }}</span>
                                 @if($menu['badge'] ?? false)

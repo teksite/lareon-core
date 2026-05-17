@@ -1,6 +1,6 @@
 <?php
 
-namespace Lareon\Steward\App\Providers;
+namespace Lareon\Modules\Auth\App\Providers;
 
 use Lareon\Steward\App\Contracts\MenuRegisteringContract;
 use Lareon\Steward\App\Enums\MenuAreaType;
@@ -33,24 +33,13 @@ class MenuProvider implements MenuRegisteringContract
     protected function admin(MenuRegisteringEvent $event): void
     {
 
-
-        $event->addMany([
-            [
-                'title'  => trans('roles'),
-                'route'  => 'admin.authorize.roles.index',
-                'order'  => 1,
-                'parent' => trans('authorization'),
-
-            ],
-            [
-                'title'  => trans('roles'),
-                'route'  => 'admin.authorize.permissions.index',
-                'order'  => 1,
-                'parent' => trans('authorization'),
-
-            ],
-        ], 'auth');
-
+        $event->add([
+            'title' => trans('authorization'),
+            'url'   => '/tkadmin',
+            'route' => 'admin.dashboard',
+            'icon'  => 'home',
+            'order' => 1,
+        ], 'steward');
 
     }
 

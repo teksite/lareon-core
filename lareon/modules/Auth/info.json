@@ -1,0 +1,10 @@
+{
+    "version":"1.0.0",
+    "id": "Auth",
+    "title": "Auth",
+    "alias": "auth",
+    "description": "",
+    "keywords": [],
+    "providers": "Lareon\\Modules\\Auth\\App\\Providers\\AuthServiceProvider"
+}
+
