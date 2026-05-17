@@ -37,7 +37,7 @@ class MenuProvider implements MenuRegisteringContract
             'title' => trans('dashboard'),
             'url'   => '/tkadmin',
             'route' => 'admin.dashboard',
-            'icon'  => 'fas fa-blog',
+            'icon'  => 'dashboard',
             'order' => 1,
         ], 'steward');
 
