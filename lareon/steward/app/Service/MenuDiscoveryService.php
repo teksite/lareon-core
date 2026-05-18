@@ -31,16 +31,16 @@ class MenuDiscoveryService
 
         $providers = [];
 
-        $modules= ['Steward' , ...Module::enables(true)];
+        $modules = ['Steward', ...Module::enables(true)];
 
         foreach ($modules as $module) {
-            $file =$this->resolveMenuProviderFile($module);
+            $file = $this->resolveMenuProviderFile($module);
 
-            if ($file && !File::exists($file))   continue;
-                $class = $this->resolveMenuProviderClass($module);
+            if ($file && !File::exists($file)) continue;
+            $class = $this->resolveMenuProviderClass($module);
 
-                if ($class && class_exists($class) && is_subclass_of($class, MenuRegisteringContract::class)) {
-                    $providers[] = app($class);
+            if ($class && class_exists($class) && is_subclass_of($class, MenuRegisteringContract::class)) {
+                $providers[] = app($class);
             }
         }
 
@@ -55,11 +55,12 @@ class MenuDiscoveryService
             : module_namespace($module) . '\\App\\Providers\\MenuProvider';
 
     }
+
     protected function resolveMenuProviderFile(string $module): ?string
     {
         return $module === 'Steward'
             ? steward_path('/app/Providers/MenuProvider.php')
-            : module_path($module , '/app/Providers/MenuProvider.php');
+            : module_path($module, '/app/Providers/MenuProvider.php');
 
     }
 

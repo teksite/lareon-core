@@ -32,20 +32,35 @@ class MenuProvider implements MenuRegisteringContract
 
     protected function admin(MenuRegisteringEvent $event): void
     {
+        $event->add(
+            [
+                'title'  => trans('authorization'),
+                'order'  => 1,
+                'parent' =>null,
+                'icon' =>'lock-closed',
+            ],
+        );
+        $event->addMany([
+            [
+                'title'  => trans('roles'),
+                'route'  => 'admin.authorize.roles.index',
+                'order'  => 2,
+                'parent' => trans('authorization'),
 
-        $event->add([
-            'title' => trans('authorization'),
-            'url'   => '/tkadmin',
-            'route' => 'admin.dashboard',
-            'icon'  => 'home',
-            'order' => 1,
-        ], 'steward');
 
+            ],
+            [
+                'title'  => trans('permissions'),
+                'route'  => 'admin.authorize.permissions.index',
+                'order'  => 1,
+                'parent' => trans('authorization'),
+
+            ],
+        ], 'auth');
     }
 
     protected function panel(MenuRegisteringEvent $event): void
     {
-
         $event->add([
             'title' => 'panel',
             'url'   => '/tkadmin',
@@ -53,7 +68,6 @@ class MenuProvider implements MenuRegisteringContract
             'icon'  => 'fas fa-blog',
             'order' => 1,
         ], 'steward');
-
     }
 
 

@@ -3,6 +3,7 @@
 namespace Lareon\Steward\App\Providers;
 
 use Illuminate\Console\Scheduling\Schedule;
+use Lareon\Steward\App\Enums\MenuAreaType;
 use Lareon\Steward\App\Service\MenuDiscoveryService;
 use Lareon\Steward\App\Service\MenuService;
 use Teksite\Module\Providers\Support\ModulesHeadquarterServiceProvider as ServiceProvider;
@@ -10,7 +11,6 @@ use Teksite\Module\Providers\Support\ModulesHeadquarterServiceProvider as Servic
 
 class ModulesHeadquarterServiceProvider extends ServiceProvider
 {
-
 
     /**
      * Boot the application events.
@@ -39,7 +39,7 @@ class ModulesHeadquarterServiceProvider extends ServiceProvider
     protected function loadViewComposers(): void
     {
         view()->composer('lareon::admin.layouts.partials.aside', function ($view) {
-            $view->with('menus', app(MenuService::class)->admin());
+            $view->with('menus', app(MenuService::class)->adminTree());
         });
 
         view()->composer('steward::user', function ($view) {

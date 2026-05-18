@@ -34,22 +34,6 @@ class MenuProvider implements MenuRegisteringContract
     {
 
 
-        $event->addMany([
-            [
-                'title'  => trans('roles'),
-                'route'  => 'admin.authorize.roles.index',
-                'order'  => 1,
-                'parent' => trans('authorization'),
-
-            ],
-            [
-                'title'  => trans('roles'),
-                'route'  => 'admin.authorize.permissions.index',
-                'order'  => 1,
-                'parent' => trans('authorization'),
-
-            ],
-        ], 'auth');
 
 
     }

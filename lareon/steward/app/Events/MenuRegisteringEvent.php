@@ -2,11 +2,6 @@
 
 namespace Lareon\Steward\App\Events;
 
-use Illuminate\Broadcasting\Channel;
-use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Lareon\Steward\App\Enums\MenuAreaType;
@@ -31,22 +26,26 @@ class MenuRegisteringEvent
      * Add a single menu item.
      *
      * @param array{title: string, url: ?string, route: ?string, icon?: string|null, permission?: string|null, order?: int, parent?: string|null, active_pattern?: string|null, badge?: string|null} $item
+     * example
+     * ```
+     * $defaults = [
+     * 'icon'           => null,
+     * 'permission'     => null,
+     * 'order'          => 999,
+     * 'parent'         => null,
+     * 'active_pattern' => null,
+     * 'badge'          => null,
+     * 'title'          => null,
+     * 'module'         => $module,
+     * ];
+     *
+     * ```
      * @param string $module
      * @return $this
      */
     public function add(array $item, string $module = 'general'): self
     {
-        $defaults = [
-            'icon'           => null,
-            'permission'     => null,
-            'order'          => 999,
-            'parent'         => null,
-            'active_pattern' => null,
-            'badge'          => null,
-            'module'         => $module,
-        ];
-
-        $this->items[$this->area->value][] = array_merge($defaults, $item);
+        $this->items[$this->area->value][] = $item;
 
         return $this;
     }
@@ -63,9 +62,9 @@ class MenuRegisteringEvent
         foreach ($items as $item) {
             $this->add($item, $module);
         }
-
         return $this;
     }
+
 
     /**
      * Get all registered menu items sorted by order.
@@ -88,17 +87,19 @@ class MenuRegisteringEvent
     public function tree(): array
     {
         $tree = [];
-
         foreach ($this->all() as $item) {
             if (empty($item['parent'])) {
-                $tree[$item['title']] = ['item' => $item, 'children' => []];
-            } elseif (isset($tree[$item['parent']])) {
+                $tree[$item['title']] = [...$item, 'children' => []];
+            } else {
                 $tree[$item['parent']]['children'][] = $item;
+                if (isset($item['children'])) {
+                    $tree[$item['parent']]['permission'][] = $item['permission'];
+                }
             }
         }
-
         return $tree;
     }
+
 
     /**
      * Filter menus by user permissions.

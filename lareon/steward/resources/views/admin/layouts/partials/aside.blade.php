@@ -1,5 +1,5 @@
 <aside class="fixed xl:p-1 top-0 start-0 w-3/4 md:w-1/2 lg:w-1/3 xl:w-1/6 transition-all duration-100 " :class="sidebar ? '{{is_rtl() ? 'translate-x-full' : '-translate-x-full'}} xl:translate-x-0' : 'translate-x-0 {{is_rtl() ? 'xl:translate-x-full' :'xl:-translate-x-full'}}' ">
-    <div class="h-dvh relative x-box xl:border-none flex flex-col justify-between px-3">
+    <div class="h-dvh relative x-box !p-0 xl:border-none flex flex-col justify-between">
         <div class="overflow-auto flex flex-col gap-1">
             <div class="mb-6 ">
                 <div class="flex items-center gap-1">
@@ -13,18 +13,10 @@
                 </div>
             </div>
             <nav class="h-full overflow-y-auto" id="aside-menu-nav">
-                <ul class="px-3 menu space-y-6">
+                <ul class="pe-3 menu space-y-6">
                     @foreach($menus as $menu)
                         <li>
-                            <a href="{{ $menu['url'] ?? route($menu['route']) ?? '' }}" class="flex items-center justify-between {{ request()->is($menu['active_pattern'] ?? '') ? 'active' : '' }}">
-                                @if($menu['icon'] ?? false)
-                                 <x-icon icon="{{$menu['icon']}}" type="outline"/>
-                                @endif
-                                <span>{{ $menu['title'] }}</span>
-                                @if($menu['badge'] ?? false)
-                                    <span class="badge">{{ $menu['badge'] }}</span>
-                                @endif
-                            </a>
+                           <x-lareon::nav.accordion-nav :menu="$menu"/>
                         </li>
                     @endforeach
                 </ul>

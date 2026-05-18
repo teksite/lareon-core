@@ -14,9 +14,11 @@ class MenuService
     public function get(MenuAreaType $area, bool $fresh = false): array
     {
         $event = new MenuRegisteringEvent($area);
+
         foreach ($this->discovery->get($area, $fresh) as $provider) {
             $provider->register($event);
         }
+
         return $event->visible();
     }
 
@@ -27,7 +29,6 @@ class MenuService
         foreach ($this->discovery->get($area, $fresh) as $provider) {
             $provider->register($event);
         }
-
         return $event->tree();
     }
 
