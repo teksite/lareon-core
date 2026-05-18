@@ -1,6 +1,6 @@
 <?php
 
-namespace Lareon\Modules\Auth\App\Providers;
+namespace {{ namespace }};
 
 use Lareon\Steward\App\Contracts\MenuRegisteringContract;
 use Lareon\Steward\App\Enums\MenuAreaType;
@@ -14,7 +14,7 @@ class MenuProvider implements MenuRegisteringContract
 
     public function priority(): int
     {
-        return 100;
+        return 10;
     }
 
     public function areas(): array
@@ -32,32 +32,39 @@ class MenuProvider implements MenuRegisteringContract
 
     protected function admin(MenuRegisteringEvent $event): void
     {
+        /*
         $event->add(
             [
                 'title'  => 'accessibility',
-                'order'  => 100,
+                'order'  => 1,
+                'parent' => null,
                 'icon'   => 'lock-closed',
                 'active' => request()->routeIs('admin.authorize.*'),
-            ],'auth'
-        )->addManyItem(
-        [
+            ],
+        );
+        $event->addMany([
             [
                 'title'  => 'roles',
-                'order'  => 1,
                 'route'  => 'admin.authorize.roles.index',
-                'active' => request()->routeIs('admin.authorize.roles.*'),
+                'order'  => 2,
+                'parent' => 'accessibility',
+
+
             ],
             [
                 'title'  => 'permissions',
-                'order'  => 2,
                 'route'  => 'admin.authorize.permissions.index',
-                'active' => request()->routeIs('admin.authorize.permissions.*'),
+                'order'  => 1,
+                'parent' => 'accessibility',
+
             ],
         ], 'auth');
+        */
     }
 
     protected function panel(MenuRegisteringEvent $event): void
     {
+        /*
         $event->add([
             'title' => 'panel',
             'url'   => '/tkadmin',
@@ -65,6 +72,7 @@ class MenuProvider implements MenuRegisteringContract
             'icon'  => 'fas fa-blog',
             'order' => 1,
         ], 'steward');
+        */
     }
 
 

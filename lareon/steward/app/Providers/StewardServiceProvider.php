@@ -4,6 +4,7 @@ namespace Lareon\Steward\App\Providers;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Lareon\Steward\App\Console\Commands\AppReset;
+use Lareon\Steward\App\Console\Commands\MenuProviderMakeCommand;
 use Teksite\Module\Providers\Support\StewardServiceProvider as ServiceProvider;
 
 class StewardServiceProvider extends ServiceProvider
@@ -30,6 +31,7 @@ class StewardServiceProvider extends ServiceProvider
      */
     protected array $commands = [
         AppReset::class,
+        MenuProviderMakeCommand::class
     ];
 
     /**

@@ -1,21 +1,13 @@
 <?php
 
-namespace Lareon\CMS\App\Http\Controllers\Web\Admin\Users;
+namespace Lareon\Modules\User\App\Http\Controllers\Web\Admin\Users;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Route;
-use Lareon\CMS\App\Events\UserRegistrationEvent;
-use Lareon\CMS\App\Http\Controllers\Controller;
-use Lareon\CMS\App\Http\Requests\Admin\NewUserRequest;
-use Lareon\CMS\App\Http\Requests\Admin\UpdateUserRequest;
-use Lareon\CMS\App\Logic\UserLogic;
-use Lareon\CMS\App\Logic\UserMetaLogic;
-use Lareon\CMS\App\Models\User;
-use Teksite\Handler\Actions\ServiceResult;
-use Teksite\Lareon\Facade\WebResponse;
+use Lareon\Modules\User\App\Logics\UserLogic;
+use Lareon\Steward\App\Http\Controllers\Controller;
+
 
 class UsersController extends Controller implements HasMiddleware
 {
