@@ -93,7 +93,9 @@ class MenuRegisteringEvent
             } else {
                 $tree[$item['parent']]['children'][] = $item;
                 if (isset($item['children'])) {
-                    $tree[$item['parent']]['permission'][] = $item['permission'];
+                    if (!empty($item['permission'])) {
+                        $tree[$item['parent']]['permission'][] = $item['permission'];
+                    }
                 }
             }
         }

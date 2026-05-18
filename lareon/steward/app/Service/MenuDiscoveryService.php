@@ -20,8 +20,8 @@ class MenuDiscoveryService
         $all = $this->discover($fresh);
 
         $filtered = array_filter($all, fn($p) => in_array($area, $p->areas()));
-        usort($filtered, fn($a, $b) => $a->priority() <=> $b->priority());
 
+        usort($filtered, fn($a, $b) => $a->priority() <=> $b->priority());
 
         return $filtered;
     }
@@ -43,7 +43,6 @@ class MenuDiscoveryService
                 $providers[] = app($class);
             }
         }
-
 
         return $providers;
     }

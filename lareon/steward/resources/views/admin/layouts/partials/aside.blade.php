@@ -22,9 +22,9 @@
                 </ul>
             </nav>
         </div>
-        <div class="px-3 pt-6">
-            <button class="logoutBtn min-h-fit h-fit flex w-full items-center justify-between text-red-600 cursor-pointer">
-                <i class='tkicon stroke-red-600 stroke-2' data-icon='turn-off'></i>
+        <div class="px-3 py-6">
+            <button class="logoutBtn p-2 min-h-fit h-fit flex w-full items-center justify-start gap-2 text-red-600 cursor-pointer hover:bg-red-100">
+                <x-icon type="outline" icon="turn-off" class="stroke-red-600" size="18"/>
                 <span>
                     {{__('lareon::global.logout')}}
                 </span>
