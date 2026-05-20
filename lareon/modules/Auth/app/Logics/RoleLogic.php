@@ -4,34 +4,60 @@ namespace Lareon\Modules\Auth\App\Logics;
 
 use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Model;
+use Teksite\Authorize\Models\Role;
+use Teksite\Handler\Actions\ServiceWrapper;
+use Teksite\Handler\contracts\ServiceResult;
+use Teksite\Handler\Services\FetchDataService;
 
 
 class RoleLogic
 {
-   public function all(mixed $fetchData = [])
-   {
+    /**
+     * @throws \Throwable
+     */
+    public function all(mixed $fetchData = []): ServiceResult
+    {
+        return ServiceWrapper::make(false)
+                             ->do(fn() => FetchDataService::get(Role::class, 'title'))
+                             ->run();
 
-   }
+    }
 
-   public function first(array $inputs =[])
-   {
+    public function first(array $inputs = [])
+    {
 
-   }
+    }
 
-   public function create(array $inputs =[])
-   {
+    /**
+     * @throws \Throwable
+     */
+    public function create(array $inputs = [])
+    {
 
-   }
+        return ServiceWrapper::make(false)
+                             ->do(fn() => Role::create($inputs))
+                             ->run();
+    }
 
-   public function update(Model $model ,array $inputs=[])
-   {
+    /**
+     * @throws \Throwable
+     */
+    public function update(Role $role, array $inputs = [])
+    {
+        return ServiceWrapper::make(false)
+                             ->do(fn() => $role->update($inputs))
+                             ->run();
+    }
 
-   }
-
-   public function delete(Model $model)
-   {
-
-   }
+    /**
+     * @throws \Throwable
+     */
+    public function delete(Role $role)
+    {
+        return ServiceWrapper::make(false)
+                             ->do(fn() => $role->delete())
+                             ->run();
+    }
 
 }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Lareon\CMS\App\Http\Controllers\Web\Admin\Authorization;
+namespace Lareon\Modules\Auth\App\Http\Controllers\Web\Admin\Authorization;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
@@ -31,7 +31,7 @@ class PermissionsController extends Controller implements HasMiddleware
      */
     public function index()
     {
-        $res=$this->logic->get();
+        $res=$this->logic->all();
         $permissions=$res->result;
 
         return view('lareon::admin.pages.authorization.permissions.index', compact('permissions'));

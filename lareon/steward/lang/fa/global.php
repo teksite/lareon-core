@@ -1,8 +1,16 @@
 <?php
 
 return [
-    'logout'         => 'خروج',
-    'dashboard'      => 'داشبرد',
-    "welcome_user" => ":title خوش آمدید",
+    'logout'               => 'خروج از سیستم',
+    'dashboard'            => 'داشبرد',
+    "welcome_user"         => ":title خوش آمدید.",
+    "created_successfully" => ":attribute با موفقیت ایجاد شد",
+    "created_failed"       => "مشکل، :attribute ایجاد نشد!",
+    "updated_successfully" => ":attribute با موفقیت بروز رسانی شد",
+    "updated_failed"       => "مشکل، :attribute بروز رسانی نشد!",
+    "delete_successfully"  => ":attribute با موفقیت حذف شد",
+    "delete_failed"        => "مشکل، :attribute حذف نشد!",
 
+    'server_error_unknown' => 'در اجرای قراید در سرور مشکلی بوجود آمده است!.',
+    'server_error' => 'مشکلی با توجه به :error بوجود آمده‌است',
 ];
