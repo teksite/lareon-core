@@ -113,6 +113,7 @@ class MenuRegisteringEvent
 
         $parentItems = $this->all();
 
+
         // Sort parent items by order
         usort($parentItems, fn($a, $b) => ($a['order'] ?? 999) <=> ($b['order'] ?? 999));
 
@@ -131,10 +132,9 @@ class MenuRegisteringEvent
                     $tree[] = $parentWithChildren;
 
                 }
+            }else{
+                $tree[] =$parent;
             }
-
-
-
         }
         return $tree;
     }

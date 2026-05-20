@@ -6,9 +6,12 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Gate;
+use Lareon\Modules\Auth\App\Http\Requests\Admin\NewPermissionRequest;
+use Lareon\Modules\Auth\App\Http\Requests\Admin\UpdatePermissionRequest;
 use Lareon\Modules\Auth\App\Logics\PermissionLogic;
 use Lareon\Modules\Auth\App\Http\Controllers\Controller;
 use Teksite\Authorize\Models\Permission;
+use Teksite\Handler\Facade\Responder;
 
 class PermissionsController extends Controller implements HasMiddleware
 {
@@ -28,11 +31,12 @@ class PermissionsController extends Controller implements HasMiddleware
 
     /**
      * Display a listing of the resource.
+     * @throws \Throwable
      */
     public function index()
     {
-        $res=$this->logic->all();
-        $permissions=$res->result;
+        $res = $this->logic->all();
+        $permissions = $res->result;
 
         return view('lareon::admin.pages.authorization.permissions.index', compact('permissions'));
     }
@@ -43,16 +47,21 @@ class PermissionsController extends Controller implements HasMiddleware
     public function create()
     {
         return view('lareon::admin.pages.authorization.permissions.create');
-
     }
 
     /**
      * Store a newly created resource in storage.
+     * @throws \Throwable
      */
     public function store(NewPermissionRequest $request)
     {
-        $result = $this->logic->register($request->validated());
-        return WebResponse::byResult($result)->go();
+        $result = $this->logic->create($request->validated());
+        return Responder::fromResult($result,
+            trans('lareon::global.created_successfully', ['attribute' => __('permission')]),
+            trans('lareon::global.created_failed'),
+            route('admin.authorize.permissions.edit'),
+            back())
+                        ->go();
     }
 
     /**
@@ -73,24 +82,34 @@ class PermissionsController extends Controller implements HasMiddleware
 
     /**
      * Update the specified resource in storage.
+     * @throws \Throwable
      */
     public function update(UpdatePermissionRequest $request, Permission $permission)
     {
-        Gate::denyIf(is_null($permission->created_at) ,'you cannot edit this permission');
+        $res = $this->logic->update($permission, $request->validated());
 
-        $res = $this->logic->change($request->validated() , $permission);
-        return WebResponse::byResult($res, route('admin.authorize.permissions.edit', $permission))->go();
+        return Responder::fromResult($res,
+            trans('lareon::global.update_successfully', ['attribute' => __('permission')]),
+            trans('lareon::global.update_failed'),
+            route('admin.authorize.permissions.edit'),
+            back())
+                        ->go();
     }
 
     /**
      * Remove the specified resource from storage.
+     * @throws \Throwable
      */
     public function destroy(Permission $permission)
     {
-        Gate::denyIf(is_null($permission->created_at) ,'you cannot delete this permission');
-
         $res = $this->logic->delete($permission);
-        return WebResponse::byResult($res, route('admin.authorize.permissions.index'))->go();
+
+        return Responder::fromResult($res,
+            trans('lareon::global.deleted_successfully', ['attribute' => __('permission')]),
+            trans('lareon::global.deleted_failed'),
+            route('admin.authorize.permissions.index'),
+            back())
+                        ->go();
     }
 
 

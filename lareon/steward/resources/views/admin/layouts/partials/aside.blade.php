@@ -9,7 +9,7 @@
                     </h1>
                 </div>
                 <div class="text-center text-zinc-600 font-black text-sm py-2 border-y border-line_light mt-6">
-                    {{__('lareon::global.welcome_user' , ['title'=>auth()->user()->name])}}!
+                    {{__('lareon::global.welcome_user' , ['attribute'=>auth()->user()->name])}}!
                 </div>
             </div>
             <nav class="h-full overflow-y-auto" id="aside-menu-nav">

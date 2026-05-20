@@ -1,12 +1,12 @@
 @props(['menu'])
 @php
-    $href=isset($menu['route']) ? route($menu['route']) : ($menup['url'] ?? null);
+    $href=isset($menu['route']) ? route($menu['route']) : ($menu['url'] ?? null);
 @endphp
 @can($menu['permission'] ?? null)
     @if(empty($menu['children']))
         <div class="rounded-e-xl p-2">
             <div class="flex items-center justify-start gap-2 w-full">
-                <x-lareon::nav.accordion-item :item="$menu" size="10"/>
+                <x-lareon::nav.accordion-item :item="$menu" size="24"/>
             </div>
         </div>
     @else

@@ -34,9 +34,10 @@ class RoleLogic
     public function create(array $inputs = [])
     {
 
-        return ServiceWrapper::make(false)
-                             ->do(fn() => Role::create($inputs))
-                             ->run();
+        return ServiceWrapper::make(false)->do(function () use ($inputs) {
+            $role = Role::create(Arr::except($inputs, 'permissions'));
+            $role->permissions()->attach($inputs['permissions'] ?? []);
+        })->run();
     }
 
     /**
@@ -44,9 +45,10 @@ class RoleLogic
      */
     public function update(Role $role, array $inputs = [])
     {
-        return ServiceWrapper::make(false)
-                             ->do(fn() => $role->update($inputs))
-                             ->run();
+        return ServiceWrapper::make(false)->do(function () use ($role, $inputs) {
+            Role::update(Arr::except($inputs, 'permissions'));
+            $role->permissions()->sync($inputs['permissions'] ?? []);
+        })->run();
     }
 
     /**

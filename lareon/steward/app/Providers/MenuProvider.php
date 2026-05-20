@@ -32,9 +32,14 @@ class MenuProvider implements MenuRegisteringContract
 
     protected function admin(MenuRegisteringEvent $event): void
     {
-
-
-
+        $event->add(
+            [
+                'title'  => trans('dashboard'),
+                'order'  => 1,
+                'icon'   => 'home',
+                'route' => 'admin.dashboard',
+                'active' => request()->routeIs('admin.dashboard'),
+            ]);
 
     }
 
