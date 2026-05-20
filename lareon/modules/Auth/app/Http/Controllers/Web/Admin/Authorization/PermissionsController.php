@@ -59,7 +59,7 @@ class PermissionsController extends Controller implements HasMiddleware
         return Responder::fromResult($result,
             trans('lareon::global.created_successfully', ['attribute' => __('permission')]),
             trans('lareon::global.created_failed'),
-            route('admin.authorize.permissions.edit'),
+            route('admin.authorize.permissions.index'),
             back())
                         ->go();
     }
