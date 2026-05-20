@@ -13,7 +13,7 @@
                 </div>
             </div>
             <nav class="h-full overflow-y-auto" id="aside-menu-nav">
-                <ul class="pe-3 menu space-y-6">
+                <ul class="pe-3 menu space-y-3">
                     @foreach($menus as $menu)
                         <li>
                            <x-lareon::nav.accordion-nav :menu="$menu"/>

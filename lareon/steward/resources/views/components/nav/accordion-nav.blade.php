@@ -13,7 +13,7 @@
         <div class="rounded-e-xl p-2" x-data="{show: false}">
             <button type="button" class="flex items-center justify-start gap-2 w-full" @click="show=!show">
                 <x-lareon::nav.accordion-item :item="$menu" size="24"/>
-                <x-icon type="outline" icon="{{is_rtl() ? 'angle-left' :'angle-right'}}" class="w-3 fill-none stroke-gray-600 ms-auto me-0 "/>
+                <x-icon type="outline" icon="{{is_rtl() ? 'angle-left' :'angle-right'}}" class="w-3 fill-none stroke-gray-600 ms-auto me-0 " x-bind:class="show ? 'rotate-90' :''"/>
             </button>
             <ul x-show="show" x-collapse x-cloak class="*:flex *:items-center *:justify-start *:gap-2 space-y-1 p-2">
                 @if($href)
