@@ -44,7 +44,20 @@
     }
 
     .input {
-        @apply border border-line_light px-3 py-1 rounded focus:outline-2 focus:outline-blue-600 bg-transparent block w-full
+        @apply border border-line_light px-3 py-1 rounded focus:outline-2 focus:outline-blue-600 bg-transparent
+    }
+
+    .input_check {
+        @apply border border-line_light px-3 py-1 rounded outline-none accent-green-600
+    }
+
+    .input[disabled], .input_check[disabled] {
+        @apply text-zinc-300 cursor-not-allowed
+    }
+
+
+    .input_label {
+        @apply text-zinc-600 font-bold text-sm block select-none
     }
 
 
@@ -81,7 +94,6 @@
     }
 
 
-
     table.tableData td {
         @apply p-2
     }
@@ -93,8 +105,6 @@
     table.tableData tr:hover .action {
         @apply visible
     }
-
-
 
 
     form .legend {
