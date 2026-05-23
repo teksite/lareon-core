@@ -54,8 +54,8 @@ class AppReset extends Command
 
             $this->call('migrate:reset',$options);
 
-            $this->call('module:migrate',$options);
             $this->call('migrate',$options);
+
 
             if ($this->option('seed')) {
                 $this->call('module:db-seed');
