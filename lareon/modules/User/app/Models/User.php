@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Lareon\Modules\User\Database\Factories\UserFactory;
+use Teksite\Authorize\Traits\HasAuthorization;
 
 #[UseFactory(UserFactory::class)]
 #[Fillable(['name', 'email', 'password'])]
@@ -17,7 +18,7 @@ use Lareon\Modules\User\Database\Factories\UserFactory;
 class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable , HasAuthorization;
 
     /**
      * Get the attributes that should be cast.
