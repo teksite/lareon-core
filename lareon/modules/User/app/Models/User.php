@@ -9,16 +9,19 @@ use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Validation\Rule;
 use Lareon\Modules\User\Database\Factories\UserFactory;
 use Teksite\Authorize\Traits\HasAuthorization;
+use Teksite\Extralaravel\Enums\MobilePatterns;
+use Teksite\Extralaravel\Rules\MobileRule;
 
 #[UseFactory(UserFactory::class)]
-#[Fillable(['name', 'email', 'password'])]
+#[Fillable(['name', 'lastname', 'email', 'phone', 'password'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable , HasAuthorization;
+    use HasFactory, Notifiable, HasAuthorization;
 
     /**
      * Get the attributes that should be cast.
@@ -29,7 +32,31 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return [
             'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            'phone_verified_at' => 'datetime',
+            'password'          => 'hashed',
         ];
+    }
+
+
+    public function rules(string $operation, int|null $userId = null): array
+    {
+        return match (true) {
+            $operation === 'create'=> [
+                'name'     => 'required|string|max:255',
+                'lastname' => 'required|string|max:255',
+                'password' => 'required|string|min:6|confirmed',
+                'phone'    => ['required', 'string', new MobileRule(MobilePatterns::IRAN)],
+                'email'    => 'required|string|email|max:255|unique:users',
+
+            ],
+            ($operation === 'update' && $userId) => [
+                'name'     => 'required|string|max:255',
+                'lastname' => 'required|string|max:255',
+                'password' => 'nullable|string|min:6',
+                'phone'    => ['required', 'string', new MobileRule(MobilePatterns::IRAN), Rule::unique('users', 'phone')->ignore($userId)],
+                'email'    => ['required', 'string', 'email', Rule::unique('users', 'email')->ignore($userId)],
+            ],
+            default=> throw new \InvalidArgumentException("Operation '{$operation}' is not valid. Allowed: create, update")
+        };
     }
 }

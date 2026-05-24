@@ -5,7 +5,9 @@ namespace Lareon\Modules\User\App\Http\Controllers\Web\Admin\Users;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\Route;
 use Lareon\Modules\User\App\Logics\UserLogic;
+use Lareon\Modules\User\App\Models\User;
 use Lareon\Steward\App\Http\Controllers\Controller;
 
 
@@ -28,6 +30,7 @@ class UsersController extends Controller implements HasMiddleware
 
     /**
      * Display a listing of the resource.
+     * @throws \Throwable
      */
     public function index()
     {
