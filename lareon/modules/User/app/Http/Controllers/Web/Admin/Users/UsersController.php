@@ -6,9 +6,13 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Route;
+use Lareon\Modules\User\App\Events\UserCrudEvent;
+use Lareon\Modules\User\App\Http\Requests\Admin\NewUserRequest;
+use Lareon\Modules\User\App\Http\Requests\Admin\UpdateUserRequest;
 use Lareon\Modules\User\App\Logics\UserLogic;
 use Lareon\Modules\User\App\Models\User;
 use Lareon\Steward\App\Http\Controllers\Controller;
+use Teksite\Handler\Facade\Responder;
 
 
 class UsersController extends Controller implements HasMiddleware
@@ -34,8 +38,8 @@ class UsersController extends Controller implements HasMiddleware
      */
     public function index()
     {
-        $res=$this->logic->all();
-        $users=$res->result;
+        $res = $this->logic->all();
+        $users = $res->result;
         return view('lareon::admin.pages.users.index', compact('users'));
     }
 
@@ -49,16 +53,18 @@ class UsersController extends Controller implements HasMiddleware
 
     /**
      * Store a newly created resource in storage.
+     * @throws \Throwable
      */
     public function store(NewUserRequest $request)
     {
-        $res = $this->logic->register($request->validated());
+        $res = $this->logic->create($request->validated());
 
-        if (isset($request->validated()['sendNotification'])){
-            event(new UserRegistrationEvent($res->result));
+        if ($res->success) {
+            event(new UserCrudEvent($res->result, 'create'), $request->validated());
+            return Responder::success(trans('lareon::global.created_successfully' ,['attribute' => __('user')]));
         }
+        return Responder::failed(trans('lareon::global.created_failed' ,['attribute' => __('user')]));
 
-        return WebResponse::byResult($res, route('admin.users.edit', $res->result))->go();
     }
 
     /**
@@ -66,10 +72,9 @@ class UsersController extends Controller implements HasMiddleware
      */
     public function show(User $user)
     {
-         if(Route::has('users.show')){
-             return redirect()->route('users.show', compact('user'));
-         }
-         abort(404);
+       if ($user->path()) redirect()->to($user->path());
+
+        abort(404);
     }
 
     /**
@@ -82,21 +87,30 @@ class UsersController extends Controller implements HasMiddleware
 
     /**
      * Update the specified resource in storage.
+     * @throws \Throwable
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        $res = $this->logic->change($request->validated() , $user);
-        return WebResponse::byResult($res, route('admin.users.edit', $user))->go();
+        $res = $this->logic->update($user ,$request->validated());
+
+        if ($res->success) {
+            return Responder::success(trans('lareon::global.updated_successfully' ,['attribute' => __('user')]));
+        }
+        return Responder::failed(trans('lareon::global.updated_failed' ,['attribute' => __('user')]));
+
     }
 
     /**
      * Remove the specified resource from storage.
+     * @throws \Throwable
      */
     public function destroy(User $user)
     {
-      //  Gate::authorize('delete', $role);
-
         $res = $this->logic->delete($user);
-        return WebResponse::byResult($res, route('admin.users.index'))->go();
+
+        if ($res->success) {
+            return Responder::success(trans('lareon::global.delete_successfully' ,['attribute' => __('user')]));
+        }
+        return Responder::failed(trans('lareon::global.delete_failed' ,['attribute' => __('user')]));
     }
 }

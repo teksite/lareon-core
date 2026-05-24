@@ -4,6 +4,8 @@ return [
     'logout'               => 'Logout',
     'dashboard'            => 'Dashboard',
     "welcome_user"         => "welcome :attribute",
+
+
     "created_successfully" => ":attribute created successfully",
     "created_failed"       => "error ,the :attribute not created!",
     "updated_successfully" => ":attribute updated successfully",

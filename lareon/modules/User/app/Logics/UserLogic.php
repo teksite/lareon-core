@@ -5,6 +5,7 @@ namespace Lareon\Modules\User\App\Logics;
 use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use Lareon\Modules\User\App\Models\User;
 use Teksite\Authorize\Models\Role;
 use Teksite\Handler\Actions\ServiceWrapper;
@@ -41,6 +42,7 @@ class UserLogic
     public function create(array $inputs = [])
     {
         return ServiceWrapper::make(true)->do(function () use ($inputs) {
+            $inputs['slug'] ??= strtolower(uniqid() . '-' .Str::random(4));
             $user = User::create($inputs);
             $rolesIds = $this->assignRole($user, config('general.default_user_role', 'user'));
             return $user;

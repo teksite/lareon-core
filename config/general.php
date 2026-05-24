@@ -11,6 +11,7 @@ return [
 
     'default_user_role'=>'user',
 
+
     /*
     | where your sql backup file stored
     */
