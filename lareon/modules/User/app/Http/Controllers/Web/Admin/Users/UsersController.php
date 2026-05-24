@@ -5,7 +5,6 @@ namespace Lareon\Modules\User\App\Http\Controllers\Web\Admin\Users;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
-use Illuminate\Support\Facades\Route;
 use Lareon\Modules\User\App\Events\UserCrudEvent;
 use Lareon\Modules\User\App\Http\Requests\Admin\NewUserRequest;
 use Lareon\Modules\User\App\Http\Requests\Admin\UpdateUserRequest;
