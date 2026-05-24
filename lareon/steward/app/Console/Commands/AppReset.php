@@ -42,8 +42,6 @@ class AppReset extends Command
 
     public function handle(): void
     {
-        //TODO remake migrations command in module package : from scratch
-
         try {
             $admin = $this->option('admin');
             $doRestore = $this->option('restore');
@@ -54,7 +52,7 @@ class AppReset extends Command
 
             $this->call('migrate:reset',$options);
 
-            $this->call('migrate',$options);
+            $this->call('module:migrate',$options);
 
 
             if ($this->option('seed')) {
@@ -82,7 +80,7 @@ class AppReset extends Command
                 }
             }*/
 
-            $this->newLine();
+           /* $this->newLine();
             $this->line("<fg=cyan;options=bold>clearing cached data</>");
             Artisan::call('optimize:clear');
             $this->components->twoColumnDetail("<fg=gray>  └─ optimized data</>", "<fg=green>✓ cleared</>");
@@ -100,7 +98,7 @@ class AppReset extends Command
             Artisan::call('cache:clear');
             $this->components->twoColumnDetail("<fg=gray>  └─ caches data</>", "<fg=green>✓ cleared</>");
 
-            $this->info('The site is refreshed successfully :)');
+            $this->info('The site is refreshed successfully :)');*/
 
         } catch (\Exception $e) {
 
