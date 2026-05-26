@@ -41,8 +41,7 @@ class UsersController extends Controller implements HasMiddleware
         $res = $this->logic->all();
         $users = $res->result;
 
-        dd($users);
-        return view('lareon::admin.pages.users.index', compact('users'));
+        return view('user::admin.pages.users.index', compact('users'));
     }
 
     /**
@@ -50,7 +49,7 @@ class UsersController extends Controller implements HasMiddleware
      */
     public function create()
     {
-        return view('lareon::admin.pages.users.create');
+        return view('user::admin.pages.users.create');
     }
 
     /**
@@ -84,7 +83,7 @@ class UsersController extends Controller implements HasMiddleware
      */
     public function edit(User $user)
     {
-        return view('lareon::admin.pages.users.edit', compact('user'));
+        return view('user::admin.pages.users.edit', compact('user'));
     }
 
     /**
