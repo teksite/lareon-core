@@ -28,7 +28,7 @@ class ClearCacheDailyMiddleware
         return $next($request);
     }
 
-    private function runCommands()
+    private function runCommands(): void
     {
         try {
 

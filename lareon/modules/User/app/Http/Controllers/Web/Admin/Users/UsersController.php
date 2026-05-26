@@ -37,8 +37,11 @@ class UsersController extends Controller implements HasMiddleware
      */
     public function index()
     {
+
         $res = $this->logic->all();
         $users = $res->result;
+
+        dd($users);
         return view('lareon::admin.pages.users.index', compact('users'));
     }
 
