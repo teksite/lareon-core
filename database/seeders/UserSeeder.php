@@ -1,11 +1,12 @@
 <?php
 
-namespace Lareon\Modules\User\Database\Seeders;
+namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Lareon\Modules\User\App\Models\User;
+use Teksite\Authorize\Models\Role;
 
 class UserSeeder extends Seeder
 {
@@ -14,13 +15,20 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-
-        User::factory()->create([
-            'name' => 'Sina Zangiband',
+        $user = User::query()->create([
+            'name' => 'SinaSSSS',
+            'lastname' => 'Zangiband',
             'email' => 'sina.zangiband@gmail.com',
             'password' => Hash::make('sina.zangiband@gmail.com',),
+            'phone' => '989126037279',
+            'slug' => '989126037279',
+
         ]);
-        $user = User::find(1);
         $user->markEmailAsVerified();
+        $user->markPhoneAsVerified();
+        $ownerRole = Role::query()->firstWhere('title' ,'owner');
+        if ($ownerRole) {
+           $res= $user->roles()->sync($ownerRole->id);
+        }
     }
 }

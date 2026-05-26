@@ -19,11 +19,12 @@ class ClearCacheDailyMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         $cacheKey = 'last_cache_clear_date';
+        $lastClearDate = Cache::get($cacheKey);
+        $today = now()->toDateString();
 
-
-        if (!Cache::has($cacheKey)) {
+        if (!$lastClearDate || $lastClearDate !== $today) {
             $this->runCommands();
-            Cache::put($cacheKey, now()->toDateString(), now()->addDay());
+            Cache::put($cacheKey, $today, now()->addDay());
         }
         return $next($request);
     }
@@ -31,12 +32,8 @@ class ClearCacheDailyMiddleware
     private function runCommands(): void
     {
         try {
-
-            Artisan::call('cache:clear');
-            Artisan::call('cache:flush-all');
+//            Artisan::call('cache:flush-all');
             Artisan::call('auth:clear-resets');
-
-
         }catch (\Exception $exception){
             Log::info('clearing cache daily middleware');
             Log::error($exception->getMessage());

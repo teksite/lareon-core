@@ -15,6 +15,7 @@ use Lareon\Modules\User\Database\Factories\UserFactory;
 use Teksite\Authorize\Traits\HasAuthorization;
 use Teksite\Extralaravel\Enums\MobilePatterns;
 use Teksite\Extralaravel\Rules\MobileRule;
+use Teksite\Extralaravel\Traits\MustVerifyPhone;
 
 #[UseFactory(UserFactory::class)]
 #[Fillable(['name', 'lastname', 'email', 'phone', 'password', 'slug'])]
@@ -22,7 +23,7 @@ use Teksite\Extralaravel\Rules\MobileRule;
 class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable, HasAuthorization;
+    use HasFactory, Notifiable, HasAuthorization ,MustVerifyPhone;
 
     /**
      * Get the attributes that should be cast.
@@ -64,5 +65,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function path(): ?string
     {
         return Route::has('users.show') ? route('users.show', ['user' => $this]) : null;
+    }
+
+    public function sendPhoneVerificationNotification(): void
+    {
+        // TODO: Implement sendPhoneVerificationNotification() method.
     }
 }
