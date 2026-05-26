@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Teksite\Authorize\Models\Permission;
+use Teksite\Authorize\Models\Role;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,7 +17,10 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
+            BasicRolesSeeder::class,
             UserSeeder::class,
         ]);
+
+
     }
 }

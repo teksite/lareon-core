@@ -3,7 +3,6 @@
 namespace Lareon\Modules\Auth\Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Teksite\Authorize\Models\Permission;
 use Teksite\Authorize\Models\Role;
 
 class RolesSeeder extends Seeder
@@ -40,18 +39,6 @@ class RolesSeeder extends Seeder
                 'description'=>'accounts that are banned and have no accessibility',
             ]
         ]);
-
-        $allPermissions = Permission::query()->select(['id' ,'title'])->get();
-
-        foreach (Role::query()->whereIn('title' , ['owner', 'administrator', 'admin',])->get() as $role) {
-            $role->permissions()->sync($allPermissions->pluck('id')->toArray());
-        }
-
-        foreach (Role::query()->whereIn('title' , ['user'])->get() as $role) {
-            $role->permissions()->sync($allPermissions->where('title' ,"LIKE" ,"panel%")->pluck('id')->toArray());
-        }
-
-
 
     }
 }

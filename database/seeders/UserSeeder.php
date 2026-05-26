@@ -28,7 +28,7 @@ class UserSeeder extends Seeder
         $user->markPhoneAsVerified();
         $ownerRole = Role::query()->firstWhere('title' ,'owner');
         if ($ownerRole) {
-           $res= $user->roles()->sync($ownerRole->id);
+           $user->roles()->sync($ownerRole->id);
         }
     }
 }
