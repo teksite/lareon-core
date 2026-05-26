@@ -1190,16 +1190,16 @@
         },
         {
             "name": "guzzlehttp/uri-template",
-            "version": "v1.0.5",
+            "version": "v1.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/uri-template.git",
-                "reference": "4f4bbd4e7172148801e76e3decc1e559bdee34e1"
+                "reference": "eef7f87bab6f204eba3c39224d8075c70c637946"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://mirror-composer.runflare.com/repos/guzzle/uri-template/zipball/4f4bbd4e7172148801e76e3decc1e559bdee34e1",
-                "reference": "4f4bbd4e7172148801e76e3decc1e559bdee34e1",
+                "url": "https://mirror-composer.runflare.com/repos/guzzle/uri-template/zipball/eef7f87bab6f204eba3c39224d8075c70c637946",
+                "reference": "eef7f87bab6f204eba3c39224d8075c70c637946",
                 "shasum": ""
             },
             "require": {
@@ -1208,7 +1208,7 @@
             },
             "require-dev": {
                 "bamarni/composer-bin-plugin": "^1.8.2",
-                "phpunit/phpunit": "^8.5.44 || ^9.6.25",
+                "phpunit/phpunit": "^8.5.52 || ^9.6.34",
                 "uri-template/tests": "1.0.0"
             },
             "type": "library",
@@ -1256,7 +1256,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/uri-template/issues",
-                "source": "https://github.com/guzzle/uri-template/tree/v1.0.5"
+                "source": "https://github.com/guzzle/uri-template/tree/v1.0.6"
             },
             "funding": [
                 {
@@ -1272,7 +1272,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-08-22T14:27:06+00:00"
+            "time": "2026-05-23T22:00:21+00:00"
         },
         {
             "name": "laravel/fortify",
@@ -5882,16 +5882,16 @@
         },
         {
             "name": "symfony/polyfill-php86",
-            "version": "v1.37.0",
+            "version": "v1.38.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php86.git",
-                "reference": "33d8fc5a705481e21fe3a81212b26f9b1f61749c"
+                "reference": "fcec68d64f46dc84e1f6ffcf2c6dda40ff3143ad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://mirror-composer.runflare.com/repos/symfony/polyfill-php86/zipball/33d8fc5a705481e21fe3a81212b26f9b1f61749c",
-                "reference": "33d8fc5a705481e21fe3a81212b26f9b1f61749c",
+                "url": "https://mirror-composer.runflare.com/repos/symfony/polyfill-php86/zipball/fcec68d64f46dc84e1f6ffcf2c6dda40ff3143ad",
+                "reference": "fcec68d64f46dc84e1f6ffcf2c6dda40ff3143ad",
                 "shasum": ""
             },
             "require": {
@@ -5938,7 +5938,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-php86/tree/v1.37.0"
+                "source": "https://github.com/symfony/polyfill-php86/tree/v1.38.0"
             },
             "funding": [
                 {
@@ -5958,7 +5958,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-04-26T13:13:48+00:00"
+            "time": "2026-05-25T11:52:35+00:00"
         },
         {
             "name": "symfony/polyfill-uuid",
@@ -7102,16 +7102,16 @@
         },
         {
             "name": "teksite/extralaravel",
-            "version": "2.1.0",
+            "version": "2.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/teksite/extralaravel.git",
-                "reference": "f90715eeda04404c0f9bae3b154e831f088cf611"
+                "reference": "f49f56a31b84699217b617ed2332f03a84101e3a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://mirror-composer.runflare.com/repos/teksite/extralaravel/zipball/f90715eeda04404c0f9bae3b154e831f088cf611",
-                "reference": "f90715eeda04404c0f9bae3b154e831f088cf611",
+                "url": "https://mirror-composer.runflare.com/repos/teksite/extralaravel/zipball/f49f56a31b84699217b617ed2332f03a84101e3a",
+                "reference": "f49f56a31b84699217b617ed2332f03a84101e3a",
                 "shasum": ""
             },
             "require": {
@@ -7148,22 +7148,22 @@
             "description": "this package add some features such as rules, middlewares, functions to laravel",
             "support": {
                 "issues": "https://github.com/teksite/extralaravel/issues",
-                "source": "https://github.com/teksite/extralaravel/tree/2.1.0"
+                "source": "https://github.com/teksite/extralaravel/tree/2.1.3"
             },
-            "time": "2026-05-23T18:07:18+00:00"
+            "time": "2026-05-24T12:55:16+00:00"
         },
         {
             "name": "teksite/handler",
-            "version": "2.0.0",
+            "version": "2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/teksite/handler.git",
-                "reference": "dcd7790f1d068e83fa2f90f5992f618c8dabb678"
+                "reference": "affc579698da56374e6fb2a555104fbea1a3cb4a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://mirror-composer.runflare.com/repos/teksite/handler/zipball/dcd7790f1d068e83fa2f90f5992f618c8dabb678",
-                "reference": "dcd7790f1d068e83fa2f90f5992f618c8dabb678",
+                "url": "https://mirror-composer.runflare.com/repos/teksite/handler/zipball/affc579698da56374e6fb2a555104fbea1a3cb4a",
+                "reference": "affc579698da56374e6fb2a555104fbea1a3cb4a",
                 "shasum": ""
             },
             "require": {
@@ -7196,9 +7196,9 @@
             "description": "Some features to work with error handling in Laravel codes",
             "support": {
                 "issues": "https://github.com/teksite/handler/issues",
-                "source": "https://github.com/teksite/handler/tree/2.0.0"
+                "source": "https://github.com/teksite/handler/tree/2.1.1"
             },
-            "time": "2026-04-26T12:52:36+00:00"
+            "time": "2026-05-24T15:20:46+00:00"
         },
         {
             "name": "teksite/icon-laravel",
@@ -7249,16 +7249,16 @@
         },
         {
             "name": "teksite/module",
-            "version": "3.0.10",
+            "version": "3.0.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/teksite/module.git",
-                "reference": "c1e5f65ca66a9ee6d94fc75c33066ba986dfbdb6"
+                "reference": "8c6e37f6e0d913b8600b79d6ea99c9346020ab34"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://mirror-composer.runflare.com/repos/teksite/module/zipball/c1e5f65ca66a9ee6d94fc75c33066ba986dfbdb6",
-                "reference": "c1e5f65ca66a9ee6d94fc75c33066ba986dfbdb6",
+                "url": "https://mirror-composer.runflare.com/repos/teksite/module/zipball/8c6e37f6e0d913b8600b79d6ea99c9346020ab34",
+                "reference": "8c6e37f6e0d913b8600b79d6ea99c9346020ab34",
                 "shasum": ""
             },
             "require": {
@@ -7310,9 +7310,9 @@
             ],
             "support": {
                 "issues": "https://github.com/teksite/module/issues",
-                "source": "https://github.com/teksite/module/tree/3.0.10"
+                "source": "https://github.com/teksite/module/tree/3.0.11"
             },
-            "time": "2026-05-23T11:48:59+00:00"
+            "time": "2026-05-24T10:59:26+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
@@ -7600,16 +7600,16 @@
         },
         {
             "name": "web-auth/webauthn-lib",
-            "version": "5.3.3",
+            "version": "5.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/web-auth/webauthn-lib.git",
-                "reference": "e6f656d6c6b29fa305382fe6a0a3be8177d177df"
+                "reference": "dbb2d7a03db5893da2ef1f2898063ab8f7792838"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://mirror-composer.runflare.com/repos/web-auth/webauthn-lib/zipball/e6f656d6c6b29fa305382fe6a0a3be8177d177df",
-                "reference": "e6f656d6c6b29fa305382fe6a0a3be8177d177df",
+                "url": "https://mirror-composer.runflare.com/repos/web-auth/webauthn-lib/zipball/dbb2d7a03db5893da2ef1f2898063ab8f7792838",
+                "reference": "dbb2d7a03db5893da2ef1f2898063ab8f7792838",
                 "shasum": ""
             },
             "require": {
@@ -7670,7 +7670,7 @@
                 "webauthn"
             ],
             "support": {
-                "source": "https://github.com/web-auth/webauthn-lib/tree/5.3.3"
+                "source": "https://github.com/web-auth/webauthn-lib/tree/5.3.4"
             },
             "funding": [
                 {
@@ -7682,7 +7682,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2026-05-17T19:04:30+00:00"
+            "time": "2026-05-18T11:59:46+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -9367,23 +9367,23 @@
         },
         {
             "name": "sebastian/environment",
-            "version": "8.1.1",
+            "version": "8.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/environment.git",
-                "reference": "334bc42a97ec6fc44c59001dc3467e0d739a20e9"
+                "reference": "9d32c685773823b1983e256ae4ecd48a10d6e439"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://mirror-composer.runflare.com/repos/sebastianbergmann/environment/zipball/334bc42a97ec6fc44c59001dc3467e0d739a20e9",
-                "reference": "334bc42a97ec6fc44c59001dc3467e0d739a20e9",
+                "url": "https://mirror-composer.runflare.com/repos/sebastianbergmann/environment/zipball/9d32c685773823b1983e256ae4ecd48a10d6e439",
+                "reference": "9d32c685773823b1983e256ae4ecd48a10d6e439",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.3"
             },
             "require-dev": {
-                "phpunit/phpunit": "^12.5.25"
+                "phpunit/phpunit": "^12.5.26"
             },
             "suggest": {
                 "ext-posix": "*"
@@ -9419,7 +9419,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/environment/issues",
                 "security": "https://github.com/sebastianbergmann/environment/security/policy",
-                "source": "https://github.com/sebastianbergmann/environment/tree/8.1.1"
+                "source": "https://github.com/sebastianbergmann/environment/tree/8.1.2"
             },
             "funding": [
                 {
@@ -9439,7 +9439,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-05-21T08:45:32+00:00"
+            "time": "2026-05-25T13:40:20+00:00"
         },
         {
             "name": "sebastian/exporter",

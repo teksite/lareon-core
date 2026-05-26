@@ -32,7 +32,7 @@ class MenuRegisteringEvent
     /**
      * Add a single menu item.
      *
-     * @param array{title: string, url: ?string, route: ?string, icon?: string|null, permission?: string|null, order?: int, active?: string|null, badge?: string|null} $item
+     * @param array{title: string, url: ?string, route: ?string, icon?: string|null, permission?: string|array|null, order?: int, active?: string|null, badge?: string|null} $item
      * @param string|null $group
      * @return $this
      */
@@ -103,40 +103,127 @@ class MenuRegisteringEvent
     }
 
     /**
+     * Check if user has permission (supports string or array).
+     *
+     * @param string|array|null $permission
+     * @return bool
+     */
+    protected function userHasPermission(string|array|null $permission): bool
+    {
+        if (is_null($permission)) {
+            return true;
+        }
+
+        if (!auth()->check()) {
+            return false;
+        }
+
+        if (is_string($permission)) {
+            return auth()->user()->can($permission);
+        }
+
+        if (is_array($permission)) {
+            return auth()->user()->canAny($permission);
+        }
+
+        return false;
+    }
+
+    /**
      * Get menu items as hierarchical tree with children injection based on group.
      *
      * @return array<int, array<string, mixed>>
      */
-    public function tree(): array
+    public function tree(bool $checkPermissions = true): array
     {
         $tree = [];
-
         $parentItems = $this->all();
 
-
-        // Sort parent items by order
         usort($parentItems, fn($a, $b) => ($a['order'] ?? 999) <=> ($b['order'] ?? 999));
 
-        // Build tree structure
         foreach ($parentItems as $parent) {
             $groupName = $parent['group'] ?? null;
-            if ($groupName) {
+            $parentPermission = $parent['permission'] ?? null;
+
+            if ($groupName && isset($this->children[$groupName])) {
+                // Parent has children
+                $children = $this->children[$groupName];
+                usort($children, fn($a, $b) => ($a['order'] ?? 999) <=> ($b['order'] ?? 999));
+
                 $parentWithChildren = $parent;
-                $parentWithChildren['children'] = [];
+                $parentWithChildren['children'] = $children;
 
-                if (isset($this->children[$groupName])) {
-                    $children = $this->children[$groupName];
-                    usort($children, fn($a, $b) => ($a['order'] ?? 999) <=> ($b['order'] ?? 999));
-                    $parentWithChildren['children'] = $children;
-
+                if ($checkPermissions) {
+                    $filteredParent = $this->filterMenuWithChildren($parentWithChildren);
+                    if ($filteredParent !== null) {
+                        $tree[] = $filteredParent;
+                    }
+                } else {
                     $tree[] = $parentWithChildren;
-
                 }
-            }else{
-                $tree[] =$parent;
+            } else {
+                // Parent has no children
+                if ($checkPermissions) {
+                    if ($this->userHasPermission($parentPermission)) {
+                        $tree[] = $parent;
+                    }
+                } else {
+                    $tree[] = $parent;
+                }
             }
         }
+
         return $tree;
+    }
+
+    /**
+     * Filter a menu item that has children based on permission logic.
+     *
+     * @param array $menuItem
+     * @return array|null
+     */
+    protected function filterMenuWithChildren(array $menuItem): ?array
+    {
+        $parentPermission = $menuItem['permission'] ?? null;
+        $children = $menuItem['children'] ?? [];
+
+        // First, filter children based on their own permissions
+        $filteredChildren = array_values(array_filter($children, function ($child) {
+            $childPermission = $child['permission'] ?? null;
+            return $this->userHasPermission($childPermission);
+        }));
+
+        // Check if parent has permission set
+        $hasParentPermission = $this->userHasPermission($parentPermission);
+
+        // Case 1: Parent has permission set
+        if (!is_null($parentPermission)) {
+            // If user doesn't have parent permission, don't show anything
+            if (!$hasParentPermission) {
+                return null;
+            }
+
+            // User has parent permission, now check children
+            if (empty($filteredChildren)) {
+                // Parent has permission but no visible children -> show parent only
+                $menuItem['children'] = [];
+                return $menuItem;
+            }
+
+            // Parent has permission and has visible children
+            $menuItem['children'] = $filteredChildren;
+            return $menuItem;
+        }
+
+        // Case 2: Parent has NO permission set
+        if (empty($filteredChildren)) {
+            // No visible children -> don't show parent at all
+            return null;
+        }
+
+        // Parent has no permission but has visible children -> show parent with its visible children
+        $menuItem['children'] = $filteredChildren;
+        return $menuItem;
     }
 
     /**
@@ -203,11 +290,8 @@ class MenuRegisteringEvent
     public function visible(): array
     {
         return array_values(array_filter($this->all(), function ($item) {
-            if (!isset($item['permission']) || is_null($item['permission'])) {
-                return true;
-            }
-
-            return auth()->check() && auth()->user()->can($item['permission']);
+            $permission = $item['permission'] ?? null;
+            return $this->userHasPermission($permission);
         }));
     }
 
@@ -218,23 +302,7 @@ class MenuRegisteringEvent
      */
     public function visibleTree(): array
     {
-        $tree = $this->tree();
-
-        // Filter tree items by permission
-        $filtered = array_filter($tree, function ($item) {
-            return $this->hasPermission($item);
-        });
-
-        // Filter children recursively
-        foreach ($filtered as &$item) {
-            if (!empty($item['children'])) {
-                $item['children'] = array_values(array_filter($item['children'], function ($child) {
-                    return $this->hasPermission($child);
-                }));
-            }
-        }
-
-        return array_values($filtered);
+        return $this->tree(true);
     }
 
     /**
@@ -245,11 +313,8 @@ class MenuRegisteringEvent
      */
     protected function hasPermission(array $item): bool
     {
-        if (!isset($item['permission']) || is_null($item['permission'])) {
-            return true;
-        }
-
-        return auth()->check() && auth()->user()->can($item['permission']);
+        $permission = $item['permission'] ?? null;
+        return $this->userHasPermission($permission);
     }
 
     /**

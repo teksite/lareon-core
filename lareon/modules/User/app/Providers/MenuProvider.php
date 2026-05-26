@@ -51,6 +51,7 @@ class MenuProvider implements MenuRegisteringContract
                       'order'  => 2,
                       'route'  => 'admin.users.create',
                       'active' => request()->routeIs('admin.users.create'),
+                      'permission' => 'admin.users.create',
                   ],
               ], 'user');
     }
