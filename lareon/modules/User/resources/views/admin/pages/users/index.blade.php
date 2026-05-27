@@ -13,10 +13,14 @@
                         <img src="/storage/admin/avatar-default.jpg" alt="{{$user->name}}" width="45" height="45" fetchpriority="low" decoding="async" loading="lazy">
                     </td>
                     <td>{{$user->fullname}}</td>
-                    <td>{{$user->phone}}</td>
-                    <td>{{$user->email}}</td>
-                    <td>{{dateAdapter($user->created_at) ?? '-'}}</td>
-                    <td>{{$user->parent()?->name ?? '-'}}</td>
+                    <td >{{$user->phone}}</td>
+                    <td >{{$user->email}}</td>
+                    <td>
+                        <x-lareon::date :date="$user->created_at"/>
+                    </td>
+                    <td>
+                        {{$user->parent()?->fullname ?? '-'}}
+                    </td>
                     <td>
                         <div class="action">
                             @if(\Illuminate\Support\Facades\Route::has('admin.users.meta.edit'))

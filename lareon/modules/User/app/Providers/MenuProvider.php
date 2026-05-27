@@ -45,13 +45,15 @@ class MenuProvider implements MenuRegisteringContract
                       'order'  => 1,
                       'route'  => 'admin.users.index',
                       'active' => request()->routeIs('admin.users.index'),
+                      'permission' => 'admin.user.read',
+
                   ],
                   [
                       'title'      => trans('lareon::global.crud.create', ['attribute' => trans('user')]),
                       'order'      => 2,
                       'route'      => 'admin.users.create',
                       'active'     => request()->routeIs('admin.users.create'),
-                      'permission' => 'admin.users.create',
+                      'permission' => 'admin.user.create',
                   ],
               ], 'user');
     }

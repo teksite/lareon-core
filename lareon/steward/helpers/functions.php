@@ -4,31 +4,6 @@
 use Carbon\Carbon;
 use Morilog\Jalali\Jalalian;
 
-if (!function_exists('admin_menus')) {
-    function admin_menus(bool $fresh = false): array
-    {
-        return app(\Lareon\Steward\App\Service\MenuService::class)->admin($fresh);
-    }
-}
-
-if (!function_exists('panel_menus')) {
-    function user_menus(bool $fresh = false): array
-    {
-        return app(\Lareon\Steward\App\Service\MenuService::class)->panel($fresh);
-    }
-}
-
-
-
-if (!function_exists('dateAdapter')) {
-    function dateAdapter($time, $format = "Y-m-d H:i"): ?string
-    {
-        if (is_null($time)) return null;
-        return config('app.locale') == 'fa' ? Jalalian::forge(Carbon::parse($time))->format($format) : Carbon::parse($time)->format($format);
-    }
-}
-
-
 if (!function_exists('dateToJalali')) {
     /**
      * To convert Gregorian date-time to Jalali
@@ -78,3 +53,34 @@ if (!function_exists('dateToGregorian')) {
 }
 
 
+if (!function_exists('smart_date')) {
+
+    function smart_date( ?string $dateTime = null,  ?string $targetTimeZone = null, string $format = 'Y-m-d H:i:s'): ?string
+    {
+        $date = $dateTime ? Carbon::parse($dateTime) : Carbon::now();
+
+        if ($targetTimeZone) {
+            return $date->tz($targetTimeZone)->format($format);
+        }
+
+        $laravelTimezone = Config::get('app.timezone');
+        $serverTimezone = date_default_timezone_get();
+
+        if ($laravelTimezone === $serverTimezone) {
+            return $date->format($format);
+        }
+
+        return $date->tz($laravelTimezone)->format($format);
+    }
+}
+
+
+if (!function_exists('dateAdapter')) {
+    function dateAdapter(null|Carbon|string $dateTime, $format = "Y-m-d H:i"): ?string
+    {
+        if (is_null($dateTime)) return null;
+
+        $newDateTime=smart_date($dateTime);
+        return config('app.locale') == 'fa' ? Jalalian::forge(Carbon::parse($newDateTime))->format($format) : Carbon::parse($newDateTime)->format($format);
+    }
+}
