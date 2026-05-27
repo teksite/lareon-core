@@ -6,8 +6,8 @@
     'label' => null,
     'confirm' => false,
     'confirmText' => 'Are you sure?',
-    'can' => [],
     'target' => null,
+    'can' => [null],
 ])
 
 @php
