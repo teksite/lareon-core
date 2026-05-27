@@ -14,7 +14,7 @@ use Lareon\Steward\App\Http\Controllers\Controller;
 use Teksite\Handler\Facade\Responder;
 
 
-class UsersController extends Controller implements HasMiddleware
+class UsersController extends Controller /*implements HasMiddleware*/
 {
 
     public function __construct(public UserLogic $logic)
@@ -40,7 +40,6 @@ class UsersController extends Controller implements HasMiddleware
 
         $res = $this->logic->all();
         $users = $res->result;
-
         return view('user::admin.pages.users.index', compact('users'));
     }
 

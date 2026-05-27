@@ -13,8 +13,8 @@
         "laravel/fortify": "^1.36",
         "laravel/framework": "^13.7",
         "laravel/tinker": "^3.0",
-        "teksite/authorize": "2.0.3",
-        "teksite/extralaravel": "^2.1.0",
+        "teksite/authorize": "^2.0",
+        "teksite/extralaravel": "^2.0",
         "teksite/handler": "^2.0",
         "teksite/module": "^3.0",
         "teksite/icon-laravel":"*"
@@ -98,11 +98,5 @@
         }
     },
     "minimum-stability": "stable",
-    "prefer-stable": true,
-    "repositories": {
-        "packagist": {
-            "type": "composer",
-            "url": "https://mirror-composer.runflare.com"
-        }
-    }
+    "prefer-stable": true
 }

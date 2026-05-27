@@ -30,5 +30,9 @@ class UserSeeder extends Seeder
         if ($ownerRole) {
            $user->roles()->sync($ownerRole->id);
         }
+
+        $userRole = Role::query()->firstWhere('title' ,'user');
+
+       User::factory(36)->create();
     }
 }
