@@ -1,4 +1,4 @@
-@props(['size' => 'sm','variant' => 'solid','color' => 'blue','disabled' => false,'fullWidth' => false,'rounded' => 'lg' ,'href' => null,'target' => '_self', 'content'=>null , 'can'=>''])
+@props(['size' => 'xs','variant' => 'solid','color' => 'blue','disabled' => false,'fullWidth' => false,'rounded' => 'xl' ,'href' => null,'target' => '_self', 'content'=>null , 'can'=>[null]])
 
 @php
     // Size classes

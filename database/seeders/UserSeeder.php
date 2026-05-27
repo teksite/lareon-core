@@ -33,6 +33,8 @@ class UserSeeder extends Seeder
 
         $userRole = Role::query()->firstWhere('title' ,'user');
 
-       User::factory(36)->create();
+       User::factory(36)->create([
+           'parent_id' => $user->id,
+       ]);
     }
 }

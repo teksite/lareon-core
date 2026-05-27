@@ -2,6 +2,7 @@
 
 namespace Lareon\Modules\User\App\Models;
 
+use Attribute;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
@@ -18,7 +19,7 @@ use Teksite\Extralaravel\Rules\MobileRule;
 use Teksite\Extralaravel\Traits\MustVerifyPhone;
 
 #[UseFactory(UserFactory::class)]
-#[Fillable(['name', 'lastname', 'email', 'phone', 'password', 'slug'])]
+#[Fillable(['name', 'lastname', 'email', 'phone', 'password', 'slug' ,'parent_id'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -67,8 +68,21 @@ class User extends Authenticatable implements MustVerifyEmail
         return Route::has('users.show') ? route('users.show', ['user' => $this]) : null;
     }
 
+    public function parent(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(User::class, 'parent_id');
+    }
+
     public function sendPhoneVerificationNotification(): void
     {
         // TODO: Implement sendPhoneVerificationNotification() method.
     }
+
+    public function fullname() :\Attribute
+    {
+        return Attribute::make(
+            get: fn () => ucfirst($this->name) . ' ' .ucfirst($this->lastname));
+    }
+
+
 }

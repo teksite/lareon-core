@@ -2,6 +2,7 @@
 
 namespace Lareon\Modules\User\App\Logics;
 
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
@@ -26,7 +27,11 @@ class UserLogic
                              ->run();
     }
 
-    public function first(array $inputs = [] ,bool $any = true)
+    /**
+     * @throws BindingResolutionException
+     * @throws \Throwable
+     */
+    public function first(array $inputs = [] , bool $any = true)
     {
         return ServiceWrapper::make(false)->do(function () use ($inputs) {
             $query = User::query();
