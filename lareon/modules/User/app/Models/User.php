@@ -2,11 +2,11 @@
 
 namespace Lareon\Modules\User\App\Models;
 
-use Attribute;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -78,11 +78,11 @@ class User extends Authenticatable implements MustVerifyEmail
         // TODO: Implement sendPhoneVerificationNotification() method.
     }
 
-    public function fullname() :\Attribute
+    public function fullname(): Attribute
     {
         return Attribute::make(
-            get: fn () => ucfirst($this->name) . ' ' .ucfirst($this->lastname));
+            get: fn () => ucfirst($this->name) . ' ' . ucfirst($this->lastname)
+        );
     }
-
 
 }

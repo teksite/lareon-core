@@ -12,7 +12,7 @@
                     <td>
                         <img src="/storage/admin/avatar-default.jpg" alt="{{$user->name}}" width="45" height="45" fetchpriority="low" decoding="async" loading="lazy">
                     </td>
-                    <td>{{$user->name}}</td>
+                    <td>{{$user->fullname}}</td>
                     <td>{{$user->phone}}</td>
                     <td>{{$user->email}}</td>
                     <td>{{dateAdapter($user->created_at) ?? '-'}}</td>
@@ -31,7 +31,15 @@
                     </td>
                 </tr>
             @endforeach
+                <x-slot:foot>
+                    <tr>
+                        <td  colspan="9" class="p-2">
+                            {!! $users->appends(request()->query())->links() !!}
+                        </td>
+                    </tr>
+                </x-slot:foot>
         </x-lareon::table>
-        {{$users->appends($_GET)->links()}}
+
     @endsection
+
 </x-lareon::admin-list>

@@ -39,10 +39,6 @@
         @apply stroke-main_color
     }
 
-    .btn-stroke {
-        @apply px-3 py-2 border border-line_light rounded-lg shadow
-    }
-
     .input {
         @apply border border-line_light px-3 py-1 rounded focus:outline-2 focus:outline-blue-600 bg-transparent
     }
@@ -55,9 +51,15 @@
         @apply text-zinc-300 cursor-not-allowed
     }
 
-
     .input_label {
         @apply text-zinc-600 font-bold text-sm block select-none
+    }
+
+    table tr .action{
+        @apply invisible
+    }
+   table tr:hover .action{
+        @apply visible
     }
 
 
@@ -65,29 +67,7 @@
         @apply container mx-auto
     }
 
-    .badge-red {
-        @apply bg-red-100 text-red-600 text-xs font-semibold px-3 py-1 rounded-xl inline-flex items-center justify-center gap-1
-    }
 
-    .badge-green {
-        @apply bg-green-100 text-green-600 text-xs font-semibold px-3 py-1 rounded-xl inline-flex items-center justify-center gap-1
-    }
-
-    .badge-yellow {
-        @apply bg-yellow-100 text-yellow-600 text-xs font-semibold px-3 py-1 rounded-xl inline-flex items-center justify-center gap-1
-    }
-
-    .badge-blue {
-        @apply bg-cyan-100 text-cyan-600 text-xs font-semibold px-3 py-1 rounded-xl inline-flex items-center justify-center gap-1
-    }
-
-    .badge-gray {
-        @apply bg-gray-100 text-gray-600 text-xs font-semibold px-3 py-1 rounded-xl inline-flex items-center justify-center gap-1
-    }
-
-    .badge-violet {
-        @apply bg-violet-100 text-violet-600 text-xs font-semibold px-3 py-1 rounded-xl inline-flex items-center justify-center gap-1
-    }
 
     .bordering {
         @apply border border-slate-300
