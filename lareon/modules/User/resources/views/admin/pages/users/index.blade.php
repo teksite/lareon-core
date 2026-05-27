@@ -22,7 +22,7 @@
                         {{$user->parent()?->fullname ?? '-'}}
                     </td>
                     <td>
-                        <div class="action">
+                        <x-lareon::action-box class="action">
                             @if(\Illuminate\Support\Facades\Route::has('admin.users.meta.edit'))
                                 <x-lareon::links.action type="sub" :href="route('admin.users.meta.edit' , $user)"/>
                             @endif
@@ -31,7 +31,7 @@
                             @endif
                             <x-lareon::links.action type="edit" :href="route('admin.users.edit' , $user)" can="admin.user.edit"/>
                             <x-lareon::links.action type="delete" :href="route('admin.users.destroy' , $user)" can="admin.user.delete"/>
-                        </div>
+                        </x-lareon::action-box>
                     </td>
                 </tr>
             @endforeach
