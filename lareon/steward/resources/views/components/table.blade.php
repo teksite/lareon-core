@@ -30,8 +30,7 @@
             @foreach($headers as $key => $header)
                 <th scope="col" class="px-3 py-3 text-xs font-semibold uppercase text-start text-zinc-600">
                     @if($sortable && is_string($key))
-                        <a href="{{ $sortUrl($key) }}"
-                           class="inline-flex items-center gap-1 hover:text-black {{ $sortColumn === $key ? 'font-bold text-black' : '' }}">
+                        <a href="{{ $sortUrl($key) }}" class="inline-flex items-center gap-1 hover:text-zinc-900 {{ $sortColumn === $key ? 'font-bold text-zinc-900' : '' }}">
                             {{ is_array($header) ? ($header['label'] ?? $key) : $header }}
                             <span class="text-xs">{{ $sortIcon($key) }}</span>
                         </a>
@@ -42,7 +41,7 @@
             @endforeach
         </tr>
         </thead>
-        <tbody class="divide-y divide-line_light bg-white *:hover:bg-slate-50">
+        <tbody class="divide-y divide-line_light bg-slate-50 *:hover:bg-blue-50">
         @if($rows && count($rows) > 0)
             {{ $slot }}
         @else

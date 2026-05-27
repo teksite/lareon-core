@@ -17,6 +17,8 @@ return [
     "crud" => [
         "all"=>"همه :attribute",
         "create"=>"ایجاد :attribute جدید",
+        "list"=>"لیست :attribute ",
+
     ],
 
 ];

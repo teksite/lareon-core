@@ -1,5 +1,5 @@
 <x-lareon::admin-list>
-    @section('title', __(':title list',['title'=>__('users')]))
+    @section('title', trans('lareon::global.crud.list' ,['attribute'=>__('users')]))
     @section('description', __('in this section you can manage all users of the app'))
     @section('header.start')
         <x-lareon::links.simple :href="route('admin.users.create')" :content="__('create a new one')" color="blue" can="admin.user.create"/>

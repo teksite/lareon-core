@@ -19,6 +19,7 @@ return [
 
     'crud'=>[
         'all'=>"all :attribute",
-        "create"=>"create new :attribute "
+        "create"=>"create new :attribute ",
+        "list"=>"list :attribute ",
     ]
 ];
