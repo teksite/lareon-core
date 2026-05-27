@@ -50,7 +50,7 @@
         'full' => 'rounded-full',
     ];
 
-   $baseClasses = 'inline-flex items-center justify-center font-medium transition-all duration-200 ease-in-out focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none';
+    $baseClasses = 'inline-flex items-center justify-center font-medium transition-all duration-200 ease-in-out focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none';
     $sizeClass = $sizes[$size] ?? $sizes['sm'];
     $colorClass = $colors[$color][$variant] ?? $colors['blue']['solid'];
     $roundedClass = $roundedClasses[$rounded] ?? $roundedClasses['lg'];

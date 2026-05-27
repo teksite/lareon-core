@@ -23,8 +23,8 @@
     };
 @endphp
 
-<div class="overflow-hidden rounded-lg border border-zinc-300">
-    <table {{ $attributes->merge(['class' => 'min-w-full text-sm divide-y divide-zinc-300']) }}>
+<div class="overflow-hidden rounded-lg border border-line_light">
+    <table {{ $attributes->merge(['class' => 'min-w-full text-sm divide-y divide-line_light']) }}>
         <thead class="bg-zinc-50">
         <tr>
             @foreach($headers as $key => $header)
@@ -42,12 +42,12 @@
             @endforeach
         </tr>
         </thead>
-        <tbody class="divide-y divide-zinc-200 bg-white">
+        <tbody class="divide-y divide-line_light bg-white">
         @if($rows && count($rows) > 0)
             {{ $slot }}
         @else
             <tr>
-                <td colspan="{{ count($headers) }}" class="px-3 py-8 text-center text-zinc-500">
+                <td colspan="{{ count($headers) }}" class="px-3 py-8 text-center text-zinc-600">
                     {{ $emptyMessage }}
                 </td>
             </tr>

@@ -14,9 +14,9 @@
     $hasValue = filled($value);
 
     $variants = [
-        'default' => 'border border-zinc-300 rounded-lg focus-within:ring-2 focus-within:ring-blue-600 focus-within:border-blue-600',
-        'minimal' => 'border-b border-zinc-300 focus-within:border-blue-600',
-        'rounded' => 'border border-zinc-300 rounded-full focus-within:ring-2 focus-within:ring-blue-600',
+        'default' => 'border border-line_light rounded-lg focus-within:ring-2 focus-within:ring-blue-600 focus-within:border-blue-600',
+        'minimal' => 'border-b border-line_light focus-within:border-blue-600',
+        'rounded' => 'border border-line_light rounded-full focus-within:ring-2 focus-within:ring-blue-600',
     ];
 
     $sizes = [
@@ -42,7 +42,7 @@
         <input type="text" name="{{ $name }}" value="{{ $value }}" placeholder="{{ __($placeholder) }}..." class="{{ $inputClasses }}" autocomplete="off">
 
         <div class="flex items-center gap-1 shrink-0">
-            <button type="submit" title="{{ __($placeholder) }}" class="flex items-center justify-center px-2 py-1 text-zinc-400 hover:text-blue-600 transition-colors duration-200 {{ $hasValue ? 'text-blue-600' : '' }}">
+            <button type="submit" title="{{ __($placeholder) }}" class="flex items-center justify-center px-2 py-1 text-zinc-600 hover:text-blue-600 transition-colors duration-200 {{ $hasValue ? 'text-blue-600' : '' }}">
                 <x-icon type="outline" icon="{{ $buttonIcon }}" size="{{ $iconSize }}"/>
             </button>
 

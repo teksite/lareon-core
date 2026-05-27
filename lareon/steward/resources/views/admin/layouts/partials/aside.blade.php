@@ -2,13 +2,13 @@
     <div class="h-dvh relative x-box !p-0 xl:border-none flex flex-col justify-between">
         <div class="overflow-auto flex flex-col gap-1">
             <div class="mb-6 ">
-                <div class="flex items-center gap-1">
+                <div class="flex items-center gap-1 p-3">
                     <x-lareon::logo class="w-16"/>
                     <h1 class="text-3xl font-bold capitalize">
                         LAREON
                     </h1>
                 </div>
-                <div class="text-center text-zinc-600 font-black text-sm py-2 border-y border-line_light mt-6">
+                <div class="text-center text-zinc-600 font-black text-sm py-2 border-y border-line_light">
                     {{__('lareon::global.welcome_user' , ['attribute'=>auth()->user()->name])}}!
                 </div>
             </div>
