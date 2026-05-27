@@ -23,7 +23,7 @@ class UserLogic
     public function all(mixed $fetchData = []): ServiceResult
     {
         return ServiceWrapper::make(false)
-                             ->do(fn() => FetchDataService::get(User::class, ['name', 'email', 'phone']))
+                             ->do(fn() => FetchDataService::get(User::class, ['name' ,'lastname', 'email', 'phone']))
                              ->run();
     }
 

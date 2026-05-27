@@ -5,8 +5,8 @@
     'buttonIcon' => 'magnifier',
     'showReset' => true,
     'resetText' => 'all',
-    'variant' => 'default', // default, minimal, rounded
-    'size' => 'md', // sm, md, lg
+    'variant' => 'rounded', // default, minimal, rounded
+    'size' => 'sm', // sm, md, lg
 ])
 
 @php
@@ -14,9 +14,9 @@
     $hasValue = filled($value);
 
     $variants = [
-        'default' => 'border border-zinc-300 rounded-lg focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-blue-500',
-        'minimal' => 'border-b border-zinc-300 focus-within:border-blue-500',
-        'rounded' => 'border border-zinc-300 rounded-full focus-within:ring-2 focus-within:ring-blue-500',
+        'default' => 'border border-zinc-300 rounded-lg focus-within:ring-2 focus-within:ring-blue-600 focus-within:border-blue-600',
+        'minimal' => 'border-b border-zinc-300 focus-within:border-blue-600',
+        'rounded' => 'border border-zinc-300 rounded-full focus-within:ring-2 focus-within:ring-blue-600',
     ];
 
     $sizes = [
