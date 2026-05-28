@@ -28,9 +28,9 @@
     $isCreateMode = in_array($type, ['create', 'store']);
 
     $buttonColor = match(true) {
-        $isDeleteMode => 'red',
-        $isEditMode => 'blue',
-        default => 'green'
+        $isDeleteMode => 'delete',
+        $isEditMode => 'update',
+        default => 'create'
     };
 
     $buttonText = match(true) {
@@ -84,18 +84,18 @@
                     @endif
 
                     @if($publishStatus && !$isDeleteMode)
-                        <x-lareon::form.status-publish :instance="$instance" :is-create-mode="$isCreateMode"/>
+                        <x-lareon::editor.status-publish :instance="$instance" :is-create-mode="$isCreateMode"/>
                     @endif
 
                     <div class="mt-6">
-                        <x-lareon::button.simple type="submit" role="submit" :color="$buttonColor" :icon="$buttonIcon" class="w-full justify-center">
+                        <x-lareon::buttons.nav type="submit" role="submit" :color="$buttonColor" :icon="$buttonIcon" >
                             {{ $buttonText }}
-                        </x-lareon::button.simple>
+                        </x-lareon::buttons.nav>
 
                         @if(!$isCreateMode && !$isDeleteMode)
-                            <x-lareon::button.simple type="button" color="gray" class="w-full justify-center mt-2" onclick="window.history.back()">
+                            <x-lareon::buttons.nav type="button"  class="w-full justify-center mt-2" onclick="window.history.back()">
                                 {{ __('cancel') }}
-                            </x-lareon::button.simple>
+                            </x-lareon::buttons.nav>
                         @endif
                     </div>
 

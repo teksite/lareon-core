@@ -23,9 +23,9 @@
     };
 @endphp
 
-<div class="overflow-hidden rounded-lg border border-line_light">
+<div class="overflow-hidden y-box !p-0">
     <table {{ $attributes->merge(['class' => 'min-w-full text-sm divide-y divide-line_light']) }}>
-        <thead class="bg-zinc-50">
+        <thead class="">
         <tr>
             @foreach($headers as $key => $header)
                 <th scope="col" class="px-3 py-3 text-xs font-semibold uppercase text-start text-zinc-600">
