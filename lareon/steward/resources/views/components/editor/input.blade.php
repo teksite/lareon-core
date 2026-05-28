@@ -34,7 +34,7 @@
         @if($label && $labelPosition === 'start')
             <x-lareon::inputs.label :title="$label" id="{{$finalId}}" class="w-fit"/>
         @endif
-        <x-lareon::inputs.text :type="$type" name="{{$name}}" :id="$id" :value="$consideredValue" :disabled="$disabled" :required="$required" :readonly="$readonly" {{ $attributes->merge(['class' => "{$inputClasses} {$errorStyle}"]) }}/>
+        <x-lareon::inputs.text name="{{$name}}" id="{{$id}}" :type="$type" :value="$consideredValue" :disabled="$disabled" :required="$required" :readonly="$readonly" class="{{$inputClasses .' ' . $errorStyle}}"/>
         @if($label && $labelPosition === 'end')
             <x-lareon::inputs.label :title="$label" id="{{$finalId}}" class="w-fit"/>
         @endif
