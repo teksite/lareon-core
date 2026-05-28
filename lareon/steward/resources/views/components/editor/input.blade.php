@@ -27,21 +27,21 @@
 
 <div class="w-full {{ $wrapperClass }}">
     @if($label && $labelPosition === 'top')
-        <x-lareon::inputs.label :title="$label" id="{{$finalId}}" class="mb-1" :requried="$required"/>
+        <x-lareon::inputs.label :title="$label" for="{{$finalId}}" class="mb-1" :requried="$required"/>
     @endif
 
     <div class="flex items-center gap-2">
         @if($label && $labelPosition === 'start')
-            <x-lareon::inputs.label :title="$label" id="{{$finalId}}" class="w-fit"/>
+            <x-lareon::inputs.label :title="$label" for="{{$finalId}}" class="w-fit"/>
         @endif
-        <x-lareon::inputs.text name="{{$name}}" id="{{$id}}" :type="$type" :value="$consideredValue" :disabled="$disabled" :required="$required" :readonly="$readonly" class="{{$inputClasses .' ' . $errorStyle}}"/>
+        <x-lareon::inputs.text name="{{$name}}" id="{{$finalId}}" :type="$type" :value="$consideredValue" :disabled="$disabled" :required="$required" :readonly="$readonly" class="{{$inputClasses .' ' . $errorStyle}}"/>
         @if($label && $labelPosition === 'end')
-            <x-lareon::inputs.label :title="$label" id="{{$finalId}}" class="w-fit"/>
+            <x-lareon::inputs.label :title="$label" for="{{$finalId}}" class="w-fit"/>
         @endif
     </div>
     <x-lareon::inputs.error :messages="$errorMessage ?? null"/>
 
     @if($label && $labelPosition === 'bottom')
-        <x-lareon::inputs.label :title="$label" id="{{$finalId}}" class="mt-1"/>
+        <x-lareon::inputs.label :title="$label" for="{{$finalId}}" class="mt-1"/>
     @endif
 </div>
