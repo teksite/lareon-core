@@ -16,6 +16,12 @@
             'solid' => 'shadow-lg shadow-blue-600/50 bg-blue-600 hover:bg-blue-700 active:bg-blue-900 text-white hover:shadow-sm focus:ring-2 focus:ring-blue-500 focus:ring-offset-2',
             'outline' => 'border-2 border-blue-600 text-blue-600 hover:bg-blue-50 active:bg-blue-100 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2',
         ],
+
+         'inf' => [
+            'solid' => 'shadow-lg shadow-blue-600/50 bg-blue-600 hover:bg-blue-700 active:bg-blue-900 text-white hover:shadow-sm focus:ring-2 focus:ring-blue-500 focus:ring-offset-2',
+            'outline' => 'border-2 border-blue-600 text-blue-600 hover:bg-blue-50 active:bg-blue-100 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2',
+        ],
+
         'gray' => [
             'solid' => 'shadow-lg shadow-gray-600/50 bg-gray-600 hover:bg-gray-700 active:bg-gray-900 text-white hover:shadow-sm focus:ring-2 focus:ring-gray-500 focus:ring-offset-2',
             'outline' => 'border-2 border-gray-600 text-gray-600 hover:bg-gray-50 active:bg-gray-100 focus:ring-2 focus:ring-gray-500 focus:ring-offset-2',

@@ -3,7 +3,7 @@
     @section('description', __('in this window you can create a new :title',['title'=>__('user')]))
     @section('formRoute', route('admin.users.store'))
     @section('header.start')
-        <x-lareon::link.btn-outline :href="route('admin.users.index')" :title="__('all :title',['title'=>__('users')])" color="index"/>
+        <x-lareon::link.simple :href="route('admin.users.index')" :title="__('all :title',['title'=>__('users')])" color="index"/>
     @endsection
     @section('form')
         <x-lareon::box>

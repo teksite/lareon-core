@@ -18,7 +18,7 @@
 @endphp
 <div class="rounded-e-xl p-2" x-data="{show:{{$active ? 'true' : 'false'}}}">
     <button type="button" class="flex items-center justify-start gap-2 w-full outline-none" @click="show=!show">
-       <span class="p-2 {{$active ? 'x-box' : ''}}">
+       <span>
             <x-icon type="{{$menu['icon-type'] ?? 'outline' }}" icon="{{$menu['icon'] ??  'circle'}}" high="18" width="18" :class="$active ? 'fill-none stroke-indigo-800' : 'fill-none stroke-gray-600'"/>
        </span>
         <span class="{{$active ? 'text-indigo-800 font-bold' : ''}}">
