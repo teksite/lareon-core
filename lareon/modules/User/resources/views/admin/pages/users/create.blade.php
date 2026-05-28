@@ -7,9 +7,7 @@
     @endsection
     @section('form')
         <x-lareon::box type="y">
-{{--
-            <x-lareon::sections.text :value="old('name')" type="text" :title="__('name')" name="name" :placeholder="__('write a :title for :item',['title'=>__('name') , 'item'=>__('user')])" :required="true"/>
---}}
+            <x-lareon::editor.input :value="old('name')" :label="__('first name')" name="name" :placeholder="__('write a :title for :item',['title'=>__('name') , 'item'=>__('user')])" :required="true"/>
 {{--
             <x-lareon::sections.text :value="old('phone')" type="phone" :title="__('phone')" name="phone" :placeholder="__('write a unique :title' ,['title'=>__('phone')])" :required="true"/>
 --}}
