@@ -29,12 +29,12 @@
     <ul x-show="show" x-collapse x-cloak class="*:flex *:items-center *:justify-start *:gap-2 space-y-1 p-2">
         @if($href)
            <li>
-               <x-lareon::nav.accordion-link :menu="$menu" size="28"/>
+               <x-lareon::accordion-nav.link :menu="$menu" size="28"/>
            </li>
         @endif
         @foreach($menu['children'] ?? [] as $child)
             <li>
-                <x-lareon::nav.accordion-link :menu="$child" size="10"/>
+                <x-lareon::accordion-nav.link :menu="$child" size="10"/>
             </li>
         @endforeach
     </ul>

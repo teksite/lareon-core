@@ -16,7 +16,7 @@
                 <ul class="pe-3 menu space-y-3">
                     @foreach($menus as $menu)
                         <li>
-                           <x-lareon::nav.accordion-nav :menu="$menu"/>
+                           <x-lareon::accordion-nav.menu :menu="$menu"/>
                         </li>
                     @endforeach
                 </ul>
