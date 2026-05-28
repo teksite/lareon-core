@@ -13,6 +13,8 @@
     'labelPosition' => 'top', // top, bottom, start, end, none
     'error' => null,
     'wrapperClass' => null,
+
+   'autocomplete'=>'false'
 ])
 
 @php
@@ -34,7 +36,7 @@
         @if($label && $labelPosition === 'start')
             <x-lareon::inputs.label :title="$label" for="{{$finalId}}" class="w-fit"/>
         @endif
-        <x-lareon::inputs.text name="{{$name}}" id="{{$finalId}}" :type="$type" :value="$consideredValue" :disabled="$disabled" :required="$required" :readonly="$readonly" class="{{$inputClasses .' ' . $errorStyle}}"/>
+        <x-lareon::inputs.text name="{{$name}}" id="{{$finalId}}" :type="$type" :value="$consideredValue" :disabled="$disabled" :required="$required" :readonly="$readonly" class="{{$inputClasses .' ' . $errorStyle}}" dir="{{$dir}}" autocomplete="{{$autocomplete}}" />
         @if($label && $labelPosition === 'end')
             <x-lareon::inputs.label :title="$label" for="{{$finalId}}" class="w-fit"/>
         @endif
