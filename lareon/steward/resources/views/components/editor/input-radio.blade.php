@@ -21,7 +21,7 @@
 
     $placeholderText = $placeholder ?? __('password');
     $inputWrapperClass = match (true){
-      in_array($style_type ,['inline' , 'inline_start']) => 'flex items-center gap-2',
+      in_array($style_type ,['inline' , 'inline_start']) => 'flex flex-wrap items-center gap-2',
       default=>null
     };
     $consideredValue= $old ? old($dotName , $value) : $value;

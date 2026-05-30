@@ -49,6 +49,7 @@
     if ($hasFile) {
         $formClasses .= " enctype='multipart/form-data'";
     }
+    $styleClass=config('lareon.admin.layout.editor')=== 'two_column' ? 'md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-7' : '';
 @endphp
 
 <x-lareon::admin-layout>
@@ -65,7 +66,7 @@
     <form id="{{ $id }}" class="{{ $formClasses }}" method="{{ $method === 'GET' ? 'GET' : 'POST' }}" action="{{ $route ?? url()->current() }}" {{$hasFile ?  'enctype="multipart/form-data"' : ''}}>
         @csrf
         @method($method)
-        <div class="grid grid-cols-1 gap-6 {{config('lareon.admin.layout.editor')=== 'two_column' ? 'md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-7' : ''}}">
+        <div class="grid grid-cols-1 gap-6 {{$styleClass}}">
             <div class="md:col-span-2 lg:col-span-2 xl:col-span-5">
                 <div class="space-y-6">
                     @yield('form.before.start')
@@ -87,12 +88,12 @@
                     @endif
 
                     <div class="mt-6">
-                        <x-lareon::buttons.nav type="submit" role="submit" :color="$buttonColor" :icon="$buttonIcon" >
+                        <x-lareon::buttons.nav :fullWidth="false" type="submit" role="submit" :color="$buttonColor" :icon="$buttonIcon" >
                             {{ $buttonText }}
                         </x-lareon::buttons.nav>
 
                         @if(!$isCreateMode && !$isDeleteMode)
-                            <x-lareon::buttons.nav type="button"  class="w-full justify-center mt-2" onclick="window.history.back()">
+                            <x-lareon::buttons.nav type="button"  class="" onclick="window.history.back()">
                                 {{ __('cancel') }}
                             </x-lareon::buttons.nav>
                         @endif
