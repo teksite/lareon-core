@@ -46,6 +46,7 @@ class UserLogic
      */
     public function create(array $inputs = [])
     {
+        dd($inputs);
         return ServiceWrapper::make(true)->do(function () use ($inputs) {
             $inputs['slug'] ??= strtolower(uniqid() . '-' .Str::random(4));
             $user = User::create($inputs);

@@ -37,7 +37,6 @@ class UsersController extends Controller /*implements HasMiddleware*/
      */
     public function index()
     {
-
         $res = $this->logic->all();
         $users = $res->result;
         return view('user::admin.pages.users.index', compact('users'));

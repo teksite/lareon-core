@@ -2,7 +2,7 @@
 'type' => 'create', // create, edit, update, delete, restore
 'instance' => null,
 'publishStatus' => true,
-'route' => null,
+'action' => null,
 'method' => null,
 'id' => 'editor-form',
 'hasFile' => false,
@@ -63,7 +63,7 @@
 
     @yield('form.before')
 
-    <form id="{{ $id }}" class="{{ $formClasses }}" method="{{ $method === 'GET' ? 'GET' : 'POST' }}" action="{{ $route ?? url()->current() }}" {{$hasFile ?  'enctype="multipart/form-data"' : ''}}>
+    <form id="{{ $id }}" class="{{ $formClasses }}" method="{{ $method === 'GET' ? 'GET' : 'POST' }}" action="{{ $action ?? url()->current() }}" {{$hasFile ?  'enctype="multipart/form-data"' : ''}}>
         @csrf
         @method($method)
         <div class="grid grid-cols-1 gap-6 {{$styleClass}}">

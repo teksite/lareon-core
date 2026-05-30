@@ -67,12 +67,6 @@
         @apply text-zinc-600 font-bold text-sm block select-none
     }
 
-    table tr .action{
-        @apply invisible
-    }
-   table tr:hover .action{
-        @apply visible
-    }
 
 
     .inner-container {
@@ -90,11 +84,11 @@
         @apply p-2
     }
 
-    table.tableData tr .action {
-        @apply invisible flex gap-3 items-center justify-end
-    }
 
-    table.tableData tr:hover .action {
+    table tr .action{
+        @apply invisible
+    }
+    table tr:hover .action{
         @apply visible
     }
 

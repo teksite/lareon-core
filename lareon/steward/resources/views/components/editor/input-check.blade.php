@@ -42,7 +42,7 @@
             @endphp
             <li class="{{$inputWrapperClass}}">
                 <x-lareon::inputs.label :title="$label" :for="$id"/>
-                <x-lareon::inputs.checkbox id="{{$id}}" name="{{$name}}" :value="$value" :disabled="$disabled" :checked="in_array($val , $consideredValue)"/>
+                <x-lareon::inputs.checkbox id="{{$id}}" name="{{$name}}" :value="$val" :disabled="$disabled" :checked="in_array($val , $consideredValue)"/>
             </li>
         @endforeach
     </ul>

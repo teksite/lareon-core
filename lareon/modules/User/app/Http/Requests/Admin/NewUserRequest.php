@@ -2,6 +2,7 @@
 namespace Lareon\Modules\User\App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Lareon\Modules\User\App\Models\User;
 
 class NewUserRequest extends FormRequest
 {
@@ -20,9 +21,6 @@ class NewUserRequest extends FormRequest
      */
     public function rules(): array
     {
-        dd(request()->all());
-        return [
-            //
-        ];
+        return User::rules('create');
     }
 }
