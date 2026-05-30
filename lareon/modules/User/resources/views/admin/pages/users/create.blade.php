@@ -25,18 +25,22 @@
     @endsection
     @section('form.before.end')
         <x-lareon::box type="y">
-            <div class="space-y-6">
+            <fieldset class="fieldset space-y-6">
+                <legend class="legend">{{__('verification')}}</legend>
                 <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('no') , null] , [__('yes') ,1]]" :label="__('mark email as verified')" name="email_verified_at" inputsClass="flex items-center gap-1"/>
                 <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('no') , null] , [__('yes') ,1]]" :label="__('mark phone as verified')" name="phone_verified_at" inputsClass="flex items-center gap-1"/>
 
-            </div>
+            </fieldset>
         </x-lareon::box>
 
         <x-lareon::box type="y">
-            <div class="space-y-6">
-                <x-lareon::editor.input-check type="inline" :required="true" :options="[[__('yes') ,1]]" :label="__('mark email as verified')" name="send_email_notification" inputsClass="flex items-center gap-1"/>
-                <x-lareon::editor.input-check type="inline" :required="true" :options="[[__('yes') ,1]]" :label="__('mark phone as verified')" name="send_phone_notification" inputsClass="flex items-center gap-1"/>
-            </div>
+            <fieldset class="fieldset space-y-6">
+                <legend class="legend">{{__('send notification')}}</legend>
+                <div class="grid gap-6 lg:grid-cols-2">
+                    <x-lareon::editor.input-check type="inline" :required="true" :options="[[__('yes') ,1]]" :label="__('send notification via email')" name="send_email_notification" inputsClass="flex items-center gap-1"/>
+                    <x-lareon::editor.input-check type="inline" :required="true" :options="[[__('yes') ,1]]" :label="__('send notification via phone')" name="send_phone_notification" inputsClass="flex items-center gap-1"/>
+                </div>
+            </fieldset>
         </x-lareon::box>
     @endsection
     @section('aside')

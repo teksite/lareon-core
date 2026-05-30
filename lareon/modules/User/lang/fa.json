@@ -5,5 +5,9 @@
     "last name": "نام خانوادگی",
     "first name": "نام",
     "fullname": "نام کامل",
-    "basic data": "اطلاعات پایه"
+    "basic data": "اطلاعات پایه",
+    "send notification via email": "ارسال اعلان با ایمیل",
+    "send notification via phone":"ارسال اعلان با تلفن",
+    "send notification": "ارسال اعلان",
+    "verification": "تایید "
 }

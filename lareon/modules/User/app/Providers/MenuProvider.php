@@ -41,7 +41,7 @@ class MenuProvider implements MenuRegisteringContract
             ], 'user')
               ->addManyItem([
                   [
-                      'title'  => trans('lareon::global.crud.all', ['attribute' => trans('users')]),
+                      'title'  => trans('lareon::global.crud.titles.all', ['attribute' => trans('users')]),
                       'order'  => 1,
                       'route'  => 'admin.users.index',
                       'active' => request()->routeIs('admin.users.index'),
@@ -49,7 +49,7 @@ class MenuProvider implements MenuRegisteringContract
 
                   ],
                   [
-                      'title'      => trans('lareon::global.crud.create', ['attribute' => trans('user')]),
+                      'title'      => trans('lareon::global.crud.titles.create', ['attribute' => trans('user')]),
                       'order'      => 2,
                       'route'      => 'admin.users.create',
                       'active'     => request()->routeIs('admin.users.create'),

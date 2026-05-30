@@ -83,4 +83,22 @@ if (!function_exists('dateAdapter')) {
         $newDateTime=smart_date($dateTime);
         return config('app.locale') == 'fa' ? Jalalian::forge(Carbon::parse($newDateTime))->format($format) : Carbon::parse($newDateTime)->format($format);
     }
+
+if (!function_exists('userCan')) {
+    /**
+     * check current user is authenticated and then check have permission(s) or not
+     *
+     * @param string|array|null $permission
+     * @return bool
+     */
+    function userCan(string|array $permission=null):bool
+    {
+        $user = Auth::user();
+        if (is_null($user)) return false;
+
+        $permissions = (array)$permission;
+
+        return $user->canAny($permissions);
+    }
+
 }
