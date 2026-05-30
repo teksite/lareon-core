@@ -1,7 +1,7 @@
-@props(['title'=>null , 'required' =>false])
-<label {{$attributes->merge(['class'=>'input_label'])->except(['required'])}}>
+@props(['title'=>null , 'markAsRequire' =>false])
+<label {{$attributes->merge(['class'=>'input_label'])}}>
     {!! $title ?? $slot ?? '' !!}
-    @if($required)
+    @if($markAsRequire)
         <span class="text-red-600 text-xs font-bold">*</span>
     @endif
 </label>

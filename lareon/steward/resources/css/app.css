@@ -45,7 +45,7 @@
     }
 
     .input {
-        @apply border border-line_light px-3 py-1 rounded focus:outline-2 focus:outline-blue-600 bg-transparent
+        @apply border border-line_light px-3 py-1 rounded focus:outline-2  focus-within:outline-blue-600 focus:outline-blue-600 bg-transparent
     }
     .input-error {
         @apply border-red-500 focus:ring-red-500/20 focus:border-red-500;
@@ -82,7 +82,7 @@
 
 
     .bordering {
-        @apply border border-slate-300
+        @apply border border-line_light
     }
 
 
@@ -99,12 +99,12 @@
     }
 
 
-    form .legend {
-        @apply p-3 font-bold text-xl
+    form .fieldset legend {
+        @apply px-3 py-1 rounded-lg  font-bold text-xl !mb-0
     }
 
-    form .fieldset {
-        @apply border border-slate-400 rounded-lg p-3
+    form .fieldset  {
+        @apply  border border-line_light p-6 rounded-lg
     }
 
 }

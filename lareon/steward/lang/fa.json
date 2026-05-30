@@ -1,3 +1,12 @@
 {
-    "dashboard": "داشبرد"
+    "dashboard": "داشبرد",
+    "featured image": "تصویر شاخص",
+    "phone": "تلفن",
+    "email": "ایمیل",
+    "password": "گذر‌واژه",
+    "confirm :attribute": "تایید :attribute",
+    "name": "نام",
+    "last name": "نام خانوادگی",
+    "first name": "نام",
+    "fullname": "نام کامل"
 }
