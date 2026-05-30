@@ -28,7 +28,7 @@
     $errorConfirmClass = $errorConfirmMessage ? 'input-error' : '';
 
     $placeholderText = $placeholder ?? __('password');
-    $confirmPlaceholder = __('confirm :attribute', ['attribute' => $label ?? __('password')]);
+    $confirmPlaceholder = trans('lareon::global.placeholders.write.auth.confirm_password');
 
     $labelText = $label ?? __('password');
     $confirmLabelText = $confirmLabel ??  __('confirm :attribute', ['attribute' => __('password')]);
@@ -158,13 +158,10 @@
                 if (pass.length >= 8) score++;
                 if (pass.length >= 12) score++;
 
-                // حروف بزرگ و کوچک
                 if (/[a-z]/.test(pass) && /[A-Z]/.test(pass)) score++;
 
-                // اعداد
                 if (/[0-9]/.test(pass)) score++;
 
-                // کاراکترهای خاص
                 if (/[^a-zA-Z0-9]/.test(pass)) score++;
 
                 this.strength = Math.min(score, 4);

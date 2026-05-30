@@ -11,5 +11,10 @@
     "weak":"ضعیف",
     "medium": "متوسط",
     "strong":"قوی",
-    "very strong": "خیلی قوی"
+    "very strong": "خیلی قوی",
+
+    "yes": "بله",
+    "no": "خیر",
+    "mark email as verified": "ایمیل را به عنوان تایید شده علامت گذاری کنید",
+    "mark phone as verified":"تلفن را به عنوان تایید شده علامت گذاری کنید"
 }

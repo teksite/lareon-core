@@ -65,8 +65,7 @@
     <form id="{{ $id }}" class="{{ $formClasses }}" method="{{ $method === 'GET' ? 'GET' : 'POST' }}" action="{{ $route ?? url()->current() }}" {{$hasFile ?  'enctype="multipart/form-data"' : ''}}>
         @csrf
         @method($method)
-
-        <div class="grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-7">
+        <div class="grid grid-cols-1 gap-6 {{config('lareon.admin.layout.editor')=== 'two_column' ? 'md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-7' : ''}}">
             <div class="md:col-span-2 lg:col-span-2 xl:col-span-5">
                 <div class="space-y-6">
                     @yield('form.before.start')
@@ -99,10 +98,6 @@
                         @endif
                     </div>
 
-                    {{-- اطلاعات اضافی برای حالت ویرایش --}}
-                    @if($isEditMode && $instance)
-                        <x-lareon::editor.meta-info :instance="$instance"/>
-                    @endif
                 </div>
             </aside>
         </div>

@@ -134,12 +134,11 @@ return [
     // ============================================
     'placeholders'  => [
         'write'  => [
-            'general' => [
-                'one'    => 'Enter :attribute',
-                'two'    => 'Enter :attribute for the :item',
-                'select' => 'Select :attribute',
-                'search' => 'Search :attribute...',
-            ],
+            'one'     => 'Enter :attribute',
+            'two'     => 'Enter :attribute for the :item',
+            'select'  => 'Select :attribute',
+            'search'  => 'Search...',
+
             'unique'  => [
                 'one' => 'Enter a unique :attribute',
                 'two' => 'Enter a unique :attribute for :item',
