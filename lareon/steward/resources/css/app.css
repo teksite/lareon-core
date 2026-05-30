@@ -31,7 +31,6 @@
         @apply bg-slate-50 p-6 rounded-lg border-line_light shadow-lg shadow-slate-400
     }
 
-
     .y-box {
         @apply bg-slate-50 p-6 rounded-lg border-line_light
     }
@@ -47,6 +46,7 @@
     .input {
         @apply border border-line_light px-3 py-1 rounded focus:outline-2  focus-within:outline-blue-600 focus:outline-blue-600 bg-transparent
     }
+
     .input-error {
         @apply border-red-500 focus:ring-red-500/20 focus:border-red-500;
     }
@@ -67,38 +67,36 @@
         @apply text-zinc-600 font-bold text-sm block select-none
     }
 
-
-
     .inner-container {
         @apply container mx-auto
     }
 
-
+    .inner-content {
+        @apply w-full md:w-11/12 mx-auto
+    }
 
     .bordering {
         @apply border border-line_light
     }
 
-
     table.tableData td {
         @apply p-2
     }
 
-
-    table tr .action{
+    table tr .action {
         @apply invisible
     }
-    table tr:hover .action{
+
+    table tr:hover .action {
         @apply visible
     }
-
 
     form .fieldset legend {
         @apply px-3 py-1 rounded-lg  font-bold text-xl !mb-0
     }
 
-    form .fieldset  {
-        @apply  border border-line_light p-6 rounded-lg
+    form .fieldset {
+        @apply border border-line_light p-6 rounded-lg
     }
 
 }

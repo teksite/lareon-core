@@ -45,7 +45,6 @@
         default => 'plus'
     };
 
-    $formClasses = "w-full";
     if ($hasFile) {
         $formClasses .= " enctype='multipart/form-data'";
     }
@@ -63,10 +62,10 @@
 
     @yield('form.before')
 
-    <form id="{{ $id }}" class="{{ $formClasses }}" method="{{ $method === 'GET' ? 'GET' : 'POST' }}" action="{{ $action ?? url()->current() }}" {{$hasFile ?  'enctype="multipart/form-data"' : ''}}>
+    <form id="{{ $id }}" class="inner-content" method="{{ $method === 'GET' ? 'GET' : 'POST' }}" action="{{ $action ?? url()->current() }}" {{$hasFile ?  'enctype="multipart/form-data"' : ''}}>
         @csrf
         @method($method)
-        <div class="grid grid-cols-1 gap-6 {{$styleClass}}">
+        <div class="grid grid-cols-1 gap-6 {{$styleClass}} ">
             <div class="md:col-span-2 lg:col-span-2 xl:col-span-5">
                 <div class="space-y-6">
                     @yield('form.before.start')
@@ -82,7 +81,6 @@
                     @hasSection('aside')
                         @yield('aside')
                     @endif
-
                     @if($publishStatus && !$isDeleteMode)
                         <x-lareon::editor.status-publish :instance="$instance" :is-create-mode="$isCreateMode"/>
                     @endif

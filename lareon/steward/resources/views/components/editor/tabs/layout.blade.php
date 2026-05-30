@@ -1,23 +1,22 @@
-@props(['tabs' => []])
+@props([])
 
-<div x-data="{ activeTab: 0 }" class="tab-contents">
-    <div class="flex gap-2  mb-4">
-        @foreach($tabs as $index => $tab)
-            <button role="button" type="button"
-                @click="activeTab = {{ $index }}"
-                :class="activeTab === {{ $index }} ? 'border-b-2 border-blue-500 font-semibold' : 'text-gray-500'"
-                class="px-4 py-2 transition-colors"
-            >
-                {{ $tab }}
+<div x-data="{  activeTab: 0, tabs: []  }" x-init=" $nextTick(() => {
+        tabs = Array.from($refs.tabContainer.children).filter(child =>
+            child.classList?.contains('tab-item')
+        ).map(tab => tab.dataset.title || 'tab ' + (tabs.length + 1))
+    }) ">
+    <div class="flex items-center justify-center mb-4">
+        <template x-for="(tab, index) in tabs" :key="index">
+            <button type="button" @click="activeTab = index" :class="activeTab === index ? 'border-blue-600 text-blue-600 font-semibold' : 'border-gray-300 text-gray-600'"  class="px-4 py-2 border-b-2 transition-colors duration-200" x-text="tab">
             </button>
-        @endforeach
+        </template>
     </div>
 
-    <div class="tab-contents">
+    <div class="tab-contents space-y-6" x-ref="tabContainer">
         {{ $slot }}
     </div>
 </div>
-@push('footerScripts')
+@pushonce('footerScripts')
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             document.querySelectorAll('.tab-contents .tab-item').forEach((el, i) => {
@@ -26,4 +25,4 @@
             })
         })
     </script>
-@endpush
+@endpushonce
