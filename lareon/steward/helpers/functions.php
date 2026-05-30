@@ -80,10 +80,10 @@ if (!function_exists('dateAdapter')) {
     {
         if (is_null($dateTime)) return null;
 
-        $newDateTime=smart_date($dateTime);
+        $newDateTime = smart_date($dateTime);
         return config('app.locale') == 'fa' ? Jalalian::forge(Carbon::parse($newDateTime))->format($format) : Carbon::parse($newDateTime)->format($format);
     }
-
+}
 if (!function_exists('userCan')) {
     /**
      * check current user is authenticated and then check have permission(s) or not
