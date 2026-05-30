@@ -1,8 +1,8 @@
 <x-lareon::admin-list>
-    @section('title', trans('lareon::global.crud.list' ,['attribute'=>__('users')]))
-    @section('description', __('in this section you can manage all users of the app'))
+    @section('title', __('lareon::global.crud.titles.list',['attribute'=>__('users')]))
+    @section('description', __('Manage all registered users, view their details and control account status'))
     @section('header.start')
-        <x-lareon::links.nav :href="route('admin.users.create')" :content="__('create a new one')" color="index" can="admin.user.create"/>
+        <x-lareon::links.nav :href="route('admin.users.create')" :content="__('lareon::global.buttons.new_one')" color="create" can="admin.user.create"/>
     @endsection
     @section('list')
         <x-lareon::table :rows="$users" :headers="['id'=>'#',__('featured image') ,'name'=>__('name'),'phone'=>__('phone'),'email'=>__('email'),'created_at'=>__('created at') ,'parent_id'=> __('creator') ,'']">

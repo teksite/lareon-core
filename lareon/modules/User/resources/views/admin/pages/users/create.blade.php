@@ -1,9 +1,8 @@
 <x-lareon::admin-editor>
-    @section('title', __('new :title',['title'=>__('user')]))
-    @section('description', __('in this window you can create a new :title',['title'=>__('user')]))
+    @section('title', __('lareon::global.crud.titles.create',['attribute'=>__('user')]))
     @section('formRoute', route('admin.users.store'))
     @section('header.start')
-        <x-lareon::links.nav :href="route('admin.users.index')" :content="__('all :title',['title'=>__('users')])" color="index"/>
+        <x-lareon::links.nav :href="route('admin.users.index')" :content="__('lareon::global.buttons.all_attribute' ,['attribute'=>__('users')])" color="index"/>
     @endsection
     @section('form')
         <x-lareon::box type="y">
