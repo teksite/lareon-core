@@ -34,9 +34,9 @@
     };
 
     $buttonText = match(true) {
-        $isDeleteMode => __('delete'),
-        $isEditMode => __('update'),
-        default => __('create')
+        $isDeleteMode => trans('lareon::global.buttons.delete'),
+        $isEditMode => trans('lareon::global.buttons.update'),
+        default => trans('lareon::global.buttons.create')
     };
 
     $buttonIcon = match(true) {
@@ -89,14 +89,8 @@
 
                     <div class="mt-6">
                         <x-lareon::buttons.nav :fullWidth="false" type="submit" role="submit" :color="$buttonColor" :icon="$buttonIcon" >
-                            {{ $buttonText }}
+                            {{ __($buttonText)}}
                         </x-lareon::buttons.nav>
-
-                        @if(!$isCreateMode && !$isDeleteMode)
-                            <x-lareon::buttons.nav type="button"  class="" onclick="window.history.back()">
-                                {{ __('cancel') }}
-                            </x-lareon::buttons.nav>
-                        @endif
                     </div>
 
                 </div>

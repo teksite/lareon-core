@@ -122,6 +122,7 @@ return [
         'share'    => 'اشتراک‌گذاری',
 
         'new_one'        => 'ایجاد مورد جدید',
+        'new_attribute'  => 'ایجاد :attribute',
         'all_items'      => 'همه موارد',
         'all_attribute'  => 'همه :attribute',
         'list_attribute' => 'لیست :attribute',
@@ -132,10 +133,10 @@ return [
     // ============================================
     'placeholders'  => [
         'write'  => [
-            'one'     => ':attribute را وارد کنید',
-            'two'     => ':attribute را برای :item وارد کنید',
-            'select'  => ':attribute را انتخاب کنید',
-            'search'  => 'جستجو...',
+            'one'    => ':attribute را وارد کنید',
+            'two'    => ':attribute را برای :item وارد کنید',
+            'select' => ':attribute را انتخاب کنید',
+            'search' => 'جستجو...',
 
             'unique'  => [
                 'one' => ':attribute یکتا وارد کنید',

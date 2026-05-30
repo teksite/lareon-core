@@ -1,59 +1,54 @@
-<x-lareon::admin-editor-layout type="update" :instance="$user">
-    @section('title', __('edit the :title',['title'=>__('user'). " ($user->name)"]))
-    @section('description', __('in this window you can edit the :title' ,['title'=>__('user') . " ($user->name)"]))
-
-    @section('formRoute', route('admin.users.update', $user))
+<x-lareon::admin-editor type="update" :instance="$user" :acttion="route('admin.users.edit' ,$user)">
+    @section('title', __('lareon::global.crud.titles.edit',['attribute'=>__('user')]) . "($user->fullname)")
     @section('header.start')
-        <x-lareon::link.btn-outline :href="route('admin.users.index')" :title="__('all :title',['title'=>__('users')])" color="index"/>
-        <x-lareon::link.btn-outline :href="route('admin.users.create')" :title="__('new :title',['title'=>__('user')])" color="create" can="admin.user.create"/>
-        @if(\Illuminate\Support\Facades\Route::has('users.show'))
-            <x-lareon::link.btn-outline :href="$user->path()" :title="__('profile')" color="yellow" can="admin.user.read"/>
-        @endif
-        @if(\Illuminate\Support\Facades\Route::has('admin.users.meta.edit'))
-            <x-lareon::link.btn-outline :href="route('admin.users.meta.edit',$user)" :title="__('information')" color="blue" can="admin.user.read"/>
-        @endif
-    @endsection
-    @section('header.end')
-        @parent
-        <x-lareon::link.delete :href="route('admin.users.destroy', $user)" can="admin.user.delete"/>
+        <x-lareon::links.nav :href="route('admin.users.index')" :content="__('lareon::global.buttons.all_attribute' ,['attribute'=>__('users')])" color="index"/>
+        <x-lareon::links.nav :href="route('admin.users.create')" :content="__('lareon::global.buttons.new_attribute' ,['attribute'=>__('user')])" color="create"/>
     @endsection
     @section('form')
-        <x-lareon::box class="grid xl:grid-cols-2 gap-6 mb-6">
-            <div>
-                <x-lareon::sections.text :value="old('name') ?? $user->name" :title="__('name')" name="name" :placeholder="__('write a :title for :item',['title'=>__('name') , 'item'=>__('user')])" :required="true"/>
-                <x-lareon::sections.text :value="old('nick_name') ?? $user->nick_name ?? $user->name" :title="__('nickname')" name="nick_name" :placeholder="__('write a :title',['title'=>__('nickname')])" :required="false"/>
-                <x-lareon::sections.text :value="old('phone') ?? $user->phone" :title="__('phone')" name="phone" :placeholder="__('write a :title',['title'=>__('phone')])" :required="true" type="phone" readonly disabled/>
-                <x-lareon::sections.text :value="old('email') ?? $user->email" :title="__('email')" name="email" :placeholder="__('write a :title',['title'=>__('email')])" :required="true" type="email" readonly disabled/>
-                @if($user->email_verified_at)
-                    <x-lareon::sections.text :value="dateAdapter($user->email_verified_at)" name="email_verification" :title="__('email verified at')" readonly disabled/>
-                @else
-                    <x-lareon::sections.checkbox value="1" :title="__('verifying email')" name="email_verified"/>
-                @endif
-                @if($user->phone_verified_at)
-                    <x-lareon::sections.text :value="dateAdapter($user->phone_verified_at)" name="phone_verification" :title="__('phone verified at')" readonly disabled/>
-                @else
-                    <x-lareon::sections.checkbox value="1" :title="__('verifying phone')" name="phone_verified"/>
-                @endif
-                <x-lareon::sections.password value="" :title="__('new :title' ,['title'=>__('password')])" name="password" :placeholder="__('leave it empty to not change')"/>
-            </div>
-            <img src="{{$user->feaured_image ?? '/storage/admin/avatar-default.jpg'}}" alt="{{$user->name}}" width="400" height="400" fetchpriority="low" decoding="async" loading="lazy">
-        </x-lareon::box>
+        <x-lareon::editor.tabs.layout :tabs="[__('basic data'),__('verification'),__('send notification')]">
+            <x-lareon::editor.tabs.item title="basic data">
+                <x-lareon::box type="y">
+                    <fieldset class="fieldset space-y-6">
+                        <legend class="legend">{{__('basic data')}}</legend>
+                        <div class="grid gap-6 lg:grid-cols-2">
+                            <x-lareon::editor.input :required="true" labelPosition="start" :label="__('first name')" name="name" :value="old('name')" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('name') , 'item'=>__('user')])"/>
+                            <x-lareon::editor.input :required="true" labelPosition="start" :label="__('last name')" name="lastname" :value="old('lastname')" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('last name') , 'item'=>__('user')])"/>
+                        </div>
+                        <div class="space-y-6">
+                            <x-lareon::editor.input :required="true" type="tel" dir="ltr" :value="old('phone')" :label="__('phone')" name="phone" :placeholder="__('lareon::global.placeholders.write.unique.two',['attribute'=>__('phone') , 'item'=>__('user')])"/>
+                            <x-lareon::editor.input :required="true" type="email" dir="ltr" :value="old('email')" :label="__('email')" name="email" :placeholder="__('lareon::global.placeholders.write.unique.two',['attribute'=>__('email') , 'item'=>__('user') ])"/>
+                        </div>
 
-    @endsection
-    @section('form.before.end')
-        <x-seo::sections.instance-editor :instance="$user" :value="old('seo',$user->getSeo() ?? null  )"/>
+                        <div class="">
+                            <x-lareon::editor.password :label="__('password')" :confirm_label="__('confirm password')" name="password" :placeholder="__('lareon::global.placeholders.write.auth.password',['attribute'=>__('password')])" :required="true" wrapperClass="grid gap-6 lg:grid-cols-2"/>
+                        </div>
+                    </fieldset>
+                </x-lareon::box>
+            </x-lareon::editor.tabs.item>
+            <x-lareon::editor.tabs.item title="verification">
+                <x-lareon::box type="y">
+                    <fieldset class="fieldset space-y-6">
+                        <legend class="legend">{{__('verification')}}</legend>
+                        <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('no') , null] , [__('yes') ,1]]" :label="__('mark email as verified')" name="email_verified_at" inputsClass="flex items-center gap-1"/>
+                        <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('no') , null] , [__('yes') ,1]]" :label="__('mark phone as verified')" name="phone_verified_at" inputsClass="flex items-center gap-1"/>
+
+                    </fieldset>
+                </x-lareon::box>
+            </x-lareon::editor.tabs.item>
+            <x-lareon::editor.tabs.item title="notification">
+                <x-lareon::box type="y">
+                    <fieldset class="fieldset space-y-6">
+                        <legend class="legend">{{__('send notification')}}</legend>
+                        <div class="grid gap-6 lg:grid-cols-2">
+                            <x-lareon::editor.input-check type="inline" :required="true" :options="[[__('yes') ,1]]" :label="__('send notification via email')" name="send_email_notification" inputsClass="flex items-center gap-1"/>
+                            <x-lareon::editor.input-check type="inline" :required="true" :options="[[__('yes') ,1]]" :label="__('send notification via phone')" name="send_phone_notification" inputsClass="flex items-center gap-1"/>
+                        </div>
+                    </fieldset>
+                </x-lareon::box>
+            </x-lareon::editor.tabs.item>
+        </x-lareon::editor.tabs.layout>
     @endsection
     @section('aside')
-        <x-lareon::box class="text-xs">
-            <div>
-                <span>{{__('roles')}}:</span>
-                <span class="font-bold">{{$user->roles->pluck('title')->implode(', ')}}</span>
-            </div>
-        </x-lareon::box>
-        @if(auth()->id() != $user->id)
-            <x-lareon::sections.roles :instance="$user"/>
-            <x-lareon::sections.permissions :instance="$user"/>
-        @endif
 
     @endsection
-</x-lareon::admin-editor-layout>
+</x-lareon::admin-editor>

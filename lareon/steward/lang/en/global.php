@@ -124,6 +124,7 @@ return [
         'share'    => 'Share',
 
         'new_one'        => 'create new one',
+        'new_attribute'        => 'create :attribute',
         'all_items'      => 'all items',
         'all_attribute'  => 'all :attribute',
         'list_attribute' => ':attribute list',

@@ -12,6 +12,6 @@
     };
 
 @endphp
-<x-lareon::links.simple :size="$size" :variant="$variant" :color="$convertedColor" :disabled="$disabled" :fullWidth="$fullWidth" :rounded="$rounded" :href="$href" :target="$target" :can="$can">
+<x-lareon::links.simple class="min-w-fit w-fit" :size="$size" :variant="$variant" :color="$convertedColor" :disabled="$disabled" :fullWidth="$fullWidth" :rounded="$rounded" :href="$href" :target="$target" :can="$can">
     {{$content ?? $slot}}
 </x-lareon::links.simple>

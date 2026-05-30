@@ -61,7 +61,7 @@
     $roundedClass = $roundedClasses[$rounded] ?? $roundedClasses['lg'];
     $widthClass = $fullWidth ? 'w-full' : '';
 
-    $classes = trim("{$baseClasses} {$sizeClass} {$colorClass} {$roundedClass} {$widthClass}");
+    $classes = trim("{$baseClasses} {$sizeClass} {$colorClass} {$roundedClass} {$widthClass} {$attributes->get('class')}");
 
     $content =$content ?? ($slot->isNotEmpty() ? $slot : '');
 @endphp

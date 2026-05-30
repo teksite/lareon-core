@@ -13,7 +13,7 @@
     @vite(['lareon/steward/resources/css/app.css','lareon/steward/resources/js/app.js'])
     @stack('headerScripts')
 </head>
-<body class="bg-slate-200 text-sm" x-data="{sidebar:true ,togglesSidebar() { this.sidebar = !this.sidebar }}">
+<body class="bg-slate-200 text-sm overflow-y-scroll" x-data="{sidebar:true ,togglesSidebar() { this.sidebar = !this.sidebar }}">
 <main class="p-3">
     @include('lareon::admin.layouts.partials.aside')
     <div class="ms-auto me-0 p-3 transition-all duration-100 xl:w-5/6" :class="{'xl:w-5/6' : sidebar }">
