@@ -21,8 +21,38 @@
             </x-lareon::editor.tabs.item>
 
             <x-lareon::editor.tabs.item :title="__('verification')">
-                <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('no') , null] , [__('yes') ,1]]" :label="__('mark email as verified')" name="email_verified_at" inputsClass="flex items-center gap-1"/>
-                <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('no') , null] , [__('yes') ,1]]" :label="__('mark phone as verified')" name="phone_verified_at" inputsClass="flex items-center gap-1"/>
+                <div class="grid gap-6 md:grid-cols-2">
+                    <div>
+                        @if(!$user->hasVerifiedPhone())
+                            <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('no') , null] , [__('yes') ,1]]" :label="__('mark email as verified')" name="email_verified_at" inputsClass="flex items-center gap-1"/>
+                        @endif
+                        @if(!$user->hasVerifiedEmail())
+                            <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('no') , null] , [__('yes') ,1]]" :label="__('mark phone as verified')" name="phone_verified_at" inputsClass="flex items-center gap-1"/>
+                        @endif
+                    </div>
+                    <div class="">
+                        <table class="bordering">
+                            <tbody>
+                            <tr>
+                                <td class="px-3 py-2 font-bold">
+                                    {{__('phone verified at')}}
+                                </td>
+                                <td class="px-3 py-2 ">
+                                    <x-lareon::date :date="$user->phone_verified_at ?? null"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-3 py-2 font-bold">
+                                    {{__('email verified at')}}
+                                </td>
+                                <td class="px-3 py-2 ">
+                                    <x-lareon::date :date="$user->email_verified_at ?? null"/>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </x-lareon::editor.tabs.item>
 
         </x-lareon::editor.tabs.layout>
