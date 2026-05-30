@@ -3,10 +3,13 @@
     "featured image": "تصویر شاخص",
     "phone": "تلفن",
     "email": "ایمیل",
-    "password": "گذر‌واژه",
+    "password": "گذر واژه",
     "confirm :attribute": "تایید :attribute",
+    "confirm password": "تایید گذر واژه",
     "name": "نام",
-    "last name": "نام خانوادگی",
-    "first name": "نام",
-    "fullname": "نام کامل"
+    "very weak": "خیلی ضعیف",
+    "weak":"ضعیف",
+    "medium": "متوسط",
+    "strong":"قوی",
+    "very strong": "خیلی قوی"
 }

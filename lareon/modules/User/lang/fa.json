@@ -2,9 +2,7 @@
     "user": "کاربر",
     "users":"کاربر‌ها",
     "in this section you can manage all users of the app": "در این بخش شما می‌توانید تمام کاربران را مدیریت کنید",
-    "very weak": "خیلی ضعیف",
-    "weak":"ضعیف",
-    "medium": "متوسط",
-    "strong":"قوی",
-    "very strong": "خیلی قوی"
+    "last name": "نام خانوادگی",
+    "first name": "نام",
+    "fullname": "نام کامل"
 }

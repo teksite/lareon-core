@@ -9,19 +9,19 @@
         <x-lareon::box type="y">
             <fieldset class="fieldset space-y-6">
                 <legend class="legend">{{__('basic data')}}</legend>
-                      <div class="grid gap-6 lg:grid-cols-2">
-                          <x-lareon::editor.input labelPosition="start" :value="old('name')" :label="__('first name')" name="name" :placeholder="__('write a :title for :item',['title'=>__('name') , 'item'=>__('user')])" :required="true"/>
-                          <x-lareon::editor.input labelPosition="start" :value="old('lastname')" :label="__('last name')" name="lastname" :placeholder="__('write a :title for :item',['title'=>__('name') , 'item'=>__('user')])" :required="true"/>
-                      </div>
-                      <div class="space-y-6">
-                          <x-lareon::editor.input type="tel" dir="ltr" :value="old('phone')" :label="__('phone')" name="phone" :placeholder="__('write a :title for :item',['title'=>__('name') , 'attribute'=>__('phone')])" :required="true"/>
-                          <x-lareon::editor.input type="email" dir="ltr" :value="old('email')" :label="__('email')" name="email" :placeholder="__('write a :title for :item',['title'=>__('name') , 'attribute'=>__('email')])" :required="true"/>
-                      </div>
+                <div class="grid gap-6 lg:grid-cols-2">
+                    <x-lareon::editor.input labelPosition="start" :value="old('name')" :label="__('first name')" name="name" :placeholder="__('lareon::global.placeholder.write.two',['attribute'=>__('name') , 'item'=>__('user')])" :required="true"/>
+                    <x-lareon::editor.input labelPosition="start" :value="old('lastname')" :label="__('last name')" name="lastname" :placeholder="__('lareon::global.placeholder.write.two',['attribute'=>__('last name') , 'item'=>__('user')])" :required="true"/>
+                </div>
+                <div class="space-y-6">
+                    <x-lareon::editor.input type="tel" dir="ltr" :value="old('phone')" :label="__('phone')" name="phone" :placeholder="__('lareon::global.placeholder.write.unique_two',['attribute'=>__('phone') , 'item'=>__('user')])" :required="true"/>
+                    <x-lareon::editor.input type="email" dir="ltr" :value="old('email')" :label="__('email')" name="email" :placeholder="__('lareon::global.placeholder.write.unique_two',['attribute'=>__('email') , 'item'=>__('user') ])" :required="true"/>
+                </div>
 
                 <div class="">
-                    <x-lareon::editor.password :value="old('password')" :label="__('password')" :confirm_label="__('confirm password')" name="password" :placeholder="__('write a :title for :item',['title'=>__('name') , 'item'=>__('user')])" :required="true" wrapperClass="grid gap-6 lg:grid-cols-2"/>
+                    <x-lareon::editor.password :label="__('password')" :confirm_label="__('confirm password')" name="password" :placeholder="__('lareon::global.placeholder.write.password',['attribute'=>__('password')])" :required="true" wrapperClass="grid gap-6 lg:grid-cols-2"/>
                 </div>
-                </fieldset>
+            </fieldset>
 
             {{--
                 <x-lareon::sections.text :value="old('email')" type="email" :title="__('email')" name="email" :placeholder="__('write a unique :title' ,['title'=>__('email')])" :required="true"/>
