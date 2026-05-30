@@ -91,12 +91,13 @@ if (!function_exists('userCan')) {
      * @param string|array|null $permission
      * @return bool
      */
-    function userCan(string|array $permission=null):bool
+    function userCan(string|array|null $permission=null):bool
     {
         $user = Auth::user();
         if (is_null($user)) return false;
 
         $permissions = (array)$permission;
+        if (empty($permissions)) return true;
 
         return $user->canAny($permissions);
     }

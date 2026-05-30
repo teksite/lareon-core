@@ -10,7 +10,7 @@ class NewUserRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth()->check();
+        return userCan('admin.user.create');
     }
 
     /**
@@ -20,6 +20,7 @@ class NewUserRequest extends FormRequest
      */
     public function rules(): array
     {
+        dd(request()->all());
         return [
             //
         ];
