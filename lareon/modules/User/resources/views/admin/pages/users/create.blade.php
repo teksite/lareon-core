@@ -34,8 +34,8 @@
 
         <x-lareon::box type="y">
             <div class="space-y-6">
-                <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('no') , null] , [__('yes') ,1]]" :label="__('mark email as verified')" name="email_verified_at" inputsClass="flex items-center gap-1"/>
-                <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('no') , null] , [__('yes') ,1]]" :label="__('mark phone as verified')" name="phone_verified_at" inputsClass="flex items-center gap-1"/>
+                <x-lareon::editor.input-check type="inline" :required="true" :options="[[__('yes') ,1]]" :label="__('mark email as verified')" name="send_email_notification" inputsClass="flex items-center gap-1"/>
+                <x-lareon::editor.input-check type="inline" :required="true" :options="[[__('yes') ,1]]" :label="__('mark phone as verified')" name="send_phone_notification" inputsClass="flex items-center gap-1"/>
             </div>
         </x-lareon::box>
     @endsection

@@ -24,7 +24,7 @@
       in_array($style_type ,['inline' , 'inline_start']) => 'flex items-center gap-2',
       default=>null
     };
-    $consideredValue= $old ? old($dotName , $value) : $checked;
+    $consideredValue= (array)($old ? old($dotName , $value) : $value);
 
 @endphp
 
@@ -33,15 +33,16 @@
         <x-lareon::inputs.label :title="$label" class="mb-1" :markAsRequire="$required"/>
     @endif
     <ul class="{{$inputWrapperClass}}">
+        @foreach($options as $option)
             @php
-                $id=$dotName.'_'.$loop->index;
+                $id=$dotName.'_'.$loop->index.'_check';
                 $label = $option['label'] ?? $option[0] ?? '-';
                 $val = $option['value'] ?? $option[1] ?? null;
                 $disabled = $option['disabled'] ?? $option[2] ?? false;
             @endphp
             <li class="{{$inputWrapperClass}}">
                 <x-lareon::inputs.label :title="$label" :for="$id"/>
-                <x-lareon::inputs.checkbox id="{{$id}}" name="{{$name}}" :value="$value" :disabled="$disabled" :checked="$val === $consideredValue"/>
+                <x-lareon::inputs.checkbox id="{{$id}}" name="{{$name}}" :value="$value" :disabled="$disabled" :checked="in_array($val , $consideredValue)"/>
             </li>
         @endforeach
     </ul>
