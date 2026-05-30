@@ -1,4 +1,5 @@
 <?php
+
 namespace Lareon\Modules\User\App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -21,6 +22,15 @@ class NewUserRequest extends FormRequest
      */
     public function rules(): array
     {
-        return User::rules('create');
+        return array_merge(
+            User::rules('create'),
+            [
+                'email_verified_at' => 'sometimes',
+                'phone_verified_at' => 'sometimes',
+            ], [
+                'send_email_notification' => 'sometimes',
+                'send_phone_notification' => 'sometimes',
+            ]
+        );
     }
 }

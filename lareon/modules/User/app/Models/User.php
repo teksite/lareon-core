@@ -40,7 +40,7 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
 
-    public function rules(string $operation, int|null $userId = null): array
+    public static function rules(string $operation, int|null $userId = null): array
     {
         return match (true) {
             $operation === 'create'=> [

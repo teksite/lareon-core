@@ -23,7 +23,7 @@ class UserLogic
     public function all(mixed $fetchData = []): ServiceResult
     {
         return ServiceWrapper::make(false)
-                             ->do(fn() => FetchDataService::get(User::class, ['name' ,'lastname', 'email', 'phone']))
+                             ->do(fn() => FetchDataService::get(User::class, ['name', 'lastname', 'email', 'phone']))
                              ->run();
     }
 
@@ -31,7 +31,7 @@ class UserLogic
      * @throws BindingResolutionException
      * @throws \Throwable
      */
-    public function first(array $inputs = [] , bool $any = true)
+    public function first(array $inputs = [], bool $any = true)
     {
         return ServiceWrapper::make(false)->do(function () use ($inputs) {
             $query = User::query();
@@ -46,9 +46,9 @@ class UserLogic
      */
     public function create(array $inputs = [])
     {
-        dd($inputs);
         return ServiceWrapper::make(true)->do(function () use ($inputs) {
-            $inputs['slug'] ??= strtolower(uniqid() . '-' .Str::random(4));
+            $inputs['slug'] ??= strtolower(uniqid() . '-' . Str::random(4));
+            $inputs['parent_id'] =auth()->id();
             $user = User::create($inputs);
             $rolesIds = $this->assignRole($user, config('general.default_user_role', 'user'));
             return $user;
@@ -74,6 +74,34 @@ class UserLogic
         return ServiceWrapper::make(false)->do(function () use ($user) {
             $user->roles()->detach();
             $user->delete();
+        })->run();
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    public function markAsVerified(User $user, null|bool $email = false, null|bool $phone = false)
+    {
+        return ServiceWrapper::make(false)->do(function () use ($phone, $email, $user) {
+            $res = [];
+            if (!is_null($email)) {
+                if ($user->hasVerifiedEmail() && $email === false) {
+                    $res['email_verified_at'] = null;
+                } elseif (!$user->hasVerifiedEmail() && $email === true) {
+                    $res['email_verified_at'] = now();
+                }
+            }
+            if (!is_null($phone)) {
+                if ($user->hasVerifiedPhone() && $phone === false) {
+                    $res['phone_verified_at'] = null;
+                } elseif (!$user->hasVerifiedPhone() && $phone === true) {
+                    $res['phone_verified_at'] = now();
+                }
+            }
+            if (empty($res)) return $res;
+            $user->forceFill($res)->save();
+
+            return $user->refresh();
         })->run();
     }
 

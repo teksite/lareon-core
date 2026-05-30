@@ -14,7 +14,7 @@ use Lareon\Steward\App\Http\Controllers\Controller;
 use Teksite\Handler\Facade\Responder;
 
 
-class UsersController extends Controller /*implements HasMiddleware*/
+class UsersController extends Controller implements HasMiddleware
 {
 
     public function __construct(public UserLogic $logic)
@@ -59,8 +59,9 @@ class UsersController extends Controller /*implements HasMiddleware*/
         $res = $this->logic->create($request->validated());
 
         if ($res->success) {
-            event(new UserCrudEvent($res->result, 'create'), $request->validated());
-            return Responder::success(trans('lareon::global.created_successfully' ,['attribute' => __('user')]));
+            $this->logic->markAsVerified($res->result, $request->validated('email_verified_at') , $request->validated('phone_verified_at'));
+            event(new UserCrudEvent($res->result, 'create' ,$request->validated()));
+            return Responder::success(trans('lareon::global.created_successfully' ,['attribute' => __('user')]))->route(route('admin.users.edit'))->go();
         }
         return Responder::failed(trans('lareon::global.created_failed' ,['attribute' => __('user')]));
 
@@ -71,8 +72,7 @@ class UsersController extends Controller /*implements HasMiddleware*/
      */
     public function show(User $user)
     {
-       if ($user->path()) redirect()->to($user->path());
-
+       if ($user->path()) return redirect()->to($user->path());
         abort(404);
     }
 
