@@ -17,5 +17,8 @@
     "yes": "بله",
     "no": "خیر",
     "mark email as verified": "ایمیل را به عنوان تایید شده علامت گذاری کنید",
-    "mark phone as verified":"تلفن را به عنوان تایید شده علامت گذاری کنید"
+    "mark phone as verified":"تلفن را به عنوان تایید شده علامت گذاری کنید",
+    "authentication": "اهراز هویت",
+    "verification": "تاییدیه",
+    "verifications": "تاییدیه‌ها"
 }

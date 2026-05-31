@@ -2,6 +2,7 @@
 namespace Lareon\Modules\User\App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Lareon\Modules\User\App\Models\User;
 
 class UpdateUserRequest extends FormRequest
 {
@@ -10,7 +11,7 @@ class UpdateUserRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return userCan('admin.user.create');
     }
 
     /**
@@ -20,8 +21,15 @@ class UpdateUserRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
-        ];
+        return array_merge(
+            User::rules('update' , $this->user->id),
+            [
+                'email_verified_at' => 'sometimes',
+                'phone_verified_at' => 'sometimes',
+            ], [
+                'send_email_notification' => 'sometimes|in:-1,0,1',
+                'send_phone_notification' => 'sometimes|in:-1,0,1',
+            ]
+        );
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Lareon\Modules\User\App\Logics;
 
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Model;
@@ -58,10 +59,11 @@ class UserLogic
     /**
      * @throws \Throwable
      */
-    public function update(User $user, array $inputs = [])
+    public function update(Authenticatable|User $user, array $inputs = [])
     {
         return ServiceWrapper::make(false)->do(function () use ($user, $inputs) {
-            User::update(Arr::except($inputs, ['permissions', 'roles']));
+            $inputs = array_filter($inputs);
+            $user->update(Arr::except($inputs, ['permissions', 'roles']));
             return $user->refresh();
         })->run();
     }
@@ -69,7 +71,7 @@ class UserLogic
     /**
      * @throws \Throwable
      */
-    public function delete(User $user)
+    public function delete(Authenticatable|User $user)
     {
         return ServiceWrapper::make(false)->do(function () use ($user) {
             $user->roles()->detach();
@@ -80,7 +82,7 @@ class UserLogic
     /**
      * @throws \Throwable
      */
-    public function markAsVerified(User $user, int|null|bool $email = -1,int|null|bool $phone = -1)
+    public function markAsVerified(Authenticatable|User $user, int|null|bool $email = -1,int|null|bool $phone = -1)
     {
         return ServiceWrapper::make(false)->do(function () use ($phone, $email, $user) {
             $cols = [
@@ -107,7 +109,7 @@ class UserLogic
     /**
      * @throws \Throwable
      */
-    public function assignRole(User $user, string|int|Role $inputs, string $action = 'creating')
+    public function assignRole(Authenticatable|User $user, string|int|Role $inputs, string $action = 'creating')
     {
         return ServiceWrapper::make(false)->do(function () use ($inputs, $action, $user) {
             $roleArray = $user->assignRole($inputs);

@@ -54,7 +54,7 @@ class User extends Authenticatable implements MustVerifyEmail
             ($operation === 'update' && $userId) => [
                 'name'     => 'required|string|max:255',
                 'lastname' => 'required|string|max:255',
-                'password' => 'nullable|string|min:6',
+                'password' => 'nullable|string|min:6|confirmed',
                 'phone'    => ['required', 'string', new MobileRule(MobilePatterns::IRAN), Rule::unique('users', 'phone')->ignore($userId)],
                 'email'    => ['required', 'string', 'email', Rule::unique('users', 'email')->ignore($userId)],
             ],

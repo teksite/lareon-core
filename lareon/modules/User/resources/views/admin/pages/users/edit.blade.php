@@ -1,4 +1,4 @@
-<x-lareon::admin-editor type="update" :instance="$user" :acttion="route('admin.users.edit' ,$user)">
+<x-lareon::admin-editor type="update" method="patch" :instance="$user" :action="route('admin.users.update', $user)">
     @section('title', __('lareon::global.crud.titles.edit',['attribute'=>__('user')]) . "($user->fullname)")
     @section('header.start')
         <x-lareon::links.nav :href="route('admin.users.index')" :content="__('lareon::global.buttons.all_attribute' ,['attribute'=>__('users')])" color="index"/>
@@ -20,11 +20,11 @@
                 </div>
             </x-lareon::editor.tabs.item>
 
-            <x-lareon::editor.tabs.item :title="__('verification')">
+            <x-lareon::editor.tabs.item :title="__('verifications')">
                 <div class="grid gap-6 md:grid-cols-2">
                     <div>
-                        <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('ignore') ,-1 ] ,[__('no') ,0] , [__('yes') ,1]]" :label="__('mark email as verified')" name="email_verified_at" inputsClass="flex items-center gap-1" :checked="-1"/>
-                        <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('ignore') ,-1 ] ,[__('no') ,0] , [__('yes') ,1]]" :label="__('mark phone as verified')" name="phone_verified_at" inputsClass="flex items-center gap-1" :checked="-1"/>
+                        <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('ignore') ,-1 ] ,[__('no') ,0] , [__('yes') ,1]]" :label="__('mark email as verified')" name="email_verified_at" inputsClass="flex items-center gap-1" :value="-1"/>
+                        <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('ignore') ,-1 ] ,[__('no') ,0] , [__('yes') ,1]]" :label="__('mark phone as verified')" name="phone_verified_at" inputsClass="flex items-center gap-1" :value="-1"/>
                     </div>
                     <div class="">
                         <table class="w-full">
@@ -54,7 +54,7 @@
             <x-lareon::editor.tabs.item :title="__('authentication')">
                 <div class="grid gap-6 md:grid-cols-2">
                     <div class="">
-                        <x-lareon::editor.password :label="__('password')" :confirm_label="__('confirm password')" name="password" :placeholder="__('lareon::global.placeholders.write.auth.password',['attribute'=>__('password')])" :required="true" wrapperClass="grid gap-6 lg:grid-cols-2"/>
+                        <x-lareon::editor.password :label="__('password')" :confirm_label="__('confirm password')" name="password" :placeholder="__('lareon::global.placeholders.write.auth.password',['attribute'=>__('password')])" wrapperClass="grid gap-6 lg:grid-cols-2"/>
                     </div>
                 </div>
             </x-lareon::editor.tabs.item>
