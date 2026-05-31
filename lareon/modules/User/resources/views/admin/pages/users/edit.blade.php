@@ -23,8 +23,8 @@
             <x-lareon::editor.tabs.item :title="__('verification')">
                 <div class="grid gap-6 md:grid-cols-2">
                     <div>
-                        <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('ignore') , ] ,[__('no') , null] , [__('yes') ,1]]" :label="__('mark email as verified')" name="email_verified_at" inputsClass="flex items-center gap-1"/>
-                        <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('ignore') , ] ,[__('no') , null] , [__('yes') ,1]]" :label="__('mark phone as verified')" name="phone_verified_at" inputsClass="flex items-center gap-1"/>
+                        <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('ignore') ,-1 ] ,[__('no') ,0] , [__('yes') ,1]]" :label="__('mark email as verified')" name="email_verified_at" inputsClass="flex items-center gap-1" :checked="-1"/>
+                        <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('ignore') ,-1 ] ,[__('no') ,0] , [__('yes') ,1]]" :label="__('mark phone as verified')" name="phone_verified_at" inputsClass="flex items-center gap-1" :checked="-1"/>
                     </div>
                     <div class="">
                         <table class="w-full">

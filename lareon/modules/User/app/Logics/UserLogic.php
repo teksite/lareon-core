@@ -80,20 +80,20 @@ class UserLogic
     /**
      * @throws \Throwable
      */
-    public function markAsVerified(User $user, null|bool $email = false, null|bool $phone = false)
+    public function markAsVerified(User $user, int|null|bool $email = -1,int|null|bool $phone = -1)
     {
         return ServiceWrapper::make(false)->do(function () use ($phone, $email, $user) {
             $cols = [
-                ['column' => 'email_verified_at', 'value' => $email],
-                ['column' => 'phone_verified_at', 'value' => $phone],
+                ['field' =>'email' ,'column' => 'email_verified_at', 'value' => $email],
+                ['field' =>'phone' ,'column' => 'phone_verified_at', 'value' => $phone],
             ];
             $res = [];
-            foreach ($cols as ['column' => $column, 'value' => $value]) {
-                if (is_null($value)) continue;
+            foreach ($cols as ['field' => $field, 'column' => $column, 'value' => $value]) {
+                if (is_null($value) || $value === -1) continue;
 
-                if ($user->$column !== null && $email === 0) {
+                if ($user->$column !== null && ($value === 0 || $value === false)) {
                     $res[$column] = null;
-                } elseif ($user->$column === null && $email === 1) {
+                } elseif ($user->$column === null && ($value === 1 || $value === true)) {
                     $res[$column] = now();
                 }
             }
