@@ -15,24 +15,17 @@
                     <x-lareon::editor.input :required="true" type="tel" dir="ltr" :value="$user->phone" :label="__('phone')" name="phone" :placeholder="__('lareon::global.placeholders.write.unique.two',['attribute'=>__('phone') , 'item'=>__('user')])"/>
                     <x-lareon::editor.input :required="true" type="email" dir="ltr" :value="$user->email" :label="__('email')" name="email" :placeholder="__('lareon::global.placeholders.write.unique.two',['attribute'=>__('email') , 'item'=>__('user') ])"/>
                 </div>
-                <div class="">
-                    <x-lareon::editor.password :label="__('password')" :confirm_label="__('confirm password')" name="password" :placeholder="__('lareon::global.placeholders.write.auth.password',['attribute'=>__('password')])" :required="true" wrapperClass="grid gap-6 lg:grid-cols-2"/>
-                </div>
             </x-lareon::editor.tabs.item>
 
             <x-lareon::editor.tabs.item :title="__('verification')">
                 <div class="grid gap-6 md:grid-cols-2">
                     <div>
-                        @if(!$user->hasVerifiedPhone())
-                            <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('no') , null] , [__('yes') ,1]]" :label="__('mark email as verified')" name="email_verified_at" inputsClass="flex items-center gap-1"/>
-                        @endif
-                        @if(!$user->hasVerifiedEmail())
-                            <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('no') , null] , [__('yes') ,1]]" :label="__('mark phone as verified')" name="phone_verified_at" inputsClass="flex items-center gap-1"/>
-                        @endif
+                        <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('ignore') , ] ,[__('no') , null] , [__('yes') ,1]]" :label="__('mark email as verified')" name="email_verified_at" inputsClass="flex items-center gap-1"/>
+                        <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('ignore') , ] ,[__('no') , null] , [__('yes') ,1]]" :label="__('mark phone as verified')" name="phone_verified_at" inputsClass="flex items-center gap-1"/>
                     </div>
                     <div class="">
-                        <table class="bordering">
-                            <tbody>
+                        <table class="w-full" >
+                            <tbody class="divide-y divide-line_light bg-slate-50 *:hover:bg-blue-50">
                             <tr>
                                 <td class="px-3 py-2 font-bold">
                                     {{__('phone verified at')}}
@@ -51,6 +44,14 @@
                             </tr>
                             </tbody>
                         </table>
+                    </div>
+                </div>
+            </x-lareon::editor.tabs.item>
+
+            <x-lareon::editor.tabs.item :title="__('authentication')">
+                <div class="grid gap-6 md:grid-cols-2">
+                    <div class="">
+                        <x-lareon::editor.password :label="__('password')" :confirm_label="__('confirm password')" name="password" :placeholder="__('lareon::global.placeholders.write.auth.password',['attribute'=>__('password')])" :required="true" wrapperClass="grid gap-6 lg:grid-cols-2"/>
                     </div>
                 </div>
             </x-lareon::editor.tabs.item>

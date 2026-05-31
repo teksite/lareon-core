@@ -26,8 +26,8 @@
         <x-lareon::box type="y">
             <fieldset class="fieldset space-y-6">
                 <legend class="legend">{{__('verification')}}</legend>
-                <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('no') , null] , [__('yes') ,1]]" :label="__('mark email as verified')" name="email_verified_at" inputsClass="flex items-center gap-1"/>
-                <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('no') , null] , [__('yes') ,1]]" :label="__('mark phone as verified')" name="phone_verified_at" inputsClass="flex items-center gap-1"/>
+                <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('no') , 0] , [__('yes') ,1]]" :label="__('mark email as verified')" name="email_verified_at" inputsClass="flex items-center gap-1"/>
+                <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('no') , 0] , [__('yes') ,1]]" :label="__('mark phone as verified')" name="phone_verified_at" inputsClass="flex items-center gap-1"/>
 
             </fieldset>
         </x-lareon::box>

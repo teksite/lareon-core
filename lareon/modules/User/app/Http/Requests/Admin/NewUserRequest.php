@@ -28,8 +28,8 @@ class NewUserRequest extends FormRequest
                 'email_verified_at' => 'sometimes',
                 'phone_verified_at' => 'sometimes',
             ], [
-                'send_email_notification' => 'sometimes',
-                'send_phone_notification' => 'sometimes',
+                'send_email_notification' => 'sometimes|boolean:1,0',
+                'send_phone_notification' => 'sometimes|boolean:1,0',
             ]
         );
     }

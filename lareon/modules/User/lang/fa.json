@@ -9,5 +9,7 @@
     "send notification via email": "ارسال اعلان با ایمیل",
     "send notification via phone":"ارسال اعلان با تلفن",
     "send notification": "ارسال اعلان",
-    "verification": "تایید "
+    "verification": "تایید ",
+    "phone verified at": "زمان تایید شدن تلفن",
+    "email verified at": "زمان تایید شدن ایمیل"
 }

@@ -48,7 +48,7 @@ class UserLogic
     {
         return ServiceWrapper::make(true)->do(function () use ($inputs) {
             $inputs['slug'] ??= strtolower(uniqid() . '-' . Str::random(4));
-            $inputs['parent_id'] =auth()->id();
+            $inputs['parent_id'] = auth()->id();
             $user = User::create($inputs);
             $rolesIds = $this->assignRole($user, config('general.default_user_role', 'user'));
             return $user;
@@ -83,25 +83,24 @@ class UserLogic
     public function markAsVerified(User $user, null|bool $email = false, null|bool $phone = false)
     {
         return ServiceWrapper::make(false)->do(function () use ($phone, $email, $user) {
+            $cols = [
+                ['column' => 'email_verified_at', 'value' => $email],
+                ['column' => 'phone_verified_at', 'value' => $phone],
+            ];
             $res = [];
-            if (!is_null($email)) {
-                if ($user->hasVerifiedEmail() && $email === false) {
-                    $res['email_verified_at'] = null;
-                } elseif (!$user->hasVerifiedEmail() && $email === true) {
-                    $res['email_verified_at'] = now();
-                }
-            }
-            if (!is_null($phone)) {
-                if ($user->hasVerifiedPhone() && $phone === false) {
-                    $res['phone_verified_at'] = null;
-                } elseif (!$user->hasVerifiedPhone() && $phone === true) {
-                    $res['phone_verified_at'] = now();
+            foreach ($cols as ['column' => $column, 'value' => $value]) {
+                if (is_null($value)) continue;
+
+                if ($user->$column !== null && $email === 0) {
+                    $res[$column] = null;
+                } elseif ($user->$column === null && $email === 1) {
+                    $res[$column] = now();
                 }
             }
             if (empty($res)) return $res;
             $user->forceFill($res)->save();
 
-            return $user->refresh();
+            return $res;
         })->run();
     }
 
