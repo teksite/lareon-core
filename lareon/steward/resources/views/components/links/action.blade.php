@@ -14,7 +14,7 @@
     $configs = [
         'show' => [
             'icon' => 'eye',
-            'color' => 'text-blue-600 hover:bg-blue-50',
+            'color' => 'text-violet-600 hover:bg-violet-50',
             'title' => trans('show'),
             'target' => '_blank',
         ],

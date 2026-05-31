@@ -44,6 +44,10 @@
             'solid' => 'shadow-lg shadow-gray-900/50 bg-gray-900 hover:bg-gray-900 active:bg-gray-950 text-white hover:shadow-sm focus:ring-2 focus:ring-gray-700 focus:ring-offset-2',
             'outline' => 'border-2 border-gray-900 text-gray-900 hover:bg-gray-50 active:bg-gray-100 focus:ring-2 focus:ring-gray-700 focus:ring-offset-2',
         ],
+        'violet' => [
+            'solid' => 'shadow-lg shadow-violet-900/50 bg-violet-900 hover:bg-violet-900 active:bg-violet-950 text-white hover:shadow-sm focus:ring-2 focus:ring-violet-700 focus:ring-offset-2',
+            'outline' => 'border-2 border-violet-900 text-violet-900 hover:bg-violet-50 active:bg-violet-100 focus:ring-2 focus:ring-violet-700 focus:ring-offset-2',
+        ],
     ];
 
     $roundedClasses = [

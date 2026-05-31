@@ -42,7 +42,7 @@
             @endphp
             <li class="{{$inputWrapperClass}}">
                 <x-lareon::inputs.label :title="$label" :for="$id"/>
-                <x-lareon::inputs.radio id="{{$id}}" name="{{$name}}" :value="$val" :disabled="$disabled" :checked="$val === $consideredValue"/>
+                <x-lareon::inputs.radio id="{{$id}}" name="{{$name}}" value="{{$val}}" :disabled="$disabled" :checked="$val === $consideredValue"/>
             </li>
         @endforeach
    </ul>

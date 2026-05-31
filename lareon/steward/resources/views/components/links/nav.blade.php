@@ -1,6 +1,4 @@
 @props(['size' => 'xs','variant' => 'solid','color' => 'blue','disabled' => false,'fullWidth' => true,'rounded' => 'xl' ,'href' => null,'target' => '_self', 'content'=>null , 'can'=>[null]])
-
-
 @php
 
     $convertedColor = match ($color){
@@ -8,6 +6,7 @@
       'create'=>  'green',
       'update'=>  'blue',
       'delete'=>  'red',
+      'show'=>  'violet',
       default =>'gray'
     };
 

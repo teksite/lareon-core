@@ -47,7 +47,7 @@ class User extends Authenticatable implements MustVerifyEmail
                 'name'     => 'required|string|max:255',
                 'lastname' => 'required|string|max:255',
                 'password' => 'required|string|min:6|confirmed',
-                'phone'    => ['required', 'string', new MobileRule(MobilePatterns::IRAN)],
+                'phone'    => ['required','unique:users', 'string', new MobileRule(MobilePatterns::IRAN)],
                 'email'    => 'required|string|email|max:255|unique:users',
 
             ],
