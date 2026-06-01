@@ -44,9 +44,7 @@ return [
             'list'   => ':attribute List',
             'delete' => 'Delete :attribute',
             'update' => 'Update :attribute',
-
-            'all_attribute'  => 'all :attribute',
-            'list_attribute' => ':attribute list',
+            'create_item' => 'create new item',
         ],
 
         // Actions

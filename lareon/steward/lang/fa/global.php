@@ -37,14 +37,14 @@ return [
 
         // عنوان‌ها
         'titles'  => [
-            'all'    => 'همه :attribute',
-            'create' => 'ایجاد :attribute جدید',
-            'edit'   => 'ویرایش :attribute',
-            'show'   => 'نمایش :attribute',
-            'list'   => 'لیست :attribute',
-            'delete' => 'حذف :attribute',
-            'update' => 'به‌روزرسانی :attribute',
-
+            'all'         => 'همه :attribute',
+            'create'      => 'ایجاد :attribute جدید',
+            'edit'        => 'ویرایش :attribute',
+            'show'        => 'نمایش :attribute',
+            'list'        => 'لیست :attribute',
+            'delete'      => 'حذف :attribute',
+            'update'      => 'به‌روزرسانی :attribute',
+            'create_item' => 'ایجاد مورد جدید',
         ],
 
         // اقدامات

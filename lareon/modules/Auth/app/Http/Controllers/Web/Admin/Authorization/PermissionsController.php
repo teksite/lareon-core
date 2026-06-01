@@ -3,9 +3,10 @@
 namespace Lareon\Modules\Auth\App\Http\Controllers\Web\Admin\Authorization;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
-use Illuminate\Support\Facades\Gate;
+use Lareon\Modules\Auth\App\Events\PermissionCrudEvent;
 use Lareon\Modules\Auth\App\Http\Requests\Admin\NewPermissionRequest;
 use Lareon\Modules\Auth\App\Http\Requests\Admin\UpdatePermissionRequest;
 use Lareon\Modules\Auth\App\Logics\PermissionLogic;
@@ -15,9 +16,8 @@ use Teksite\Handler\Facade\Responder;
 
 class PermissionsController extends Controller implements HasMiddleware
 {
-    public function __construct(public PermissionLogic $logic)
-    {
-    }
+
+    public function __construct(public PermissionLogic $logic) {}
 
     public static function middleware()
     {
@@ -31,14 +31,14 @@ class PermissionsController extends Controller implements HasMiddleware
 
     /**
      * Display a listing of the resource.
+     *
      * @throws \Throwable
      */
     public function index()
     {
         $res = $this->logic->all();
         $permissions = $res->result;
-
-        return view('lareon::admin.pages.authorization.permissions.index', compact('permissions'));
+        return view('auth::admin.pages.permissions.index-create', compact('permissions'));
     }
 
     /**
@@ -46,22 +46,24 @@ class PermissionsController extends Controller implements HasMiddleware
      */
     public function create()
     {
-        return view('lareon::admin.pages.authorization.permissions.create');
+        return redirect()->action([self::class, 'index']);
     }
 
     /**
      * Store a newly created resource in storage.
+     *
      * @throws \Throwable
      */
     public function store(NewPermissionRequest $request)
     {
-        $result = $this->logic->create($request->validated());
-        return Responder::fromResult($result,
-            trans('lareon::global.created_successfully', ['attribute' => __('permission')]),
-            trans('lareon::global.created_failed'),
-            route('admin.authorize.permissions.index'),
-            back())
-                        ->go();
+        $res = $this->logic->create($request->validated());
+
+        if ($res->success) {
+            event(new PermissionCrudEvent($res->result, 'create', $request->validated()));
+            return Responder::success(trans('lareon::global.created_successfully', ['attribute' => __('permission')]))->route('admin.permissions.index', $res->result)->go();
+        }
+        return Responder::failed(trans('lareon::global.created_failed', ['attribute' => __('permission')]));
+
     }
 
     /**
@@ -77,40 +79,38 @@ class PermissionsController extends Controller implements HasMiddleware
      */
     public function edit(Permission $permission)
     {
-        return view('lareon::admin.pages.authorization.permissions.edit', compact('permission'));
+        return view('auth::admin.pages.permissions.edit', compact('permission'));
     }
 
     /**
      * Update the specified resource in storage.
+     *
      * @throws \Throwable
      */
     public function update(UpdatePermissionRequest $request, Permission $permission)
     {
         $res = $this->logic->update($permission, $request->validated());
 
-        return Responder::fromResult($res,
-            trans('lareon::global.update_successfully', ['attribute' => __('permission')]),
-            trans('lareon::global.update_failed'),
-            route('admin.authorize.permissions.edit'),
-            back())
-                        ->go();
+        if ($res->success) {
+            event(new PermissionCrudEvent($permission, 'update', $request->validated()));
+            return Responder::success(trans('lareon::global.updated_successfully', ['attribute' => __('permission')]))->go();
+        }
+        return Responder::failed(trans('lareon::global.updated_failed', ['attribute' => __('permission')]))->go();
+
     }
 
     /**
      * Remove the specified resource from storage.
+     *
      * @throws \Throwable
      */
     public function destroy(Permission $permission)
     {
         $res = $this->logic->delete($permission);
 
-        return Responder::fromResult($res,
-            trans('lareon::global.deleted_successfully', ['attribute' => __('permission')]),
-            trans('lareon::global.deleted_failed'),
-            route('admin.authorize.permissions.index'),
-            back())
-                        ->go();
+        if ($res->success) {
+            return Responder::success(trans('lareon::global.delete_successfully', ['attribute' => __('permission')]));
+        }
+        return Responder::failed(trans('lareon::global.delete_failed', ['attribute' => __('permission')]));
     }
-
-
 }
