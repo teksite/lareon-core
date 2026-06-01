@@ -11,6 +11,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Lareon\Modules\User\App\Models\User;
+use Lareon\Steward\App\Enums\CrudTypeEnum;
 
 class UserCrudEvent
 {
@@ -19,7 +20,7 @@ class UserCrudEvent
     /**
      * Create a new event instance.
      */
-    public function __construct(public User|Authenticatable $user, public string $operation, public array $data = [])
+    public function __construct(public User|Authenticatable $user, public CrudTypeEnum $operation, public array $data = [])
     {
         //
     }

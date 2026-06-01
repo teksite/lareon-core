@@ -11,6 +11,7 @@ use Lareon\Modules\Auth\App\Http\Requests\Admin\NewPermissionRequest;
 use Lareon\Modules\Auth\App\Http\Requests\Admin\UpdatePermissionRequest;
 use Lareon\Modules\Auth\App\Logics\PermissionLogic;
 use Lareon\Modules\Auth\App\Http\Controllers\Controller;
+use Lareon\Steward\App\Enums\CrudTypeEnum;
 use Teksite\Authorize\Models\Permission;
 use Teksite\Handler\Facade\Responder;
 
@@ -59,7 +60,7 @@ class PermissionsController extends Controller implements HasMiddleware
         $res = $this->logic->create($request->validated());
 
         if ($res->success) {
-            event(new PermissionCrudEvent($res->result, 'create', $request->validated()));
+            event(new PermissionCrudEvent($res->result, CrudTypeEnum::CREATE, $request->validated()));
             return Responder::success(trans('lareon::global.created_successfully', ['attribute' => __('permission')]))->go();
         }
         return Responder::failed(trans('lareon::global.created_failed', ['attribute' => __('permission')]));
@@ -92,7 +93,7 @@ class PermissionsController extends Controller implements HasMiddleware
         $res = $this->logic->update($permission, $request->validated());
 
         if ($res->success) {
-            event(new PermissionCrudEvent($permission, 'update', $request->validated()));
+            event(new PermissionCrudEvent($permission, CrudTypeEnum::UPDATE, $request->validated()));
             return Responder::success(trans('lareon::global.updated_successfully', ['attribute' => __('permission')]))->go();
         }
         return Responder::failed(trans('lareon::global.updated_failed', ['attribute' => __('permission')]))->go();
@@ -109,6 +110,7 @@ class PermissionsController extends Controller implements HasMiddleware
         $res = $this->logic->delete($permission);
 
         if ($res->success) {
+            event(new PermissionCrudEvent($permission, CrudTypeEnum::DELETE));
             return Responder::success(trans('lareon::global.delete_successfully', ['attribute' => __('permission')]))->route('admin.authorize.permissions.index')->go();
         }
         return Responder::failed(trans('lareon::global.delete_failed', ['attribute' => __('permission')]))->go();

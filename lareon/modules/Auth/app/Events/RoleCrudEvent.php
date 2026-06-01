@@ -11,16 +11,16 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Lareon\Steward\App\Enums\CrudTypeEnum;
-use Teksite\Authorize\Models\Permission;
+use Teksite\Authorize\Models\Role;
 
-class PermissionCrudEvent
+class RoleCrudEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
      * Create a new event instance.
      */
-    public function __construct(public Permission $permission, public CrudTypeEnum $operation, public array $data = [])
+    public function __construct(public Role $role, public CrudTypeEnum $operation, public array $data = [])
     {
         //
     }

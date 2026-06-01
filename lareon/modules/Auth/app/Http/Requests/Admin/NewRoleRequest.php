@@ -1,7 +1,9 @@
 <?php
+
 namespace Lareon\Modules\Auth\App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Teksite\Authorize\Models\Role;
 
 class NewRoleRequest extends FormRequest
 {
@@ -10,7 +12,7 @@ class NewRoleRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return userCan('admin.role.create');
     }
 
     /**
@@ -20,8 +22,7 @@ class NewRoleRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
-        ];
+        return Role::rules('create');
+
     }
 }
