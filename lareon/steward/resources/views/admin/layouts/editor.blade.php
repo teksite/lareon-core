@@ -77,8 +77,8 @@
                                     @yield('form')
 
                                     @if($publishStatus && !$isDeleteMode)
-                                        <x-lareon::editor.tabs.item :title="__('basic data')">
-                                            <x-lareon::editor.status-publish :instance="$instance" :is-create-mode="$isCreateMode"/>
+                                        <x-lareon::editor.tabs.item :title="__('publish data')">
+                                            <x-lareon::editor.publish-data :instance="$instance"/>
                                         </x-lareon::editor.tabs.item>
                                     @endif
                                 </x-lareon::editor.tabs.layout>
@@ -97,7 +97,7 @@
                         @yield('aside')
                     @endif
                     @if($publishStatus && !$isDeleteMode && !$hasTab)
-                        <x-lareon::editor.status-publish :instance="$instance" :is-create-mode="$isCreateMode"/>
+                        <x-lareon::editor.publish-data :instance="$instance"/>
                     @endif
 
                     <div class="mt-6">

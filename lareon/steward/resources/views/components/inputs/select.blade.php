@@ -1,4 +1,4 @@
-@props(['selected'=>false, "disabled"=>false ,'required'=>false ,'multiple'=>false, $options =>[] ,'placeholder'=>null])
+@props(['selected'=>false, "disabled"=>false ,'required'=>false ,'multiple'=>false, 'options' =>[] ,'placeholder'=>null])
 @php
     $selectedValues = is_array($selected) ? $selected : (array)$selected;
 

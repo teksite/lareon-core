@@ -1,4 +1,4 @@
-<x-lareon::admin-editor :action="route('admin.users.store')">
+<x-lareon::admin-editor :action="route('admin.users.store')" :hasTab="false">
     @section('title', __('lareon::global.crud.titles.create',['attribute'=>__('user')]))
     @section('header.start')
         <x-lareon::links.nav :href="route('admin.users.index')" :content="__('lareon::global.buttons.all_attribute' ,['attribute'=>__('users')])" color="index"/>
@@ -21,14 +21,11 @@
                 </div>
             </fieldset>
         </x-lareon::box>
-    @endsection
-    @section('form.before.end')
         <x-lareon::box type="y">
             <fieldset class="fieldset space-y-6">
                 <legend class="legend">{{__('verification')}}</legend>
-                <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('no') , 0] , [__('yes') ,1]]" :label="__('mark email as verified')" name="email_verified_at" inputsClass="flex items-center gap-1"/>
-                <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('no') , 0] , [__('yes') ,1]]" :label="__('mark phone as verified')" name="phone_verified_at" inputsClass="flex items-center gap-1"/>
-
+                <x-lareon::editor.input-radio type="inline" :required="true" value="0" :options="[[__('no') , 0] , [__('yes') ,1]]" :label="__('mark email as verified')" name="email_verified_at" inputsClass="flex items-center gap-1"/>
+                <x-lareon::editor.input-radio type="inline" :required="true" value="0" :options="[[__('no') , 0] , [__('yes') ,1]]" :label="__('mark phone as verified')" name="phone_verified_at" inputsClass="flex items-center gap-1"/>
             </fieldset>
         </x-lareon::box>
 
