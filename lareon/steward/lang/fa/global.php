@@ -37,14 +37,15 @@ return [
 
         // عنوان‌ها
         'titles'  => [
-            'all'         => 'همه :attribute',
-            'create'      => 'ایجاد :attribute جدید',
-            'edit'        => 'ویرایش :attribute',
-            'show'        => 'نمایش :attribute',
-            'list'        => 'لیست :attribute',
-            'delete'      => 'حذف :attribute',
-            'update'      => 'به‌روزرسانی :attribute',
-            'create_item' => 'ایجاد مورد جدید',
+            'all'          => 'همه :attribute',
+            'create'       => 'ایجاد :attribute جدید',
+            'edit'         => 'ویرایش :attribute',
+            'edit_current' => 'ویرایش :attribute (:item)',
+            'show'         => 'نمایش :attribute',
+            'list'         => 'لیست :attribute',
+            'delete'       => 'حذف :attribute',
+            'update'       => 'به‌روزرسانی :attribute',
+            'create_item'  => 'ایجاد مورد جدید',
         ],
 
         // اقدامات

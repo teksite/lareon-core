@@ -5,6 +5,8 @@ namespace Lareon\Modules\Auth\App\Providers;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Lareon\Modules\Auth\App\Events\PermissionCrudEvent;
+use Lareon\Modules\Auth\App\Listeners\NewPermissionListener;
 
 class EventServiceProvider  extends ServiceProvider
 {
@@ -13,7 +15,11 @@ class EventServiceProvider  extends ServiceProvider
      *
      * @var array<string, array<int, string>>
      */
-    protected $listen = [];
+    protected $listen = [
+        PermissionCrudEvent::class => [
+            NewPermissionListener::class
+        ]
+    ];
 
 
     /**

@@ -46,7 +46,7 @@ class PermissionsController extends Controller implements HasMiddleware
      */
     public function create()
     {
-        return redirect()->action([self::class, 'index']);
+        return redirect()->action([self::class , 'index']);
     }
 
     /**
@@ -60,7 +60,7 @@ class PermissionsController extends Controller implements HasMiddleware
 
         if ($res->success) {
             event(new PermissionCrudEvent($res->result, 'create', $request->validated()));
-            return Responder::success(trans('lareon::global.created_successfully', ['attribute' => __('permission')]))->route('admin.permissions.index', $res->result)->go();
+            return Responder::success(trans('lareon::global.created_successfully', ['attribute' => __('permission')]))->go();
         }
         return Responder::failed(trans('lareon::global.created_failed', ['attribute' => __('permission')]));
 
@@ -109,8 +109,8 @@ class PermissionsController extends Controller implements HasMiddleware
         $res = $this->logic->delete($permission);
 
         if ($res->success) {
-            return Responder::success(trans('lareon::global.delete_successfully', ['attribute' => __('permission')]));
+            return Responder::success(trans('lareon::global.delete_successfully', ['attribute' => __('permission')]))->route('admin.authorize.permissions.index')->go();
         }
-        return Responder::failed(trans('lareon::global.delete_failed', ['attribute' => __('permission')]));
+        return Responder::failed(trans('lareon::global.delete_failed', ['attribute' => __('permission')]))->go();
     }
 }

@@ -40,6 +40,8 @@ return [
             'all'    => 'All :attribute',
             'create' => 'Create New :attribute',
             'edit'   => 'Edit :attribute',
+            'edit_current' => 'edit :attribute (:item)',
+
             'show'   => 'Show :attribute',
             'list'   => ':attribute List',
             'delete' => 'Delete :attribute',

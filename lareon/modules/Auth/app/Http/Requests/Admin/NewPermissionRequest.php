@@ -1,7 +1,9 @@
 <?php
+
 namespace Lareon\Modules\Auth\App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Teksite\Authorize\Models\Permission;
 
 class NewPermissionRequest extends FormRequest
 {
@@ -10,7 +12,7 @@ class NewPermissionRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return userCan('admin.permission.create');
     }
 
     /**
@@ -20,8 +22,6 @@ class NewPermissionRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
-        ];
+        return  Permission::rules('create');
     }
 }

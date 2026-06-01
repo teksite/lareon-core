@@ -20,11 +20,18 @@
     "authentication": "اهراز هویت",
     "verification": "تاییدیه",
     "verifications": "تاییدیه‌ها",
+
     "created at": "زمان ایجاد",
     "updated at": "زمان بروز رسانی",
     "deleted at": "زمان حذف",
     "published at": "زمان انتشار",
     "raed at": "زمان خوانده شدن",
     "seen at": "زمان مشاهده",
-    "publish data": "اطلاعات انتشار"
+    "publish data": "اطلاعات انتشار",
+    "title": "عنوان",
+    "description": "شرح",
+    "body": "بدنه",
+    "content": "محتوا",
+    "explanation": "توضیح",
+    "excerpt": "گزیده"
 }
