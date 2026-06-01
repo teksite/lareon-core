@@ -70,7 +70,11 @@
                 <div class="space-y-6">
                     @yield('form.before.start')
                     <div class="space-y-6">
-                        @yield('form')
+                        @hasSection('form')
+                            <x-lareon::editor.tabs.layout>
+                                @yield('form')
+                            </x-lareon::editor.tabs.layout>
+                        @endif
                     </div>
                     @yield('form.before.end')
                 </div>
@@ -86,7 +90,7 @@
                     @endif
 
                     <div class="mt-6">
-                        <x-lareon::buttons.nav :fullWidth="false" type="submit" role="submit" :color="$buttonColor" :icon="$buttonIcon" >
+                        <x-lareon::buttons.nav :fullWidth="false" type="submit" role="submit" :color="$buttonColor" :icon="$buttonIcon">
                             {{ __($buttonText)}}
                         </x-lareon::buttons.nav>
                     </div>

@@ -7,8 +7,9 @@
     @section('header.end')
         <x-lareon::links.action type="delete" :href="route('admin.users.destroy', $user)" method="delete" :label="trans('lareon::global.buttons.delete')" can="admin.user.delete"/>
     @endsection
+
     @section('form')
-        <x-lareon::editor.tabs.layout>
+
             <x-lareon::editor.tabs.item :title="__('basic data')">
                 <div class="grid gap-6 lg:grid-cols-2">
                     <x-lareon::editor.input :required="true" labelPosition="start" :label="__('first name')" name="name" :value="$user->name" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('name') , 'item'=>__('user')])"/>
@@ -64,6 +65,5 @@
 
             {{--TODO add 2FA and Passkey --}}
 
-        </x-lareon::editor.tabs.layout>
     @endsection
 </x-lareon::admin-editor>
