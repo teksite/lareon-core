@@ -47,8 +47,8 @@ class RolesController extends Controller implements HasMiddleware
      */
     public function create()
     {
-//        $permission=$this->permissionLogic->tree();
-        return view('auth::admin.pages.roles.create',);
+        $permission=$this->permissionLogic->tree();
+        return view('auth::admin.pages.roles.create',compact('permission'));
     }
 
     /**
