@@ -13,8 +13,8 @@
     'labelPosition' => 'top', // top, bottom, start, end, none
     'error' => null,
     'wrapperClass' => null,
-   'autocomplete'=>'false',
-   'placeholder'=>null
+    'autocomplete'=>'false',
+    'placeholder'=>null
 ])
 
 @php

@@ -13,14 +13,10 @@
                         <img src="{{asset('assets/images/avatar-default.jpg')}}" alt="{{$user->name}}" width="35" height="35" fetchpriority="low" decoding="async" loading="lazy">
                     </td>
                     <td>{{$user->fullname}}</td>
-                    <td >{{$user->phone}}</td>
-                    <td >{{$user->email}}</td>
-                    <td>
-                        <x-lareon::date :date="$user->created_at"/>
-                    </td>
-                    <td>
-                        {{$user->parent()?->fullname ?? '-'}}
-                    </td>
+                    <td>{{$user->phone}}</td>
+                    <td>{{$user->email}}</td>
+                    <td> <x-lareon::date :date="$user->created_at"/> </td>
+                    <td> {{$user->parent()?->fullname ?? '-'}} </td>
                     <td>
                         <x-lareon::action-box class="action">
                             @if(\Illuminate\Support\Facades\Route::has('admin.users.meta.edit'))
@@ -35,13 +31,13 @@
                     </td>
                 </tr>
             @endforeach
-                <x-slot:foot>
-                    <tr>
-                        <td  colspan="9" class="p-2">
-                            {!! $users->appends(request()->query())->links() !!}
-                        </td>
-                    </tr>
-                </x-slot:foot>
+            <x-slot:foot>
+                <tr>
+                    <td colspan="9" class="p-2">
+                        {!! $users->appends(request()->query())->links() !!}
+                    </td>
+                </tr>
+            </x-slot:foot>
         </x-lareon::table>
 
     @endsection

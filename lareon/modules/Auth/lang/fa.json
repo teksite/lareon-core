@@ -3,6 +3,7 @@
     "authorization": "مجوز",
     "accessibility": "دسترسی‌ها",
     "accessibilities": "دسترسی",
+    "each permission determines access to a specific section or feature in the application": "هر پرمیشن مشخص می‌کند که کاربر به کدام بخش یا قابلیت خاصی در اپلیکیشن دسترسی دارد",
     "permissions":"مجوز‌ها",
     "permission": "مجوز",
     "roles":"نقش‌ها",

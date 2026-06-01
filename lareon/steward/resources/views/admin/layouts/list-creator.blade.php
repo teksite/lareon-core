@@ -3,9 +3,13 @@
     <x-slot:title> @yield('title') </x-slot:title>
     <x-slot:description> @yield('description') </x-slot:description>
 
-    <x-slot:header.start> @yield('header.start') </x-slot:header.start>
+    @section('header.start')
+        @yield('header.start')
+    @endsection
 
-    <x-slot:header.end> @yield('header.end') </x-slot:header.end>
+    @section('header.end')
+        <x-lareon::search/>
+    @endsection
 
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div class="space-y-6">
@@ -18,9 +22,9 @@
                     <form method="POST" action="{{$href}}" id="createForm">
                         @csrf
                         @yield('form')
-                        <div class="flex items-center justify-end">
-                            <x-lareon::buttons.nav type="submit" role="submit" color="create">
-                                {{__('lareon::global.crud.buttons.create')}}
+                        <div class="mt-6">
+                            <x-lareon::buttons.nav type="submit" role="submit" color="create" size="sm">
+                                {{__('lareon::global.buttons.create')}}
                             </x-lareon::buttons.nav>
                         </div>
                     </form>
@@ -32,6 +36,4 @@
             @yield('list')
         </div>
     </div>
-
-
 </x-lareon::admin-layout>

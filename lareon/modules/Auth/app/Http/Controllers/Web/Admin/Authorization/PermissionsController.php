@@ -38,7 +38,7 @@ class PermissionsController extends Controller implements HasMiddleware
     {
         $res = $this->logic->all();
         $permissions = $res->result;
-        return view('auth::admin.pages.permissions.index-create', compact('permissions'));
+        return view('auth::admin.pages.permissions.index', compact('permissions'));
     }
 
     /**
