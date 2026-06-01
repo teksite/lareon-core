@@ -13,16 +13,17 @@
         @endif
 
         @if($hasChildren)
-            <label class="flex items-center gap-2 text-xs text-blue-600 ml-7 py-1">
-                📁 <input type="checkbox" class="perm-cascade w-4 h-4" data-path="{{ $node['title'] }}">
-                <span>{{ $node['title'] }}</span>
-
-            </label>
-            <ul class="ms-1 space-y-1">
-                @foreach($node['children'] as $child)
-                    <x-auth::editor.permissions-tree-node :node="$child" :level="$level + 1"/>
-                @endforeach
-            </ul>
+          <div class="cascade">
+              <label class="flex items-center gap-2 text-xs text-blue-600 ml-7 py-1">
+                  📁 <input type="checkbox" class="perm-cascade w-4 h-4" data-id="{{ $node['title'] }}">
+                  <span>{{ $node['title'] }}</span>
+              </label>
+              <ul class="ms-1 space-y-1">
+                  @foreach($node['children'] as $child)
+                      <x-auth::editor.permissions-tree-node :node="$child" :level="$level + 1"/>
+                  @endforeach
+              </ul>
+          </div>
         @endif
     </div>
 </li>
