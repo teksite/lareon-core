@@ -3,11 +3,11 @@
     $hasChildren = !empty($node['children']);
 @endphp
 <li>
-    <div style="padding-inline-start: {{ $level * 18 }}px">
+    <div style="padding-inline-start: {{ $level * 9 }}px">
 
         @if(isset($node['id']))
             <label class="flex items-center gap-2 text-xs text-gray-600 py-1">
-                📄<input type="checkbox" name="permissions[]" value="{{ $node['id'] }}" class="perm-self w-4 h-4" >
+                📄<input type="checkbox" name="permissions[]" value="{{ $node['id'] }}" class="perm-self w-4 h-4">
                 <span>{{ $node['title'] }}</span>
             </label>
         @endif
