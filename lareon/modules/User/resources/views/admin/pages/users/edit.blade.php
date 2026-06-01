@@ -1,8 +1,11 @@
 <x-lareon::admin-editor type="update" method="patch" :instance="$user" :action="route('admin.users.update', $user)">
     @section('title', __('lareon::global.crud.titles.edit',['attribute'=>__('user')]) . "($user->fullname)")
     @section('header.start')
-        <x-lareon::links.nav :href="route('admin.users.index')" :content="__('lareon::global.buttons.all_attribute' ,['attribute'=>__('users')])" color="index"/>
-        <x-lareon::links.nav :href="route('admin.users.create')" :content="__('lareon::global.buttons.new_attribute' ,['attribute'=>__('user')])" color="create"/>
+        <x-lareon::links.nav :href="route('admin.users.index')" :content="__('lareon::global.buttons.all_attribute' ,['attribute'=>__('users')])" color="index" can="admin.user.read"/>
+        <x-lareon::links.nav :href="route('admin.users.create')" :content="__('lareon::global.buttons.new_attribute' ,['attribute'=>__('user')])" color="create" can="admin.user.create"/>
+    @endsection
+    @section('header.end')
+        <x-lareon::links.action type="delete" :href="route('admin.users.destroy', $user)" method="delete" :label="trans('lareon::global.buttons.delete')" can="admin.user.delete"/>
     @endsection
     @section('form')
         <x-lareon::editor.tabs.layout>
@@ -22,9 +25,9 @@
 
             <x-lareon::editor.tabs.item :title="__('verifications')">
                 <div class="grid gap-6 md:grid-cols-2">
-                    <div>
-                        <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('ignore') ,-1 ] ,[__('no') ,0] , [__('yes') ,1]]" :label="__('mark email as verified')" name="email_verified_at" inputsClass="flex items-center gap-1" :value="-1"/>
+                    <div class="space-y-6">
                         <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('ignore') ,-1 ] ,[__('no') ,0] , [__('yes') ,1]]" :label="__('mark phone as verified')" name="phone_verified_at" inputsClass="flex items-center gap-1" :value="-1"/>
+                        <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('ignore') ,-1 ] ,[__('no') ,0] , [__('yes') ,1]]" :label="__('mark email as verified')" name="email_verified_at" inputsClass="flex items-center gap-1" :value="-1"/>
                     </div>
                     <div class="">
                         <table class="w-full">
@@ -58,6 +61,8 @@
                     </div>
                 </div>
             </x-lareon::editor.tabs.item>
+
+            {{--TODO add 2FA and Passkey --}}
 
         </x-lareon::editor.tabs.layout>
     @endsection

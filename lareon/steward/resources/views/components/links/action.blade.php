@@ -5,7 +5,6 @@
     'size' => 'md',
     'label' => null,
     'confirm' => false,
-    'confirmText' => 'Are you sure?',
     'target' => null,
     'can' => [null],
 ])
@@ -85,7 +84,7 @@
             @csrf
             @method($method)
 
-            <button type="submit" {{ $attributes }} @if($confirm) onclick="return confirm('{{ $confirmText }}')" @endif >
+            <button type="submit" {{ $attributes }} @if($confirm) data-action_confirm @endif data-type="{{$method}}">
                 <x-icon type="outline" icon="{{ $config['icon'] }}" size="18" class="fill-none stroke-current" />
                 @if($label)
                     <span class="text-sm">{{ $label }}</span>
@@ -93,14 +92,14 @@
             </button>
         </form>
     @elseif($href)
-        <a href="{{ $href }}" {{ $attributes }} @if($target) target="{{ $target }}" @endif >
+        <a href="{{ $href }}" {{ $attributes }} @if($target) target="{{ $target }}" @endif  @if($confirm) data-action_confirm @endif data-type="{{$method}}">
             <x-icon type="outline" icon="{{ $config['icon'] }}" size="18" class="fill-none stroke-current" />
             @if($label)
                 <span class="text-sm">{{ $label }}</span>
             @endif
         </a>
     @else
-        <button type="button" {{ $attributes }} @if($confirm) onclick="return confirm('{{ $confirmText }}')" @endif >
+        <button type="button" {{ $attributes }} @if($confirm) data-action_confirm @endif data-type="{{$method}}">
             <x-icon type="outline" icon="{{ $config['icon'] }}" size="18" class="fill-none stroke-current" />
             @if($label)
                 <span class="text-sm">{{ $label }}</span>

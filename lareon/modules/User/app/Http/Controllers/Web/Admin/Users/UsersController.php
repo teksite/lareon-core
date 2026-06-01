@@ -17,9 +17,7 @@ use Teksite\Handler\Facade\Responder;
 class UsersController extends Controller implements HasMiddleware
 {
 
-    public function __construct(public UserLogic $logic)
-    {
-    }
+    public function __construct(public UserLogic $logic) {}
 
     public static function middleware()
     {
@@ -33,6 +31,7 @@ class UsersController extends Controller implements HasMiddleware
 
     /**
      * Display a listing of the resource.
+     *
      * @throws \Throwable
      */
     public function index()
@@ -52,6 +51,7 @@ class UsersController extends Controller implements HasMiddleware
 
     /**
      * Store a newly created resource in storage.
+     *
      * @throws \Throwable
      */
     public function store(NewUserRequest $request)
@@ -59,11 +59,11 @@ class UsersController extends Controller implements HasMiddleware
         $res = $this->logic->create($request->validated());
 
         if ($res->success) {
-            $this->logic->markAsVerified($res->result, $request->validated('email_verified_at') , $request->validated('phone_verified_at'));
-            event(new UserCrudEvent($res->result, 'create' ,$request->validated()));
-            return Responder::success(trans('lareon::global.created_successfully' ,['attribute' => __('user')]))->route('admin.users.edit' , $res->result)->go();
+            $this->logic->markAsVerified($res->result, $request->validated('email_verified_at'), $request->validated('phone_verified_at'));
+            event(new UserCrudEvent($res->result, 'create', $request->validated()));
+            return Responder::success(trans('lareon::global.created_successfully', ['attribute' => __('user')]))->route('admin.users.edit', $res->result)->go();
         }
-        return Responder::failed(trans('lareon::global.created_failed' ,['attribute' => __('user')]));
+        return Responder::failed(trans('lareon::global.created_failed', ['attribute' => __('user')]));
 
     }
 
@@ -72,7 +72,7 @@ class UsersController extends Controller implements HasMiddleware
      */
     public function show(User $user)
     {
-       if ($user->path()) return redirect()->to($user->path());
+        if ($user->path()) return redirect()->to($user->path());
         abort(404);
     }
 
@@ -86,21 +86,25 @@ class UsersController extends Controller implements HasMiddleware
 
     /**
      * Update the specified resource in storage.
+     *
      * @throws \Throwable
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        $res = $this->logic->update($user ,$request->validated());
+        $res = $this->logic->update($user, $request->validated());
 
         if ($res->success) {
-            return Responder::success(trans('lareon::global.updated_successfully' ,['attribute' => __('user')]));
+            $this->logic->markAsVerified($user, $request->validated('email_verified_at'), $request->validated('phone_verified_at'));
+            event(new UserCrudEvent($user, 'update', $request->validated()));
+            return Responder::success(trans('lareon::global.updated_successfully', ['attribute' => __('user')]))->go();
         }
-        return Responder::failed(trans('lareon::global.updated_failed' ,['attribute' => __('user')]));
+        return Responder::failed(trans('lareon::global.updated_failed', ['attribute' => __('user')]))->go();
 
     }
 
     /**
      * Remove the specified resource from storage.
+     *
      * @throws \Throwable
      */
     public function destroy(User $user)
@@ -108,8 +112,9 @@ class UsersController extends Controller implements HasMiddleware
         $res = $this->logic->delete($user);
 
         if ($res->success) {
-            return Responder::success(trans('lareon::global.delete_successfully' ,['attribute' => __('user')]));
+            event(new UserCrudEvent($user, 'delete'));
+            return Responder::success(trans('lareon::global.delete_successfully', ['attribute' => __('user')]));
         }
-        return Responder::failed(trans('lareon::global.delete_failed' ,['attribute' => __('user')]));
+        return Responder::failed(trans('lareon::global.delete_failed', ['attribute' => __('user')]));
     }
 }

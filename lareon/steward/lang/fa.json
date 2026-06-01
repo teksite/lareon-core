@@ -20,5 +20,9 @@
     "mark phone as verified":"تلفن را به عنوان تایید شده علامت گذاری کنید",
     "authentication": "اهراز هویت",
     "verification": "تاییدیه",
-    "verifications": "تاییدیه‌ها"
+    "verifications": "تاییدیه‌ها",
+    "created at": "زمان ایجاد",
+    "updated at": "زمان بروز رسانی",
+    "deleted at":"زمان حذف",
+    "published at": "زمان انتشار"
 }

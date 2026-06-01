@@ -32,7 +32,7 @@ class UserLogic
      * @throws BindingResolutionException
      * @throws \Throwable
      */
-    public function first(array $inputs = [], bool $any = true)
+    public function first(array $inputs = [], bool $any = true): ServiceResult
     {
         return ServiceWrapper::make(false)->do(function () use ($inputs) {
             $query = User::query();
@@ -45,7 +45,7 @@ class UserLogic
     /**
      * @throws \Throwable
      */
-    public function create(array $inputs = [])
+    public function create(array $inputs = []): ServiceResult
     {
         return ServiceWrapper::make(true)->do(function () use ($inputs) {
             $inputs['slug'] ??= strtolower(uniqid() . '-' . Str::random(4));
@@ -59,11 +59,11 @@ class UserLogic
     /**
      * @throws \Throwable
      */
-    public function update(Authenticatable|User $user, array $inputs = [])
+    public function update(Authenticatable|User $user, array $inputs = []): ServiceResult
     {
         return ServiceWrapper::make(false)->do(function () use ($user, $inputs) {
             $inputs = array_filter($inputs);
-            $user->update(Arr::except($inputs, ['permissions', 'roles']));
+            $user->update(Arr::except($inputs, ['permissions', 'roles' ,'meta' ,'seo']));
             return $user->refresh();
         })->run();
     }
@@ -71,7 +71,7 @@ class UserLogic
     /**
      * @throws \Throwable
      */
-    public function delete(Authenticatable|User $user)
+    public function delete(Authenticatable|User $user): ServiceResult
     {
         return ServiceWrapper::make(false)->do(function () use ($user) {
             $user->roles()->detach();
@@ -82,12 +82,12 @@ class UserLogic
     /**
      * @throws \Throwable
      */
-    public function markAsVerified(Authenticatable|User $user, int|null|bool $email = -1,int|null|bool $phone = -1)
+    public function markAsVerified(Authenticatable|User $user, int|null|bool $email = -1, int|null|bool $phone = -1): ServiceResult
     {
         return ServiceWrapper::make(false)->do(function () use ($phone, $email, $user) {
             $cols = [
-                ['field' =>'email' ,'column' => 'email_verified_at', 'value' => $email],
-                ['field' =>'phone' ,'column' => 'phone_verified_at', 'value' => $phone],
+                ['field' => 'email', 'column' => 'email_verified_at', 'value' => $email],
+                ['field' => 'phone', 'column' => 'phone_verified_at', 'value' => $phone],
             ];
             $res = [];
             foreach ($cols as ['field' => $field, 'column' => $column, 'value' => $value]) {
@@ -109,7 +109,7 @@ class UserLogic
     /**
      * @throws \Throwable
      */
-    public function assignRole(Authenticatable|User $user, string|int|Role $inputs, string $action = 'creating')
+    public function assignRole(Authenticatable|User $user, string|int|Role $inputs, string $action = 'creating'): ServiceResult
     {
         return ServiceWrapper::make(false)->do(function () use ($inputs, $action, $user) {
             $roleArray = $user->assignRole($inputs);
