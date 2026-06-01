@@ -16,6 +16,7 @@
         <x-lareon::box type="y">
             <fieldset class="fieldset space-y-6">
                 <legend class="legend">{{__('permissions')}}</legend>
+                <x-auth::editor.permissions-tree :permissions="$permissions" />
             </fieldset>
         </x-lareon::box>
     @endsection

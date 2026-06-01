@@ -82,59 +82,52 @@ class PermissionLogic
     }
 
 
-
-
     public function tree(): array
     {
-        $tree = [];
+        $nodes = [];
+        $index = [];
 
-        $permissions = $this->getAll();
-        foreach ($permissions as $permission) {
-            $parts = explode('.', $permission);
-            $current = &$tree;
+        foreach ($this->getAll() as $id=>$title) {
+            $parts = explode('.', $title);
+            $path = '';
 
-            foreach ($parts as $index => $part) {
-                $fullPath = implode('.', array_slice($parts, 0, $index + 1));
+            foreach ($parts as $i => $part) {
+                $path = $path === '' ? $part : $path . '.' . $part;
 
-                if (!isset($current[$part])) {
-                    $current[$part] = [
-                        'name' => $part,
-                        'full_path' => $fullPath,
-                        'is_leaf' => ($index === count($parts) - 1),
-                        'level' => $index,
+                if (!isset($index[$path])) {
+
+                    $isRealNode = ($i === count($parts) - 1);
+
+                    $index[$path] = [
+                        'id' => $isRealNode ? $id : null,
+                        'title' => $path,
                         'children' => [],
-                        'has_children' => false
                     ];
                 }
 
-                if (in_array($fullPath, $permissions) && $index === count($parts) - 1) {
-                    $current[$part]['is_permission_itself'] = true;
+                if ($i > 0) {
+                    $parentPath = implode('.', array_slice($parts, 0, $i));
+
+                    $index[$parentPath]['children'][$path] = &$index[$path];
                 }
-                $current = &$current[$part]['children'];
+            }
+
+            if (count($parts) === 1) {
+                $nodes[$title] = &$index[$title];
             }
         }
 
-        $this->processTree($tree);
-
-        return $tree;
+        return array_values($this->normalize($nodes));
     }
 
-
-    private function processTree(&$nodes): void
+    private function normalize(array $nodes): array
     {
         foreach ($nodes as &$node) {
             if (!empty($node['children'])) {
-                $node['has_children'] = true;
-                $this->processTree($node['children']);
-            } else {
-                $node['has_children'] = false;
+                $node['children'] = array_values($this->normalize($node['children']));
             }
         }
 
-        usort($nodes, function($a, $b) {
-            return strcmp($a['name'], $b['name']);
-        });
+        return $nodes;
     }
 }
-
-
