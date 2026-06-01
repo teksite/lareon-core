@@ -8,20 +8,17 @@ use Illuminate\Support\Facades\Gate;
 use Lareon\Modules\Auth\App\Events\RoleCrudEvent;
 use Lareon\Modules\Auth\App\Http\Controllers\Controller;
 use Lareon\Modules\Auth\App\Http\Requests\Admin\NewRoleRequest;
-use Lareon\Modules\Auth\App\Http\Requests\Admin\NewRoleRequest;
 use Lareon\Modules\Auth\App\Http\Requests\Admin\UpdateRoleRequest;
-use Lareon\Modules\Auth\App\Http\Requests\Admin\UpdateRoleRequest;
-use Lareon\Modules\Auth\App\Logics\RoleLogic;
+use Lareon\Modules\Auth\App\Logics\PermissionLogic;
 use Lareon\Modules\Auth\App\Logics\RoleLogic;
 use Lareon\Steward\App\Enums\CrudTypeEnum;
-use Teksite\Authorize\Models\Role;
 use Teksite\Authorize\Models\Role;
 use Teksite\Handler\Facade\Responder;
 
 class RolesController extends Controller implements HasMiddleware
 {
 
-    public function __construct(public RoleLogic $logic) {}
+    public function __construct(public RoleLogic $logic , public PermissionLogic $permissionLogic) {}
 
     public static function middleware()
     {
@@ -50,7 +47,8 @@ class RolesController extends Controller implements HasMiddleware
      */
     public function create()
     {
-        return redirect()->action([self::class , 'index']);
+//        $permission=$this->permissionLogic->tree();
+        return view('auth::admin.pages.roles.create',);
     }
 
     /**
