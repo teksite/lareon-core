@@ -4,6 +4,7 @@
 'publishStatus' => true,
 'action' => null,
 'method' => null,
+'hasTab' => true,
 'id' => 'editor-form',
 'hasFile' => false,
 ])
@@ -71,9 +72,19 @@
                     @yield('form.before.start')
                     <div class="space-y-6">
                         @hasSection('form')
-                            <x-lareon::editor.tabs.layout>
+                            @if($hasTab)
+                                <x-lareon::editor.tabs.layout>
+                                    @yield('form')
+
+                                    @if($publishStatus && !$isDeleteMode)
+                                        <x-lareon::editor.tabs.item :title="__('basic data')">
+                                            <x-lareon::editor.status-publish :instance="$instance" :is-create-mode="$isCreateMode"/>
+                                        </x-lareon::editor.tabs.item>
+                                    @endif
+                                </x-lareon::editor.tabs.layout>
+                            @else
                                 @yield('form')
-                            </x-lareon::editor.tabs.layout>
+                            @endif
                         @endif
                     </div>
                     @yield('form.before.end')
@@ -85,7 +96,7 @@
                     @hasSection('aside')
                         @yield('aside')
                     @endif
-                    @if($publishStatus && !$isDeleteMode)
+                    @if($publishStatus && !$isDeleteMode && !$hasTab)
                         <x-lareon::editor.status-publish :instance="$instance" :is-create-mode="$isCreateMode"/>
                     @endif
 
