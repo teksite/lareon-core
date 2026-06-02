@@ -22,6 +22,16 @@
         <x-lareon::box type="y">
             <fieldset class="fieldset space-y-6">
                 <legend class="legend">{{__('permissions')}}</legend>
+
+                <div class="warning-msg flex items-center gap-2 justify-start">
+                    <div class="relative inline-flex size-3">
+                        <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-yellow-600 opacity-75"></span>
+                        <span class="relative inline-flex size-3 rounded-full bg-yellow-600"></span>
+                    </div>
+                    <p>
+                        {{__('please note that changes to the permissions of this role will cause the user to either gain or lose access to different parts of the application')}}.
+                    </p>
+                </div>
                 <x-auth::editor.permissions-tree :permissions="$permissions" :value="$role->permissions?->pluck('id')->toArray() ?? []" />
             </fieldset>
         </x-lareon::box>

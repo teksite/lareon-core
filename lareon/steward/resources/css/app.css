@@ -87,6 +87,9 @@
     .danger-msg{
         @apply text-red-600  text-sm font-bold inline-block px-1
     }
+    .warning-msg{
+        @apply text-yellow-600  text-sm font-bold inline-block px-1
+    }
 
 }
 
