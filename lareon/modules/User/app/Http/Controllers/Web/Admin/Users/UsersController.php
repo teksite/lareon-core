@@ -114,8 +114,8 @@ class UsersController extends Controller implements HasMiddleware
 
         if ($res->success) {
             event(new UserCrudEvent($user, CrudTypeEnum::DELETE));
-            return Responder::success(trans('lareon::global.delete_successfully', ['attribute' => __('user')]));
+            return Responder::success(trans('lareon::global.delete_successfully', ['attribute' => __('user')]))->route('admin.users.index')->go();
         }
-        return Responder::failed(trans('lareon::global.delete_failed', ['attribute' => __('user')]));
+        return Responder::failed(trans('lareon::global.delete_failed', ['attribute' => __('user')]))->go();
     }
 }
