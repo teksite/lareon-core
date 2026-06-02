@@ -46,7 +46,7 @@ class RoleLogic
     public function update(Role $role, array $inputs = [])
     {
         return ServiceWrapper::make(false)->do(function () use ($role, $inputs) {
-            Role::update(Arr::except($inputs, 'permissions'));
+            $role->update(Arr::except($inputs, 'permissions'));
             $role->permissions()->sync($inputs['permissions'] ?? []);
         })->run();
     }

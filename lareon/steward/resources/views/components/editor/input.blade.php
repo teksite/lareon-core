@@ -37,23 +37,7 @@
             <x-lareon::inputs.label :title="$label" for="{{$finalId}}" class="w-fit min-w-fit" :markAsRequire="$required"/>
         @endif
 
-        <x-lareon::inputs.text name="{{$name}}" id="{{$finalId}}" :type="$type" :value="$consideredValue" :disabled="$disabled" :required="$required" :readonly="$readonly" class="{{$inputClasses .' ' . $errorStyle}}" dir="{{$dir}}" autocomplete="{{$autocomplete}}" placeholder="{{$placeholder}}" {{$attributes->exceptProps([
-'id',
-'name',
-'type',
-'value',
-'dir',
-'old',
-'inputClasses',
-'required',
-'disabled',
-'readonly',
-'label',
-'labelPosition',
-'error',
-'wrapperClass',
-'autocomplete',
-'placeholder',])}}/>
+        <x-lareon::inputs.text name="{{$name}}" id="{{$finalId}}" :type="$type" :value="$consideredValue" :disabled="$disabled" :required="$required" :readonly="$readonly" class="{{$inputClasses .' ' . $errorStyle}}" dir="{{$dir}}" autocomplete="{{$autocomplete}}" placeholder="{{$placeholder}}" {{$attributes}}/>
 
         @if($label && $labelPosition === 'end')
             <x-lareon::inputs.label :title="$label" for="{{$finalId}}" class="w-fit min-w-fit" :markAsRequire="$required"/>

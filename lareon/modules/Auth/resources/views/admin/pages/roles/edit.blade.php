@@ -22,8 +22,7 @@
         <x-lareon::box type="y">
             <fieldset class="fieldset space-y-6">
                 <legend class="legend">{{__('permissions')}}</legend>
-                @dd($role->permissions)
-                <x-auth::editor.permissions-tree :permissions="$permissions" :value="$role->permissions?->toArray()" />
+                <x-auth::editor.permissions-tree :permissions="$permissions" :value="$role->permissions?->pluck('id')->toArray() ?? []" />
             </fieldset>
         </x-lareon::box>
     @endsection

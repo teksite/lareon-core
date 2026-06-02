@@ -11,7 +11,8 @@ class UpdateRoleRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return userCan('admin.role.edit');
+
     }
 
     /**
@@ -21,6 +22,6 @@ class UpdateRoleRequest extends FormRequest
      */
     public function rules(): array
     {
-        return Role::rules('update');
+        return Role::rules('update' , $this->role->id);
     }
 }
