@@ -8,6 +8,7 @@ use Illuminate\Routing\Controllers\Middleware;
 use Lareon\Modules\Auth\App\Logics\PermissionLogic;
 use Lareon\Modules\User\App\Events\UserCrudEvent;
 use Lareon\Modules\User\App\Http\Requests\Admin\NewUserRequest;
+use Lareon\Modules\User\App\Http\Requests\Admin\UpdateUserACLRequest;
 use Lareon\Modules\User\App\Http\Requests\Admin\UpdateUserRequest;
 use Lareon\Modules\User\App\Logics\UserLogic;
 use Lareon\Modules\User\App\Models\User;
@@ -32,9 +33,9 @@ class UsersACLController extends Controller implements HasMiddleware
 
     public function edit(User $user)
     {
-        $permissions=(new PermissionLogic())->tree();
-        $roles= Role::query()->pluck('title','id')->toArray();
-        return view('user::admin.pages.users.acl', compact('user' ,'permissions' , 'roles'));
+        $permissions = (new PermissionLogic())->tree();
+        $rolesGroup = Role::query()->orderBy('hierarchy')->get(['id' , 'title' , 'hierarchy' ])->groupBy(fn($role) => intdiv($role->hierarchy, 10) * 10)->toArray();
+        return view('user::admin.pages.users.acl', compact('user', 'permissions', 'rolesGroup'));
     }
 
     /**
@@ -42,9 +43,9 @@ class UsersACLController extends Controller implements HasMiddleware
      *
      * @throws \Throwable
      */
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(UpdateUserACLRequest $request, User $user)
     {
-        $res = $this->logic->update($user, $request->validated());
+        $res = $this->logic->updateACL($user, $request->validated());
 
         if ($res->success) {
             $this->logic->markAsVerified($user, $request->validated('email_verified_at'), $request->validated('phone_verified_at'));

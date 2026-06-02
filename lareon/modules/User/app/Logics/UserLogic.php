@@ -119,5 +119,26 @@ class UserLogic
         })->run();
     }
 
+
+    /**
+     * @throws BindingResolutionException
+     * @throws \Throwable
+     */
+    public function updateACL(Authenticatable|User $user , array $inputs )
+    {
+        return ServiceWrapper::make(false)->do(function () use ($inputs, $user) {
+            $roles=$inputs['roles'] ?? [];
+            $permissions=$inputs['permissions'] ?? [];
+            $roleArray = $user->assignRole($roles);
+            $permissionsArray = $user->syncPermissions($permissions);
+
+            return [
+                'roles'=>$roleArray,
+                'permissions'=>$permissionsArray,
+            ];
+
+        })->run();
+    }
+
 }
 

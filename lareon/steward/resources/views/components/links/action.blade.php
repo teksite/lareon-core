@@ -53,6 +53,12 @@
             'title' => trans('download'),
             'target' => '_blank',
         ],
+        'setting' => [
+            'icon' => 'gears',
+            'color' => 'text-orange-600 hover:bg-orange-50',
+            'title' => trans('settings'),
+            'target' => '_self',
+        ],
     ];
 
     $config = $configs[$type] ?? [

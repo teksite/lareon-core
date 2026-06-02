@@ -15,7 +15,9 @@
                     <td>{{$user->fullname}}</td>
                     <td>{{$user->phone}}</td>
                     <td>{{$user->email}}</td>
-                    <td> <x-lareon::date :date="$user->created_at"/> </td>
+                    <td>
+                        <x-lareon::date :date="$user->created_at"/>
+                    </td>
                     <td> {{$user->parent()?->fullname ?? '-'}} </td>
                     <td>
                         <x-lareon::action-box class="action">
@@ -25,9 +27,11 @@
                             @if($user->path())
                                 <x-lareon::links.action type="show" :href="route('users.show' , $user)"/>
                             @endif
-                            <x-lareon::links.action type="edit" :href="route('admin.users.acl.edit' , $user)" can="admin.user.acl.edit"/>
+                            @if(\Illuminate\Support\Facades\Route::has('admin.users.acl.edit'))
+                                    <x-lareon::links.action type="setting" :href="route('admin.users.acl.edit' , $user)" can="admin.user.acl.edit"/>
+                            @endif
                             <x-lareon::links.action type="edit" :href="route('admin.users.edit' , $user)" can="admin.user.edit"/>
-                            <x-lareon::links.action type="delete" method="delete"  :href="route('admin.users.destroy' , $user)" can="admin.user.delete"/>
+                            <x-lareon::links.action type="delete" method="delete" :href="route('admin.users.destroy' , $user)" can="admin.user.delete"/>
                         </x-lareon::action-box>
                     </td>
                 </tr>

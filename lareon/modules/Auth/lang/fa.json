@@ -9,6 +9,7 @@
     "permission": "مجوز",
     "roles":"نقش‌ها",
     "role": "نقش",
+    "user accessibility": "اجازه دسترسی کاربر",
     "changing the title of a permission may affect the accessibility of roles and users to different parts of the app": "تغییر عنوان دسترسی ممکن است بر قابلیت دسترسی نقش‌ها و کاربران به بخش‌های مختلف برنامه تأثیر بگذارد",
     "please note that changes to the permissions of this role will cause the user to either gain or lose access to different parts of the application": "توجه کنید: تغییر در اجازه دسترسی‌های این نقش باعث دسترسی یا عدم دسترسی کاربر به بخش‌های مختلف اپلیکیشن می‌شود"
 }
