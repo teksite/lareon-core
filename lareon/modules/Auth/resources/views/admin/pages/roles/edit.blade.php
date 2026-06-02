@@ -62,8 +62,5 @@
                     </div>
                 </div>
             </x-lareon::editor.tabs.item>
-
-            {{--TODO add 2FA and Passkey --}}
-
     @endsection
 </x-lareon::admin-editor>

@@ -6,9 +6,9 @@
     <div class="bg-linear-to-r from-cyan-500 to-blue-500 50 w-full h-full relative rounded-xl">
         <div class="w-full h-full p-3 min-h-64 flex items-center">
             <div class="px-3">
-                <h2 class="mb-3 text-zinc-50">
+                <h1 class="mb-3 text-zinc-50">
                     @yield('title' , __('dashboard'))
-                </h2>
+                </h1>
                 <p class="font-semibold text-zinc-300">
                     @yield('description' , '')
                 </p>
