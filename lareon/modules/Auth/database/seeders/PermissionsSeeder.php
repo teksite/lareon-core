@@ -117,6 +117,10 @@ class PermissionsSeeder extends Seeder
                 'title'=>'admin.user.delete',
                 'description'=>'have access to delete users (in the admin panel)',
             ],
+            [
+                'title'=>'admin.user.acl.edit',
+                'description'=>'have access to change role-permission of users (in the admin panel)',
+            ],
             /*ADMIN*/
             [
                 'title'=>'panel',
