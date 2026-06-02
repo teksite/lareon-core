@@ -1,66 +1,30 @@
-<x-lareon::admin-editor type="update" method="patch" :instance="$user" :action="route('admin.users.update', $user)">
-    @section('title', __('lareon::global.crud.titles.edit',['attribute'=>__('user')]) . "($user->fullname)")
+<x-lareon::admin-editor type="update" method="patch" :instance="$role" :action="route('admin.authorize.roles.update', $role)">
+    @section('title', __('lareon::global.crud.titles.edit',['attribute'=>__('user')]) . "($role->title)")
     @section('header.start')
-        <x-lareon::links.nav :href="route('admin.users.index')" :content="__('lareon::global.buttons.all_attribute' ,['attribute'=>__('users')])" color="index" can="admin.user.read"/>
-        <x-lareon::links.nav :href="route('admin.users.create')" :content="__('lareon::global.buttons.new_attribute' ,['attribute'=>__('user')])" color="create" can="admin.user.create"/>
+        <x-lareon::links.nav :href="route('admin.authorize.roles.index')" :content="__('lareon::global.buttons.all_attribute' ,['attribute'=>__('role')])" color="index" can="admin.role.read"/>
+        <x-lareon::links.nav :href="route('admin.authorize.roles.create')" :content="__('lareon::global.buttons.new_attribute' ,['attribute'=>__('role')])" color="create" can="admin.role.create"/>
     @endsection
     @section('header.end')
-        <x-lareon::links.action type="delete" :href="route('admin.users.destroy', $user)" method="delete" :label="trans('lareon::global.buttons.delete')" can="admin.user.delete"/>
+        <x-lareon::links.action type="delete" :href="route('admin.authorize.roles.destroy', $role)" method="delete" :label="trans('lareon::global.buttons.delete')" can="admin.role.delete"/>
     @endsection
 
     @section('form')
-
-            <x-lareon::editor.tabs.item :title="__('basic data')">
+        <x-lareon::box type="y">
+            <fieldset class="fieldset space-y-6">
+                <legend class="legend">{{__('basic data')}}</legend>
                 <div class="grid gap-6 lg:grid-cols-2">
-                    <x-lareon::editor.input :required="true" labelPosition="start" :label="__('first name')" name="name" :value="$user->name" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('name') , 'item'=>__('user')])"/>
-                    <x-lareon::editor.input :required="true" labelPosition="start" :label="__('last name')" name="lastname" :value="$user->lastname" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('last name') , 'item'=>__('user')])"/>
+                    <x-lareon::editor.input :required="true" :label="__('title')" name="title" :value="$role->title" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('title') , 'item'=>__('role')])"/>
+                    <x-lareon::editor.input :required="false" :label="__('description')" name="description" :value="$role->description" :placeholder="__('lareon::global.placeholders.write.one',['attribute'=>__('description')])"/>
+                    <x-lareon::editor.input :required="true" min="0" max="100" step="1" :label="__('hierarchy')" name="hierarchy" :value="$role->hierarchy" :placeholder="__('lareon::global.placeholders.write.one',['attribute'=>__('description')])"/>
                 </div>
-                <div class="space-y-6">
-                    <x-lareon::editor.input :required="true" type="tel" dir="ltr" :value="$user->phone" :label="__('phone')" name="phone" :placeholder="__('lareon::global.placeholders.write.unique.two',['attribute'=>__('phone') , 'item'=>__('user')])"/>
-                    <x-lareon::editor.input :required="true" type="email" dir="ltr" :value="$user->email" :label="__('email')" name="email" :placeholder="__('lareon::global.placeholders.write.unique.two',['attribute'=>__('email') , 'item'=>__('user') ])"/>
-                </div>
-                <div>
-                    <x-lareon::editor.input-slug :disabled="true" :readonly="true" :value="$user->slug" :label="__('slug')" name="slug" :placeholder="__('lareon::global.placeholders.write.unique.two',['attribute'=>__('slug') , 'item'=>__('user') ])" :showUrl="!!($user->path())"/>
-                </div>
-            </x-lareon::editor.tabs.item>
-
-            <x-lareon::editor.tabs.item :title="__('verifications')">
-                <div class="grid gap-6 md:grid-cols-2">
-                    <div class="space-y-6">
-                        <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('ignore') ,-1 ] ,[__('no') ,0] , [__('yes') ,1]]" :label="__('mark phone as verified')" name="phone_verified_at" inputsClass="flex items-center gap-1" :value="-1"/>
-                        <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('ignore') ,-1 ] ,[__('no') ,0] , [__('yes') ,1]]" :label="__('mark email as verified')" name="email_verified_at" inputsClass="flex items-center gap-1" :value="-1"/>
-                    </div>
-                    <div class="">
-                        <table class="w-full">
-                            <tbody class="divide-y divide-line_light bg-slate-50 *:hover:bg-blue-50">
-                            <tr>
-                                <td class="px-3 py-2 font-bold">
-                                    {{__('phone verified at')}}
-                                </td>
-                                <td class="px-3 py-2 ">
-                                    <x-lareon::date :date="$user->phone_verified_at ?? null"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="px-3 py-2 font-bold">
-                                    {{__('email verified at')}}
-                                </td>
-                                <td class="px-3 py-2 ">
-                                    <x-lareon::date :date="$user->email_verified_at ?? null"/>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </x-lareon::editor.tabs.item>
-
-            <x-lareon::editor.tabs.item :title="__('authentication')">
-                <div class="grid gap-6 md:grid-cols-2">
-                    <div class="">
-                        <x-lareon::editor.password :label="__('password')" :confirm_label="__('confirm password')" name="password" :placeholder="__('lareon::global.placeholders.write.auth.password',['attribute'=>__('password')])" wrapperClass="grid gap-6 lg:grid-cols-2"/>
-                    </div>
-                </div>
-            </x-lareon::editor.tabs.item>
+            </fieldset>
+        </x-lareon::box>
+        <x-lareon::box type="y">
+            <fieldset class="fieldset space-y-6">
+                <legend class="legend">{{__('permissions')}}</legend>
+                @dd($role->permissions)
+                <x-auth::editor.permissions-tree :permissions="$permissions" :value="$role->permissions?->toArray()" />
+            </fieldset>
+        </x-lareon::box>
     @endsection
 </x-lareon::admin-editor>

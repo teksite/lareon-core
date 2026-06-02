@@ -81,7 +81,8 @@ class RolesController extends Controller implements HasMiddleware
      */
     public function edit(Role $role)
     {
-        return view('auth::admin.pages.roles.edit', compact('role'));
+        $permissions=$this->permissionLogic->tree();
+        return view('auth::admin.pages.roles.edit', compact('role' ,'permissions'));
     }
 
     /**

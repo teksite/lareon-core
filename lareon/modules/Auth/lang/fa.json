@@ -4,6 +4,7 @@
     "accessibility": "دسترسی‌ها",
     "accessibilities": "دسترسی",
     "each permission determines access to a specific section or feature in the application": "هر پرمیشن مشخص می‌کند که کاربر به کدام بخش یا قابلیت خاصی در اپلیکیشن دسترسی دارد",
+    "roles control user access via ACL": "نقش‌ها دسترسی کاربران را از طریق ACL کنترل می‌کنند",
     "permissions":"مجوز‌ها",
     "permission": "مجوز",
     "roles":"نقش‌ها",

@@ -1,6 +1,6 @@
 <x-lareon::admin-list>
     @section('title', __('lareon::global.crud.titles.list',['attribute'=>__('roles')]))
-    @section('description', __('Manage all registered roles, view their details and control account status'))
+    @section('description', __('roles control user access via ACL'))
     @section('header.start')
         <x-lareon::links.nav :href="route('admin.authorize.roles.create')" :content="__('lareon::global.buttons.new_one')" color="create" can="admin.role.create"/>
     @endsection
