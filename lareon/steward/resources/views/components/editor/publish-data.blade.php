@@ -26,7 +26,6 @@
         'seen_at'=>'eye',
         'default'=>'circle-three',
 ];
-
 @endphp
 
 
@@ -49,5 +48,4 @@
             @endif
         @endforeach
     </ul>
-
 @endif

@@ -26,7 +26,7 @@
                                 <x-lareon::links.action type="show" :href="route('users.show' , $user)"/>
                             @endif
                             <x-lareon::links.action type="edit" :href="route('admin.users.edit' , $user)" can="admin.user.edit"/>
-                            <x-lareon::links.action type="delete" :href="route('admin.users.destroy' , $user)" can="admin.user.delete"/>
+                            <x-lareon::links.action type="delete" method="delete"  :href="route('admin.users.destroy' , $user)" can="admin.user.delete"/>
                         </x-lareon::action-box>
                     </td>
                 </tr>

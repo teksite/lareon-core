@@ -1,4 +1,4 @@
-<x-lareon::admin-editor type="update" method="patch" :instance="$role" :action="route('admin.authorize.roles.update', $role)">
+<x-lareon::admin-editor type="update" method="patch" :hasTab="false" :instance="$role" :action="route('admin.authorize.roles.update', $role)">
     @section('title', __('lareon::global.crud.titles.edit',['attribute'=>__('user')]) . "($role->title)")
     @section('header.start')
         <x-lareon::links.nav :href="route('admin.authorize.roles.index')" :content="__('lareon::global.buttons.all_attribute' ,['attribute'=>__('role')])" color="index" can="admin.role.read"/>

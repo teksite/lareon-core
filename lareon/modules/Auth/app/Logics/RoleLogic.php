@@ -37,6 +37,7 @@ class RoleLogic
         return ServiceWrapper::make(false)->do(function () use ($inputs) {
             $role = Role::create(Arr::except($inputs, 'permissions'));
             $role->permissions()->attach($inputs['permissions'] ?? []);
+            return $role;
         })->run();
     }
 
@@ -48,6 +49,7 @@ class RoleLogic
         return ServiceWrapper::make(false)->do(function () use ($role, $inputs) {
             $role->update(Arr::except($inputs, 'permissions'));
             $role->permissions()->sync($inputs['permissions'] ?? []);
+            return $role->refresh();
         })->run();
     }
 
