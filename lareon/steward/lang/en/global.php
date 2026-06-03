@@ -5,13 +5,6 @@ return [
     // Authentication & User Management
     // ============================================
     'auth'          => [
-        'buttons'      => [
-            'logout'   => 'Logout',
-            'login'    => 'Login',
-            'register' => 'Register',
-
-        ],
-
         'logout'       => 'Logout',
         'login'        => 'Login to your account',
         'register'     => 'Register',
@@ -22,6 +15,8 @@ return [
         'welcome_back' => 'Welcome back, :name!',
         'unauthorized' => 'You are not authorized to perform this action',
         'forbidden'    => 'Access forbidden',
+        'sign_in' => 'Sign In',
+        'sign_up' => 'Sign Up',
     ],
 
     // ============================================
@@ -130,6 +125,12 @@ return [
         'copy'     => 'Copy',
         'share'    => 'Share',
 
+        'logout'   => 'Logout',
+        'login'    => 'Login',
+        'register' => 'Register',
+        'sign_in' => 'Sign In',
+        'sign_up' => 'Sign Up',
+
         'new_one'        => 'create new one',
         'new_attribute'  => 'create :attribute',
         'all_items'      => 'all items',
@@ -151,24 +152,6 @@ return [
                 'one' => 'Enter a unique :attribute',
                 'two' => 'Enter a unique :attribute for :item',
             ],
-
-            'numbers' => [
-                'min'   => 'Enter minimum :attribute',
-                'max'   => 'Enter maximum :attribute',
-                'range' => 'Enter :attribute between :min and :max',
-            ],
-            'auth'    => [
-                'email'            => 'Enter email address',
-                'password'         => 'Enter password',
-                'confirm_password' => 'Confirm password',
-                'username'         => 'Enter username',
-                'old_password'     => 'Enter old password',
-                'new_password'     => 'Enter new password',
-
-                "remember" => "remember me",
-                "forget_password" => "do you forget your password?",
-
-            ],
         ],
         'insert' => [
             'one'   => 'Insert :attribute',
@@ -180,11 +163,19 @@ return [
             ],
         ],
         'auth'=>[
-            'username'  => 'enter your username',
-            'password'  => 'enter your password',
+            'email'            => 'Enter email address',
+            'password'         => 'Enter password',
+            'confirm_password' => 'Confirm password',
+            'username'         => 'Enter username',
+            'old_password'     => 'Enter old password',
+            'new_password'     => 'Enter new password',
+
             "remember" => "remember me",
-            "forget_password" => "do you forget your password?",
         ],
+    ],
+    "links"=>[
+        "forget_password" => "do you forget your password?",
+        "back_home" => "back to home",
     ],
 
     // ============================================
