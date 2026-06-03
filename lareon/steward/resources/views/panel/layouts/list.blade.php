@@ -1,0 +1,14 @@
+<x-lareon::admin-layout>
+    @section('title')
+        @yield('title')
+    @endsection
+    @section('description')
+        @yield('description')
+    @endsection
+    @section('header.end')
+        <x-lareon::search/>
+    @endsection
+    @yield('list.before')
+    @yield('list')
+    @yield('list.after')
+</x-lareon::admin-layout>

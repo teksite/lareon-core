@@ -9,8 +9,10 @@ export default defineConfig({
         laravel({
             input: [
                 'lareon/steward/resources/css/app.css', 'lareon/steward/resources/js/app.js',
+                'lareon/steward/resources/css/panel.css', 'lareon/steward/resources/js/panel.js',
 
                 ...globSync('lareon/modules/*/resources/js/app.js'), ...globSync('lareon/modules/*/resources/css/app.css'),
+                ...globSync('lareon/modules/*/resources/js/panel.js'), ...globSync('lareon/modules/*/resources/css/panel.css'),
 
                 'resources/css/app.css', 'resources/js/app.js',
 
