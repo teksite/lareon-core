@@ -4,7 +4,7 @@
     @section('form')
      <div class="space-y-6">
          <x-lareon::editor.input :required="true" type="text" :label="__('title')" name="title" :placeholder="__('lareon::global.placeholders.write.unique.one',['attribute'=>__('title')])"/>
-         <x-lareon::editor.input type="text" :label="__('description')" name="description" :placeholder="__('lareon::global.placeholders.write.unique.one',['attribute'=>__('description')])"/>
+         <x-lareon::editor.input type="text" :label="__('description')" name="description" :placeholder="__('lareon::global.placeholders.write.one',['attribute'=>__('description')])"/>
      </div>
     @endsection
     @section('list')

@@ -28,7 +28,7 @@
     $errorConfirmClass = $errorConfirmMessage ? 'input-error' : '';
 
     $placeholderText = $placeholder ?? __('password');
-    $confirmPlaceholder = trans('lareon::global.placeholders.write.auth.confirm_password');
+    $confirmPlaceholder = trans('lareon::global.placeholders.auth.confirm_password');
 
     $labelText = $label ;
     $confirmLabelText = $confirmLabel ??  __('confirm :attribute', ['attribute' => __('password')]);

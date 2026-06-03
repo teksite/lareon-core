@@ -165,7 +165,7 @@ return [
         'auth'=>[
             'email'            => 'Enter email address',
             'password'         => 'Enter password',
-            'confirm_password' => 'Confirm password',
+            'confirm_password' => 'renter the password',
             'username'         => 'Enter username',
             'old_password'     => 'Enter old password',
             'new_password'     => 'Enter new password',

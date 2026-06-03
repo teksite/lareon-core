@@ -10,7 +10,7 @@
     @section('form')
         <x-lareon::editor.tabs.item :title="__('basic data')">
             <div class="grid gap-6 lg:grid-cols-2">
-                <x-lareon::editor.input :required="true" :label="__('title')" name="title" :value="$permission->title" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('title') , 'item'=>__('permission')])"/>
+                <x-lareon::editor.input :required="true" :label="__('title')" name="title" :value="$permission->title" :placeholder="__('lareon::global.placeholders.write.unique.two',['attribute'=>__('title') , 'item'=>__('permission')])"/>
                 <x-lareon::editor.input :required="false" :label="__('description')" name="description" :value="$permission->description" :placeholder="__('lareon::global.placeholders.write.one',['attribute'=>__('description')])"/>
 
             </div>
