@@ -30,7 +30,7 @@
     $placeholderText = $placeholder ?? __('password');
     $confirmPlaceholder = trans('lareon::global.placeholders.write.auth.confirm_password');
 
-    $labelText = $label ?? __('password');
+    $labelText = $label ;
     $confirmLabelText = $confirmLabel ??  __('confirm :attribute', ['attribute' => __('password')]);
 @endphp
 
@@ -43,7 +43,7 @@
 >
     <div class="mb-3">
         @if($labelText)
-            <x-lareon::inputs.label :title="$labelText" :for="$id" class="mb-1" :required="$required" />
+            <x-lareon::inputs.label :title="$labelText" :for="$id" class="mb-1" :markAsRequire="$required" />
         @endif
 
         <div class="input flex items-center justify-between gap-2 {{ $errorClass }}">
@@ -54,9 +54,7 @@
                     <div x-show="strength > 0 && password.length > 0" x-cloak class="absolute left-0 right-0 -bottom-8">
                         <div class="flex gap-1 mt-1">
                             <template x-for="i in 4" :key="i">
-                                <div class="flex-1 h-1 rounded-full transition-all duration-300"
-                                     :class="i <= strength ? strengthColor : 'bg-gray-200'">
-                                </div>
+                                <div class="flex-1 h-1 rounded-full transition-all duration-300" :class="i <= strength ? strengthColor : 'bg-gray-200'"></div>
                             </template>
                         </div>
                         <div class="flex justify-between items-center mt-1">

@@ -5,14 +5,15 @@ return [
     // Authentication & User Management
     // ============================================
     'auth'          => [
-        'buttons'=>[
-            'logout'       => 'Logout',
-            'login'        => 'Login',
-            'register'     => 'Register',
+        'buttons'      => [
+            'logout'   => 'Logout',
+            'login'    => 'Login',
+            'register' => 'Register',
 
         ],
+
         'logout'       => 'Logout',
-        'login'        => 'Login',
+        'login'        => 'Login to your account',
         'register'     => 'Register',
         'profile'      => 'Profile',
         'settings'     => 'Settings',
@@ -43,15 +44,15 @@ return [
 
         // Titles
         'titles'  => [
-            'all'    => 'All :attribute',
-            'create' => 'Create New :attribute',
-            'edit'   => 'Edit :attribute',
+            'all'          => 'All :attribute',
+            'create'       => 'Create New :attribute',
+            'edit'         => 'Edit :attribute',
             'edit_current' => 'edit :attribute (:item)',
 
-            'show'   => 'Show :attribute',
-            'list'   => ':attribute List',
-            'delete' => 'Delete :attribute',
-            'update' => 'Update :attribute',
+            'show'        => 'Show :attribute',
+            'list'        => ':attribute List',
+            'delete'      => 'Delete :attribute',
+            'update'      => 'Update :attribute',
             'create_item' => 'create new item',
         ],
 
@@ -130,7 +131,7 @@ return [
         'share'    => 'Share',
 
         'new_one'        => 'create new one',
-        'new_attribute'        => 'create :attribute',
+        'new_attribute'  => 'create :attribute',
         'all_items'      => 'all items',
         'all_attribute'  => 'all :attribute',
         'list_attribute' => ':attribute list',
@@ -141,14 +142,20 @@ return [
     // ============================================
     'placeholders'  => [
         'write'  => [
-            'one'     => 'Enter :attribute',
-            'two'     => 'Enter :attribute for the :item',
-            'select'  => 'Select :attribute',
-            'search'  => 'Search...',
+            'one'    => 'Enter :attribute',
+            'two'    => 'Enter :attribute for the :item',
+            'select' => 'Select :attribute',
+            'search' => 'Search...',
 
             'unique'  => [
                 'one' => 'Enter a unique :attribute',
                 'two' => 'Enter a unique :attribute for :item',
+            ],
+
+            'numbers' => [
+                'min'   => 'Enter minimum :attribute',
+                'max'   => 'Enter maximum :attribute',
+                'range' => 'Enter :attribute between :min and :max',
             ],
             'auth'    => [
                 'email'            => 'Enter email address',
@@ -157,23 +164,26 @@ return [
                 'username'         => 'Enter username',
                 'old_password'     => 'Enter old password',
                 'new_password'     => 'Enter new password',
-            ],
-            'numbers' => [
-                'min'   => 'Enter minimum :attribute',
-                'max'   => 'Enter maximum :attribute',
-                'range' => 'Enter :attribute between :min and :max',
+
+                "remember" => "remember me",
+                "forget_password" => "do you forget your password?",
+
             ],
         ],
         'insert' => [
-            'general' => [
-                'one' => 'Insert :attribute',
-            ],
-            'files'   => [
+            'one'   => 'Insert :attribute',
+            'files' => [
                 'file'     => 'Choose file for :attribute',
                 'image'    => 'Select image for :attribute',
                 'video'    => 'Select video for :attribute',
                 'document' => 'Upload document for :attribute',
             ],
+        ],
+        'auth'=>[
+            'username'  => 'enter your username',
+            'password'  => 'enter your password',
+            "remember" => "remember me",
+            "forget_password" => "do you forget your password?",
         ],
     ],
 

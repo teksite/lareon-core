@@ -14,18 +14,21 @@
     @stack('headerScripts')
 </head>
 <body class="bg-slate-200">
-<main class="ms-auto me-0 max-h-svh h-svh min-h-svh bg-center bg-cover bg-no-repeat bg-theme-3 p-3">
+<main class="ms-auto me-0 max-h-svh h-svh min-h-svh bg-center bg-cover bg-no-repeat bg-wavy p-3">
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 h-full items-stretch">
-        <div class="bg-slate-50 py-6 px-12 flex items-center w-full">
-            {!! $slot !!}
+        <div class="y-box flex flex-col gap-6 justify-between w-full">
+            <header>
+                @yield('header')
+            </header>
             <div>
-                <x-auth::auth.session-status />
+                {!! $slot !!}
+                <x-auth::auth.session-status/>
             </div>
-        </div>
-        <div class="lg:col-span-2 hidden sm:block">
+            <footer>
+                @yield('footer')
+            </footer>
 
         </div>
-    </div>
 </main>
 @stack('footerScripts')
 </body>

@@ -32,6 +32,7 @@
     @if($label)
         <x-lareon::inputs.label :title="$label" class="mb-1" :markAsRequire="$required"/>
     @endif
+    <x-lareon::inputs.error :messages="$errorMessage ?? null"/>
     <ul class="{{$inputWrapperClass}}">
         @foreach($options as $option)
             @php
@@ -45,5 +46,5 @@
                 <x-lareon::inputs.radio id="{{$id}}" name="{{$name}}" value="{{$val}}" :disabled="$disabled" :checked="$val == $consideredValue"/>
             </li>
         @endforeach
-   </ul>
+    </ul>
 </div>

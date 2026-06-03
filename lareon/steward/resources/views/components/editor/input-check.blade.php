@@ -32,6 +32,7 @@
     @if($label)
         <x-lareon::inputs.label :title="$label" class="mb-1" :markAsRequire="$required"/>
     @endif
+    <x-lareon::inputs.error :messages="$errorMessage ?? null"/>
     <ul class="{{$inputWrapperClass}}">
         @foreach($options as $option)
             @php
