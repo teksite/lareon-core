@@ -2,18 +2,21 @@
 
 namespace Lareon\Modules\Auth\App\Providers;
 
-use App\Actions\Fortify\CreateNewUser;
-use App\Actions\Fortify\ResetUserPassword;
-use App\Actions\Fortify\UpdateUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Laravel\Fortify\Actions\RedirectIfTwoFactorAuthenticatable;
 use Laravel\Fortify\Fortify;
+use Lareon\Modules\Auth\App\Actions\Fortify\AuthenticationUser;
+use Lareon\Modules\Auth\App\Actions\Fortify\CreateNewUser;
+use Lareon\Modules\Auth\App\Actions\Fortify\ResetUserPassword;
+use Lareon\Modules\Auth\App\Actions\Fortify\UpdateUserPassword;
+use Lareon\Modules\User\App\Models\User;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -30,22 +33,50 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->bootViews();
         $this->bootFeatures();
+        $this->bootRateLimiters();
+        $this->bootViews();
     }
 
-    private function bootViews(): void {
-        Fortify::loginView(fn()=> View::first(['authentication.pages.login' ,'auth::authentication.pages.login']));
+    private function bootViews(): void
+    {
+        Fortify::loginView(fn() => View::first(['pages.auth.login', 'auth::authentication.pages.login']));
     }
 
     private function bootFeatures(): void
     {
         Fortify::createUsersUsing(CreateNewUser::class);
-        Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
+//        Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
         Fortify::redirectUserForTwoFactorAuthenticationUsing(RedirectIfTwoFactorAuthenticatable::class);
+        Fortify::authenticateUsing($this->authenticationUser());
+    }
 
+    /**
+     * @return \Closure
+     */
+    protected function authenticationUser(): \Closure
+    {
+        return function (Request $request) {
+            $username = $request->input('username');
+            $password = $request->input('password');
+
+            $user= User::query()
+                       ->where('email', $username)
+                       ->orWhere('phone', $username)
+                       ->first();
+
+            if ($user && Hash::check($password, $user->password)) {
+                return $user;
+            }
+            return null;
+        };
+    }
+
+
+    private function bootRateLimiters(): void
+    {
         RateLimiter::for('login', function (Request $request) {
             $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())) . '|' . $request->ip());
 

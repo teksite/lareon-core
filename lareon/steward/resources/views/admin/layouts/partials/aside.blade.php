@@ -24,7 +24,7 @@
             <button class="logoutBtn p-2 min-h-fit h-fit flex w-full items-center justify-start gap-2 text-red-600 cursor-pointer hover:bg-red-100">
                 <x-icon type="outline" icon="turn-off" class="stroke-red-600" size="18"/>
                 <span>
-                    {{__('lareon::global.auth.buttons.logout')}}
+                    {{__('lareon::global.buttons.logout')}}
                 </span>
             </button>
         </div>
