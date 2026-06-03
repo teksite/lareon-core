@@ -5,6 +5,12 @@ return [
     // Authentication & User Management
     // ============================================
     'auth'          => [
+        'buttons'=>[
+            'logout'       => 'Logout',
+            'login'        => 'Login',
+            'register'     => 'Register',
+
+        ],
         'logout'       => 'Logout',
         'login'        => 'Login',
         'register'     => 'Register',

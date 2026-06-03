@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="shortcut icon" href="{{asset('/uploads/favicon/favicon.ico')}}" type="image/x-icon">
-    <link rel="apple-touch-icon" sizes="16x16" href="{{asset('"/uploads/favicon/favicon-16x16.png')}}">
+    <link rel="apple-touch-icon" sizes="16x16" href="{{asset('/uploads/favicon/favicon-16x16.png')}}">
     <link rel="apple-touch-icon" sizes="32x32" href="{{asset('/uploads/favicon/favicon-32x32.png')}}">
     <link rel="apple-touch-icon" sizes="192x192" href="{{asset('/uploads/favicon/favicon-192x192.png')}}">
     <meta name="theme-color" content="#ffffff">
