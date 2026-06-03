@@ -9,13 +9,13 @@
     <link rel="apple-touch-icon" sizes="32x32" href="{{asset('/uploads/favicon/favicon-32x32.png')}}">
     <link rel="apple-touch-icon" sizes="192x192" href="{{asset('/uploads/favicon/favicon-192x192.png')}}">
     <meta name="theme-color" content="#ffffff">
-    <title>@yield('title',__('authentication')) - {{__(config('app.name'))}}</title>
+    <title>{{$title ?? __('authentication') }} - {{__(config('app.name'))}}</title>
     @vite(['lareon/steward/resources/css/panel.css','lareon/steward/resources/js/panel.js'])
     @stack('headerScripts')
 </head>
 <body class="bg-slate-200">
 <main class="ms-auto me-0 max-h-svh h-svh min-h-svh bg-center bg-cover bg-no-repeat bg-wavy p-3">
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 h-full items-stretch">
+    <div class="grid sm:grid-cols-2 xl:grid-cols-3 h-full items-stretch">
         <div class="y-box flex flex-col gap-6 justify-between w-full">
             <header>
                 @yield('header')
@@ -29,6 +29,7 @@
             </footer>
 
         </div>
+    </div>
 </main>
 @stack('footerScripts')
 </body>

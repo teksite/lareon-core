@@ -82,7 +82,7 @@
     @if($showConfirm)
         <div>
             @if($confirmLabelText)
-                <x-lareon::inputs.label :title="$confirmLabelText" :for="$confirmId" class="mb-1" :required="$required"/>
+                <x-lareon::inputs.label :title="$confirmLabelText" :for="$confirmId" class="mb-1" :markAsRequire="$required"/>
             @endif
 
             <div class="input flex items-center justify-between gap-2 {{ $errorConfirmClass }}">

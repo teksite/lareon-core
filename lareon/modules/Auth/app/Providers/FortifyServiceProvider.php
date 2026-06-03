@@ -41,8 +41,13 @@ class FortifyServiceProvider extends ServiceProvider
     private function bootViews(): void
     {
         Fortify::loginView(fn() => View::first(['pages.auth.login', 'auth::authentication.pages.login']));
+        Fortify::registerView(fn() => View::first(['pages.auth.register', 'auth::authentication.pages.register']));
+//        Fortify::requestPasswordResetLinkView(fn() => View::first(['pages.auth.forgot-password', 'lareon::authentication.pages.forgot-password']));
+//        Fortify::resetPasswordView(fn() => View::first(['pages.auth.reset-password', 'lareon::authentication.pages.reset-password']));
+//        Fortify::verifyEmailView(fn() => View::first(['pages.auth.verify-email', 'lareon::pages.auth.verify-email']));
+//        Fortify::twoFactorChallengeView(fn() => View::first(['pages.auth.two-factor-challenge', 'lareon::authentication.pages.two-factor-challenge']));
+//        Fortify::confirmPasswordView(fn() => View::first(['pages.pages.auth.confirm-password', 'lareon::panel.pages.profiles.confirm-password']));    }
     }
-
     private function bootFeatures(): void
     {
         Fortify::createUsersUsing(CreateNewUser::class);
