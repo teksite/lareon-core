@@ -48,7 +48,6 @@
     @if($label && $labelPosition === 'bottom')
         <x-lareon::inputs.label :title="$label" for="{{$finalId}}" class="mt-1" :markAsRequire="$required"/>
     @endif
-
     <x-lareon::inputs.error :messages="$errorMessage ?? null"/>
 
 </div>

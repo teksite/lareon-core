@@ -27,7 +27,15 @@
             <footer>
                 @yield('footer')
             </footer>
-
+        </div>
+        <div>
+            @if($errors && $errors->count())
+                @foreach($errors as $error)
+                    <div class="bg-white">
+                        {{$error}}
+                    </div>
+                @endforeach
+            @endif
         </div>
     </div>
 </main>
