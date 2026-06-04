@@ -31,7 +31,7 @@ class UpdateUserRequest extends FormRequest
                 'send_phone_notification' => 'sometimes|in:-1,0,1',
             ],
             [
-                'enable_2fa' => 'sometimes|in:0,1',
+                'enable_2fa' => 'sometimes|in:0,1,-1',
             ]
         );
     }

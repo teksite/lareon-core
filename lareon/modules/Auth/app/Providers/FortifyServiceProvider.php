@@ -46,7 +46,8 @@ class FortifyServiceProvider extends ServiceProvider
 //        Fortify::requestPasswordResetLinkView(fn() => View::first(['pages.auth.forgot-password', 'lareon::authentication.pages.forgot-password']));
 //        Fortify::resetPasswordView(fn() => View::first(['pages.auth.reset-password', 'lareon::authentication.pages.reset-password']));
 //        Fortify::twoFactorChallengeView(fn() => View::first(['pages.auth.two-factor-challenge', 'lareon::authentication.pages.two-factor-challenge']));
-//        Fortify::confirmPasswordView(fn() => View::first(['pages.pages.auth.confirm-password', 'lareon::panel.pages.profiles.confirm-password']));    }
+        Fortify::confirmPasswordView(fn() => View::first(['pages.auth.confirm-password', 'auth::authentication.pages.confirm-password']));
+
     }
     private function bootFeatures(): void
     {
@@ -56,6 +57,8 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
         Fortify::redirectUserForTwoFactorAuthenticationUsing(RedirectIfTwoFactorAuthenticatable::class);
         Fortify::authenticateUsing($this->authenticationUser());
+        Fortify::confirmPasswordsUsing(fn() => View::first(['pages.auth.confirm-password', 'auth::authentication.pages.confirm-password']));
+
     }
 
     /**

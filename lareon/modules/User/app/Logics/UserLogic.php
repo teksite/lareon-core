@@ -6,13 +6,9 @@ use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
-use Laravel\Fortify\Fortify;
-use Laravel\Fortify\RecoveryCode;
 use Lareon\Modules\User\App\Models\User;
-use PragmaRX\Google2FA\Google2FA;
 use Teksite\Authorize\Models\Role;
 use Teksite\Handler\Actions\ServiceWrapper;
 use Teksite\Handler\contracts\ServiceResult;
@@ -67,11 +63,7 @@ class UserLogic
     {
         return ServiceWrapper::make(false)->do(function () use ($user, $inputs) {
             $inputs = array_filter($inputs);
-            if (isset($inputs['enable_2fa']) && $inputs['enable_2fa'] === 1) {
-                $secretLength = (int)config('fortify-options.two-factor-authentication.secret-length', 16);
-
-            }
-            $user->update(Arr::except($inputs, ['permissions', 'roles', 'meta', 'seo']));
+            $user->update(Arr::except($inputs, ['permissions', 'roles' ,'meta' ,'seo']));
             return $user->refresh();
         })->run();
     }
@@ -132,17 +124,17 @@ class UserLogic
      * @throws BindingResolutionException
      * @throws \Throwable
      */
-    public function updateACL(Authenticatable|User $user, array $inputs)
+    public function updateACL(Authenticatable|User $user , array $inputs )
     {
         return ServiceWrapper::make(false)->do(function () use ($inputs, $user) {
-            $roles = $inputs['roles'] ?? [];
-            $permissions = $inputs['permissions'] ?? [];
+            $roles=$inputs['roles'] ?? [];
+            $permissions=$inputs['permissions'] ?? [];
             $roleArray = $user->assignRole($roles);
             $permissionsArray = $user->syncPermissions($permissions);
 
             return [
-                'roles'       => $roleArray,
-                'permissions' => $permissionsArray,
+                'roles'=>$roleArray,
+                'permissions'=>$permissionsArray,
             ];
 
         })->run();
