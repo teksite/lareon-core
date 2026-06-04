@@ -71,6 +71,7 @@
                 </div>
             </div>
         </x-lareon::editor.tabs.item>
+
         <x-lareon::editor.tabs.item :title="__('two factor authentication')">
             <x-auth::editor.2fa :user="$user"/>
         </x-lareon::editor.tabs.item>

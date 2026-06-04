@@ -62,8 +62,9 @@ class UserLogic
     public function update(Authenticatable|User $user, array $inputs = []): ServiceResult
     {
         return ServiceWrapper::make(false)->do(function () use ($user, $inputs) {
-            $inputs = array_filter($inputs);
-            $user->update(Arr::except($inputs, ['permissions', 'roles' ,'meta' ,'seo']));
+            $user->fill(Arr::except($inputs, ['permissions', 'roles' ,'enable_2fa', 'meta', 'seo']));
+            $this->toggle2fa($user , $inputs['enable_2fa'] ?? null);
+            $user->save();
             return $user->refresh();
         })->run();
     }
@@ -124,20 +125,35 @@ class UserLogic
      * @throws BindingResolutionException
      * @throws \Throwable
      */
-    public function updateACL(Authenticatable|User $user , array $inputs )
+    public function updateACL(Authenticatable|User $user, array $inputs)
     {
         return ServiceWrapper::make(false)->do(function () use ($inputs, $user) {
-            $roles=$inputs['roles'] ?? [];
-            $permissions=$inputs['permissions'] ?? [];
+            $roles = $inputs['roles'] ?? [];
+            $permissions = $inputs['permissions'] ?? [];
             $roleArray = $user->assignRole($roles);
             $permissionsArray = $user->syncPermissions($permissions);
 
             return [
-                'roles'=>$roleArray,
-                'permissions'=>$permissionsArray,
+                'roles'       => $roleArray,
+                'permissions' => $permissionsArray,
             ];
 
         })->run();
+    }
+
+
+    public function toggle2fa(Authenticatable|User $user, int|null $status=null): void
+    {
+        if ($status === 1){
+            return ;
+        }elseif ($status === 0){
+            $user->forceFill([
+                'two_factor_secret'=>null,
+                'two_factor_recovery_codes'=>null,
+                'two_factor_confirmed_at'=>null,
+            ]);
+        }
+        return ;
     }
 
 }
