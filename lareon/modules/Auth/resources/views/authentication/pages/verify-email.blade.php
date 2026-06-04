@@ -11,9 +11,11 @@
             </p>
         </div>
         <div class="">
-            <x-lareon::buttons.simple type="submit" role="submit" :fullWidth="true">
-                {{__('lareon::global.buttons.resend_email')}}
-            </x-lareon::buttons.simple>
+            <form method="POST" action="{{ route('verification.send') }}" class="formAction">
+                <x-lareon::buttons.simple type="submit" role="submit" :fullWidth="true">
+                    {{__('lareon::global.buttons.resend_email')}}
+                </x-lareon::buttons.simple>
+            </form>
         </div>
         @section('footer')
             <section class="">

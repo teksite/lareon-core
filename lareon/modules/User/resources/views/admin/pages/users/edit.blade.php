@@ -64,7 +64,35 @@
                 </div>
             </x-lareon::editor.tabs.item>
 
-            {{--TODO add 2FA and Passkey --}}
+        <x-lareon::editor.tabs.item :title="__('passkey')">
+            <div class="grid gap-6 md:grid-cols-2">
+                <div class="">
+                    <x-lareon::editor.password :label="__('password')" :confirm_label="__('confirm password')" name="password" :placeholder="__('lareon::global.placeholders.auth.password',['attribute'=>__('password')])" wrapperClass="grid gap-6 lg:grid-cols-2"/>
+                </div>
+            </div>
+        </x-lareon::editor.tabs.item>
+        <x-lareon::editor.tabs.item :title="__('two factor authentication')">
+            @if(auth()->user()->two_factor_secret)
+                <x-lareon::box class="mb-6">
+                    <form method="POST" action="{{route('two-factor.disable')}}">
+                        @csrf
+                        @method('DELETE')
+                        <div class="mb-3  flex flex-col md:flex-row items-center justify-between gap-6">
+                            <p class="mb-0 w-full">
+                                {{__('two-Factor Authentication is currently enabled. to disable it, please click the \'disable\' button')}}
+                            </p>
+                            <x-lareon::buttons.nav color="delete" class="w-64">
+                                {{ __('disable') }}
+                            </x-lareon::buttons.nav>
+                        </div>
+                    </form>
+                </x-lareon::box>
+            @else
+                <p>
+                    {{__("The user has not activated two-factor authentication yet")}}.
+                </p>
+            @endif
+        </x-lareon::editor.tabs.item>
 
     @endsection
 </x-lareon::admin-editor>

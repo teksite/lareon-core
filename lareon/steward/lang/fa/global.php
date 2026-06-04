@@ -16,7 +16,7 @@ return [
         'unauthorized'       => 'شما مجوز انجام این عملیات را ندارید',
         'forbidden'          => 'دسترسی غیرمجاز',
         'sign_in'            => 'ورود به سیستم',
-        'sign_up'            => 'ثبت نام در سیستم',
+        'sign_up'            => 'ثبت‌نام در سیستم',
         'email_verification' => 'تأیید ایمیل',
         'phone_verification' => 'تأیید نلفن',
     ],
@@ -135,7 +135,7 @@ return [
         'login'    => 'ورود',
         'register' => 'ثبت‌نام',
         'sign_in'  => 'ورود',
-        'sign_up'  => 'ثبت نام',
+        'sign_up'  => 'ثبت‌نام',
 
         'new_one'        => 'ایجاد مورد جدید',
         'new_attribute'  => 'ایجاد :attribute',
