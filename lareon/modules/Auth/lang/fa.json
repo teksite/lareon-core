@@ -14,6 +14,6 @@
     "please note that changes to the permissions of this role will cause the user to either gain or lose access to different parts of the application": "توجه کنید: تغییر در اجازه دسترسی‌های این نقش باعث دسترسی یا عدم دسترسی کاربر به بخش‌های مختلف اپلیکیشن می‌شود",
     "username": "نام کاربری",
     "two factor authentication": "اهراز هویت دو مرحله‌ای",
-    "The user has not activated two-factor authentication yet": "کاربر هنوز احراز هویت دو مرحله‌ای (two-factor authentication) را فعال نکرده است",
+    "two-factor authentication has not been enabled yet": "احراز هویت دو مرحله‌ای هنوز فعال نشده است",
     "Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you did not receive the email, we will gladly send you another": "از ثبت‌نام شما سپاسگزاریم! پیش از شروع، لطفاً آدرس ایمیل خود را با کلیک روی پیوندی که برایتان ایمیل کردیم، تأیید کنید. اگر ایمیلی دریافت نکردید، با کمال میل یک ایمیل دیگر برایتان ارسال خواهیم کرد"
 }

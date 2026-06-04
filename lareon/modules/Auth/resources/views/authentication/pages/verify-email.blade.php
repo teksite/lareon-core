@@ -12,6 +12,7 @@
         </div>
         <div class="">
             <form method="POST" action="{{ route('verification.send') }}" class="formAction">
+                @csrf
                 <x-lareon::buttons.simple type="submit" role="submit" :fullWidth="true">
                     {{__('lareon::global.buttons.resend_email')}}
                 </x-lareon::buttons.simple>

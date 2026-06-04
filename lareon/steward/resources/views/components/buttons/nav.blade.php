@@ -6,6 +6,7 @@
       'create'=>  'green',
       'update'=>  'blue',
       'delete'=>  'red',
+      'enable'=>  'cyan',
       default =>'gray'
     };
 

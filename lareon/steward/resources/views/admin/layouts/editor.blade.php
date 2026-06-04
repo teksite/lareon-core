@@ -69,7 +69,7 @@
         <div class="grid grid-cols-1 gap-6 {{$styleClass}} ">
             <div class="md:col-span-2 lg:col-span-2 xl:col-span-5">
                 <div class="space-y-6">
-                    @yield('form.before.start')
+                    @yield('form.start')
                     <div class="space-y-6">
                         @hasSection('form')
                             @if($hasTab)
@@ -87,7 +87,7 @@
                             @endif
                         @endif
                     </div>
-                    @yield('form.before.end')
+                    @yield('form.end')
                 </div>
             </div>
 
