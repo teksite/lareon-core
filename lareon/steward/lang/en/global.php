@@ -17,6 +17,8 @@ return [
         'forbidden'    => 'Access forbidden',
         'sign_in' => 'Sign In',
         'sign_up' => 'Sign Up',
+        'email_verification' => 'Email Verification',
+        'phone_verification' => 'Phone Verification',
     ],
 
     // ============================================
