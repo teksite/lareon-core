@@ -28,15 +28,14 @@
                 @yield('footer')
             </footer>
         </div>
-        <div>
-            @if($errors && $errors->count())
-                @foreach($errors as $error)
-                    <div class="bg-white">
-                        {{$error}}
-                    </div>
-                @endforeach
-            @endif
-        </div>
+
+    </div>
+    <div class="absolute top-5 end-5 ">
+        @foreach($errors?->all() as $error)
+            <div class="bg-white">
+                {{$error}}
+            </div>
+        @endforeach
     </div>
 </main>
 @stack('footerScripts')

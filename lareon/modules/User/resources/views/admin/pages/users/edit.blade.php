@@ -72,9 +72,11 @@
             </div>
         </x-lareon::editor.tabs.item>
 
+    @if(\Illuminate\Support\Facades\Route::has('two-factor.enable'))
         <x-lareon::editor.tabs.item :title="__('two factor authentication')">
             <x-auth::editor.2fa :user="$user"/>
         </x-lareon::editor.tabs.item>
+        @endif
 
     @endsection
     @section('form.after')

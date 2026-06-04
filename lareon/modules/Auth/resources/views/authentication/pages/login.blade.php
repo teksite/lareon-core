@@ -6,7 +6,7 @@
             <h1 class="text-center !mb-0 text-xl">{{__('lareon::global.auth.login')}}</h1>
         </div>
         <hr class="my-6 border-zinc-300">
-        <form method="POST" action="{{ route('login') }}" class="formAction space-y-3">
+        <form method="POST" action="{{ route('login.store') }}" class="formAction space-y-3">
             @csrf
             <div class="mb-6 space-y-3">
                 <x-lareon::editor.input :label="__('username')" name="username" autocomplete="email" :placeholder="__('lareon::global.placeholders.auth.username')" :required="true"/>

@@ -19,6 +19,7 @@ return [
         'sign_up'            => 'ثبت‌نام در سیستم',
         'email_verification' => 'تأیید ایمیل',
         'phone_verification' => 'تأیید نلفن',
+        'confirm_password' => 'تایید گذر واژه',
     ],
 
     // ============================================

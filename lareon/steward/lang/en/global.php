@@ -19,6 +19,8 @@ return [
         'sign_up' => 'Sign Up',
         'email_verification' => 'Email Verification',
         'phone_verification' => 'Phone Verification',
+        'confirm_password' => 'confirm the password',
+
     ],
 
     // ============================================

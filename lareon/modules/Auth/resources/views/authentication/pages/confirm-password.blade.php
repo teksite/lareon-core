@@ -1,21 +1,18 @@
-<x-auth::layout :title="trans('lareon::global.auth.sign_in')">
-    <section class="w-11/12 md:2-3/4 mx-auto my-3">
-        <p>
-            {{ __('to enable two factor authentication please enter your password in the below field') }}
+<x-auth::layout :title="trans('lareon::global.auth.sign_in')" layput="center">
+    <section class="w-11/12 md:2-3/4 mx-auto space-y-6">
+        <div class="text-center">
+            <x-icon type="outline" icon="password" size="32" class="mx-auto mb-3"></x-icon>
+            <h1 class="text-center !mb-0 text-xl">{{__('lareon::global.auth.confirm_password')}}</h1>
+        </div>
+        <p class="text-center">
+            {{ __('to continue the process, you should enter your password') }}.
         </p>
-
-        <form method="POST" action="{{ route('password.confirm') }}">
+        <form method="POST" action="{{ route('password.confirm') }}" >
             @csrf
-            <div class="mb-3">
-                <x-lareon::inputs.label for="password" :value="__('password')"/>
-                <x-lareon::inputs.text id="password" class="block w-full" type="password" name="password" required
-                              autocomplete="current-password"/>
-                <x-lareon::inputs.error :messages="$errors->get('password')" class="mt-2"/>
-            </div>
-
-            <div class="flex justify-end">
+            <x-lareon::editor.password :label="__('password')" name="password" :placeholder="__('lareon::global.placeholders.auth.password',['attribute'=>__('password')])" :showConfirm="false" :strength="false"/>
+            <div class="flex justify-end mt-3">
                 <x-lareon::buttons.nav>
-                    {{ __('confirm') }}
+                    {{ __('lareon::global.buttons.confirm') }}
                 </x-lareon::buttons.nav>
             </div>
         </form>
