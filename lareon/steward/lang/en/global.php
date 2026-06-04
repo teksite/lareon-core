@@ -126,6 +126,11 @@ return [
         'download' => 'Download',
         'copy'     => 'Copy',
         'share'    => 'Share',
+        'send'         => 'Send',
+        'send_email'   => 'Send Email',
+        'send_sms'     => 'Send SMS',
+        'resend_email' => 'Send Email Again',
+        'resend_sms'  => 'Send SMS Again',
 
         'logout'   => 'Logout',
         'login'    => 'Login',

@@ -26,7 +26,7 @@
             </div>
             <div class="">
                 <x-lareon::buttons.simple type="submit" role="submit" :fullWidth="true">
-                    {{__('lareon::global.buttons.sign_in')}}
+                    {{__('lareon::global.buttons.register')}}
                 </x-lareon::buttons.simple>
             </div>
 

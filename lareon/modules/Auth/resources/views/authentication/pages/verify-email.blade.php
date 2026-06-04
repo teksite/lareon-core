@@ -12,7 +12,7 @@
         </div>
         <div class="">
             <x-lareon::buttons.simple type="submit" role="submit" :fullWidth="true">
-                {{__('lareon::global.buttons.send_email')}}
+                {{__('lareon::global.buttons.resend_email')}}
             </x-lareon::buttons.simple>
         </div>
         @section('footer')
