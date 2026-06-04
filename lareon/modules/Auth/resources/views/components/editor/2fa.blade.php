@@ -1,7 +1,7 @@
 @props(['user'])
 @if($user->two_factor_secret)
     <div class="">
-        <x-lareon::editor.input-check :options="[[__('disable 2FA') , 0 ]]" name="enable_2" value="0" value="null"/>
+        <x-lareon::editor.input-check :options="[[__('disable 2FA') , 0 ]]" name="enable_2fa"  value="null"/>
 
         @if(auth()->id() === $user->id)
             <hr class="bordering my-12">

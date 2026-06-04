@@ -62,8 +62,11 @@ class UserLogic
     public function update(Authenticatable|User $user, array $inputs = []): ServiceResult
     {
         return ServiceWrapper::make(false)->do(function () use ($user, $inputs) {
-            $user->fill(Arr::except($inputs, ['permissions', 'roles' ,'enable_2fa', 'meta', 'seo']));
-            $this->toggle2fa($user , $inputs['enable_2fa'] ?? null);
+            if (!isset($inputs['password']) || $inputs['password'] === null) {
+                unset($inputs['password']);
+            }
+            $user->fill(Arr::except($inputs, ['permissions', 'roles', 'enable_2fa', 'meta', 'seo']));
+            $this->toggle2fa($user, $inputs['enable_2fa'] ?? null);
             $user->save();
             return $user->refresh();
         })->run();
@@ -142,18 +145,15 @@ class UserLogic
     }
 
 
-    public function toggle2fa(Authenticatable|User $user, int|null $status=null): void
+    public function toggle2fa(Authenticatable|User $user, int|null $status = null): void
     {
-        if ($status === 1){
-            return ;
-        }elseif ($status === 0){
+        if ($status === 0) {
             $user->forceFill([
-                'two_factor_secret'=>null,
-                'two_factor_recovery_codes'=>null,
-                'two_factor_confirmed_at'=>null,
+                'two_factor_secret'         => null,
+                'two_factor_recovery_codes' => null,
+                'two_factor_confirmed_at'   => null,
             ]);
         }
-        return ;
     }
 
 }
