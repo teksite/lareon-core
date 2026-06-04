@@ -45,9 +45,9 @@ return [
     |
     */
 
-    'username' => 'username',
+    'username' => 'email',
 
-    'email' => 'username',
+    'email' => 'email',
 
     /*
     |--------------------------------------------------------------------------
@@ -150,7 +150,7 @@ return [
         Features::updateProfileInformation(),
         Features::updatePasswords(),
         Features::twoFactorAuthentication([
-            'confirm'         => true,
+//            'confirm'         => true,
             'confirmPassword' => true,
             // 'window' => 0,
         ]),

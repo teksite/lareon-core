@@ -78,17 +78,17 @@
     @endsection
     @section('form.after')
         <x-lareon::box class="mb-6">
-            <form method="POST" action="{{route('two-factor.disable')}}">
+            <form method="POST" action="{{ route('two-factor.enable')}}">
                 @csrf
-                @method('DELETE')
-                <div class="mb-3  flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="mb-3 flex flex-col md:flex-row items-center justify-between gap-6">
                     <p class="mb-0 w-full">
-                        {{__('two-Factor Authentication is currently enabled. to disable it, please click the \'disable\' button')}}
+                        {{__('Two-Factor Authentication is currently disabled. To enable it, please click the \'enable\' button')}}
                     </p>
                     <x-lareon::buttons.nav class="w-64">
-                        {{ __('disable') }}
+                        {{ __('enable') }}
                     </x-lareon::buttons.nav>
                 </div>
+
             </form>
         </x-lareon::box>
     @endsection

@@ -12,6 +12,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Validation\Rule;
+use Laravel\Fortify\TwoFactorAuthenticatable;
 use Lareon\Modules\User\Database\Factories\UserFactory;
 use Teksite\Authorize\Traits\HasAuthorization;
 use Teksite\Extralaravel\Enums\MobilePatterns;
@@ -24,7 +25,7 @@ use Teksite\Extralaravel\Traits\MustVerifyPhone;
 class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable, HasAuthorization ,MustVerifyPhone;
+    use HasFactory, Notifiable, HasAuthorization ,MustVerifyPhone ,TwoFactorAuthenticatable;
 
     /**
      * Get the attributes that should be cast.

@@ -3,6 +3,7 @@
 namespace Lareon\Modules\Auth\App\Providers;
 
 use App\Actions\Fortify\UpdateUserProfileInformation;
+use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -57,7 +58,7 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
         Fortify::redirectUserForTwoFactorAuthenticationUsing(RedirectIfTwoFactorAuthenticatable::class);
         Fortify::authenticateUsing($this->authenticationUser());
-        Fortify::confirmPasswordsUsing(fn() => View::first(['pages.auth.confirm-password', 'auth::authentication.pages.confirm-password']));
+
 
     }
 
