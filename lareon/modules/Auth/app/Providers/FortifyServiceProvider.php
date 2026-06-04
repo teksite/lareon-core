@@ -5,6 +5,7 @@ namespace Lareon\Modules\Auth\App\Providers;
 use App\Actions\Fortify\UpdateUserProfileInformation;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\RateLimiter;
@@ -46,7 +47,7 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::verifyEmailView(fn() => View::first(['pages.auth.verify-email', 'auth::authentication.pages.verify-email']));
 //        Fortify::requestPasswordResetLinkView(fn() => View::first(['pages.auth.forgot-password', 'lareon::authentication.pages.forgot-password']));
 //        Fortify::resetPasswordView(fn() => View::first(['pages.auth.reset-password', 'lareon::authentication.pages.reset-password']));
-        Fortify::twoFactorChallengeView(fn() => View::first(['pages.auth.2fa-challenge', 'auth::authentication.pages.pages.2fa-challenge']));
+        Fortify::twoFactorChallengeView(fn() => View::first(['pages.auth.2fa-challenge', 'auth::authentication.pages.2fa-challenge']));
         Fortify::confirmPasswordView(fn() => View::first(['pages.auth.confirm-password', 'auth::authentication.pages.confirm-password']));
 
     }
@@ -58,6 +59,7 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
         Fortify::redirectUserForTwoFactorAuthenticationUsing(RedirectIfTwoFactorAuthenticatable::class);
         Fortify::authenticateUsing($this->authenticationUser());
+/*        Fortify::confirmPasswordsUsing($this->confirmPassword());*/
 
 
     }
@@ -83,6 +85,17 @@ class FortifyServiceProvider extends ServiceProvider
         };
     }
 
+
+
+    /**
+     * @return \Closure
+     */
+    protected function confirmPassword(): \Closure
+    {
+        return function (User $user, string $password): bool {
+            return Hash::check($password, $user->password);
+        };
+    }
 
     private function bootRateLimiters(): void
     {
