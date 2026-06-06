@@ -32,7 +32,7 @@ class RecoveryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code' => 'string|required',
+            'recovery_code' => 'string|required',
         ];
     }
 

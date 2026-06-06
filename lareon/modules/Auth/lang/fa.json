@@ -16,5 +16,11 @@
     "two factor authentication": "اهراز هویت دو مرحله‌ای",
     "two-factor authentication has not been enabled yet": "احراز هویت دو مرحله‌ای هنوز فعال نشده است",
     "to continue the process, you should enter your password": "برای ادامهٔ فرآیند، باید رمز عبور خود را وارد کنید",
-    "Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you did not receive the email, we will gladly send you another": "از ثبت‌نام شما سپاسگزاریم! پیش از شروع، لطفاً آدرس ایمیل خود را با کلیک روی پیوندی که برایتان ایمیل کردیم، تأیید کنید. اگر ایمیلی دریافت نکردید، با کمال میل یک ایمیل دیگر برایتان ارسال خواهیم کرد"
+    "Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you did not receive the email, we will gladly send you another": "از ثبت‌نام شما سپاسگزاریم! پیش از شروع، لطفاً آدرس ایمیل خود را با کلیک روی پیوندی که برایتان ایمیل کردیم، تأیید کنید. اگر ایمیلی دریافت نکردید، با کمال میل یک ایمیل دیگر برایتان ارسال خواهیم کرد",
+    "QR code": "QR کد",
+    "To use the QR code, please download the Google Authenticator app on your phone and scan the code below": "برای استفاده از کد QR، لطفاً اپلیکیشن Google Authenticator را روی گوشی خود نصب کنید و کد زیر را اسکن نمایید",
+    "If you don't have access to your authenticator app, use these codes": "اگر به اپلیکیشن احراز هویت (Authenticator) خود دسترسی ندارید، از این کدها استفاده کنید",
+    "Save these codes in a safe place and don't share them": "این کدها را در جای امنی ذخیره کنید و با کسی به اشتراک نگذارید",
+    "recovery code": "کد بازیابی",
+    "disable 2FA": "غیرفعال کردن 2FA"
 }
