@@ -20,6 +20,7 @@ return [
         'email_verification' => 'Email Verification',
         'phone_verification' => 'Phone Verification',
         'confirm_password' => 'confirm the password',
+        '2fa' => 'two factor authentication',
 
     ],
 

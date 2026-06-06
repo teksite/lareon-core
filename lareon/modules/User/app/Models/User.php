@@ -21,7 +21,7 @@ use Teksite\Extralaravel\Traits\MustVerifyPhone;
 
 #[UseFactory(UserFactory::class)]
 #[Fillable(['name', 'lastname', 'email', 'phone', 'password', 'slug' ,'parent_id'])]
-#[Hidden(['password', 'remember_token'])]
+#[Hidden(['password', 'remember_token' ,'two_factor_secret','two_factor_recovery_codes','two_factor_confirmed_at'])]
 class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<UserFactory> */
