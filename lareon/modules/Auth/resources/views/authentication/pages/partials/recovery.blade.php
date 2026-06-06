@@ -1,4 +1,4 @@
-<div x-show="activeTab === 2" x-transition.opacity.duration.300ms>
+<div x-show="activeTab === 2">
     <section>
         <form method="POST" action="{{route('auth.recovery.login.store')}}" class="formAction">
             @csrf

@@ -85,13 +85,15 @@ function singleArrayInput() {
 function requestSendOTP() {
     const otpBox = document.getElementById('sendOtp');
     const form = document.getElementById('sendOtpGuest');
+    const labelEl = document.getElementById('opt_helper_label');
 
     if (!otpBox || !form) return;
     const currentUrl = location.toString().replace(location.search, "")
 
-    const endpoint = `${currentUrl}/send-otp`;
+    const endpoint = `/auth/two-factor-otp-challenge/send-otp`;
     const csrfToken = form.querySelector("[name = '_token']").value;
     const action = form.querySelector("[name = 'action']").value;
+    const contactType = form.querySelector("[name = 'contactType']");
     const resultEl = document.querySelector('#resultMsg');
 
     if (!csrfToken) {
@@ -101,25 +103,29 @@ function requestSendOTP() {
 
     otpBox.addEventListener('click', async (e) => {
         const button = e.target.closest('button');
-
-        if (resultEl) { resultEl.innerHTML = ''; }
-
         if (!button) return;
 
-        let contactType = null;
+        if (button.disabled) return;
+
+        if (resultEl) resultEl.innerHTML = '';
+
+
 
         switch (button.id) {
             case 'sendOtpViaEmail':
-                contactType = 'email';
+                labelEl.innerHTML = 'کد ارسال‌شده به ایمیل خود را وارد کنید'
+                contactType.value='email';
+
                 break;
 
             case 'sendOtpViaSMS':
-                contactType = 'phone';
+                labelEl.innerHTML = 'کد ارسال‌شده به موبایل خود را وارد کنید';
+                contactType.value='phone';
                 break;
         }
 
 
-        if (!contactType) return;
+        if (!contactType.value) return;
 
         const originalHtml = button.innerHTML;
 
@@ -143,7 +149,7 @@ function requestSendOTP() {
                     'X-Requested-With': 'XMLHttpRequest',
                     'X-CSRF-TOKEN': csrfToken
                 },
-                body: JSON.stringify({contactType, action})
+                body: JSON.stringify({contactType : contactType.value, action})
             });
 
             clearTimeout(timeout);

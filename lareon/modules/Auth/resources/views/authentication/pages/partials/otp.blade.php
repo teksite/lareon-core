@@ -1,10 +1,11 @@
-<div x-show="activeTab === 3" x-transition.opacity.duration.300ms>
+<div x-show="activeTab === 3">
     <section>
-        <form method="POST" action="{{route('auth.otp.login.store')}}" class="formAction" id="sendOtpGuest">
+        <form method="POST" action="{{route('auth.otp.verify')}}" class="formAction" id="sendOtpGuest">
             @csrf
             <input type="hidden" name="action" value="{{\Lareon\Modules\Auth\App\Enums\VerificationActionType::LOGIN->value}}">
+            <input type="hidden" name="contactType" value="{{\Lareon\Modules\Auth\App\Enums\ContactType::EMAIL->value}}">
             <div class="text-center mb-6 ">
-                <x-lareon::inputs.label for="code" :title="__('enter the sent otp code via email/SMS')" class=""/>
+                <x-lareon::inputs.label for="code" :title="__('enter the sent otp code via email/SMS')" class="" id="opt_helper_label"/>
                 <div class="flex items-center justify-center gap-1 mt-3" dir="ltr">
                     @for($i=0 ;$i<6 ; $i++)
                         <input class="otpField oneFieldInput border border-zinc-300 px-4 py-3 w-12 h-12 font-bold {{$i==2 ? 'me-3' : ''}} {{$i==3 ? 'ms-3': ''}}" name="otp_code[]" type="text" maxlength=1>

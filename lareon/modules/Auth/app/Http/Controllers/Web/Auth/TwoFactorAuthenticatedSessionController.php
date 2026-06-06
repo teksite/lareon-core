@@ -15,7 +15,7 @@ class TwoFactorAuthenticatedSessionController extends Controller
     {
     }
 
-    public function viaOTP(TotpRequest $request)
+    public function viaTOTP(TotpRequest $request)
     {
         $this->guard->login($request->challengedUser(), $request->remember());
 

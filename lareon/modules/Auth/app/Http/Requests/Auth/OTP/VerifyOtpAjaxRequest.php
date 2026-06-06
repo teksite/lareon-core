@@ -2,6 +2,7 @@
 
 namespace Lareon\Modules\Auth\App\Http\Requests\Auth\OTP;
 
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Validator;
 use Lareon\Modules\Auth\App\Enums\ContactType;
@@ -10,7 +11,7 @@ use Lareon\Modules\Auth\App\Services\OtpService;
 use Lareon\Modules\User\App\Models\User;
 use Teksite\Extralaravel\Http\ApiFormRequest;
 
-class SendOtpAjaxRequest extends ApiFormRequest
+class VerifyOtpAjaxRequest extends  FormRequest
 {
 
     public ?User $user = null;
@@ -26,6 +27,15 @@ class SendOtpAjaxRequest extends ApiFormRequest
         return true;
     }
 
+    protected function prepareForValidation(): void
+    {
+
+        if ($this->otp_code){
+            $this->replace([
+                'otp_code' => implode($this->otp_code),
+            ]);
+        }
+    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -34,18 +44,19 @@ class SendOtpAjaxRequest extends ApiFormRequest
      */
     public function rules(): array
     {
+        dd($this->toArray());
         return [
             'contactType' => ['bail', 'required', 'string', Rule::enum(ContactType::class)],
-            'action'      => ['bail', 'required', 'string', Rule::enum(VerificationActionType::class)],
+            'action'  => ['bail', 'required', 'string', Rule::enum(VerificationActionType::class)],
+            'otp_code'    => ['bail', 'required', 'string'],
         ];
     }
-
     public function after(): array
     {
         return [
             fn(Validator $validator) => $this->resolveUser($validator),
             fn(Validator $validator) => $this->resolveContact($validator),
-            fn(Validator $validator) => $this->ensureRetryTime($validator),
+            fn(Validator $validator) => $this->validateCode($validator),
         ];
     }
 
@@ -88,16 +99,23 @@ class SendOtpAjaxRequest extends ApiFormRequest
         $this->actionType = $actionType;
     }
 
-    private function ensureRetryTime(Validator $validator): void
+    private function validateCode(Validator $validator): void
     {
         if ($validator->errors()->isNotEmpty()) return;
+        $verificationService = new OtpService();
 
-        $retryTime = (new OtpService())->getRetryTime($this->contact, $this->actionType, testing: false);
+        if ($verificationService::CODE_LENGTH !== strlen((string)$this->input('otp_code'))) {
+            $validator->errors()->add('credentials', trans('auth::messages.verification_code.not_valid'));
+        }
 
-        if ($retryTime > 0) {
-            $validator->errors()->add('credentials', trans('auth::messages.verification_code.wait', ['seconds' => $retryTime . ' ('.now()->addSeconds($retryTime)->format('i:s').')']));
+        $isValid = $verificationService->verify($this->input('code'), $this->contact, VerificationActionType::tryFrom($this->actionType));
+
+
+        if (!$isValid) {
+            $validator->errors()->add('credentials', trans('auth::messages.verification_code.not_valid'));
             return;
         }
+
     }
 
 }

@@ -1,4 +1,4 @@
-<div x-show="activeTab === 1" x-transition.opacity.duration.300ms>
+<div x-show="activeTab === 1">
     <section>
         <form method="POST" action="{{route('auth.two-factor.login.store')}}" class="formAction">
             @csrf
