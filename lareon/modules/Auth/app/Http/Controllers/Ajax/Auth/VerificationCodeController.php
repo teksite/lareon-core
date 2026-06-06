@@ -6,11 +6,12 @@ use Lareon\Modules\Auth\App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Lareon\Modules\Auth\App\Http\Requests\Auth\OTP\SendOtpAjaxRequest;
 use Services\OtpService;
+use Services\SendOtpService;
 use Teksite\Handler\Facade\Responder;
 
 class VerificationCodeController extends Controller
 {
-    public function __construct(protected OtpService $service) {}
+    public function __construct(protected OtpService $otpService , protected SendOtpService $sendService) {}
 
     public function send(SendOtpAjaxRequest $request)
     {
@@ -18,27 +19,23 @@ class VerificationCodeController extends Controller
         $gateway = $validated['contactType'];
         $action = $validated['action'];
         $user = $request->user;
-
-        $to = match ($gateway) {
-            'phone' => $user->phone,
-            'email' => $user->email,
-            default => null
-        };
-
-        if ($to) {
-            $codeDate = $this->service->generate($to, $action);
-            if ($contactType === ContactType::PHONE) {
-                $res = $this->sendService->viaSMS($to, $code['code'], $actionType, $code['expire_at']);
-            } elseif ($contactType === ContactType::EMAIL) {
-                $res = $this->sendService->viaEmail($to, $code['code'], $actionType, $code['expire_at']);
-            }
+        
+        if ($gateway === 'phone') {
+            $codeDate = $this->otpService->generate( $user->phone, $action);
+            $res = $this->sendService->viaSMS($user->phone, $codeDate['code'], $action, $codeDate['expire_at']);
+        }else if ($gateway === 'email') {
+            $codeDate = $this->otpService->generate( $user->email, $action);
+            $res = $this->sendService->viaEmail($user->email, $codeDate['code'], $action, $codeDate['expire_at']);
+        }else{
+            return Responder::failed(trans('lareon::errors.server_validation_error'));
         }
 
+        if ($res){
+            return Responder::success(trans('lareon::global.crud.success.general'));
+        }else{
+            return Responder::success(trans('lareon::global.crud.error.general'));
 
-        return Responder::failed(trans('lareon::errors.server_validation_error'));
-
+        }
     }
-
-
     public function verify(Request $request) {}
 }

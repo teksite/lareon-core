@@ -33,6 +33,7 @@ return [
             'created' => ':attribute created successfully',
             'updated' => ':attribute updated successfully',
             'deleted' => ':attribute deleted successfully',
+            'general' => 'successfully done'
         ],
 
         // Error messages
@@ -40,6 +41,8 @@ return [
             'created' => 'Error: The :attribute could not be created!',
             'updated' => 'Error: The :attribute could not be updated!',
             'deleted' => 'Error: The :attribute could not be deleted!',
+            'general' => 'unfortunately  failed'
+
         ],
 
         // Titles
