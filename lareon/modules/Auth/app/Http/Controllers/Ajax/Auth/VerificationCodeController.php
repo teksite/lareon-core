@@ -2,6 +2,8 @@
 
 namespace Lareon\Modules\Auth\App\Http\Controllers\Ajax\Auth;
 
+use Illuminate\Contracts\Auth\StatefulGuard;
+use Laravel\Fortify\Contracts\TwoFactorLoginResponse;
 use Lareon\Modules\Auth\App\Enums\ContactType;
 use Lareon\Modules\Auth\App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -13,7 +15,7 @@ use Teksite\Handler\Facade\Responder;
 
 class VerificationCodeController extends Controller
 {
-    public function __construct(protected OtpService $otpService, protected SendOtpService $sendService) {}
+    public function __construct(protected StatefulGuard $guard , protected OtpService $otpService, protected SendOtpService $sendService) {}
 
     public function send(SendOtpAjaxRequest $request)
     {
@@ -33,11 +35,12 @@ class VerificationCodeController extends Controller
 
     public function verify(VerifyOtpAjaxRequest $request) {
 
-        dd($request->toArray());
-        $contact = $request->contact;
-        $actionType = $request->actionType;
+        $this->guard->login($request->user, $request->remember());
 
-        return Responder::success(['token' => $token], trans('auth::messages.verification_code.sent_successfully'))->reply();
+        $this->otpService->flushCache();
 
+        $request->session()->regenerate();
+
+        return app(TwoFactorLoginResponse::class);
     }
 }

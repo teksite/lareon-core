@@ -11,7 +11,8 @@
                         <input class="otpField oneFieldInput border border-zinc-300 px-4 py-3 w-12 h-12 font-bold {{$i==2 ? 'me-3' : ''}} {{$i==3 ? 'ms-3': ''}}" name="otp_code[]" type="text" maxlength=1>
                     @endfor
                 </div>
-                <x-lareon::inputs.error :messages="$errors->get('otp_code')" class="mt-2"/>
+                <x-lareon::inputs.error :messages="$errors->first('otp_code') ?? null"/>
+                <x-lareon::inputs.error :messages="$errors->first('otp_code.*') ?? null"/>
             </div>
             <div class="flex items-center my-12" id="sendOtp">
                 @if(true)

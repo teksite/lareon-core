@@ -1,6 +1,7 @@
 <?php
 
 namespace Lareon\Modules\Auth\App\Services;
+
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
@@ -8,7 +9,8 @@ use Lareon\Modules\Auth\App\Actions\Otp\DetectContactType;
 use Lareon\Modules\Auth\App\Enums\ContactType;
 use Lareon\Modules\Auth\App\Enums\VerificationActionType;
 
-class OtpService {
+class OtpService
+{
 
     const int CODE_LENGTH = 6;
 
@@ -19,9 +21,7 @@ class OtpService {
 
     const bool PRODUCTION_MODE = true;
 
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     /**
      * @param string $to
@@ -87,8 +87,14 @@ class OtpService {
      */
     private function generateCacheKey(ContactType $gateway, VerificationActionType $action, string $to): string
     {
-        return "verification_code::" . $action->value . "::" . $gateway->value . "::" . $to;
+        return $this->preFixForCache() . $action->value . "::" . $gateway->value . "::" . $to;
     }
+
+    public function preFixForCache(): string
+    {
+        return "verification_code::" . request()->ip() . '::';
+    }
+
 
     /**
      * @param string $cacheKey
@@ -98,7 +104,7 @@ class OtpService {
      */
     private function cache(string $cacheKey, string $code, Carbon $expireAt): void
     {
-        Cache::put($cacheKey, [
+        Cache::tags(['otp', request()->ip(),])->put($cacheKey, [
             'code'      => self::ENCRYPT_CODE ? encrypt($code) : $code,
             'expire_at' => (string)$expireAt,
             'secure'    => self::ENCRYPT_CODE,
@@ -113,7 +119,7 @@ class OtpService {
      * @param bool $testing
      * @return int|Carbon
      */
-    public function getRetryTime(string $to, VerificationActionType $action, bool $different = true , bool $testing = false): int|Carbon
+    public function getRetryTime(string $to, VerificationActionType $action, bool $different = true, bool $testing = false): int|Carbon
     {
         if (!self::PRODUCTION_MODE || $testing) return 0;
         $gateway = DetectContactType::handle($to);
@@ -143,7 +149,7 @@ class OtpService {
 
         $cacheKey = $this->generateCacheKey($gateway, $action, $contact);
 
-        $cachedData = Cache::get($cacheKey);
+        $cachedData = Cache::tags(['otp', request()->ip()])->get($cacheKey);
 
         if (is_null($cachedData)) return false;
 
@@ -161,19 +167,24 @@ class OtpService {
 
     public function verify($code, string $contact, VerificationActionType $action): bool
     {
-        $isValid= $this->check($code , $contact ,$action);
+        $isValid = $this->check($code, $contact, $action);
         if (!$isValid) return false;
-        $this->forget($contact , $action);
+        $this->forget($contact, $action);
         return true;
     }
 
-    public function forget(string $contact, VerificationActionType $action ): void
+    public function forget(string $contact, VerificationActionType $action): void
     {
         $gateway = DetectContactType::handle($contact);
 
         $cacheKey = $this->generateCacheKey($gateway, $action, $contact);
 
-        Cache::forget($cacheKey);
+        Cache::tags(['otp', request()->ip(),])->forget($cacheKey);
+    }
+
+    public function flushCache(): void
+    {
+        Cache::tags(['otp', request()->ip()])->flush();
     }
 
 }

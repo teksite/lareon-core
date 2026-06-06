@@ -19,6 +19,8 @@ class VerifyOtpAjaxRequest extends  FormRequest
     public ?string $contact = null;
     public ?VerificationActionType $actionType = null;
 
+    public bool $remember =false;
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -31,7 +33,7 @@ class VerifyOtpAjaxRequest extends  FormRequest
     {
 
         if ($this->otp_code){
-            $this->replace([
+            $this->merge([
                 'otp_code' => implode($this->otp_code),
             ]);
         }
@@ -44,7 +46,6 @@ class VerifyOtpAjaxRequest extends  FormRequest
      */
     public function rules(): array
     {
-        dd($this->toArray());
         return [
             'contactType' => ['bail', 'required', 'string', Rule::enum(ContactType::class)],
             'action'  => ['bail', 'required', 'string', Rule::enum(VerificationActionType::class)],
@@ -108,7 +109,7 @@ class VerifyOtpAjaxRequest extends  FormRequest
             $validator->errors()->add('credentials', trans('auth::messages.verification_code.not_valid'));
         }
 
-        $isValid = $verificationService->verify($this->input('code'), $this->contact, VerificationActionType::tryFrom($this->actionType));
+        $isValid = $verificationService->verify($this->input('otp_code'), $this->contact, $this->actionType);
 
 
         if (!$isValid) {
@@ -116,6 +117,16 @@ class VerifyOtpAjaxRequest extends  FormRequest
             return;
         }
 
+    }
+
+
+    public function remember(): bool
+    {
+        if (!$this->remember) {
+            $this->remember = $this->session()->pull('login.remember', false);
+        }
+
+        return $this->remember;
     }
 
 }

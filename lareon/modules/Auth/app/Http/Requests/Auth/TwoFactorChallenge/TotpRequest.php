@@ -23,7 +23,7 @@ class TotpRequest extends FormRequest
         $this->challengedUser();
 
         if ($this->code){
-            $this->replace([
+            $this->merge([
                 'code' => implode($this->code),
             ]);
         }
