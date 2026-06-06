@@ -16,9 +16,15 @@ Route::group(['middleware' => config('fortify.middleware', ['web'])], function (
 //            $limiter ? 'throttle:' . $limiter : null,
 //        ]))->name('login.store');
 
-    Route::post(RoutePath::for('two-factor.login', '/two-factor-challenge'), [TwoFactorAuthenticatedSessionController::class, 'store'])
+    Route::post(RoutePath::for('two-factor.login', '/two-factor-challenge'), [TwoFactorAuthenticatedSessionController::class, 'viaOTP'])
          ->middleware(array_filter([
              'guest:'.config('fortify.guard'),
              $twoFactorLimiter ? 'throttle:'.$twoFactorLimiter : null,
          ]))->name('two-factor.login.store');
+
+    Route::post( 'two-factor-recovery-challenge', [TwoFactorAuthenticatedSessionController::class, 'viaRecovery'])
+         ->middleware(array_filter([
+             'guest:'.config('fortify.guard'),
+             $twoFactorLimiter ? 'throttle:'.$twoFactorLimiter : null,
+         ]))->name('recovery.login.store');
 });
