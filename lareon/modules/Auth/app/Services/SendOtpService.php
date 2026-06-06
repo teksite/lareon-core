@@ -1,6 +1,6 @@
 <?php
 
-namespace Services;
+namespace Lareon\Modules\Auth\App\Services;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Mail;
 use Lareon\Modules\Auth\App\Actions\Otp\DetectContactType;
 use Lareon\Modules\Auth\App\Enums\ContactType;
 use Lareon\Modules\Auth\App\Enums\VerificationActionType;
+use Lareon\Modules\Auth\App\Mail\OtpMail;
 
 class SendOtpService {
 
@@ -41,7 +42,7 @@ class SendOtpService {
     {
 
         try {
-            $res = Mail::to($to)->send(new VerificationCodeEmail($code, $expireAt));
+            $res = Mail::to($to)->send(new OtpMail($code, $expireAt));
             if (!!$res) return true;
             throw new \Exception();
         } catch (\Exception $exception) {

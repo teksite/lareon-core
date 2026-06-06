@@ -9,6 +9,8 @@ function singleArrayInput() {
     const fields = document.querySelectorAll('.oneFieldInput');
     const submitBtn = document.getElementById('totpFieldSubmit');
 
+    if (!fields.length) return;
+
     fields.forEach((field, index) => {
         field.addEventListener('input', (e) => {
             let value = e.target.value.replace(/\D/g, '');
@@ -85,10 +87,12 @@ function requestSendOTP() {
     const form = document.getElementById('sendOtpGuest');
 
     if (!otpBox || !form) return;
+    const currentUrl = location.toString().replace(location.search, "")
 
-    const endpoint = `${form.action}/send`;
-    const csrfToken= form.querySelector("[name = '_token']").value;
-    const action= form.querySelector("[name = 'action']").value;
+    const endpoint = `${currentUrl}/send-otp`;
+    const csrfToken = form.querySelector("[name = '_token']").value;
+    const action = form.querySelector("[name = 'action']").value;
+    const resultEl = document.querySelector('#resultMsg');
 
     if (!csrfToken) {
         console.error('CSRF token not found');
@@ -97,6 +101,8 @@ function requestSendOTP() {
 
     otpBox.addEventListener('click', async (e) => {
         const button = e.target.closest('button');
+
+        if (resultEl) { resultEl.innerHTML = ''; }
 
         if (!button) return;
 
@@ -137,7 +143,7 @@ function requestSendOTP() {
                     'X-Requested-With': 'XMLHttpRequest',
                     'X-CSRF-TOKEN': csrfToken
                 },
-                body: JSON.stringify({ contactType , action })
+                body: JSON.stringify({contactType, action})
             });
 
             clearTimeout(timeout);
@@ -145,16 +151,39 @@ function requestSendOTP() {
             const data = await response.json();
 
             if (!response.ok) {
-                throw new Error(data.message || 'Failed to send OTP');
+                let errors = [];
+                if (data.errors) {
+                    errors = Object.values(data.errors).flat();
+                }
+
+                if (!errors.length && data.message) {
+                    errors.push(data.message);
+                }
+
+                throw errors;
             }
 
+            resultEl.innerHTML = `<span class="text-green-600 bg-green-50 px-2 py-1">otp code has been sent successfully</span>`
 
             startOtpCooldown(button, originalHtml);
+
 
         } catch (error) {
             clearTimeout(timeout);
             console.error(error);
 
+            if (resultEl) {
+
+                const messages = Array.isArray(error)
+                    ? error
+                    : [error.message || 'Something went wrong'];
+
+                resultEl.innerHTML = messages
+                    .map(message => `<div class="text-red-600 bg-red-50 px-2 py-1">${message}</div>`)
+                    .join('');
+
+                resultEl.classList.remove('hidden');
+            }
             button.disabled = false;
             button.innerHTML = originalHtml;
         }
@@ -167,10 +196,7 @@ function startOtpCooldown(button, originalHtml, seconds = 120) {
 
     const timer = setInterval(() => {
 
-        button.innerHTML = `
-            ${loader}
-            <span>${remaining}s</span>
-        `;
+        button.innerHTML = `send again in <span>${remaining}s</span>`;
 
         remaining--;
 

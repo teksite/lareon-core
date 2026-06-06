@@ -4,7 +4,7 @@
             @csrf
             <input type="hidden" name="action" value="{{\Lareon\Modules\Auth\App\Enums\VerificationActionType::LOGIN->value}}">
             <div class="text-center mb-6 ">
-                <x-lareon::inputs.label for="code" :title="__('enter the code from your authentication app')" class=""/>
+                <x-lareon::inputs.label for="code" :title="__('enter the sent otp code via email/SMS')" class=""/>
                 <div class="flex items-center justify-center gap-1 mt-3" dir="ltr">
                     @for($i=0 ;$i<6 ; $i++)
                         <input class="otpField oneFieldInput border border-zinc-300 px-4 py-3 w-12 h-12 font-bold {{$i==2 ? 'me-3' : ''}} {{$i==3 ? 'ms-3': ''}}" name="otp_code[]" type="text" maxlength=1>

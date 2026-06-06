@@ -30,8 +30,8 @@ Route::group(['middleware' => config('fortify.middleware', ['web'])], function (
          ]))->name('otp.login.store');
 
 
-    Route::prefix('otp-challenge')->name('verification_code.')->group(function () {
-        Route::post("send", [VerificationCodeController::class, 'send',])->name('send')->middleware('throttle:2,1');
+    Route::prefix('two-factor-challenge')->name('verification_code.')->group(function () {
+        Route::post("send-otp", [VerificationCodeController::class, 'send',])->name('send')->middleware('throttle:2,1');
         Route::post("verify", [VerificationCodeController::class, 'verify',])->name('verify')->middleware('throttle:5,1');
     });
 });

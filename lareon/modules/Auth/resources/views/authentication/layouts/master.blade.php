@@ -24,6 +24,8 @@
             <div>
                 {!! $slot !!}
                 <x-auth::auth.session-status/>
+                <x-lareon::inputs.error />
+                <div id="resultMsg" class="text-sm font-semibold mt-6"></div>
             </div>
             <footer>
                 @yield('footer')

@@ -26,5 +26,6 @@
     "enter the code from your authentication app": "کد دریافتی از اپلیکیشن احراز هویت (Authenticator) خود را وارد کنید",
     "enter the recovery code": "کد بازیابی (recovery code) را وارد کنید",
     "send via email": "ارسال توسط ایمیل",
-    "send via SMS": "ارسال توسط پیامک"
+    "send via SMS": "ارسال توسط پیامک",
+    "enter the sent otp code via email/SMS": "کد OTP ارسال شده توسط ایمیل/پیامک را وارد کنید"
 }

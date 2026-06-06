@@ -1,7 +1,6 @@
 <?php
 
-namespace Services;
-
+namespace Lareon\Modules\Auth\App\Services;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
