@@ -24,5 +24,7 @@
     "recovery code": "کد بازیابی",
     "disable 2FA": "غیرفعال کردن 2FA",
     "enter the code from your authentication app": "کد دریافتی از اپلیکیشن احراز هویت (Authenticator) خود را وارد کنید",
-    "enter the recovery code": "کد بازیابی (recovery code) را وارد کنید"
+    "enter the recovery code": "کد بازیابی (recovery code) را وارد کنید",
+    "send via email": "ارسال توسط ایمیل",
+    "send via SMS": "ارسال توسط پیامک"
 }
