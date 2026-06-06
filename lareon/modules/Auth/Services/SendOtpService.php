@@ -9,7 +9,7 @@ use Lareon\Modules\Auth\App\Actions\Otp\DetectContactType;
 use Lareon\Modules\Auth\App\Enums\ContactType;
 use Lareon\Modules\Auth\App\Enums\VerificationActionType;
 
-class OtpService {
+class SendOtpService {
 
     const int CODE_LENGTH = 6;
 

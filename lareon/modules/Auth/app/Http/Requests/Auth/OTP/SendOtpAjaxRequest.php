@@ -10,6 +10,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Validation\Validator;
 use Laravel\Fortify\Contracts\FailedTwoFactorLoginResponse;
 use Lareon\Modules\Auth\App\Enums\ContactType;
+use Lareon\Modules\Auth\App\Enums\VerificationActionType;
 use Lareon\Modules\User\App\Models\User;
 use Teksite\Extralaravel\Http\ApiFormRequest;
 
@@ -34,7 +35,8 @@ class SendOtpAjaxRequest extends ApiFormRequest
     public function rules(): array
     {
         return [
-            'via' => ['bail', 'required', 'string', Rule::enum(ContactType::class)],
+            'contactType' => ['bail', 'required', 'string', Rule::enum(ContactType::class)],
+            'action' => ['bail', 'required', 'string', Rule::enum(VerificationActionType::class)],
         ];
     }
 
@@ -48,11 +50,9 @@ class SendOtpAjaxRequest extends ApiFormRequest
     private function validateUser(Validator $validator): void
     {
         if ($validator->errors()->isNotEmpty()) return;
-
         if ($this->user) {
             return;
         }
-
         if (!$this->session()->has('login.id') || !$user = User::find($this->session()->get('login.id'))) {
             throw new HttpResponseException(
                 app(FailedTwoFactorLoginResponse::class)->toResponse($this)

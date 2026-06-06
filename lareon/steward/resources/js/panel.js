@@ -88,6 +88,7 @@ function requestSendOTP() {
 
     const endpoint = `${form.action}/send`;
     const csrfToken= form.querySelector("[name = '_token']").value;
+    const action= form.querySelector("[name = 'action']").value;
 
     if (!csrfToken) {
         console.error('CSRF token not found');
@@ -110,6 +111,7 @@ function requestSendOTP() {
                 contactType = 'phone';
                 break;
         }
+
 
         if (!contactType) return;
 
@@ -135,7 +137,7 @@ function requestSendOTP() {
                     'X-Requested-With': 'XMLHttpRequest',
                     'X-CSRF-TOKEN': csrfToken
                 },
-                body: JSON.stringify({ contactType })
+                body: JSON.stringify({ contactType , action })
             });
 
             clearTimeout(timeout);

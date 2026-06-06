@@ -2,6 +2,7 @@
     <section>
         <form method="POST" action="{{route('auth.otp.login.store')}}" class="formAction" id="sendOtpGuest">
             @csrf
+            <input type="hidden" name="action" value="{{\Lareon\Modules\Auth\App\Enums\VerificationActionType::LOGIN->value}}">
             <div class="text-center mb-6 ">
                 <x-lareon::inputs.label for="code" :title="__('enter the code from your authentication app')" class=""/>
                 <div class="flex items-center justify-center gap-1 mt-3" dir="ltr">
