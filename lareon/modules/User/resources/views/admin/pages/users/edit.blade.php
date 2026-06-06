@@ -57,11 +57,7 @@
         </x-lareon::editor.tabs.item>
 
         <x-lareon::editor.tabs.item :title="__('password')">
-            <div class="grid gap-6 md:grid-cols-2">
-                <div class="">
                     <x-lareon::editor.password :label="__('password')" :confirm_label="__('confirm password')" name="password" :placeholder="__('lareon::global.placeholders.auth.password',['attribute'=>__('password')])" wrapperClass="grid gap-6 lg:grid-cols-2"/>
-                </div>
-            </div>
         </x-lareon::editor.tabs.item>
 
         <x-lareon::editor.tabs.item :title="__('passkey')">

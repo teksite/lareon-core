@@ -1,4 +1,4 @@
-<x-auth::layout :title="trans('lareon::global.auth.sign_up')">
+<x-auth::layout :title="trans('lareon::global.auth.sign_up')" :indexable="true">
     <div class="w-full">
         <div class="text-center">
             <x-icon type="outline" icon="user" size="32" class="mx-auto mb-3"></x-icon>

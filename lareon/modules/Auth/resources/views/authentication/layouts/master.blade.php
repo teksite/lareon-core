@@ -8,6 +8,7 @@
     <link rel="apple-touch-icon" sizes="16x16" href="{{asset('/uploads/favicon/favicon-16x16.png')}}">
     <link rel="apple-touch-icon" sizes="32x32" href="{{asset('/uploads/favicon/favicon-32x32.png')}}">
     <link rel="apple-touch-icon" sizes="192x192" href="{{asset('/uploads/favicon/favicon-192x192.png')}}">
+    <meta name="robots" content="{{isset($indexable) && $indexable ? 'follow,index' : 'nofollow,noindex' }}" >
     <meta name="theme-color" content="#ffffff">
     <title>{{$title ?? __('authentication') }} - {{__(config('app.name'))}}</title>
     @vite(['lareon/steward/resources/css/panel.css','lareon/steward/resources/js/panel.js'])

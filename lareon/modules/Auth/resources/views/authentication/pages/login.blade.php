@@ -1,4 +1,4 @@
-<x-auth::layout :title="trans('lareon::global.auth.sign_in')">
+<x-auth::layout :title="trans('lareon::global.auth.sign_in')" :indexable="true">
 @section('title',__('login'))
     <div class="w-full">
         <div class="text-center">
