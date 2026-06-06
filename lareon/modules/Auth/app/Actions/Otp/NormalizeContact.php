@@ -23,14 +23,14 @@ class NormalizeContact
 
     private static function normalizePhoneNumber(string|int $phoneNumber): string
     {
-        if (str_starts_with($phoneNumber, '989')) {
-            return '0' . substr($phoneNumber, 2);
+        if (str_starts_with($phoneNumber, '09')) {
+            return '98' . substr($phoneNumber, 1);
         } elseif (str_starts_with($phoneNumber, '+989')) {
-            return '0' . substr($phoneNumber, 3);
+            return '98' . substr($phoneNumber, 3);
         } elseif (str_starts_with($phoneNumber, '00989')) {
-            return '0' . substr($phoneNumber, 4);
+            return '98' . substr($phoneNumber, 4);
         } elseif (str_starts_with($phoneNumber, '9')) {
-            return '0' . $phoneNumber;
+            return '98' . $phoneNumber;
         } else {
             return $phoneNumber;
         }
