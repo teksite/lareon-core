@@ -1,6 +1,6 @@
 <?php
 
-namespace Lareon\Modules\Auth\App\Http\Requests\Auth;
+namespace Lareon\Modules\Auth\App\Http\Requests\Auth\TwoFactorChallenge;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Validator;
@@ -32,7 +32,7 @@ class RecoveryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'recovery_code' => 'string|required',
+            'recovery_code' => 'bail|string|required',
         ];
     }
 

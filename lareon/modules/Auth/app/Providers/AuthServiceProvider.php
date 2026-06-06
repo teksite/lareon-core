@@ -3,6 +3,8 @@
 namespace Lareon\Modules\Auth\App\Providers;
 
 use Illuminate\Console\Scheduling\Schedule;
+use Laravel\Sanctum\Sanctum;
+use Lareon\Modules\Auth\App\Models\PersonalAccessToken;
 use Teksite\Module\Providers\Support\BaseModuleServiceProvider as ServiceProvider;
 
 
@@ -65,6 +67,8 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         parent::boot();
+        Sanctum::usePersonalAccessTokenModel(PersonalAccessToken::class);
+
     }
 
     /**

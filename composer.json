@@ -12,12 +12,13 @@
         "php": "^8.3",
         "laravel/fortify": "^1.36",
         "laravel/framework": "^13.7",
+        "laravel/sanctum": "^4.0",
         "laravel/tinker": "^3.0",
         "teksite/authorize": "^2.0",
         "teksite/extralaravel": "^2.0",
         "teksite/handler": "^2.0",
-        "teksite/module": "^3.0",
-        "teksite/icon-laravel":"*"
+        "teksite/icon-laravel": "*",
+        "teksite/module": "^3.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

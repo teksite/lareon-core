@@ -3,7 +3,7 @@
         <form method="POST" action="{{route('auth.recovery.login.store')}}" class="formAction">
             @csrf
             <div class="text-center mb-6 ">
-                <x-lareon::inputs.label for="code" :title="__('enter the code from your authentication app')" class=""/>
+                <x-lareon::inputs.label for="code" :title="__('enter the recovery code')" class=""/>
                 <div class="flex items-center justify-center gap-1 mt-3" dir="ltr">
                         <input class="border border-zinc-300 px-4 py-3 font-bold" name="recovery_code" type="text" >
                 </div>

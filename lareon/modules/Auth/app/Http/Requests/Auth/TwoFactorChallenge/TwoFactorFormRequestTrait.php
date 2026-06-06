@@ -1,6 +1,6 @@
 <?php
 
-namespace Lareon\Modules\Auth\App\Http\Requests\Auth;
+namespace Lareon\Modules\Auth\App\Http\Requests\Auth\TwoFactorChallenge;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\StatefulGuard;

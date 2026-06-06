@@ -22,5 +22,7 @@
     "If you don't have access to your authenticator app, use these codes": "اگر به اپلیکیشن احراز هویت (Authenticator) خود دسترسی ندارید، از این کدها استفاده کنید",
     "Save these codes in a safe place and don't share them": "این کدها را در جای امنی ذخیره کنید و با کسی به اشتراک نگذارید",
     "recovery code": "کد بازیابی",
-    "disable 2FA": "غیرفعال کردن 2FA"
+    "disable 2FA": "غیرفعال کردن 2FA",
+    "enter the code from your authentication app": "کد دریافتی از اپلیکیشن احراز هویت (Authenticator) خود را وارد کنید",
+    "enter the recovery code": "کد بازیابی (recovery code) را وارد کنید"
 }
