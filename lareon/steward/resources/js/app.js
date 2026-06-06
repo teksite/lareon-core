@@ -1,15 +1,11 @@
 import './bootstrap.js'
 import './general.js'
 import './tools.js'
+import {logout} from "./general.js";
 
 
-function loadAjaxForm() {
-    const formEls = document.querySelectorAll('form.formAction[data-ajax]');
-    if (!formEls.length) return;
 
-    formEls.forEach(formEl => {
-        formEl.addEventListener('submit', e => {
-            e.preventDefault();
-        });
-    });
-}
+
+document.addEventListener('DOMContentLoaded', function () {
+    logout();
+});

@@ -4,6 +4,8 @@ namespace Lareon\Modules\Auth\App\Http\Requests\Auth\OTP;
 
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Validator;
+use Lareon\Modules\Auth\App\Enums\VerificationActionType;
+use Lareon\Modules\Auth\App\Rules\ContactCheckRule;
 
 class ForgotPasswordRequest extends BaseAuthRequest
 {

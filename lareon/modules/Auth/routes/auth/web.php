@@ -2,6 +2,7 @@
 
 
 use Laravel\Fortify\RoutePath;
+use Lareon\Modules\Auth\App\Http\Controllers\Ajax\Auth\VerificationCodeController;
 use Lareon\Modules\Auth\App\Http\Controllers\Web\Auth\TwoFactorAuthenticatedSessionController;
 
 Route::group(['middleware' => config('fortify.middleware', ['web'])], function () {
@@ -9,12 +10,6 @@ Route::group(['middleware' => config('fortify.middleware', ['web'])], function (
     $twoFactorLimiter = config('fortify.limiters.two-factor');
     $verificationLimiter = config('fortify.limiters.verification', '6,1');
 
-
-//    Route::post(RoutePath::for('login', '/login'), [AuthenticatedSessionController::class, 'store'])
-//        ->middleware(array_filter([
-//            'guest:' . config('fortify.guard'),
-//            $limiter ? 'throttle:' . $limiter : null,
-//        ]))->name('login.store');
 
     Route::post(RoutePath::for('two-factor.login', '/two-factor-challenge'), [TwoFactorAuthenticatedSessionController::class, 'viaOTP'])
          ->middleware(array_filter([
@@ -33,4 +28,10 @@ Route::group(['middleware' => config('fortify.middleware', ['web'])], function (
              'guest:' . config('fortify.guard'),
              $twoFactorLimiter ? 'throttle:' . $twoFactorLimiter : null,
          ]))->name('otp.login.store');
+
+
+    Route::prefix('otp-challenge')->name('verification_code.')->group(function () {
+        Route::post("send", [VerificationCodeController::class, 'send',])->name('send')->middleware('throttle:2,1');
+        Route::post("verify", [VerificationCodeController::class, 'verify',])->name('verify')->middleware('throttle:5,1');
+    });
 });

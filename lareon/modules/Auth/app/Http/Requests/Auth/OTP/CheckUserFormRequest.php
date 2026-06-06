@@ -3,6 +3,7 @@
 namespace Lareon\Modules\Auth\App\Http\Requests\Auth\OTP;
 
 use Illuminate\Validation\Validator;
+use Lareon\Modules\Auth\App\Rules\ContactCheckRule;
 
 class CheckUserFormRequest extends BaseAuthRequest
 {

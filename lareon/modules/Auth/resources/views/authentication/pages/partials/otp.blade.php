@@ -1,6 +1,6 @@
 <div x-show="activeTab === 3" x-transition.opacity.duration.300ms>
     <section>
-        <form method="POST" action="{{route('auth.otp.login.store')}}" class="formAction">
+        <form method="POST" action="{{route('auth.otp.login.store')}}" class="formAction" id="sendOtpGuest">
             @csrf
             <div class="text-center mb-6 ">
                 <x-lareon::inputs.label for="code" :title="__('enter the code from your authentication app')" class=""/>
@@ -11,14 +11,14 @@
                 </div>
                 <x-lareon::inputs.error :messages="$errors->get('otp_code')" class="mt-2"/>
             </div>
-            <div class="flex items-center my-12">
+            <div class="flex items-center my-12" id="sendOtp">
                 @if(true)
-                    <x-lareon::buttons.simple color="blue" variant="simple" size="xs" role="button" type="button">
+                    <x-lareon::buttons.simple id="sendOtpViaEmail" color="blue" variant="simple" size="xs" role="button" type="button">
                         {{__('send via email')}}
                     </x-lareon::buttons.simple>
                 @endif
                 @if(true)
-                    <x-lareon::buttons.simple color="blue" variant="simple" size="xs" role="button" type="button">
+                    <x-lareon::buttons.simple id="sendOtpViaSMS" color="blue" variant="simple" size="xs" role="button" type="button">
                         {{__('send via SMS')}}
                     </x-lareon::buttons.simple>
                 @endif
