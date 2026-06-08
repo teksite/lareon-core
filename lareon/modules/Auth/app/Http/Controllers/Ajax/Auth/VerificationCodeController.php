@@ -26,9 +26,9 @@ class VerificationCodeController extends Controller
 
         $res = false;
         if ($contactType === ContactType::PHONE) {
-            $res = $this->sendService->viaSMS($contact, $codeDate['code'], $actionType, $codeDate['expire_at']);
+            $res = $this->sendService->viaSMS($contact, $codeDate['code'], $actionType, $codeDate['expires_at']);
         } elseif ($contactType === ContactType::EMAIL) {
-            $res = $this->sendService->viaEmail($contact, $codeDate['code'], $actionType, $codeDate['expire_at']);
+            $res = $this->sendService->viaEmail($contact, $codeDate['code'], $actionType, $codeDate['expires_at']);
         }
         return $res ? Responder::success(trans('auth::messages.verification_code.sent_successfully', ['attribute' => __($contactType->value)]))->reply() : Responder::failed(trans('auth::messages.otp.verification_code.sent_failed', ['attribute' => __($contactType->value)]))->reply();
     }
@@ -36,8 +36,6 @@ class VerificationCodeController extends Controller
     public function verify(VerifyOtpAjaxRequest $request) {
 
         $this->guard->login($request->user, $request->remember());
-
-        $this->otpService->flushCache();
 
         $request->session()->regenerate();
 

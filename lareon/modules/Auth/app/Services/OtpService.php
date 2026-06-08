@@ -3,9 +3,7 @@
 namespace Lareon\Modules\Auth\App\Services;
 
 use Illuminate\Support\Arr;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Crypt;
 use Lareon\Modules\Auth\App\Actions\Otp\DetectContactType;
 use Lareon\Modules\Auth\App\Enums\ContactType;
 use Lareon\Modules\Auth\App\Enums\VerificationActionType;
@@ -21,9 +19,6 @@ class OtpService
     const int MAX_ATTEMPTS = 5;
 
     const true ENCRYPT = true;
-
-    const bool PRODUCTION_MODE = true;
-
 
     /**
      * generate random code
@@ -118,7 +113,7 @@ class OtpService
             return false;
         }
 
-        if (hash('sha256', $code) !== $data['hash']) {
+        if (hash('sha256', $code) !== $data['code']) {
             $data['attempts'] = ($data['attempts'] ?? 0) + 1;
 
             Cache::put($key, $data, now()->addSeconds($data['expires_at'] - now()->timestamp));
@@ -130,8 +125,9 @@ class OtpService
     }
 
 
-    public function remainingTime(string $to, VerificationActionType $action): int
+    public function remainingTime(string $to, VerificationActionType $action , bool $testing = false): int
     {
+       if ($testing) return 0;
         $data = Cache::get($this->key($to, $action));
 
         if (!$data || !isset($data['expires_at'])) {

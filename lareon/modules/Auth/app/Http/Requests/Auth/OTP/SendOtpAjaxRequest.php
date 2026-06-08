@@ -92,7 +92,7 @@ class SendOtpAjaxRequest extends ApiFormRequest
     {
         if ($validator->errors()->isNotEmpty()) return;
 
-        $retryTime = (new OtpService())->getRetryTime($this->contact, $this->actionType, testing: false);
+        $retryTime = (new OtpService())->remainingTime($this->contact, $this->actionType, testing: true);
 
         if ($retryTime > 0) {
             $validator->errors()->add('credentials', trans('auth::messages.verification_code.wait', ['seconds' => $retryTime . ' ('.now()->addSeconds($retryTime)->format('i:s').')']));
