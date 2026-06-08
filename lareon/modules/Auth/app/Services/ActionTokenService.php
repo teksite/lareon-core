@@ -14,7 +14,7 @@ class ActionTokenService
 
     public const int CODE_LENGTH = 40;
 
-    
+
     /**
      * generate key for cache
      */
@@ -82,5 +82,18 @@ class ActionTokenService
     {
         if (is_null($token)) return;
         Cache::forget($this->key($token));
+    }
+
+
+    public function remainingTime(string $to, ActionType $action , bool $testing = false): int
+    {
+        if ($testing) return 0;
+        $data = Cache::get($this->key($to, $action));
+
+        if (!$data || !isset($data['expires_at'])) {
+            return 0;
+        }
+
+        return max($data['expires_at'] - now()->timestamp, 0);
     }
 }

@@ -5,6 +5,7 @@ namespace Lareon\Modules\Auth\App\Http\Requests\Api\Validations;
 use Illuminate\Validation\Validator;
 use Lareon\Modules\Auth\App\Enums\ActionType;
 use Lareon\Modules\Auth\App\Services\ActionTokenService;
+use Lareon\Modules\Auth\App\Services\OtpService;
 
 trait ActionTokenRequestTrait
 {
@@ -39,7 +40,7 @@ trait ActionTokenRequestTrait
     {
         if ($validator->errors()->isNotEmpty()) return;
 
-        $retryTime = (new VerificationCodeService())->getRetryTime($this->contactValue, VerificationActionType::tryFrom($this->input('action')) , testing: $testing);
+        $retryTime = (new OtpService())->remainingTime($this->contactValue, $this->actionType, testing: $testing);
 
         if ($retryTime > 0) {
             $validator->errors()->add('credentials', trans('auth::messages.verification_code.wait', ['seconds' => $retryTime]));

@@ -4,7 +4,6 @@ namespace Lareon\Modules\Auth\App\Services;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
-use Lareon\Modules\Auth\App\Actions\Otp\DetectContactType;
 use Lareon\Modules\Auth\App\Enums\ContactType;
 use Lareon\Modules\Auth\App\Enums\ActionType;
 
@@ -39,7 +38,7 @@ class OtpService
      */
     private function key(string $to, ActionType $action): string
     {
-        $gateway = DetectContactType::handle($to);
+        $gateway = ContactType::detect($to);
         return "otp::{$action->value}::{$gateway->value}::" . sha1($to);
     }
 
@@ -50,7 +49,7 @@ class OtpService
     {
         if ($customTtl !== null) return max(1, $customTtl);
 
-        return DetectContactType::handle($to) === ContactType::PHONE
+        return ContactType::detect($to) === ContactType::PHONE
             ? self::SMS_EXPIRATION
             : self::EMAIL_EXPIRATION;
     }
@@ -60,7 +59,7 @@ class OtpService
      */
     public function generate(string $to, ActionType $action, null|int $ttl = null): false|array
     {
-        $gateway = DetectContactType::handle($to);
+        $gateway = ContactType::detect($to);
 
         if (!$gateway) return false;
 
