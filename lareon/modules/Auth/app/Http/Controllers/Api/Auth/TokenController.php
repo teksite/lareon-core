@@ -43,7 +43,7 @@ class TokenController extends Controller
             $res = $sendService->viaEmail($contact, $codeData['code'], $actionType, $codeData['expires_at']);
         }
 
-        return $res ? Responder::success( trans('auth::messages.verification_code.sent_successfully'))->reply() : Responder::Failed('auth::messages.verification_code.sent_failed')->reply();
+        return $res ? Responder::success( trans('auth::messages.verification_code.sent_successfully' , ['attribute'=>__($contactType->value)]))->reply() : Responder::Failed('auth::messages.verification_code.sent_failed')->reply();
 
 
     }
