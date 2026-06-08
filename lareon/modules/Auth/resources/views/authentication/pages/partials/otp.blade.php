@@ -2,7 +2,7 @@
     <section>
         <form method="POST" action="{{route('auth.otp.verify')}}" class="formAction" id="sendOtpGuest">
             @csrf
-            <input type="hidden" name="action" value="{{\Lareon\Modules\Auth\App\Enums\VerificationActionType::LOGIN->value}}">
+            <input type="hidden" name="action" value="{{\Lareon\Modules\Auth\App\Enums\ActionType::LOGIN->value}}">
             <input type="hidden" name="contactType" value="{{\Lareon\Modules\Auth\App\Enums\ContactType::EMAIL->value}}">
             <div class="text-center mb-6 ">
                 <x-lareon::inputs.label for="code" :title="__('enter the sent otp code via email/SMS')" class="" id="opt_helper_label"/>

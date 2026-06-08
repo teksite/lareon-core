@@ -10,12 +10,12 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Lareon\Modules\Auth\App\Actions\Otp\DetectContactType;
 use Lareon\Modules\Auth\App\Enums\ContactType;
-use Lareon\Modules\Auth\App\Enums\VerificationActionType;
+use Lareon\Modules\Auth\App\Enums\ActionType;
 use Lareon\Modules\Auth\App\Mail\OtpMail;
 
 class SendOtpService {
 
-    public function viaSMS(string $to, string $code, VerificationActionType $action, ?string $expireAt=null): bool
+    public function viaSMS(string $to, string $code, ActionType $action, ?string $expireAt=null): bool
     {
         $apiKey = config('services.msgway');
         $params = [
@@ -38,7 +38,7 @@ class SendOtpService {
             return false;
         }
     }
-    public function viaEmail(string $to, string $code, VerificationActionType $action, ?string $expireAt=null): bool
+    public function viaEmail(string $to, string $code, ActionType $action, ?string $expireAt=null): bool
     {
 
         try {

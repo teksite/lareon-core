@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Validator;
 use Lareon\Modules\Auth\App\Enums\ContactType;
-use Lareon\Modules\Auth\App\Enums\VerificationActionType;
+use Lareon\Modules\Auth\App\Enums\ActionType;
 use Lareon\Modules\Auth\App\Services\OtpService;
 use Lareon\Modules\User\App\Models\User;
 use Teksite\Extralaravel\Http\ApiFormRequest;
@@ -17,7 +17,7 @@ class VerifyOtpAjaxRequest extends  FormRequest
     public ?User $user = null;
     public ?ContactType $contactType = null;
     public ?string $contact = null;
-    public ?VerificationActionType $actionType = null;
+    public ?ActionType $actionType = null;
 
     public bool $remember =false;
 
@@ -48,7 +48,7 @@ class VerifyOtpAjaxRequest extends  FormRequest
     {
         return [
             'contactType' => ['bail', 'required', 'string', Rule::enum(ContactType::class)],
-            'action'  => ['bail', 'required', 'string', Rule::enum(VerificationActionType::class)],
+            'action'  => ['bail', 'required', 'string', Rule::enum(ActionType::class)],
             'otp_code'    => ['bail', 'required', 'string'],
         ];
     }
@@ -87,7 +87,7 @@ class VerifyOtpAjaxRequest extends  FormRequest
             ContactType::PHONE => $this->user->phone,
         };
 
-        $actionType = VerificationActionType::from($this->string('action'));
+        $actionType = ActionType::from($this->string('action'));
 
 
         if (is_null($contact)) {

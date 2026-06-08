@@ -7187,16 +7187,16 @@
         },
         {
             "name": "teksite/extralaravel",
-            "version": "2.1.3",
+            "version": "2.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/teksite/extralaravel.git",
-                "reference": "f49f56a31b84699217b617ed2332f03a84101e3a"
+                "reference": "37153db14fb1212109fe087db35ef3d84404431f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/teksite/extralaravel/zipball/f49f56a31b84699217b617ed2332f03a84101e3a",
-                "reference": "f49f56a31b84699217b617ed2332f03a84101e3a",
+                "url": "https://api.github.com/repos/teksite/extralaravel/zipball/37153db14fb1212109fe087db35ef3d84404431f",
+                "reference": "37153db14fb1212109fe087db35ef3d84404431f",
                 "shasum": ""
             },
             "require": {
@@ -7233,9 +7233,9 @@
             "description": "this package add some features such as rules, middlewares, functions to laravel",
             "support": {
                 "issues": "https://github.com/teksite/extralaravel/issues",
-                "source": "https://github.com/teksite/extralaravel/tree/2.1.3"
+                "source": "https://github.com/teksite/extralaravel/tree/2.2.1"
             },
-            "time": "2026-05-24T12:55:16+00:00"
+            "time": "2026-06-08T14:33:08+00:00"
         },
         {
             "name": "teksite/handler",

@@ -2,7 +2,7 @@
 
 namespace Lareon\Modules\Auth\App\Enums;
 
-enum VerificationActionType: string
+enum ActionType: string
 {
     case REGISTER = 'register';
     case LOGIN = 'login';

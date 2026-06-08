@@ -6,7 +6,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use Lareon\Modules\Auth\App\Actions\Otp\DetectContactType;
 use Lareon\Modules\Auth\App\Enums\ContactType;
-use Lareon\Modules\Auth\App\Enums\VerificationActionType;
+use Lareon\Modules\Auth\App\Enums\ActionType;
 
 class OtpService
 {
@@ -37,7 +37,7 @@ class OtpService
      * generate cache key
      *
      */
-    private function key(string $to, VerificationActionType $action): string
+    private function key(string $to, ActionType $action): string
     {
         $gateway = DetectContactType::handle($to);
         return "otp::{$action->value}::{$gateway->value}::" . sha1($to);
@@ -58,7 +58,7 @@ class OtpService
     /**
      * GENERATE OTP
      */
-    public function generate(string $to, VerificationActionType $action, null|int $ttl = null): false|array
+    public function generate(string $to, ActionType $action, null|int $ttl = null): false|array
     {
         $gateway = DetectContactType::handle($to);
 
@@ -91,7 +91,7 @@ class OtpService
     /**
      * VERIFY OTP
      */
-    public function verify(string $code, string $to, VerificationActionType $action): bool
+    public function verify(string $code, string $to, ActionType $action): bool
     {
         $key = $this->key($to, $action);
 
@@ -125,7 +125,7 @@ class OtpService
     }
 
 
-    public function remainingTime(string $to, VerificationActionType $action , bool $testing = false): int
+    public function remainingTime(string $to, ActionType $action , bool $testing = false): int
     {
        if ($testing) return 0;
         $data = Cache::get($this->key($to, $action));

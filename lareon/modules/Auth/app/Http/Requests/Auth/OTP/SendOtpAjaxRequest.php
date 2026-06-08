@@ -5,7 +5,7 @@ namespace Lareon\Modules\Auth\App\Http\Requests\Auth\OTP;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Validator;
 use Lareon\Modules\Auth\App\Enums\ContactType;
-use Lareon\Modules\Auth\App\Enums\VerificationActionType;
+use Lareon\Modules\Auth\App\Enums\ActionType;
 use Lareon\Modules\Auth\App\Services\OtpService;
 use Lareon\Modules\User\App\Models\User;
 use Teksite\Extralaravel\Http\ApiFormRequest;
@@ -16,7 +16,7 @@ class SendOtpAjaxRequest extends ApiFormRequest
     public ?User $user = null;
     public ?ContactType $contactType = null;
     public ?string $contact = null;
-    public ?VerificationActionType $actionType = null;
+    public ?ActionType $actionType = null;
 
     /**
      * Determine if the user is authorized to make this request.
@@ -36,7 +36,7 @@ class SendOtpAjaxRequest extends ApiFormRequest
     {
         return [
             'contactType' => ['bail', 'required', 'string', Rule::enum(ContactType::class)],
-            'action'      => ['bail', 'required', 'string', Rule::enum(VerificationActionType::class)],
+            'action'      => ['bail', 'required', 'string', Rule::enum(ActionType::class)],
         ];
     }
 
@@ -75,7 +75,7 @@ class SendOtpAjaxRequest extends ApiFormRequest
             ContactType::PHONE => $this->user->phone,
         };
 
-        $actionType = VerificationActionType::from($this->string('action'));
+        $actionType = ActionType::from($this->string('action'));
 
 
         if (is_null($contact)) {
