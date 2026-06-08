@@ -12,7 +12,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Validation\Rule;
+use Laravel\Fortify\PasskeyAuthenticatable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
+use Laravel\Fortify\Contracts\PasskeyUser;
 use Laravel\Sanctum\HasApiTokens;
 use Lareon\Modules\User\Database\Factories\UserFactory;
 use Teksite\Authorize\Traits\HasAuthorization;
@@ -23,10 +25,10 @@ use Teksite\Extralaravel\Traits\MustVerifyPhone;
 #[UseFactory(UserFactory::class)]
 #[Fillable(['name', 'lastname', 'email', 'phone', 'password', 'slug' ,'parent_id'])]
 #[Hidden(['password', 'remember_token' ,'two_factor_secret','two_factor_recovery_codes','two_factor_confirmed_at'])]
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail , PasskeyUser
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable, HasAuthorization ,MustVerifyPhone ,TwoFactorAuthenticatable , HasApiTokens;
+    use HasFactory, Notifiable, HasAuthorization ,MustVerifyPhone ,TwoFactorAuthenticatable , HasApiTokens , PasskeyAuthenticatable;
 
     /**
      * Get the attributes that should be cast.

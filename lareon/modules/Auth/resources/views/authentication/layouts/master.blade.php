@@ -8,10 +8,11 @@
     <link rel="apple-touch-icon" sizes="16x16" href="{{asset('/uploads/favicon/favicon-16x16.png')}}">
     <link rel="apple-touch-icon" sizes="32x32" href="{{asset('/uploads/favicon/favicon-32x32.png')}}">
     <link rel="apple-touch-icon" sizes="192x192" href="{{asset('/uploads/favicon/favicon-192x192.png')}}">
-    <meta name="robots" content="{{isset($indexable) && $indexable ? 'follow,index' : 'nofollow,noindex' }}" >
+    <meta name="robots" content="{{isset($indexable) && $indexable ? 'follow,index' : 'nofollow,noindex' }}">
     <meta name="theme-color" content="#ffffff">
     <title>{{$title ?? __('authentication') }} - {{__(config('app.name'))}}</title>
-    @vite(['lareon/steward/resources/css/panel.css','lareon/steward/resources/js/panel.js'])
+    @vite(['lareon/steward/resources/css/panel.css','lareon/steward/resources/js/panel.js',
+'lareon/modules/auth/resources/js/panel.js'])
     @stack('headerScripts')
 </head>
 <body class="bg-slate-200">
@@ -24,7 +25,7 @@
             <div>
                 {!! $slot !!}
                 <x-auth::auth.session-status/>
-                <x-lareon::inputs.error />
+                <x-lareon::inputs.error/>
                 <div id="resultMsg" class="text-sm font-semibold mt-6"></div>
             </div>
             <footer>
