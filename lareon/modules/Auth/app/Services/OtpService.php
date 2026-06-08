@@ -5,186 +5,140 @@ namespace Lareon\Modules\Auth\App\Services;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Crypt;
 use Lareon\Modules\Auth\App\Actions\Otp\DetectContactType;
 use Lareon\Modules\Auth\App\Enums\ContactType;
 use Lareon\Modules\Auth\App\Enums\VerificationActionType;
 
 class OtpService
 {
-
     const int CODE_LENGTH = 6;
-
     const array CHAR_CODE = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-    const int SMS_EXPIRATION = 60;      //second
-    const int EMAIL_EXPIRATION = 60 * 5;//second
-    const bool ENCRYPT_CODE = true;
+
+    const int SMS_EXPIRATION = 60; //in seconds
+    const int EMAIL_EXPIRATION = 300; //in seconds
+
+    const int MAX_ATTEMPTS = 5;
+
+    const true ENCRYPT = true;
 
     const bool PRODUCTION_MODE = true;
 
-    public function __construct() {}
 
     /**
-     * @param string $to
-     * @param VerificationActionType $action
-     * @param Carbon|int|null $expiration
-     * @return false|array
-     */
-    public function generate(string $to, VerificationActionType $action, null|Carbon|int $expiration = null): false|array
-    {
-        $gateway = DetectContactType::handle($to);
-        if (is_null($gateway)) return false;
-
-        $expireAt = $this->expiration($gateway, $expiration);
-        $cacheKey = $this->generateCacheKey($gateway, $action, $to);
-        $code = $this->randomCode();
-        $this->cache($cacheKey, $code, $expireAt);
-
-        return [
-            'code'      => $code,
-            'to'        => $to,
-            'expire_at' => $expireAt->format('Y-m-d H:i:s'),
-            'gateway'   => $gateway,
-        ];
-    }
-
-    /**
-     * @return string
+     * generate random code
      */
     private function randomCode(): string
     {
         $code = '';
         for ($i = 0; $i < self::CODE_LENGTH; $i++) {
             $code .= Arr::random(self::CHAR_CODE);
-        };
+        }
         return $code;
     }
 
-    /**
-     * @param ContactType $gateway
-     * @param Carbon|int|null $expiration => $expiration int means second
-     * @return Carbon
-     */
-    private function expiration(ContactType $gateway, null|Carbon|int $expiration = null): Carbon
-    {
-        if (is_null($expiration)) {
-            if ($gateway === ContactType::PHONE) {
-                return Carbon::now()->addSeconds(self::SMS_EXPIRATION);
-            }
-            if ($gateway === ContactType::EMAIL) {
-                return Carbon::now()->addSeconds(self::EMAIL_EXPIRATION);
-            }
-        }
-        if ($expiration instanceof Carbon) return $expiration;
 
-        return Carbon::now()->addSeconds($expiration);
+    /**
+     * generate cache key
+     *
+     */
+    private function key(string $to, VerificationActionType $action): string
+    {
+        $gateway = DetectContactType::handle($to);
+        return "otp::{$action->value}::{$gateway->value}::" . sha1($to);
     }
 
     /**
-     * @param ContactType $gateway
-     * @param VerificationActionType $action
-     * @param string $to
-     * @return string
+     * calculate ttl for cache
      */
-    private function generateCacheKey(ContactType $gateway, VerificationActionType $action, string $to): string
+    private function ttl(string $to, ?int $customTtl = null): int
     {
-        return $this->preFixForCache() . $action->value . "::" . $gateway->value . "::" . $to;
-    }
+        if ($customTtl !== null) return max(1, $customTtl);
 
-    public function preFixForCache(): string
-    {
-        return "verification_code::" . request()->ip() . '::';
+        return DetectContactType::handle($to) === ContactType::PHONE
+            ? self::SMS_EXPIRATION
+            : self::EMAIL_EXPIRATION;
     }
-
 
     /**
-     * @param string $cacheKey
-     * @param string $code
-     * @param Carbon $expireAt
-     * @return void
+     * GENERATE OTP
      */
-    private function cache(string $cacheKey, string $code, Carbon $expireAt): void
+    public function generate(string $to, VerificationActionType $action, null|int $ttl = null): false|array
     {
-        Cache::tags(['otp', request()->ip(),])->put($cacheKey, [
-            'code'      => self::ENCRYPT_CODE ? encrypt($code) : $code,
-            'expire_at' => (string)$expireAt,
-            'secure'    => self::ENCRYPT_CODE,
-        ], $expireAt);
-    }
-
-
-    /**
-     * @param string $to
-     * @param VerificationActionType $action
-     * @param bool $different
-     * @param bool $testing
-     * @return int|Carbon
-     */
-    public function getRetryTime(string $to, VerificationActionType $action, bool $different = true, bool $testing = false): int|Carbon
-    {
-        if (!self::PRODUCTION_MODE || $testing) return 0;
         $gateway = DetectContactType::handle($to);
 
-        $cacheKey = $this->generateCacheKey($gateway, $action, $to);
+        if (!$gateway) return false;
 
-        $cachedData = Cache::get($cacheKey);
+        $key = $this->key($to, $action);
 
-        $reservedTime = $cachedData['expire_at'] ?? now();
+        $ttl = $this->ttl($to, $ttl);
 
-        if (!$different) return $reservedTime;
-        $diff = now()->diffInSeconds($reservedTime);
-        return max($diff, 0);
+        $code = $this->randomCode();
 
+        $payload = [
+            'code'       => self::ENCRYPT ? hash('sha256', $code) : $code,
+            'attempts'   => 0,
+            'created_at' => now()->timestamp,
+            'expires_at' => now()->addSeconds($ttl)->timestamp,
+            'verified'   => false,
+        ];
 
+        Cache::put($key, $payload, now()->addSeconds($ttl));
+
+        return [
+            'code'       => $code,
+            'to'         => $to,
+            'expires_at' => $payload['expires_at'],
+            'ttl'        => $ttl,
+        ];
     }
 
     /**
-     * @param $code
-     * @param string $contact
-     * @param VerificationActionType $action
-     * @return bool
+     * VERIFY OTP
      */
-    public function check($code, string $contact, VerificationActionType $action): bool
+    public function verify(string $code, string $to, VerificationActionType $action): bool
     {
-        $gateway = DetectContactType::handle($contact);
+        $key = $this->key($to, $action);
 
-        $cacheKey = $this->generateCacheKey($gateway, $action, $contact);
+        $data = Cache::get($key);
 
-        $cachedData = Cache::tags(['otp', request()->ip()])->get($cacheKey);
+        if (!$data)   return false;
 
-        if (is_null($cachedData)) return false;
+        if (($data['expires_at'] ?? 0) < now()->timestamp) {
+            Cache::forget($key);
+            return false;
+        }
 
-        $reservedTime = $cachedData['expire_at'] ?? now();
+        if (!empty($data['verified']) || $data['verified'] === true) {
+            return false;
+        }
 
-        $cachedCode = $cachedData['code'] ?? '';
+        if (($data['attempts'] ?? 0) >= self::MAX_ATTEMPTS) {
+            Cache::forget($key);
+            return false;
+        }
 
-        $diff = now()->diffInSeconds($reservedTime);
+        if (hash('sha256', $code) !== $data['hash']) {
+            $data['attempts'] = ($data['attempts'] ?? 0) + 1;
 
-        if ($diff == 0 || $cachedCode === $code) return false;
+            Cache::put($key, $data, now()->addSeconds($data['expires_at'] - now()->timestamp));
 
+            return false;
+        }
+        Cache::forget($key);
         return true;
-
     }
 
-    public function verify($code, string $contact, VerificationActionType $action): bool
+
+    public function remainingTime(string $to, VerificationActionType $action): int
     {
-        $isValid = $this->check($code, $contact, $action);
-        if (!$isValid) return false;
-        $this->forget($contact, $action);
-        return true;
-    }
+        $data = Cache::get($this->key($to, $action));
 
-    public function forget(string $contact, VerificationActionType $action): void
-    {
-        $gateway = DetectContactType::handle($contact);
+        if (!$data || !isset($data['expires_at'])) {
+            return 0;
+        }
 
-        $cacheKey = $this->generateCacheKey($gateway, $action, $contact);
-
-        Cache::tags(['otp', request()->ip(),])->forget($cacheKey);
-    }
-
-    public function flushCache(): void
-    {
-        Cache::tags(['otp', request()->ip()])->flush();
+        return max($data['expires_at'] - now()->timestamp, 0);
     }
 
 }

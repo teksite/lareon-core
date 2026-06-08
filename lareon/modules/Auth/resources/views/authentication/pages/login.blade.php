@@ -6,6 +6,7 @@
             <h1 class="text-center !mb-0 text-xl">{{__('lareon::global.auth.login')}}</h1>
         </div>
         <hr class="my-6 border-zinc-300">
+
         <x-auth::passkey />
 
         <form method="POST" action="{{ route('login.store') }}" class="formAction space-y-3">
