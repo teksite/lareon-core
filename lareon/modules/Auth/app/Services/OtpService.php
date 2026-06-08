@@ -119,8 +119,14 @@ class OtpService
 
             return false;
         }
-        Cache::forget($key);
+
         return true;
+    }
+
+    public function forget(string $to, ActionType $action): void
+    {
+        $key = $this->key($to, $action);
+        Cache::forget($key);
     }
 
 

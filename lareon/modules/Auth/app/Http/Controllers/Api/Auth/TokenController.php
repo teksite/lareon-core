@@ -11,13 +11,14 @@ use Lareon\Modules\Auth\App\Http\Requests\Api\RegisterApiRequest;
 use Lareon\Modules\Auth\App\Http\Requests\Api\SendVerificationCodeApiRequest;
 use Lareon\Modules\Auth\App\Services\ActionTokenService;
 use Lareon\Modules\Auth\App\Services\OtpService;
+use Lareon\Modules\Auth\App\Services\SendOtpService;
 use Lareon\Modules\User\App\Logics\UserLogic;
 use Teksite\Handler\Facade\Responder;
 
 
 class TokenController extends Controller
 {
-    public function __construct(protected OtpService $otpService,) {}
+    public function __construct(protected OtpService $otpService) {}
 
 
     /**
@@ -30,6 +31,20 @@ class TokenController extends Controller
         $contactType=$request->contactType;
         $actionType=$request->actionType;
         $codeData= $this->otpService->generate($contact, $actionType, );
+        if ($codeData === false) {
+            Responder::failed('steward::error.server_error_unknown' ,)->reply();
+        }
+
+        $res = false;
+        $sendService = new SendOtpService;
+        if ($contactType === ContactType::PHONE) {
+            $res = $sendService->viaSMS($contact, $codeData['code'], $actionType, $codeData['expires_at']);
+        } elseif ($contactType === ContactType::EMAIL) {
+            $res = $sendService->viaEmail($contact, $codeData['code'], $actionType, $codeData['expires_at']);
+        }
+
+        return $res ? Responder::success( trans('auth::messages.verification_code.sent_successfully'))->reply() : Responder::Failed('auth::messages.verification_code.sent_failed')->reply();
+
 
     }
 

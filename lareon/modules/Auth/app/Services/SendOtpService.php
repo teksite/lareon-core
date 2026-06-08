@@ -2,14 +2,9 @@
 
 namespace Lareon\Modules\Auth\App\Services;
 
-use Illuminate\Support\Arr;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
-use Lareon\Modules\Auth\App\Actions\Otp\DetectContactType;
-use Lareon\Modules\Auth\App\Enums\ContactType;
 use Lareon\Modules\Auth\App\Enums\ActionType;
 use Lareon\Modules\Auth\App\Mail\OtpMail;
 
