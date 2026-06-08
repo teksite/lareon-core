@@ -27,5 +27,7 @@
     "enter the recovery code": "کد بازیابی (recovery code) را وارد کنید",
     "send via email": "ارسال توسط ایمیل",
     "send via SMS": "ارسال توسط پیامک",
-    "enter the sent otp code via email/SMS": "کد OTP ارسال شده توسط ایمیل/پیامک را وارد کنید"
+    "enter the sent otp code via email/SMS": "کد OTP ارسال شده توسط ایمیل/پیامک را وارد کنید",
+    "or continue with username and password": "یا با نام‌کاربری و گذر واژه ادامه دهید",
+    "authenticating...": "در حال احراز هویت..."
 }

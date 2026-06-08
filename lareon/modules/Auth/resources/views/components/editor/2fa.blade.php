@@ -15,7 +15,8 @@
                     </p>
                     <a class="regular flex gap-3 mb-3"
                        href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en&gl=US">
-                        <img src="{{asset('/storage/admin/google-play-icon.png')}}" alt="{{__('google play')}}" width="25" height="25"> {{__('download')}}
+                        <x-icon type="outline" icon="googleplay" />
+                        {{__('download')}}
                     </a>
 
                 </div>

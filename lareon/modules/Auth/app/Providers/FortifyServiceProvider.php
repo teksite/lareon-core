@@ -35,31 +35,32 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->bootFeatures();
-        $this->bootRateLimiters();
+        $this->configureActions();
         $this->bootViews();
+        $this->configureRateLimiting();
     }
 
     private function bootViews(): void
     {
-        Fortify::loginView(fn() => View::first(['pages.auth.login', 'auth::authentication.pages.login']));
         Fortify::registerView(fn() => View::first(['pages.auth.register', 'auth::authentication.pages.register']));
+        Fortify::loginView(fn() => View::first(['pages.auth.login', 'auth::authentication.pages.login']));
         Fortify::verifyEmailView(fn() => View::first(['pages.auth.verify-email', 'auth::authentication.pages.verify-email']));
-//        Fortify::requestPasswordResetLinkView(fn() => View::first(['pages.auth.forgot-password', 'lareon::authentication.pages.forgot-password']));
-//        Fortify::resetPasswordView(fn() => View::first(['pages.auth.reset-password', 'lareon::authentication.pages.reset-password']));
         Fortify::twoFactorChallengeView(fn() => View::first(['pages.auth.2fa-challenge', 'auth::authentication.pages.2fa-challenge']));
         Fortify::confirmPasswordView(fn() => View::first(['pages.auth.confirm-password', 'auth::authentication.pages.confirm-password']));
+//        Fortify::requestPasswordResetLinkView(fn() => View::first(['pages.auth.forgot-password', 'lareon::authentication.pages.forgot-password']));
+//        Fortify::resetPasswordView(fn() => View::first(['pages.auth.reset-password', 'lareon::authentication.pages.reset-password']));
+
 
     }
-    private function bootFeatures(): void
+    private function configureActions(): void
     {
+        Fortify::authenticateUsing($this->authenticationUser());
         Fortify::createUsersUsing(CreateNewUser::class);
-//        Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
         Fortify::redirectUserForTwoFactorAuthenticationUsing(RedirectIfTwoFactorAuthenticatable::class);
-        Fortify::authenticateUsing($this->authenticationUser());
-/*        Fortify::confirmPasswordsUsing($this->confirmPassword());*/
+//        Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
+//        Fortify::confirmPasswordsUsing($this->confirmPassword());
 
 
     }
@@ -97,16 +98,24 @@ class FortifyServiceProvider extends ServiceProvider
         };
     }
 
-    private function bootRateLimiters(): void
+    private function configureRateLimiting(): void
     {
+        RateLimiter::for('two-factor', function (Request $request) {
+            return Limit::perMinute(5)->by($request->session()->get('login.id'));
+        });
+
         RateLimiter::for('login', function (Request $request) {
-            $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())) . '|' . $request->ip());
+            $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())).'|'.$request->ip());
 
             return Limit::perMinute(5)->by($throttleKey);
         });
 
-        RateLimiter::for('two-factor', function (Request $request) {
-            return Limit::perMinute(5)->by($request->session()->get('login.id'));
+        RateLimiter::for('passkeys', function (Request $request) {
+            $credentialId = $request->input('credential.id');
+
+            return Limit::perMinute(10)->by(
+                ($credentialId ?: $request->session()->getId()).'|'.$request->ip(),
+            );
         });
     }
 }

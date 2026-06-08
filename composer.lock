@@ -863,16 +863,16 @@
         },
         {
             "name": "guzzlehttp/guzzle",
-            "version": "7.11.0",
+            "version": "7.11.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "c987f8ce84b8434fa430795eca0f3430663da72b"
+                "reference": "5af96f374e0ab4ebd747b8310888c99d3adb0a8c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/c987f8ce84b8434fa430795eca0f3430663da72b",
-                "reference": "c987f8ce84b8434fa430795eca0f3430663da72b",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/5af96f374e0ab4ebd747b8310888c99d3adb0a8c",
+                "reference": "5af96f374e0ab4ebd747b8310888c99d3adb0a8c",
                 "shasum": ""
             },
             "require": {
@@ -891,7 +891,7 @@
                 "bamarni/composer-bin-plugin": "^1.8.2",
                 "ext-curl": "*",
                 "guzzle/client-integration-tests": "3.0.2",
-                "guzzlehttp/test-server": "^0.4",
+                "guzzlehttp/test-server": "^0.5",
                 "php-http/message-factory": "^1.1",
                 "phpunit/phpunit": "^8.5.52 || ^9.6.34",
                 "psr/log": "^1.1 || ^2.0 || ^3.0"
@@ -971,7 +971,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/guzzle/issues",
-                "source": "https://github.com/guzzle/guzzle/tree/7.11.0"
+                "source": "https://github.com/guzzle/guzzle/tree/7.11.1"
             },
             "funding": [
                 {
@@ -987,7 +987,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-06-02T12:40:51+00:00"
+            "time": "2026-06-07T22:54:06+00:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -1344,16 +1344,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v13.13.0",
+            "version": "v13.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "1daa6d3b4defe46976ccfa4fb0a7ab62717712a2"
+                "reference": "e60b1c817a9ef7da319e4007de6cfda5301a58c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/1daa6d3b4defe46976ccfa4fb0a7ab62717712a2",
-                "reference": "1daa6d3b4defe46976ccfa4fb0a7ab62717712a2",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/e60b1c817a9ef7da319e4007de6cfda5301a58c0",
+                "reference": "e60b1c817a9ef7da319e4007de6cfda5301a58c0",
                 "shasum": ""
             },
             "require": {
@@ -1564,7 +1564,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2026-06-02T14:28:17+00:00"
+            "time": "2026-06-04T18:46:35+00:00"
         },
         {
             "name": "laravel/passkeys",
@@ -7239,7 +7239,7 @@
         },
         {
             "name": "teksite/handler",
-            "version": "2.1.6",
+            "version": "2.1.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/teksite/handler.git",
@@ -7281,22 +7281,22 @@
             "description": "Some features to work with error handling in Laravel codes",
             "support": {
                 "issues": "https://github.com/teksite/handler/issues",
-                "source": "https://github.com/teksite/handler/tree/2.1.6"
+                "source": "https://github.com/teksite/handler/tree/2.1.7"
             },
             "time": "2026-05-31T14:52:20+00:00"
         },
         {
             "name": "teksite/icon-laravel",
-            "version": "0.1.0",
+            "version": "0.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/teksite/laravel-icon.git",
-                "reference": "14336674cd923db386dfc98ada88c55145a46966"
+                "reference": "af761d27dbd8230d915be977e78f2812fe927fda"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/teksite/laravel-icon/zipball/14336674cd923db386dfc98ada88c55145a46966",
-                "reference": "14336674cd923db386dfc98ada88c55145a46966",
+                "url": "https://api.github.com/repos/teksite/laravel-icon/zipball/af761d27dbd8230d915be977e78f2812fe927fda",
+                "reference": "af761d27dbd8230d915be977e78f2812fe927fda",
                 "shasum": ""
             },
             "require": {
@@ -7328,22 +7328,22 @@
             "description": "This package is a simple and tiny SVG icons font laravel",
             "support": {
                 "issues": "https://github.com/teksite/laravel-icon/issues",
-                "source": "https://github.com/teksite/laravel-icon/tree/0.1.0"
+                "source": "https://github.com/teksite/laravel-icon/tree/0.1.1"
             },
-            "time": "2026-05-28T08:04:22+00:00"
+            "time": "2026-06-08T09:48:32+00:00"
         },
         {
             "name": "teksite/module",
-            "version": "3.0.11",
+            "version": "3.0.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/teksite/module.git",
-                "reference": "8c6e37f6e0d913b8600b79d6ea99c9346020ab34"
+                "reference": "cb03eb710f65078cf4e965e83c128ab733c4c8bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/teksite/module/zipball/8c6e37f6e0d913b8600b79d6ea99c9346020ab34",
-                "reference": "8c6e37f6e0d913b8600b79d6ea99c9346020ab34",
+                "url": "https://api.github.com/repos/teksite/module/zipball/cb03eb710f65078cf4e965e83c128ab733c4c8bf",
+                "reference": "cb03eb710f65078cf4e965e83c128ab733c4c8bf",
                 "shasum": ""
             },
             "require": {
@@ -7395,9 +7395,9 @@
             ],
             "support": {
                 "issues": "https://github.com/teksite/module/issues",
-                "source": "https://github.com/teksite/module/tree/3.0.11"
+                "source": "https://github.com/teksite/module/tree/3.0.12"
             },
-            "time": "2026-05-24T10:59:26+00:00"
+            "time": "2026-06-06T17:27:25+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
@@ -9077,16 +9077,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "12.5.28",
+            "version": "12.5.29",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "5895d05f5bf421ed230fbd76e1277e4b8955def4"
+                "reference": "9aa66a47db3ea70f1a468e66dd969f67e594945a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/5895d05f5bf421ed230fbd76e1277e4b8955def4",
-                "reference": "5895d05f5bf421ed230fbd76e1277e4b8955def4",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/9aa66a47db3ea70f1a468e66dd969f67e594945a",
+                "reference": "9aa66a47db3ea70f1a468e66dd969f67e594945a",
                 "shasum": ""
             },
             "require": {
@@ -9100,7 +9100,7 @@
                 "phar-io/manifest": "^2.0.4",
                 "phar-io/version": "^3.2.1",
                 "php": ">=8.3",
-                "phpunit/php-code-coverage": "^12.5.6",
+                "phpunit/php-code-coverage": "^12.5.7",
                 "phpunit/php-file-iterator": "^6.0.1",
                 "phpunit/php-invoker": "^6.0.0",
                 "phpunit/php-text-template": "^5.0.0",
@@ -9110,7 +9110,7 @@
                 "sebastian/diff": "^7.0.0",
                 "sebastian/environment": "^8.1.2",
                 "sebastian/exporter": "^7.0.3",
-                "sebastian/global-state": "^8.0.2",
+                "sebastian/global-state": "^8.0.3",
                 "sebastian/object-enumerator": "^7.0.0",
                 "sebastian/recursion-context": "^7.0.1",
                 "sebastian/type": "^6.0.4",
@@ -9155,7 +9155,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/12.5.28"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/12.5.29"
             },
             "funding": [
                 {
@@ -9163,7 +9163,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2026-05-27T14:01:10+00:00"
+            "time": "2026-06-04T06:14:42+00:00"
         },
         {
             "name": "sebastian/cli-parser",

@@ -1,15 +1,12 @@
 @props([
     'optionsRoute' => 'passkey.login-options',
     'submitRoute' => 'passkey.login',
-    'label' => __('Sign in with a passkey'),
-    'loadingLabel' => __('Authenticating...'),
-    'separator' => __('Or continue with email'),
+    'label' => __('sign in with a passkey'),
+    'loadingLabel' => __('authenticating...'),
+    'separator' => __('or continue with username and password'),
 ])
 <div
-    x-data="{
-        supported: false,
-        loading: false,
-        error: null,
+    x-data="{ supported: false, loading: false, error: null,
         updateSupport() {
             this.supported = Boolean(window.Passkeys?.isSupported());
         },
@@ -41,26 +38,25 @@
 >
     <template x-if="supported">
         <div>
-            <div class="grid gap-2">
-                <x-lareons::button.simple
-                    variant="outline"
-                    class="w-full"
+            <div class="">
+                <x-lareon::buttons.simple variant="outline" color="gray" class="mb-3 " :fullWidth="true"
                     x-on:click="verify()"
-                    x-bind:disabled="loading"
-                >
-                    <span x-show="!loading">{{ $label }}</span>
-                    <span x-show="loading" x-cloak>{{ $loadingLabel }}</span>
-                </x-lareons::button.simple>
-                <p x-show="error" x-text="error" x-cloak
-                   class="text-sm text-center text-red-600 dark:text-red-400"></p>
+                    x-bind:disabled="loading" >
+                    <div class=" flex items-center gap-2 justify-center">
+                        <x-icon type="outline" icon="fingerprint" />
+                        <span x-show="!loading">{{ $label }}</span>
+                        <span x-show="loading" x-cloak>{{ $loadingLabel }}</span>
+                    </div>
+                </x-lareon::buttons.simple>
+                <p x-show="error" x-text="error" x-cloak class="text-sm text-center text-red-600"></p>
             </div>
 
             <div class="relative my-6">
                 <div class="absolute inset-0 flex items-center">
-                    <div class="w-full border-t border-zinc-200 dark:border-zinc-700"></div>
+                    <div class="w-full border-t border-line_light"></div>
                 </div>
                 <div class="relative flex justify-center text-xs uppercase">
-                    <span class="px-2 text-zinc-500 dark:text-zinc-400 bg-white dark:bg-zinc-900">
+                    <span class="px-2 text-zinc-600 bg-slate-50">
                         {{ $separator }}
                     </span>
                 </div>

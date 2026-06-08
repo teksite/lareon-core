@@ -12,7 +12,7 @@
     <meta name="theme-color" content="#ffffff">
     <title>{{$title ?? __('authentication') }} - {{__(config('app.name'))}}</title>
     @vite(['lareon/steward/resources/css/panel.css','lareon/steward/resources/js/panel.js',
-'lareon/modules/auth/resources/js/panel.js'])
+'lareon/modules/Auth/resources/js/panel.js'])
     @stack('headerScripts')
 </head>
 <body class="bg-slate-200">
