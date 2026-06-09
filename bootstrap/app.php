@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Lareon\Modules\Auth\App\Http\Middleware\DecryptAuthenticationTokenMiddleware;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -12,10 +13,12 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        $middleware->append([
-            \App\Http\Middleware\ClearCacheDailyMiddleware::class,
-        ]);
-    })
+        $middleware->append([ \App\Http\Middleware\ClearCacheDailyMiddleware::class,]);
+        $middleware->api([DecryptAuthenticationTokenMiddleware::class ]);
+
+    }
+
+    )
     ->withExceptions(function (Exceptions $exceptions): void {
         //
     })->create();

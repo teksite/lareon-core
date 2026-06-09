@@ -16,7 +16,7 @@ trait TokenCodeRequestTrait
         if ($validator->errors()->isNotEmpty()) return;
 
         $tokenService = new ActionTokenService();
-        if (!$tokenService->verify($this->input('token' , ''), $this->contactType, $this->actionType)) {
+        if (!$tokenService->verify($this->input('token' , ''), $this->contactValue, $this->actionType)) {
             $validator->errors()->add('credentials', trans('auth::messages.auth.invalid_token'));
             return;
         }

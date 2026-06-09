@@ -2,11 +2,7 @@
 
 namespace Lareon\Modules\Auth\App\Http\Controllers\Api\Auth;
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use Lareon\Modules\Auth\App\Enums\ContactType;
 use Lareon\Modules\Auth\App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Lareon\Modules\Auth\App\Http\Requests\Api\RegisterApiRequest;
 use Lareon\Modules\Auth\App\Services\ActionTokenService;
 use Lareon\Modules\Auth\App\Services\AuthTokenService;
@@ -46,10 +42,10 @@ class RegisterUserController extends Controller
             $user = $res->result;
             $apiToken = $this->authService->create($user);
 
-            return Responder::Success(trans('steward::global.crud.success', ['attribute' => __('user')]))
+            return Responder::Success(trans('lareon::global.crud.success.created', ['attribute' => __('user')]))
                             ->reply()->withCookie(cookie('x_web_token', $apiToken, 24 * 28 * 60, config('session.domain'), null, true, true));
         }
-        return Responder::failed(trans('steward::global.crud.failed', ['attribute' => __('user')]))->reply();
+        return Responder::failed(trans('lareon::global.crud.error.created', ['attribute' => __('user')]))->reply();
     }
 
 }

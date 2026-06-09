@@ -52,7 +52,7 @@ class TokenController extends Controller
 
         $token = (new ActionTokenService())->create($contactValue, $actionType);
 
-        return Responder::success(trans('auth::messages.verification_code.generate_token_code'), ['token' => $token])->reply();
+        return Responder::success(trans('auth::messages.verification_code.token_generated'), ['token' => $token])->reply();
     }
 
 }
