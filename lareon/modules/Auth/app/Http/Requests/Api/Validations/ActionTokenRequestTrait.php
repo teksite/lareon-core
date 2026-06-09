@@ -25,7 +25,6 @@ trait ActionTokenRequestTrait
             $validator->errors()->add('credentials', trans('auth::messages.verification_code.not_valid'));
             return;
         }
-
         $isValid = $verificationService->verify($code, $this->contactValue, $this->actionType);
 
         if (!$isValid) {

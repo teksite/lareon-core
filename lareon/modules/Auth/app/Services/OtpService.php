@@ -9,41 +9,35 @@ use Lareon\Modules\Auth\App\Enums\ActionType;
 
 class OtpService
 {
-    const int CODE_LENGTH = 6;
-    const array CHAR_CODE = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    public const int CODE_LENGTH = 6;
 
-    const int SMS_EXPIRATION = 60; //in seconds
-    const int EMAIL_EXPIRATION = 300; //in seconds
+    public const int SMS_EXPIRATION = 60;
 
-    const int MAX_ATTEMPTS = 5;
+    public const int EMAIL_EXPIRATION = 300;
 
-    const true ENCRYPT = true;
+    public const int MAX_ATTEMPTS = 5;
+
+    public const bool ENCRYPT = true;
 
     /**
-     * generate random code
+     * Generate secure OTP.
      */
     private function randomCode(): string
     {
-        $code = '';
-        for ($i = 0; $i < self::CODE_LENGTH; $i++) {
-            $code .= Arr::random(self::CHAR_CODE);
-        }
-        return $code;
+        return str_pad((string)random_int(0, (10 ** self::CODE_LENGTH) - 1), self::CODE_LENGTH, '0', STR_PAD_LEFT);
     }
 
-
     /**
-     * generate cache key
-     *
+     * Cache key.
      */
     private function key(string $to, ActionType $action): string
     {
-        $gateway = ContactType::detect($to);
-        return "otp::{$action->value}::{$gateway->value}::" . sha1($to);
+        $contactType = ContactType::detect($to);
+        return sprintf('otp::%s:%s:%s', $action->value, $contactType->value, sha1($to));
     }
 
     /**
-     * calculate ttl for cache
+     * Resolve ttl.
      */
     private function ttl(string $to, ?int $customTtl = null): int
     {
@@ -55,18 +49,11 @@ class OtpService
     }
 
     /**
-     * GENERATE OTP
+     * Generate OTP.
      */
-    public function generate(string $to, ActionType $action, null|int $ttl = null): false|array
+    public function generate(string $to, ActionType $action, ?int $ttl = null): array
     {
-        $gateway = ContactType::detect($to);
-
-        if (!$gateway) return false;
-
-        $key = $this->key($to, $action);
-
         $ttl = $this->ttl($to, $ttl);
-
         $code = $this->randomCode();
 
         $payload = [
@@ -74,21 +61,20 @@ class OtpService
             'attempts'   => 0,
             'created_at' => now()->timestamp,
             'expires_at' => now()->addSeconds($ttl)->timestamp,
-            'verified'   => false,
         ];
 
-        Cache::put($key, $payload, now()->addSeconds($ttl));
+        Cache::put($this->key($to, $action), $payload, now()->addSeconds($ttl));
 
         return [
             'code'       => $code,
             'to'         => $to,
-            'expires_at' => $payload['expires_at'],
             'ttl'        => $ttl,
+            'expires_at' => $payload['expires_at'],
         ];
     }
 
     /**
-     * VERIFY OTP
+     * Verify OTP.
      */
     public function verify(string $code, string $to, ActionType $action): bool
     {
@@ -96,14 +82,10 @@ class OtpService
 
         $data = Cache::get($key);
 
-        if (!$data)   return false;
+        if (!$data) return false;
 
         if (($data['expires_at'] ?? 0) < now()->timestamp) {
             Cache::forget($key);
-            return false;
-        }
-
-        if (!empty($data['verified']) || $data['verified'] === true) {
             return false;
         }
 
@@ -112,36 +94,50 @@ class OtpService
             return false;
         }
 
-        if (hash('sha256', $code) !== $data['code']) {
+        $isValid = self::ENCRYPT
+            ? hash_equals($data['code'], hash('sha256', $code))
+            : hash_equals($data['code'], $code);
+
+        if (!$isValid) {
             $data['attempts'] = ($data['attempts'] ?? 0) + 1;
+            $remaining = max($data['expires_at'] - now()->timestamp, 1);
 
-            Cache::put($key, $data, now()->addSeconds($data['expires_at'] - now()->timestamp));
-
+            Cache::put($key, $data, now()->addSeconds($remaining));
             return false;
         }
-        $this->forget($key);
 
+        Cache::forget($key);
         return true;
     }
 
-    public function forget(string $to, ?ActionType $action= null): void
+    /**
+     * Delete OTP.
+     */
+    public function forget(string $to, ActionType $action): void
     {
-        if ($action === null) cache()->forget($to);
-        $key = $this->key($to, $action);
-        Cache::forget($key);
+        Cache::forget($this->key($to, $action));
     }
 
-
-    public function remainingTime(string $to, ActionType $action , bool $testing = false): int
+    /**
+     * Remaining time in seconds.
+     */
+    public function remainingTime(string $to, ActionType $action, bool $testing = false): int
     {
-       if ($testing) return 0;
+        if ($testing) return 0;
+
         $data = Cache::get($this->key($to, $action));
 
-        if (!$data || !isset($data['expires_at'])) {
-            return 0;
-        }
+        if (!$data || !isset($data['expires_at'])) return 0;
+
 
         return max($data['expires_at'] - now()->timestamp, 0);
     }
 
+    /**
+     * Check whether OTP exists.
+     */
+    public function exists(string $to, ActionType $action): bool
+    {
+        return Cache::has($this->key($to, $action));
+    }
 }

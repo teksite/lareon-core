@@ -18,36 +18,49 @@ class ActionTokenService
      */
     private function key(string $token): string
     {
-        return "action_token::" . $token;
+        return "action_token::{$token}";
     }
+
+
+    /**
+     * Cache key for contact/action lookup.
+     */
+    private function lookupKey(string $contact, ActionType $action): string
+    {
+        return "action_token_lookup::{$action->value}::{$contact}";
+    }
+
     /**
      * generate token
      */
-    public function create(string $contact, ActionType $action , ?int $ttl=null): string
+    public function create(string $contact, ActionType $action, ?int $ttl = null): string
     {
+        $ttl ??= self::DEFAULT_TTL;
+
+        $this->revokeByContact($contact, $action);
+
         $token = $this->generateToken();
 
         $payload = [
             'contact'    => $contact,
             'action'     => $action->value,
-            'used'       => false,
-            'token'       => hash('sha256', $token),
             'created_at' => now()->timestamp,
-            'expires_at' => now()->addSeconds($ttl ?? self::TTL ?? 600)->timestamp,
+            'expires_at' => now()->addSeconds($ttl)->timestamp,
         ];
 
-        Cache::put($this->key($token), $payload, now()->addSeconds(self::TTL));
+        Cache::put($this->key($token), $payload, now()->addSeconds($ttl));
+
+        Cache::put($this->lookupKey($contact, $action), $token, now()->addSeconds($ttl));
 
         return $token;
     }
 
     /**
-     * @param int|null $length
-     * @return string
+     * Generate secure random token.
      */
-    public function generateToken(?int $length = null): string
+    public function generateToken(int $length = self::TOKEN_LENGTH): string
     {
-        return Str::random($length ?? self::CODE_LENGTH ?? 40);
+        return Str::random($length);
     }
 
 
@@ -60,35 +73,61 @@ class ActionTokenService
 
         if (!$data) return false;
 
-        if (!empty($data['used'])) return false;
 
-        if ( ($data['contact'] ?? null) !== $contact || ($data['action'] ?? null) !== $action->value ) return false;
+        if (($data['contact'] ?? null) !== $contact) return false;
+        if (($data['action'] ?? null) !== $action->value) return false;
+
+        if (($data['expires_at'] ?? 0) < now()->timestamp) {
+            $this->forget($token);
+            return false;
+        }
+
 
         $this->forget($token);
-
         return true;
     }
 
     /**
-     * @param string|null $token
-     * @return void
+     * Remaining lifetime in seconds.
      */
-    public function forget(?string $token): void
+    public function remainingTime(string $contact, ActionType $action): int
     {
-        if (is_null($token)) return;
+        $token = Cache::get($this->lookupKey($contact, $action));
+
+        if (!$token) return 0;
+
+        $data = Cache::get($this->key($token));
+
+        if (!$data) return 0;
+
+        return max(($data['expires_at'] ?? 0) - now()->timestamp, 0);
+    }
+
+    /**
+     * Remove token.
+     */
+    public function forget(string $token): void
+    {
+        $data = Cache::get($this->key($token));
+
+        if ($data) {
+            Cache::forget($this->lookupKey($data['contact'], ActionType::from($data['action'])));
+        }
+
         Cache::forget($this->key($token));
     }
 
-
-    public function remainingTime(string $to, ActionType $action , bool $testing = false): int
+    /**
+     * Remove token by contact/action.
+     */
+    public function revokeByContact(string $contact, ActionType $action): void
     {
-        if ($testing) return 0;
-        $data = Cache::get($this->key($to));
+        $token = Cache::get($this->lookupKey($contact, $action));
 
-        if (!$data || !isset($data['expires_at'])) {
-            return 0;
+        if ($token) {
+            Cache::forget($this->key($token));
         }
 
-        return max($data['expires_at'] - now()->timestamp, 0);
+        Cache::forget($this->lookupKey($contact, $action));
     }
 }
