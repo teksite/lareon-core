@@ -2,23 +2,20 @@
 
 namespace Lareon\Modules\Auth\App\Http\Controllers\Api\Auth;
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Lareon\Modules\Auth\App\Enums\ContactType;
 use Lareon\Modules\Auth\App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Lareon\Modules\Auth\App\Http\Requests\Api\RegisterApiRequest;
 use Lareon\Modules\Auth\App\Http\Requests\Api\SendVerificationCodeApiRequest;
+use Lareon\Modules\Auth\App\Http\Requests\Api\VerifyVerificationCodeApiRequest;
 use Lareon\Modules\Auth\App\Services\ActionTokenService;
 use Lareon\Modules\Auth\App\Services\OtpService;
 use Lareon\Modules\Auth\App\Services\SendOtpService;
-use Lareon\Modules\User\App\Logics\UserLogic;
 use Teksite\Handler\Facade\Responder;
 
 
 class TokenController extends Controller
 {
-    public function __construct(protected OtpService $otpService) {}
+    public function __construct() {}
 
 
     /**
@@ -30,7 +27,7 @@ class TokenController extends Controller
         $contact = $request->contactValue;
         $contactType=$request->contactType;
         $actionType=$request->actionType;
-        $codeData= $this->otpService->generate($contact, $actionType, );
+        $codeData= (new OtpService)->generate($contact, $actionType, );
         if ($codeData === false) {
             Responder::failed('steward::error.server_error_unknown' ,)->reply();
         }
@@ -49,9 +46,14 @@ class TokenController extends Controller
     }
 
 
-    public function verify(RegisterApiRequest $request)
+    public function verify(VerifyVerificationCodeApiRequest $request)
     {
+        $contactValue = $request->contactValue;
+        $actionType = $request->actionType;
 
+        $token = (new ActionTokenService())->create($contactValue, $actionType);
+
+        return Responder::success(trans('auth::messages.verification_code.sent_successfully') , compact('token'));
     }
 
 }

@@ -8,11 +8,9 @@ use Lareon\Modules\Auth\App\Enums\ActionType;
 
 class ActionTokenService
 {
+    private const int DEFAULT_TTL = 600;
 
-
-    private const int TTL = 10 * 60;
-
-    public const int CODE_LENGTH = 40;
+    public const int TOKEN_LENGTH = 40;
 
 
     /**
@@ -22,14 +20,10 @@ class ActionTokenService
     {
         return "action_token::" . $token;
     }
-
-
-
-
     /**
      * generate token
      */
-    public function create(string $contact, ActionType $action): string
+    public function create(string $contact, ActionType $action , ?int $ttl=null): string
     {
         $token = $this->generateToken();
 
@@ -37,8 +31,9 @@ class ActionTokenService
             'contact'    => $contact,
             'action'     => $action->value,
             'used'       => false,
-            'hash'       => hash('sha256', $token),
+            'token'       => hash('sha256', $token),
             'created_at' => now()->timestamp,
+            'expires_at' => now()->addSeconds($ttl ?? self::TTL ?? 600)->timestamp,
         ];
 
         Cache::put($this->key($token), $payload, now()->addSeconds(self::TTL));
@@ -52,7 +47,7 @@ class ActionTokenService
      */
     public function generateToken(?int $length = null): string
     {
-        return Str::random($length ?? self::CODE_LENGTH);
+        return Str::random($length ?? self::CODE_LENGTH ?? 40);
     }
 
 
@@ -88,7 +83,7 @@ class ActionTokenService
     public function remainingTime(string $to, ActionType $action , bool $testing = false): int
     {
         if ($testing) return 0;
-        $data = Cache::get($this->key($to, $action));
+        $data = Cache::get($this->key($to));
 
         if (!$data || !isset($data['expires_at'])) {
             return 0;

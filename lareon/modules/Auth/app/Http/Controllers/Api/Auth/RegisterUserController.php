@@ -1,0 +1,52 @@
+<?php
+
+namespace Lareon\Modules\Auth\App\Http\Controllers\Api\Auth;
+
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Lareon\Modules\Auth\App\Enums\ContactType;
+use Lareon\Modules\Auth\App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Lareon\Modules\Auth\App\Http\Requests\Api\RegisterApiRequest;
+use Lareon\Modules\Auth\App\Services\ActionTokenService;
+use Lareon\Modules\User\App\Logics\UserLogic;
+use Teksite\Handler\Facade\Responder;
+
+
+class RegisterUserController extends Controller
+{
+    public function __construct(protected ActionTokenService $tokenService, protected AuthTokenService $authService, protected UserLogic $logic) {}
+
+
+    /**
+     * @throws \Throwable
+     */
+    public function store(RegisterApiRequest $request)
+    {
+        $name = $request->input('name');
+        $password = $request->input('password');
+        $token = $request->input('token');
+        $contactType = $request->contactType;
+        $contactValue = $request->contactValue;
+        $contactAltType = $request->contactAltType;
+        $contactAltValue = $request->contactAltValue;
+
+        $data = [
+            'name'                 => $name,
+            'password'             => $password,
+            $contactType->value    => $contactValue,
+            $contactAltType->value => $contactAltValue,
+        ];
+
+        $res = $this->logic->create($data);
+        if ($res->success) {
+            $user = $res->result;
+            $apiToken = $this->authService->create($user);
+
+            return Responder::Success(trans('steward::global.crud.success', ['attribute' => __('user')]))
+                            ->reply()->withCookie(cookie('x_web_token', $apiToken, 24 * 28 * 60, config('session.domain'), null, true, true));
+        }
+        return Responder::failed(trans('steward::global.crud.failed', ['attribute' => __('user')]))->reply();
+    }
+
+}

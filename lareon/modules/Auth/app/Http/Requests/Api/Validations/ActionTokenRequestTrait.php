@@ -16,13 +16,17 @@ trait ActionTokenRequestTrait
     protected function checkSentVerificationCode(Validator $validator): void
     {
         if ($validator->errors()->isNotEmpty()) return;
-        $verificationService = new ActionTokenService();
 
-        if ($verificationService::CODE_LENGTH !== strlen((string)$this->input('code'))) {
+        $verificationService = new OtpService();
+
+        $code= (string)$this->input('code');
+
+        if ($verificationService::CODE_LENGTH !== strlen($code)) {
             $validator->errors()->add('credentials', trans('auth::messages.verification_code.not_valid'));
+            return;
         }
 
-        $isValid = $verificationService->verify($this->input('code'), $this->contactValue, ActionType::tryFrom($this->input('action')));
+        $isValid = $verificationService->verify($code, $this->contactValue, $this->actionType);
 
         if (!$isValid) {
             $validator->errors()->add('credentials', trans('auth::messages.verification_code.not_valid'));

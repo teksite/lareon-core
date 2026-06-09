@@ -55,7 +55,7 @@ trait AuthDataRequestTrait
             $contactValue = strtolower($contact);
         }
 
-        $this->contactValue = $contactValue;
+        $this->contactValue = $contactValue ?? $this->input('contact');
 
         $this->actionType = ActionType::tryFrom($this->input('action'));
     }
