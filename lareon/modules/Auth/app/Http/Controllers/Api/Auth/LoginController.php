@@ -4,8 +4,8 @@ namespace Lareon\Modules\Auth\App\Http\Controllers\Api\Auth;
 
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Lareon\Modules\Auth\App\Http\Controllers\Controller;
-use Lareon\Modules\Auth\App\Http\Resources\UserResource;
 use Lareon\Modules\Auth\App\Services\AuthTokenService;
+use Lareon\Modules\User\App\Http\Resources\UserResource;
 use Teksite\Handler\Actions\ServiceWrapper;
 use Teksite\Handler\Facade\Responder;
 

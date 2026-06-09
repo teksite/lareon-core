@@ -4,7 +4,7 @@ namespace Lareon\Modules\Auth\App\Http\Controllers\Api\Auth;
 
 use Illuminate\Http\Request;
 use Lareon\Modules\Auth\App\Http\Controllers\Controller;
-use Lareon\Modules\Auth\App\Http\Resources\UserResource;
+use Lareon\Modules\User\App\Http\Resources\UserResource;
 use Teksite\Handler\Facade\Responder;
 
 
