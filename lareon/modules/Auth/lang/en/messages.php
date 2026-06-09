@@ -1,34 +1,65 @@
 <?php
 
 return [
+
     'auth' => [
-        'usernameType'                     => 'the contact format is invalid',
-        'user_exist'                       => 'the user exists',
-        'user_not_found'                   => 'the user does not exist',
-        'contact_is_used_before'           => 'the entered :attribute is already used by another user or is not accepted by the system',
-        'contact_wrong_pattern'           => 'the entered :attribute is invalid and do not match with mobile or email',
-        'contact_phone_pattern'           => 'the entered phone number is invalid and do not match with any mobile number',
-        'contact_email_pattern'           => 'the entered email address is invalid and do not match with email',
-        'invalid_token'                    => 'invalid token, please try again',
-        'conflict_password_code'           => 'something went wrong with the authentication method',
-        'conflict_password_code_existence' => 'password and verification code cannot be used together',
-        'credentials'                      => 'the provided credentials do not match our records',
-        'reset_password'                   => 'password has been reset successfully',
-        'contact_verified_before'          => 'the entered :attribute has already been verified',
-        'contact_verified_success'         => 'the entered :attribute has been verified successfully',
-        'contact_is_not_verified'          => 'the :attribute has not been verified',
-        'contact_verified_failed'          => 'the entered :attribute could not be verified, please try again',
-        'contact_failed'                   => 'something went wrong with the authentication method',
+
+        'invalid_contact_type' => 'The contact information format is invalid.',
+
+        'user_exists' => 'A user with the provided contact information already exists.',
+
+        'user_not_found' => 'No user was found with the provided contact information.',
+
+        'contact_already_used' => 'The provided :attribute is already in use by another user.',
+
+        'invalid_contact' => 'The provided :attribute must be a valid email address or mobile number.',
+
+        'invalid_phone' => 'The provided phone number is invalid.',
+
+        'invalid_email' => 'The provided email address is invalid.',
+
+        'invalid_token' => 'The provided token is invalid.',
+
+        'authentication_conflict' => 'The selected authentication method is invalid.',
+
+        'password_and_code_conflict' => 'Password and verification code cannot be used together.',
+
+        'invalid_credentials' => 'The provided credentials do not match our records.',
+
+        'password_reset_successfully' => 'Your password has been reset successfully.',
+
+        'contact_already_verified' => 'The provided :attribute has already been verified.',
+
+        'contact_verified' => 'The provided :attribute has been verified successfully.',
+
+        'contact_not_verified' => 'The provided :attribute has not been verified.',
+
+        'contact_verification_failed' => 'Failed to verify the provided :attribute.',
+
+        'alternative_contact_same' => 'The :alt_attribute must be different from the :attribute.',
+
+        'authentication_failed' => 'Authentication failed. Please try again.',
+
     ],
 
     'verification_code' => [
-        'sent_successfully' => 'the verification code was sent successfully via :attribute',
-        'sent_failed'       => 'failed to send the verification code via :attribute, please try again later',
-        'wait'              => 'you can try again in :seconds seconds',
-        'email_subject'     => 'verification code',
-        'not_valid'         => 'the verification code is invalid',
-        'valid'             => 'the verification code has been verified successfully',
-        'wrong_auth_token'  => 'the authentication token is invalid',
-        'generate_token_code'  => 'use the token for the next step for your action',
+
+        'sent_successfully' => 'The verification code was sent successfully via :attribute.',
+
+        'sending_failed' => 'Failed to send the verification code via :attribute. Please try again later.',
+
+        'wait_before_retry' => 'Please wait :seconds seconds before requesting another code.',
+
+        'email_subject' => 'Verification Code',
+
+        'invalid_code' => 'The verification code is invalid.',
+
+        'verified_successfully' => 'The verification code has been verified successfully.',
+
+        'invalid_auth_token' => 'The authentication token is invalid.',
+
+        'token_generated' => 'Use the provided token to continue the authentication process.',
+
     ],
+
 ];

@@ -14,8 +14,10 @@ trait AuthDataRequestTrait
     public User|Authenticatable|null $user = null;
     public ActionType|null $actionType = null;
 
+
     public ContactType|null $contactType = null;
     public string|null $contactValue = null;
+
 
     public ContactType|null $contactAltType = null;
     public string|null $contactAltValue = null;
@@ -30,37 +32,51 @@ trait AuthDataRequestTrait
 
         if ($validator->errors()->isNotEmpty()) return;
 
-        $contact= $this->input('contact');
+        $contact = $this->normalizeContact($this->input('contact'));
 
-        $contactType = ContactType::detect($contact);
-
-        if (!$contactType) {
-            $validator->errors()->add( 'contact', trans('auth::messages.auth.contact_wrong_pattern') );
+        if (!$contact) {
+            $validator->errors()->add('contact', trans('auth::messages.auth.contact_wrong_pattern'));
             return;
         }
 
+        $this->contactType = $contact['type'];
+        $this->contactValue = $contact['value'];
 
-        $this->contactType = $contactType;
-
-        if ($contactType === ContactType::PHONE) {
-            $contactValue = MobilePatterns::canonical($contact, MobilePatterns::IRAN);
-            if ($contactValue === null) {
-                $validator->errors()->add('contact', trans('auth::messages.auth.contact_phone_pattern'));
-                return;
-            };
-
-
-        }
-        if ($contactType === ContactType::EMAIL) {
-            $contactValue = strtolower($contact);
-        }
-
-        $this->contactValue = $contactValue ?? $this->input('contact');
 
         $this->actionType = ActionType::tryFrom($this->input('action'));
     }
 
+    protected function resolveAltContactData(Validator $validator): void
+    {
+        if ($validator->errors()->isNotEmpty()) return;
 
+        $contact = $this->normalizeContact($this->input('contact_alt'));
+
+        if (!$contact) {
+            $validator->errors()->add('contact_alt', trans('auth::messages.auth.contact_wrong_pattern'));
+            return;
+        }
+
+        if ($contact['type'] === $this->contactType) {
+            $validator->errors()->add('contact_alt', trans('auth::messages.auth.alternative_contact_same', ['attribute' => $this->contactType?->value, 'alt_attribute' => $contact['type']->value,]));
+            return;
+        }
+
+        $exists = User::query()->where($contact['type']->value, $contact['value'])->exists();
+
+        if ($exists) {
+            $validator->errors()->add('contact_alt', trans('auth::messages.auth.contact_is_used_before', ['attribute' => $contact['type']->value,]));
+            return;
+        }
+
+        $this->contactAltType = $contact['type'];
+        $this->contactAltValue = $contact['value'];
+    }
+
+
+    /**
+     * Resolve user from contact.
+     */
     protected function resolveUser(Validator $validator): void
     {
         $this->user = User::query()->firstWhere($this->contactType->value, $this->contactValue);
@@ -68,53 +84,46 @@ trait AuthDataRequestTrait
 
 
     /**
-     * @param Validator $validator
-     * @return void
+     * Validate user existence conditions.
      */
     protected function checkExistenceContactCondition(Validator $validator): void
     {
         if ($validator->errors()->isNotEmpty()) return;
 
-        $user = $this->user;
-
-        if ($this->actionType === ActionType::REGISTER && $user) {
-            $validator->errors()->add($this->contactType->value, trans('auth::messages.auth.contact_is_used_before', ['attribute' => $this->contactType->value]));
+        if ($this->actionType === ActionType::REGISTER && $this->user) {
+            $validator->errors()->add('contact', trans('auth::messages.auth.contact_is_used_before', ['attribute' => $this->contactType?->value,]));
             return;
         }
 
-        if ($this->actionType === ActionType::LOGIN->value && !$user) {
-            $validator->errors()->add($this->actionType, trans('auth::messages.auth.user_not_found'));
-            return;
+        if ($this->actionType === ActionType::LOGIN && !$this->user) {
+            $validator->errors()->add('contact', trans('auth::messages.auth.user_not_found'));
         }
     }
 
 
-
-
-
-/*
-    protected function appendAltContactData(Validator $validator): void
+    /**
+     * Normalize phone/email.
+     */
+    private function normalizeContact(?string $contact): ?array
     {
-        if ($validator->errors()->isNotEmpty()) return;
+        if (blank($contact))   return null;
 
-        if (is_null($this->contactType) || is_null($this->contactValue)) {
-            $validator->errors()->add('overall', trans('auth::messages.auth.troubles'));
-            return;
-        }
+        $type = ContactType::detect($contact);
 
-        $contactAltType = $this->contactType === ContactType::PHONE ? ContactType::EMAIL : ContactType::PHONE;
-
-        $existenceUserByAltContact = User::query()->where($contactAltType->value, $this->contactValue)->exists();
-        if ($existenceUserByAltContact) {
-            $validator->errors()->add($contactAltType->value, trans('auth::messages.auth.contact_is_used_before', ['attribute' => $contactAltType->value]));
-            return;
-        }
-
-        $this->contactAltType = $contactAltType;
-        $this->contactAltValue = NormalizeContact::handle($this->input('contact_alt'));
-        return;
-    }*/
+        if (!$type)    return null;
 
 
+        $value = match ($type) {
+            ContactType::PHONE => MobilePatterns::canonical($contact, MobilePatterns::IRAN),
+            ContactType::EMAIL => strtolower(trim($contact)),
+        };
+
+        if (blank($value))  return null;
+
+        return [
+            'type'  => $type,
+            'value' => $value,
+        ];
+    }
 
 }

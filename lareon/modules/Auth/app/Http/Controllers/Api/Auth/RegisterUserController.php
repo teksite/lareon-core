@@ -9,6 +9,7 @@ use Lareon\Modules\Auth\App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Lareon\Modules\Auth\App\Http\Requests\Api\RegisterApiRequest;
 use Lareon\Modules\Auth\App\Services\ActionTokenService;
+use Lareon\Modules\Auth\App\Services\AuthTokenService;
 use Lareon\Modules\User\App\Logics\UserLogic;
 use Teksite\Handler\Facade\Responder;
 
@@ -24,8 +25,8 @@ class RegisterUserController extends Controller
     public function store(RegisterApiRequest $request)
     {
         $name = $request->input('name');
+        $lastname = $request->input('lastname');
         $password = $request->input('password');
-        $token = $request->input('token');
         $contactType = $request->contactType;
         $contactValue = $request->contactValue;
         $contactAltType = $request->contactAltType;
@@ -33,12 +34,14 @@ class RegisterUserController extends Controller
 
         $data = [
             'name'                 => $name,
+            'lastname'             => $lastname,
             'password'             => $password,
             $contactType->value    => $contactValue,
             $contactAltType->value => $contactAltValue,
         ];
 
         $res = $this->logic->create($data);
+
         if ($res->success) {
             $user = $res->result;
             $apiToken = $this->authService->create($user);

@@ -5,14 +5,14 @@
             <h1 class="text-center !mb-0 text-xl">{{__('lareon::global.auth.register')}}</h1>
         </div>
         <hr class="my-6 border-zinc-300">
-        <form method="POST" action="{{ route('register') }}" class="formAction space-y-3">
+        <form method="POST" action="{{ route('register') }}" class="formAction space-y-6">
             @csrf
-            <div class="mb-6 space-y-3">
+            <div class="mb-6 space-y-6">
                 <div class="grid gap-6 md:grid-cols-2">
                     <x-lareon::editor.input :label="__('name')" name="name" autocomplete="name" :placeholder="__('lareon::global.placeholders.write.one',['attribute'=>__('name')])" :required="true"/>
                     <x-lareon::editor.input :label="__('lastname')" name="lastname" autocomplete="lastname" :placeholder="__('lareon::global.placeholders.write.one',['attribute'=>__('lastname')])" :required="true"/>
                 </div>
-                <div class=" space-y-3">
+                <div class=" space-y-6">
                     <x-lareon::editor.input :label="__('email')" name="email" autocomplete="email" :placeholder="__('lareon::global.placeholders.write.unique.one',['attribute'=>__('email')])" :required="true"/>
                     <x-lareon::editor.input :label="__('phone')" name="phone" autocomplete="phone" :placeholder="__('lareon::global.placeholders.write.unique.one',['attribute'=>__('phone')])" :required="true"/>
                 </div>
