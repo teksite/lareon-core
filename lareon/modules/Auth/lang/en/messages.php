@@ -40,6 +40,8 @@ return [
 
         'authentication_failed' => 'Authentication failed. Please try again.',
 
+        'login_success' => 'you are logged in successfully.',
+
     ],
 
     'verification_code' => [
@@ -59,6 +61,8 @@ return [
         'invalid_auth_token' => 'The authentication token is invalid.',
 
         'token_generated' => 'Use the provided token to continue the authentication process.',
+
+        'login_failed' => 'you are not logged in.',
 
     ],
 

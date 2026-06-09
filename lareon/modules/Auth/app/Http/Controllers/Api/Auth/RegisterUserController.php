@@ -4,7 +4,6 @@ namespace Lareon\Modules\Auth\App\Http\Controllers\Api\Auth;
 
 use Lareon\Modules\Auth\App\Http\Controllers\Controller;
 use Lareon\Modules\Auth\App\Http\Requests\Api\RegisterApiRequest;
-use Lareon\Modules\Auth\App\Services\ActionTokenService;
 use Lareon\Modules\Auth\App\Services\AuthTokenService;
 use Lareon\Modules\User\App\Logics\UserLogic;
 use Teksite\Handler\Facade\Responder;
@@ -12,7 +11,7 @@ use Teksite\Handler\Facade\Responder;
 
 class RegisterUserController extends Controller
 {
-    public function __construct(protected ActionTokenService $tokenService, protected AuthTokenService $authService, protected UserLogic $logic) {}
+    public function __construct(protected AuthTokenService $authService, protected UserLogic $logic) {}
 
 
     /**

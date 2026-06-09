@@ -40,6 +40,10 @@ return [
 
         'authentication_failed' => 'احراز هویت ناموفق بود. لطفاً دوباره تلاش کنید.',
 
+        'login_success' => 'شما با موفقیت به سیستم وارد شدید.',
+
+        'login_failed' => 'شما موفق به ورد به سیستم نشدید.',
+
     ],
 
     'verification_code' => [
