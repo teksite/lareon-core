@@ -106,7 +106,7 @@ class OtpService
             return false;
         }
 
-//        Cache::forget($key);
+        Cache::forget($key);
         return true;
     }
 

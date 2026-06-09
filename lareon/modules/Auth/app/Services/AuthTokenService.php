@@ -2,128 +2,123 @@
 
 namespace Lareon\Modules\Auth\App\Services;
 
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Str;
-use Lareon\Modules\Auth\App\Enums\ActionType;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Crypt;
+use Lareon\Modules\Auth\App\Models\PersonalAccessToken;
+use Lareon\Modules\User\App\Models\User;
+
 
 class AuthTokenService
 {
-    private const int DEFAULT_TTL = 600;
-
-    public const int TOKEN_LENGTH = 40;
-
+    const string PREFIX = 'x_web_token';
+    const string TOKEN_PREFIX = "Bearer ";
+    const bool ENCRYPT_TOKEN = true;
+    const int TTL = 28 * 24 * 3600;
 
     /**
-     * generate key for cache
+     * Create new access token.
      */
-    private function key(string $token): string
+    public function create(User|Authenticatable $user): string
     {
-        return "action_token::{$token}";
+        $token = $user->createToken(self::PREFIX, expiresAt: now()->addSeconds(self::TTL))->plainTextToken;
+
+        return self::ENCRYPT_TOKEN ? Crypt::encrypt($token) : $token;
+    }
+
+    /**
+     * delete the token
+     */
+    public function delete(?string $token): void
+    {
+        $tokenModel = $this->findToken($token);
+
+        if (!$tokenModel) return;
+
+        $tokenModel->delete();
+
+    }
+
+    /**
+     * Delete all the user tokens.
+     */
+    public function flush(Authenticatable|User $user): void
+    {
+        $user->tokens()->delete();
+    }
+
+    /**
+     * Get current request token.
+     */
+    public function getCurrentToken(bool $extracted = true): string
+    {
+        $authorizationToken = request()->header('Authorization', '') ?? request()->cookie(self::PREFIX);
+
+        return $extracted ? str_replace(self::TOKEN_PREFIX, '', $authorizationToken) : $authorizationToken;
     }
 
 
     /**
-     * Cache key for contact/action lookup.
+     * Check if current request has valid token.
      */
-    private function lookupKey(string $contact, ActionType $action): string
+    public function hasValidToken(): bool
     {
-        return "action_token_lookup::{$action->value}::{$contact}";
+        return $this->currentTokenModel() !== null;
     }
 
     /**
-     * generate token
+     * Resolve token model.
      */
-    public function create(string $contact, ActionType $action, ?int $ttl = null): string
+    public function findToken(?string $token): ?PersonalAccessToken
     {
-        $ttl ??= self::DEFAULT_TTL;
+        if (blank($token)) return null;
+        $token = $this->normalizeToken($token);
 
-        $this->revokeByContact($contact, $action);
+        if (!$token) return null;
 
-        $token = $this->generateToken();
-
-        $payload = [
-            'contact'    => $contact,
-            'action'     => $action->value,
-            'created_at' => now()->timestamp,
-            'expires_at' => now()->addSeconds($ttl)->timestamp,
-        ];
-
-        Cache::put($this->key($token), $payload, now()->addSeconds($ttl));
-
-        Cache::put($this->lookupKey($contact, $action), $token, now()->addSeconds($ttl));
-
-        return $token;
-    }
-
-    /**
-     * Generate secure random token.
-     */
-    public function generateToken(int $length = self::TOKEN_LENGTH): string
-    {
-        return Str::random($length);
+        return PersonalAccessToken::findToken($token);
     }
 
 
     /**
-     * verify token for each action
+     * Normalize token.
      */
-    public function verify(string $token, string $contact, ActionType $action): bool
+    protected function normalizeToken(string $token): ?string
     {
-        $data = Cache::get($this->key($token));
+        if (!self::ENCRYPT_TOKEN) return $token;
 
-        if (!$data) return false;
-
-        if (($data['contact'] ?? null) !== $contact) return false;
-        if (($data['action'] ?? null) !== $action->value) return false;
-
-        if (($data['expires_at'] ?? 0) < now()->timestamp) {
-            $this->forget($token);
-            return false;
+        try {
+            return Crypt::decryptString($token);
+        } catch (\Throwable) {
+            return null;
         }
-
-        $this->forget($token);
-        return true;
     }
 
     /**
-     * Remaining lifetime in seconds.
+     * Revoke current authenticated token.
      */
-    public function remainingTime(string $contact, ActionType $action): int
+    public function revokeCurrentToken(): void
     {
-        $token = Cache::get($this->lookupKey($contact, $action));
-
-        if (!$token) return 0;
-
-        $data = Cache::get($this->key($token));
-
-        if (!$data) return 0;
-
-        return max(($data['expires_at'] ?? 0) - now()->timestamp, 0);
+        $this->currentTokenModel()?->delete();
     }
 
     /**
-     * Remove token.
+     * Revoke all tokens except current one.
      */
-    public function forget(string $token): void
+    public function revokeOtherTokens(User|Authenticatable $user): void
     {
-        $data = Cache::get($this->key($token));
+        $currentTokenId = auth()->user()?->currentAccessToken()?->id;
 
-        if ($data) {
-            Cache::forget($this->lookupKey($data['contact'], ActionType::from($data['action'])));
-        }
-
-        Cache::forget($this->key($token));
+        $user->tokens()
+             ->when($currentTokenId, fn($query) => $query->whereKeyNot($currentTokenId))
+             ->delete();
     }
 
     /**
-     * Remove token by contact/action.
+     * Get current authenticated token model.
      */
-    public function revokeByContact(string $contact, ActionType $action): void
+    public function currentTokenModel(): ?PersonalAccessToken
     {
-        $token = Cache::get($this->lookupKey($contact, $action));
-
-        if ($token) { Cache::forget($this->key($token)); }
-
-        Cache::forget($this->lookupKey($contact, $action));
+        return $this->findToken($this->getCurrentToken());
     }
+
 }

@@ -28,6 +28,7 @@ class TokenController extends Controller
         $contactType = $request->contactType;
         $actionType = $request->actionType;
         $codeData = (new OtpService)->generate($contact, $actionType);
+
         if ($codeData === false) {
             Responder::failed('steward::error.server_error_unknown')->reply();
         }
@@ -41,8 +42,6 @@ class TokenController extends Controller
         }
 
         return $res ? Responder::success(trans('auth::messages.verification_code.sent_successfully', ['attribute' => __($contactType->value)]))->reply() : Responder::Failed('auth::messages.verification_code.sent_failed')->reply();
-
-
     }
 
 
@@ -53,10 +52,7 @@ class TokenController extends Controller
 
         $token = (new ActionTokenService())->create($contactValue, $actionType);
 
-        return Responder::success(
-            trans('auth::messages.verification_code.generate_token_code'),
-            ['token' => $token])
-                        ->reply();
+        return Responder::success(trans('auth::messages.verification_code.generate_token_code'), ['token' => $token])->reply();
     }
 
 }
