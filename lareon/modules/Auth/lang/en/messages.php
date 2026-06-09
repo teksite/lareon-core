@@ -29,5 +29,6 @@ return [
         'not_valid'         => 'the verification code is invalid',
         'valid'             => 'the verification code has been verified successfully',
         'wrong_auth_token'  => 'the authentication token is invalid',
+        'generate_token_code'  => 'use the token for the next step for your action',
     ],
 ];

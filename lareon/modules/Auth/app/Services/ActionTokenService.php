@@ -73,7 +73,6 @@ class ActionTokenService
 
         if (!$data) return false;
 
-
         if (($data['contact'] ?? null) !== $contact) return false;
         if (($data['action'] ?? null) !== $action->value) return false;
 
@@ -81,7 +80,6 @@ class ActionTokenService
             $this->forget($token);
             return false;
         }
-
 
         $this->forget($token);
         return true;
@@ -124,9 +122,7 @@ class ActionTokenService
     {
         $token = Cache::get($this->lookupKey($contact, $action));
 
-        if ($token) {
-            Cache::forget($this->key($token));
-        }
+        if ($token) { Cache::forget($this->key($token)); }
 
         Cache::forget($this->lookupKey($contact, $action));
     }
