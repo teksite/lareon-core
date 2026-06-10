@@ -8,6 +8,9 @@ use Lareon\Modules\Auth\App\Http\Middleware\EnsureContactsAreVerifiedMiddleware;
 
 //TODO add throttle and rate limiter
 
+//Route::post("/check-user", [CheckUserController::class, 'check'])->name('check-user');
+
+
 Route::prefix('verification-code')->name('verification_code.')->group(function () {
     Route::post("send", [TokenController::class, 'send',])->name('send');
     Route::post("verify", [TokenController::class, 'verify',])->name('verify');

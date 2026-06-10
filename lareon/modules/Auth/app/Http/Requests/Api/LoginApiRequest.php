@@ -15,7 +15,7 @@ class LoginApiRequest extends BaseApiRequest
      */
     public function authorize(): bool
     {
-        return !auth('sanctum')->check();
+        return auth('sanctum')->guest();
     }
 
     /**

@@ -43,15 +43,14 @@ class LoginController extends Controller
                      ->withCookie( cookie(
                          AuthTokenService::PREFIX,
                          $token,
-                         AuthTokenService::TTL,
+                         AuthTokenService::TTL / 60,
                          config('session.domain'),
                          null,
-                         true,
-                         true,
+                         app()->isProduction(),
+                         app()->isProduction(),
                      ));
-
         }
-        Responder::failed(trans('auth::messages.auth.login_failed'))->reply();
+        return Responder::failed(trans('auth::messages.auth.login_failed'))->reply();
 
     }
 
