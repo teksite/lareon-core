@@ -10,6 +10,8 @@ return [
 
         'user_not_found' => 'No user was found with the provided contact information.',
 
+        "user_not_detected"=>"in our records, there in no user with entered information.",
+
         'contact_already_used' => 'The provided :attribute is already in use by another user.',
 
         'invalid_contact' => 'The provided :attribute must be a valid email address or mobile number.',
@@ -42,6 +44,8 @@ return [
 
         'login_success' => 'you are logged in successfully.',
 
+        'login_failed' => 'you are not logged in.',
+
     ],
 
     'verification_code' => [
@@ -62,7 +66,6 @@ return [
 
         'token_generated' => 'Use the provided token to continue the authentication process.',
 
-        'login_failed' => 'you are not logged in.',
 
     ],
 

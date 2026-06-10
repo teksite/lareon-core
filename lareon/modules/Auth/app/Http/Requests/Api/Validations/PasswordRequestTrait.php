@@ -21,7 +21,7 @@ trait PasswordRequestTrait
         ];
 
         if (!Auth::once($credentials)){
-            $validator->errors()->add('credentials', trans('auth::messages.auth.credentials'));
+            $validator->errors()->add('credentials', trans('auth::messages.auth.user_not_detected'));
             return;
         }
 

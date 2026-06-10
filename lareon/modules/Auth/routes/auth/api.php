@@ -1,5 +1,6 @@
 <?php
 
+use Lareon\Modules\Auth\App\Http\Controllers\Api\Auth\LoginController;
 use Lareon\Modules\Auth\App\Http\Controllers\Api\Auth\RegisterUserController;
 use Lareon\Modules\Auth\App\Http\Controllers\Api\Auth\TokenController;
 use Lareon\Modules\Auth\App\Http\Controllers\Api\Auth\WhoAmIController;

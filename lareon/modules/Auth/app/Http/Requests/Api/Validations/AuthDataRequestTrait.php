@@ -79,6 +79,8 @@ trait AuthDataRequestTrait
      */
     protected function resolveUser(Validator $validator): void
     {
+        if ($validator->errors()->isNotEmpty()) return;
+
         $this->user = User::query()->firstWhere($this->contactType->value, $this->contactValue);
     }
 
@@ -89,12 +91,10 @@ trait AuthDataRequestTrait
     protected function checkExistenceContactCondition(Validator $validator): void
     {
         if ($validator->errors()->isNotEmpty()) return;
-
         if ($this->actionType === ActionType::REGISTER && $this->user) {
             $validator->errors()->add('contact', trans('auth::messages.auth.contact_is_used_before', ['attribute' => $this->contactType?->value,]));
             return;
         }
-
         if ($this->actionType === ActionType::LOGIN && !$this->user) {
             $validator->errors()->add('contact', trans('auth::messages.auth.user_not_found'));
         }

@@ -34,6 +34,7 @@ class VerifyVerificationCodeApiRequest extends BaseApiRequest
     {
         return [
             fn(Validator $validator) => $this->resolveContactData($validator),
+            fn(Validator $validator) => $this->resolveUser($validator),
             fn(Validator $validator) => $this->checkExistenceContactCondition($validator),
             fn(Validator $validator) => $this->checkSentVerificationCode($validator),
         ];

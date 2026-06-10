@@ -22,13 +22,13 @@ trait ActionTokenRequestTrait
         $code= (string)$this->input('code');
 
         if ($verificationService::CODE_LENGTH !== strlen($code)) {
-            $validator->errors()->add('credentials', trans('auth::messages.verification_code.not_valid'));
+            $validator->errors()->add('credentials', trans('auth::messages.verification_code.invalid_auth_token'));
             return;
         }
         $isValid = $verificationService->verify($code, $this->contactValue, $this->actionType);
 
         if (!$isValid) {
-            $validator->errors()->add('credentials', trans('auth::messages.verification_code.not_valid'));
+            $validator->errors()->add('credentials', trans('auth::messages.verification_code.invalid_auth_token'));
             return;
         }
 
@@ -46,7 +46,7 @@ trait ActionTokenRequestTrait
         $retryTime = (new OtpService())->remainingTime($this->contactValue, $this->actionType, testing: $testing);
 
         if ($retryTime > 0) {
-            $validator->errors()->add('credentials', trans('auth::messages.verification_code.wait', ['seconds' => $retryTime]));
+            $validator->errors()->add('credentials', trans('auth::messages.verification_code.wait_before_retry', ['seconds' => $retryTime]));
             return;
         }
     }
