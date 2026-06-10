@@ -21,7 +21,7 @@ class EnsureContactsAreVerifiedMiddleware
         if (!$user) {
             abort(403, 'Your are not authenticated.');
         }
-        if ($this->verifiedContacts($user )) {
+        if (!$this->verifiedContacts($user)) {
             if ($request->expectsJson()) {
                 return Responder::Failed('Your contacts must be verified.', $this->getErrors($user),403)->reply();
             }
@@ -38,11 +38,11 @@ class EnsureContactsAreVerifiedMiddleware
     public function getErrors(mixed $user): array
     {
         $errors = [];
-        if ($user->hasVerifiedEmail()) {
+        if (!$user->hasVerifiedEmail()) {
             $errors['email'] = trans('auth::messages.auth.contact_not_verified', ['attribute' => __('email')]);
         }
-        if ($user->hasVerifiedPhone()) {
-            $errors['pone'] = trans('auth::messages.auth.contact_not_verified', ['attribute' => __('pone')]);
+        if (!$user->hasVerifiedPhone()) {
+            $errors['phone'] = trans('auth::messages.auth.contact_not_verified', ['attribute' => __('phone')]);
         }
         return $errors;
     }
@@ -54,7 +54,7 @@ class EnsureContactsAreVerifiedMiddleware
             'email' => $user->hasVerifiedEmail(),
         ];
         if (is_null($contactType)) return $contactTypes['phone'] && $contactTypes['email'];
-        
+
         return $contactTypes[$contactType->value];
 
 

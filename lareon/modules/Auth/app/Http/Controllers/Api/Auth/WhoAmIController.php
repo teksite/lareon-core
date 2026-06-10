@@ -10,13 +10,13 @@ use Teksite\Handler\Facade\Responder;
 
 class WhoAmIController extends Controller
 {
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     public function whoAmI(Request $request)
     {
-        return Responder::Success(':)' , UserResource::make(auth('sanctum')->user()));
+        return Responder::Success(':)', [
+            'user' => UserResource::make(auth('sanctum')->user()),
+        ])->reply();
     }
 
 }
