@@ -1,5 +1,6 @@
 <?php
 
+use Lareon\Modules\Auth\App\Http\Controllers\Api\Auth\CheckUserController;
 use Lareon\Modules\Auth\App\Http\Controllers\Api\Auth\LoginController;
 use Lareon\Modules\Auth\App\Http\Controllers\Api\Auth\RegisterUserController;
 use Lareon\Modules\Auth\App\Http\Controllers\Api\Auth\TokenController;
@@ -8,7 +9,7 @@ use Lareon\Modules\Auth\App\Http\Middleware\EnsureContactsAreVerifiedMiddleware;
 
 //TODO add throttle and rate limiter
 
-//Route::post("/check-user", [CheckUserController::class, 'check'])->name('check-user');
+Route::post("/check-user", [CheckUserController::class, 'check'])->name('check-user');
 
 
 Route::prefix('verification-code')->name('verification_code.')->group(function () {
