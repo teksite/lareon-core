@@ -14,7 +14,6 @@ class WhoAmIController extends Controller
     {
     }
 
-
     public function whoAmI(Request $request)
     {
         return Responder::Success(':)' , UserResource::make(auth('sanctum')->user()));

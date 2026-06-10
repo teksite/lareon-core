@@ -21,6 +21,8 @@ class DecryptAuthenticationTokenMiddleware
         $headerToken = $request->header('authorization') ?? $request->header('Authorization');
         $cookieToken = $request->cookies->get(AuthTokenService::PREFIX);
 
+        $cookieToken = $request->cookies->get('token') ?? $request->cookie('token');
+
         if (!!$headerToken || !!$cookieToken) {
 
             $res = false;

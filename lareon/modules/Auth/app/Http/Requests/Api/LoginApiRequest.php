@@ -39,6 +39,7 @@ class LoginApiRequest extends BaseApiRequest
     {
         return [
             fn(Validator $validator) => $this->resolveContactData($validator),
+            fn(Validator $validator) => $this->resolveUser($validator),
             fn(Validator $validator) => $this->checkPasswordOrVerificationToken($validator),
         ];
     }
