@@ -4,9 +4,6 @@ namespace Lareon\Modules\Auth\App\Http\Requests\Api;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Validator;
 use Lareon\Modules\Auth\App\Enums\ActionType;
-use Modules\Auth\Enums\VerificationActionType;
-use Modules\Auth\Rules\ContactCheckRule;
-use Teksite\Module\Foundations\ApiFormRequest;
 
 class LoginApiRequest extends BaseApiRequest
 {

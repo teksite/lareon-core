@@ -4,6 +4,7 @@ use Lareon\Modules\Auth\App\Http\Controllers\Api\Auth\CheckUserController;
 use Lareon\Modules\Auth\App\Http\Controllers\Api\Auth\LoginController;
 use Lareon\Modules\Auth\App\Http\Controllers\Api\Auth\RegisterUserController;
 use Lareon\Modules\Auth\App\Http\Controllers\Api\Auth\TokenController;
+use Lareon\Modules\Auth\App\Http\Controllers\Api\Auth\VerifyContactController;
 use Lareon\Modules\Auth\App\Http\Controllers\Api\Auth\WhoAmIController;
 use Lareon\Modules\Auth\App\Http\Middleware\EnsureContactsAreVerifiedMiddleware;
 
@@ -25,9 +26,10 @@ Route::middleware(['guest'])->group(function () {
 });
 
 
-
-Route::middleware(['auth:sanctum'])->middleware([EnsureContactsAreVerifiedMiddleware::class])->group(function () {
-    Route::get("/who-am-i", [WhoAmIController::class, 'whoAmI'])->name('whoAmI');
-    Route::get("/authorize", [WhoAmIController::class, 'authorize'])->name('authorize');
-//    Route::post("/verify-contact", [VerifyContactsController::class, 'verify'])->name('verify-contact');
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::middleware(['auth:sanctum'])->middleware([EnsureContactsAreVerifiedMiddleware::class])->group(function () {
+        Route::get("/who-am-i", [WhoAmIController::class, 'whoAmI'])->name('whoAmI');
+        Route::get("/authorize", [WhoAmIController::class, 'authorize'])->name('authorize');
+    });
+    Route::post("/verify-contact", [VerifyContactController::class, 'verify'])->name('verify-contact');
 });

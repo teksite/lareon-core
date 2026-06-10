@@ -1,12 +1,7 @@
 <?php
 namespace Lareon\Modules\Auth\App\Http\Requests\Api;
 
-use Illuminate\Validation\Rule;
 use Illuminate\Validation\Validator;
-use Lareon\Modules\Auth\App\Enums\ActionType;
-use Modules\Auth\Enums\VerificationActionType;
-use Modules\Auth\Rules\ContactCheckRule;
-use Teksite\Module\Foundations\ApiFormRequest;
 
 class CheckUserApiRequest extends BaseApiRequest
 {
@@ -38,6 +33,7 @@ class CheckUserApiRequest extends BaseApiRequest
             fn(Validator $validator) => $this->resolveContactData($validator),
             fn(Validator $validator) => $this->resolveUser($validator),
             fn(Validator $validator) => $this->checkToken($validator),
+            fn(Validator $validator) => $this->checkIfContactIsNull($validator),
         ];
     }
 

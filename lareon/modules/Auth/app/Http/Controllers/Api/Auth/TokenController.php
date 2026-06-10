@@ -4,7 +4,6 @@ namespace Lareon\Modules\Auth\App\Http\Controllers\Api\Auth;
 
 use Lareon\Modules\Auth\App\Enums\ContactType;
 use Lareon\Modules\Auth\App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Lareon\Modules\Auth\App\Http\Requests\Api\SendVerificationCodeApiRequest;
 use Lareon\Modules\Auth\App\Http\Requests\Api\VerifyVerificationCodeApiRequest;
 use Lareon\Modules\Auth\App\Services\ActionTokenService;

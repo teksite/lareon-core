@@ -34,6 +34,8 @@ return [
 
         'contact_verified' => ':attribute با موفقیت تأیید شد.',
 
+        'contact_verified_before' => ':attribute قبلا تایید شده‌است.',
+
         'contact_not_verified' => ':attribute هنوز تأیید نشده است.',
 
         'contact_verification_failed' => 'تأیید :attribute با شکست مواجه شد.',

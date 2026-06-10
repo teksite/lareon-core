@@ -34,6 +34,8 @@ return [
 
         'contact_verified' => 'The provided :attribute has been verified successfully.',
 
+        'contact_verified_before'=>'The :attribute has already been verified before.',
+
         'contact_not_verified' => 'The provided :attribute has not been verified.',
 
         'contact_verification_failed' => 'Failed to verify the provided :attribute.',

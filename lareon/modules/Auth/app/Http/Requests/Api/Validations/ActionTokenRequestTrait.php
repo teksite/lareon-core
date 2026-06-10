@@ -3,8 +3,6 @@
 namespace Lareon\Modules\Auth\App\Http\Requests\Api\Validations;
 
 use Illuminate\Validation\Validator;
-use Lareon\Modules\Auth\App\Enums\ActionType;
-use Lareon\Modules\Auth\App\Services\ActionTokenService;
 use Lareon\Modules\Auth\App\Services\OtpService;
 
 trait ActionTokenRequestTrait

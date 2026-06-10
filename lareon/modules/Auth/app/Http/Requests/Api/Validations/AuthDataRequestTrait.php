@@ -126,4 +126,17 @@ trait AuthDataRequestTrait
         ];
     }
 
+
+    protected function checkIfContactIsNull(Validator $validator): void
+    {
+        if ($validator->errors()->isNotEmpty()) return;
+
+        $column = $this->contactType === ContactType::EMAIL ? 'email_verified_at' : 'phone_verified_at';
+        if ($this->user->$column !== null) {
+            $validator->errors()->add('contact', trans('auth::messages.auth.contact_verified_before' , ['attribute' => $this->contactType?->value, 'alt_attribute' => $this->contactType->value,]));
+            return;
+        }
+
+    }
+
 }
