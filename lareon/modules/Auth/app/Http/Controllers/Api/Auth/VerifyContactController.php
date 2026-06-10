@@ -24,14 +24,13 @@ class VerifyContactController extends Controller
     {
         $contactType = $request->contactType;
         $user = $request->user;
-
         $res = ServiceWrapper::make()->do(function () use ($contactType, $user) {
             $column = $contactType === ContactType::EMAIL ? 'email_verified_at' : 'phone_verified_at';
-            return $user->forceFill([$column, now()])->save();
+            return $user->forceFill([$column => now()])->save();
         })->run();
 
 
-        if ($res->suucess) {
+        if ($res->success) {
             return Responder::success(trans('lareon::global.crud.success.general'))->reply();
 
         }

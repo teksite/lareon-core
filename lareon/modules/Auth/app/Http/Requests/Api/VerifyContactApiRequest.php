@@ -13,7 +13,7 @@ class VerifyContactApiRequest extends BaseApiRequest
      */
     public function authorize(): bool
     {
-        return !auth('sanctum')->guest();
+        return true;
     }
 
     /**

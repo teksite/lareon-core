@@ -27,9 +27,9 @@ Route::middleware(['guest'])->group(function () {
 
 
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::middleware(['auth:sanctum'])->middleware([EnsureContactsAreVerifiedMiddleware::class])->group(function () {
+    Route::middleware([EnsureContactsAreVerifiedMiddleware::class])->group(function () {
         Route::get("/who-am-i", [WhoAmIController::class, 'whoAmI'])->name('whoAmI');
         Route::get("/authorize", [WhoAmIController::class, 'authorize'])->name('authorize');
     });
-    Route::post("/verify-contact", [VerifyContactController::class, 'verify'])->name('verify-contact');
 });
+    Route::post("/verify-contact", [VerifyContactController::class, 'verify'])->name('verify-contact');

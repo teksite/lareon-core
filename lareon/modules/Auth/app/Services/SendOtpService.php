@@ -22,7 +22,9 @@ class SendOtpService {
                 $expireAt
             ]
         ];
-        try {
+        Log::info("Sending OTP via SMS : $code");
+        return true;
+       /* try {
             $res = Http::withHeaders(['apiKey'=> $apiKey, 'Accept' => 'application/json'])
                        ->post('https://api.msgway.com/send', $params);
             if ($res->successful()) return true;
@@ -31,7 +33,7 @@ class SendOtpService {
             (new OtpService())->forget($to, $action);
             Log::error($exception);
             return false;
-        }
+        }*/
     }
     public function viaEmail(string $to, string $code, ActionType $action, ?string $expireAt=null): bool
     {

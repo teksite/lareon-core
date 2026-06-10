@@ -19,8 +19,8 @@ return [
         'sign_up'            => 'ثبت‌نام در سیستم',
         'email_verification' => 'تأیید ایمیل',
         'phone_verification' => 'تأیید نلفن',
-        'confirm_password' => 'تایید گذر واژه',
-        '2fa' => 'اهراز هویت دو مرحله‌ای',
+        'confirm_password'   => 'تایید گذر واژه',
+        '2fa'                => 'اهراز هویت دو مرحله‌ای',
 
     ],
 
@@ -33,6 +33,8 @@ return [
             'created' => ':attribute با موفقیت ایجاد شد',
             'updated' => ':attribute با موفقیت به‌روزرسانی شد',
             'deleted' => ':attribute با موفقیت حذف شد',
+            'general' => 'با موفقیت انجام شد',
+
         ],
 
         // پیام‌های خطا
@@ -40,6 +42,8 @@ return [
             'created' => 'خطا: :attribute ایجاد نشد!',
             'updated' => 'خطا: :attribute به‌روزرسانی نشد!',
             'deleted' => 'خطا: :attribute حذف نشد!',
+            'general' => 'عملیات انجلم نشد!',
+
         ],
 
         // عنوان‌ها
@@ -132,7 +136,7 @@ return [
         'send_email'   => 'ارسال ایمیل',
         'send_sms'     => 'ارسال پیامک',
         'resend_email' => 'ارسال دوباره ایمیل',
-        'resend_sms'  => 'ارسال دوباره پیامک',
+        'resend_sms'   => 'ارسال دوباره پیامک',
 
         'logout'   => 'خروج',
         'login'    => 'ورود',
