@@ -69,7 +69,7 @@ class ActionTokenService
      */
     public function verify(string $token, string $contact, ActionType $action): bool
     {
-        $data = Cache::get($this->key($token));
+        $data = Cache::pull($this->key($token));
 
         if (!$data) return false;
 
@@ -80,8 +80,6 @@ class ActionTokenService
             $this->forget($token);
             return false;
         }
-
-        $this->forget($token);
         return true;
     }
 
