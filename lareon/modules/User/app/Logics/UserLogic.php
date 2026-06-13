@@ -72,6 +72,19 @@ class UserLogic
         })->run();
     }
 
+
+
+
+    /**
+     * @throws \Throwable
+     */
+    public function changePassword(Authenticatable|User $user, array $inputs = []): ServiceResult
+    {
+        return ServiceWrapper::make(false)->do(function () use ($user, $inputs) {
+         $user->update(['password' =>$inputs['password']]);
+        })->run();
+    }
+
     /**
      * @throws \Throwable
      */

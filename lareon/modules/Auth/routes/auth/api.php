@@ -1,6 +1,7 @@
 <?php
 
 use Lareon\Modules\Auth\App\Http\Controllers\Api\Auth\CheckUserController;
+use Lareon\Modules\Auth\App\Http\Controllers\Api\Auth\ForgetPasswordController;
 use Lareon\Modules\Auth\App\Http\Controllers\Api\Auth\LoginController;
 use Lareon\Modules\Auth\App\Http\Controllers\Api\Auth\RegisterUserController;
 use Lareon\Modules\Auth\App\Http\Controllers\Api\Auth\TokenController;
@@ -22,7 +23,7 @@ Route::prefix('verification-code')->name('verification_code.')->group(function (
 Route::middleware(['guest'])->group(function () {
     Route::post("/register", [RegisterUserController::class, 'store'])->name('register');
     Route::post("/login", [LoginController::class, 'login'])->name('login');
-    Route::post("/forgot-password", [ForgotPasswordController::class, 'forgot'])->name('forgot-password');
+    Route::post("/forgot-password", [ForgetPasswordController::class, 'reset'])->name('reset-password');
 });
 
 
