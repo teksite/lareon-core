@@ -22,7 +22,7 @@ Route::prefix('verification-code')->name('verification_code.')->group(function (
 Route::middleware(['guest'])->group(function () {
     Route::post("/register", [RegisterUserController::class, 'store'])->name('register');
     Route::post("/login", [LoginController::class, 'login'])->name('login');
-//    Route::post("/forgot-password", [ForgotPasswordController::class, 'forgot'])->name('forgot-password');
+    Route::post("/forgot-password", [ForgotPasswordController::class, 'forgot'])->name('forgot-password');
 });
 
 
