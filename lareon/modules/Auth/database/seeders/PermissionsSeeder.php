@@ -121,7 +121,8 @@ class PermissionsSeeder extends Seeder
                 'title'=>'admin.user.acl.edit',
                 'description'=>'have access to change role-permission of users (in the admin panel)',
             ],
-            /*ADMIN*/
+
+            /*  PANEL   */
             [
                 'title'=>'panel',
                 'description'=>'have access to user panel',

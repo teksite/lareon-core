@@ -41,6 +41,24 @@ class MenuProvider implements MenuRegisteringContract
                 'active' => request()->routeIs('admin.dashboard'),
             ]);
 
+        $event->add(
+            [
+                'title'  => trans('settings'),
+                'order'  => 2,
+                'icon'   => 'gears',
+                'active' => request()->routeIs('admin.settings.*'),
+            ], 'settings')
+              ->addManyItem([
+                  [
+                      'title'  => trans('information'),
+                      'order'  => 1,
+                      'route'  => 'admin.settings.information.index',
+                      'active' => request()->routeIs('admin.settings.information.index'),
+                      'permission' => 'admin.setting.read',
+
+                  ],
+              ], 'settings');
+
     }
 
     protected function panel(MenuRegisteringEvent $event): void
