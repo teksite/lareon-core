@@ -5,7 +5,9 @@ namespace Lareon\Modules\Auth\App\Http\Controllers\Api\Auth;
 use Lareon\Modules\Auth\App\Http\Controllers\Controller;
 use Lareon\Modules\Auth\App\Http\Requests\Api\RegisterApiRequest;
 use Lareon\Modules\Auth\App\Services\AuthTokenService;
+use Lareon\Modules\User\App\Events\UserCrudEvent;
 use Lareon\Modules\User\App\Logics\UserLogic;
+use Lareon\Steward\App\Enums\CrudTypeEnum;
 use Teksite\Handler\Facade\Responder;
 
 
@@ -40,6 +42,8 @@ class RegisterUserController extends Controller
         if ($res->success) {
             $user = $res->result;
             $apiToken = $this->authService->create($user);
+            event(new UserCrudEvent($res->result, CrudTypeEnum::CREATE, $request->validated()));
+
 
             return Responder::Success(trans('lareon::global.crud.success.created', ['attribute' => __('user')]))
                             ->reply()->withCookie(cookie('x_web_token', $apiToken, 24 * 28 * 60, config('session.domain'), null, true, true));
