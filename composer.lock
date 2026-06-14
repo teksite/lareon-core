@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d488a4198fb15a8c335a79e4e1b317b0",
+    "content-hash": "adb6ac7ad9a355e8771268da9daf7b56",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -7398,6 +7398,65 @@
                 "source": "https://github.com/teksite/module/tree/3.0.12"
             },
             "time": "2026-06-06T17:27:25+00:00"
+        },
+        {
+            "name": "teksite/systeminfo-laravel",
+            "version": "0.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/teksite/systeminfo-laravel.git",
+                "reference": "faf1c30846e1963214ba6e8ad0745fe0f005866b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/teksite/systeminfo-laravel/zipball/faf1c30846e1963214ba6e8ad0745fe0f005866b",
+                "reference": "faf1c30846e1963214ba6e8ad0745fe0f005866b",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^11.0|^12.0|^13.0",
+                "php": "^8.3"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Teksite\\SystemInfo\\SystemInformationProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Teksite\\SystemInfo\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sina Zangiband",
+                    "email": "sina.zangiband@gmail.com"
+                }
+            ],
+            "description": "A Laravel package for collecting system, server, PHP and Laravel runtime information",
+            "keywords": [
+                "CPU",
+                "disk",
+                "laravel",
+                "laravel-monitor",
+                "monitoring",
+                "php",
+                "ram",
+                "server",
+                "system-info"
+            ],
+            "support": {
+                "issues": "https://github.com/teksite/systeminfo-laravel/issues",
+                "source": "https://github.com/teksite/systeminfo-laravel/tree/0.0.1"
+            },
+            "time": "2026-06-14T10:11:39+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",

@@ -73,6 +73,5 @@
             <x-auth::editor.2fa :user="$user"/>
         </x-lareon::editor.tabs.item>
         @endif
-
     @endsection
 </x-lareon::admin-editor>

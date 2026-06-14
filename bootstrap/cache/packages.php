@@ -97,4 +97,11 @@
       0 => 'Teksite\\Module\\ModuleServiceProvider',
     ),
   ),
+  'teksite/systeminfo-laravel' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Teksite\\SystemInfo\\SystemInformationProvider',
+    ),
+  ),
 );

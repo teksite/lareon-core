@@ -38,7 +38,8 @@
     34 => 'Teksite\\Handler\\HandlerServiceProvider',
     35 => 'Teksite\\IconLaravel\\IconLaravelServiceProvider',
     36 => 'Teksite\\Module\\ModuleServiceProvider',
-    37 => 'App\\Providers\\AppServiceProvider',
+    37 => 'Teksite\\SystemInfo\\SystemInformationProvider',
+    38 => 'App\\Providers\\AppServiceProvider',
   ),
   'eager' => 
   array (
@@ -65,7 +66,8 @@
     20 => 'Teksite\\Handler\\HandlerServiceProvider',
     21 => 'Teksite\\IconLaravel\\IconLaravelServiceProvider',
     22 => 'Teksite\\Module\\ModuleServiceProvider',
-    23 => 'App\\Providers\\AppServiceProvider',
+    23 => 'Teksite\\SystemInfo\\SystemInformationProvider',
+    24 => 'App\\Providers\\AppServiceProvider',
   ),
   'deferred' => 
   array (

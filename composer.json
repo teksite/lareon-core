@@ -18,7 +18,8 @@
         "teksite/extralaravel": "^2.0",
         "teksite/handler": "^2.0",
         "teksite/icon-laravel": "*",
-        "teksite/module": "^3.0"
+        "teksite/module": "^3.0",
+        "teksite/systeminfo-laravel": "^0.0.1"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
