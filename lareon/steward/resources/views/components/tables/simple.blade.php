@@ -6,35 +6,28 @@
 @once
     @php
 
-        function renderValue($value)
+        function renderValue($value): string
         {
             return renderValueRecursive($value);
         }
 
-        function renderValueRecursive($value)
+        function renderValueRecursive($value): string
         {
-            // NULL
             if (is_null($value)) {
                 return '<span class="text-gray-400">null</span>';
             }
 
-            // BOOLEAN
             if (is_bool($value)) {
-                return '<x-icon type="outline"
-                    icon="'.($value ? 'tick-circle' : 'cross').'"
-                    class="fill-none stroke-2 '.($value ? 'stroke-green-600' : 'stroke-red-500').'"
-                    size="12"/>';
+                return '<span class="font-bold '. ($value ? 'text-green-600' : 'text-yellow-600' ). '">' . ($value ? '✓' : '✘') . '</span>';
             }
 
-            // STRING / NUMBER
+
             if (is_string($value) || is_numeric($value)) {
                 return e($value);
             }
 
-            // ARRAY
             if (is_array($value)) {
 
-                // list array
                 $isList = array_keys($value) === range(0, count($value) - 1);
 
                 if ($isList) {
@@ -45,7 +38,6 @@
                     return $html . '</ul>';
                 }
 
-                // associative array
                 $html = '<div class="space-y-1">';
                 foreach ($value as $k => $v) {
                     $html .= '
