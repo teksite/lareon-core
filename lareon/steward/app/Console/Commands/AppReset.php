@@ -80,7 +80,7 @@ class AppReset extends Command
                 }
             }*/
 
-           /* $this->newLine();
+            $this->newLine();
             $this->line("<fg=cyan;options=bold>clearing cached data</>");
             Artisan::call('optimize:clear');
             $this->components->twoColumnDetail("<fg=gray>  └─ optimized data</>", "<fg=green>✓ cleared</>");
@@ -98,7 +98,10 @@ class AppReset extends Command
             Artisan::call('cache:clear');
             $this->components->twoColumnDetail("<fg=gray>  └─ caches data</>", "<fg=green>✓ cleared</>");
 
-            $this->info('The site is refreshed successfully :)');*/
+            Artisan::call('schedule:clear-cache');
+            $this->components->twoColumnDetail("<fg=gray>  └─ schedule cache</>", "<fg=green>✓ cleared</>");
+
+            $this->info('The site is refreshed successfully :)');
 
         } catch (\Exception $e) {
 
