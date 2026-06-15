@@ -72,12 +72,8 @@ class PermissionsSeeder extends Seeder
                 'description'=>'have access to the caches (in the admin panel)',
             ],
             [
-                'title'=>'admin.setting.cache.create',
-                'description'=>'have access to cache determined data (in the admin panel)',
-            ],
-            [
-                'title'=>'admin.setting.cache.delete',
-                'description'=>'have access to delete determined caches (in the admin panel)',
+                'title'=>'admin.setting.cache.execute',
+                'description'=>'have access to store aor clear caches data (in the admin panel)',
             ],
             /* Log */
             [
@@ -88,10 +84,7 @@ class PermissionsSeeder extends Seeder
                 'title'=>'admin.setting.log.clear',
                 'description'=>'have access to clear log files (in the admin panel)',
             ],
-            [
-                'title'=>'admin.setting.log.delete',
-                'description'=>'have access to delete log files (in the admin panel)',
-            ],
+            /* manager */
             [
                 'title'=>'admin.file.manager.edit',
                 'description'=>'have access to manage file manager (in the admin panel)',

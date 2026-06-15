@@ -1,6 +1,6 @@
 <x-lareon::admin-layout>
-    @section('title', __('information'))
-    @section('description', __('this page is a brief overview of the application and the system it is running on'))
+    @section('title', __('caches'))
+    @section('description', __("manage, clear, and optimize your application's caches from a single place"))
     <ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch mt-12">
         @foreach($cacheTypes as $type)
             <li>

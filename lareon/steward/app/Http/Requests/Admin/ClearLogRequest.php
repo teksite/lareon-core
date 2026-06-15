@@ -7,14 +7,14 @@ use Illuminate\Validation\Rules\Enum;
 use Lareon\Steward\App\Enums\CacheAction;
 use Lareon\Steward\App\Enums\CacheType;
 
-class CacheRequest extends FormRequest
+class ClearLogRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return auth()->check() && auth()->user()->canAny(['admin.setting.cache.create', 'admin.setting.cache.delete']);
+        return auth()->check() && auth()->user()->can('admin.setting.log.clear');
     }
 
     /**
@@ -25,8 +25,7 @@ class CacheRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'type'   => ['required', new Enum(CacheType::class),],
-            'action' => ['required', new Enum(CacheAction::class),],
+            'name'   => ['required', 'string',],
         ];
     }
 }

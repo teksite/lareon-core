@@ -5,28 +5,29 @@ namespace Lareon\Steward\App\Enums;
 enum CacheType: string
 {
     case AUTH = 'auth';
+    case SANCTUM = 'sanctum';
     case CACHE = 'cache';
     case CONFIG = 'config';
     case EVENT = 'event';
-    case OPTIMIZE = 'optimize';
     case ROUTE = 'route';
-    case SANCTUM = 'sanctum';
-    case SCHEDULE = 'schedule';
     case VIEW = 'view';
+
+    case OPTIMIZE = 'optimize';
+    case SCHEDULE = 'schedule';
     case COMPILED_FILE = 'compiled_file';
 
     public function label(): string
     {
         return match ($this) {
             self::AUTH          => 'Auth',
+            self::SANCTUM       => 'Sanctum',
             self::CACHE         => 'Cache',
             self::CONFIG        => 'Config',
-            self::EVENT         => 'Event',
-            self::OPTIMIZE      => 'Optimize',
-            self::ROUTE         => 'Route',
-            self::SANCTUM       => 'Sanctum',
-            self::SCHEDULE      => 'Schedule',
             self::VIEW          => 'View',
+            self::ROUTE         => 'Route',
+            self::EVENT         => 'Event',
+            self::SCHEDULE      => 'Schedule',
+            self::OPTIMIZE      => 'Optimize',
             self::COMPILED_FILE => 'Compiled Files',
         };
     }
