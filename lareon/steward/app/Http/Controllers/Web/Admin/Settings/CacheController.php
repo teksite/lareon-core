@@ -42,12 +42,15 @@ class CacheController extends Controller implements HasMiddleware
      */
     public function execute(CacheRequest $request)
     {
+        $validated = $request->validated();
+        $action = $validated['action'];
+        $type = $validated['type'];
         $res = ServiceWrapper::make(hasTransaction: false)
-                             ->do(fn($request) => (new CacheManagerService())->run(CacheType::from($request->type), CacheAction::from($request->action)))
+                             ->do(fn() => (new CacheManagerService())->run(CacheType::from($type), CacheAction::from($action)))
                              ->run();
         return $res->success
-            ? Responder::success(trans('lareon::global.crud.success.general'))->route('admin.setting.cache.index')->go()
-            : Responder::failed(trans('lareon::global.crud.error.general'))->route('admin.setting.cache.index')->go();
+            ? Responder::success(trans('lareon::global.crud.success.general'))->route('admin.settings.cache.index')->go()
+            : Responder::failed(trans('lareon::global.crud.error.general'))->route('admin.settings.cache.index')->go();
 
     }
 
