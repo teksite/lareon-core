@@ -31,11 +31,11 @@ class LogsController extends Controller implements HasMiddleware
      */
     public function index()
     {
-        $logs = $this->logic->getLogFiles()->result;
-        $content = $this->logic->getLogContent()->result;
         $name = request()->input('name', 'laravel');
+        $logs = $this->logic->getLogFiles()->result;
+        $content = $this->logic->getLogContent($name)->result;
 
-        return view('lareon::admin.pages.settings.log.index',  compact('logs', 'content', 'name'));
+        return view('lareon::admin.pages.settings.logs.index',  compact('logs', 'content', 'name'));
     }
 
     /**
@@ -45,10 +45,7 @@ class LogsController extends Controller implements HasMiddleware
     {
         $res = $this->logic->clearContent($request->input('name'));
 
-        return $res->success
-            ? Responder::success(trans('lareon::global.crud.success.general'))->route('admin.settings.cache.index')->go()
-            : Responder::failed(trans('lareon::global.crud.error.general'))->route('admin.settings.cache.index')->go();
-
+        return  Responder::fromResult($res)->go();
     }
 
     /**
