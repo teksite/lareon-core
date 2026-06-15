@@ -2,11 +2,12 @@
 
 namespace Lareon\Steward\App\Http\Requests\Admin;
 
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Validator;
 use Lareon\Steward\App\Logics\LogLogic;
 
-class ClearLogRequest extends FormRequest
+class ExecutionLogRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -31,17 +32,21 @@ class ClearLogRequest extends FormRequest
     public function after(): array
     {
         return [
-            fn(Validator $validator) => $validator->validateFileName($validator),
+            fn(Validator $validator) => $this->validateFileName($validator),
         ];
     }
 
+    /**
+     * @throws BindingResolutionException
+     * @throws \Throwable
+     */
     private function validateFileName(Validator $validator): void
     {
         if ($validator->errors()->isNotEmpty()) return;
 
         $fileName = $this->request->get('name');
         $files = (new LogLogic())->getLogFiles()->result;
-        if (in_array($fileName ,$files )){
+        if (!in_array($fileName ,$files )){
             $validator->errors()->add('name', trans('lareon::errors.the_file_not_exist' ,['attribute' => $fileName]));
             return;
         }

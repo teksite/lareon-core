@@ -84,6 +84,10 @@ class PermissionsSeeder extends Seeder
                 'title'=>'admin.setting.log.clear',
                 'description'=>'have access to clear log files (in the admin panel)',
             ],
+            [
+                'title'=>'admin.setting.log.delete',
+                'description'=>'have access to delete log files (in the admin panel)',
+            ],
             /* manager */
             [
                 'title'=>'admin.file.manager.edit',

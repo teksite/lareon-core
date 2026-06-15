@@ -17,7 +17,7 @@ Route::name('settings.')->prefix('settings')->group(function () {
     });
     Route::name('logs.')->prefix('logs')->group(function () {
         Route::get('/', [LogsController::class, 'index'])->name('index');
-        Route::post('/', [LogsController::class, 'clear'])->name('clear');
-        Route::post('/', [LogsController::class, 'destroy'])->name('delete');
+        Route::patch('/', [LogsController::class, 'clear'])->name('clear');
+        Route::delete('/', [LogsController::class, 'delete'])->name('destroy');
     });
 });
