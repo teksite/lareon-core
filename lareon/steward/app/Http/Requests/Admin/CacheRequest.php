@@ -14,7 +14,7 @@ class CacheRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth()->check() && auth()->user()->canAny(['admin.setting.info.create', 'admin.setting.info.delete']);
+        return auth()->check() && auth()->user()->canAny(['admin.setting.cache.create', 'admin.setting.cache.delete']);
     }
 
     /**
