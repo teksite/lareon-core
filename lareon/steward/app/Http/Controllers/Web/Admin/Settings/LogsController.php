@@ -7,22 +7,15 @@ use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
-use Lareon\Steward\App\Enums\CacheAction;
-use Lareon\Steward\App\Enums\CacheType;
 use Lareon\Steward\App\Http\Controllers\Controller;
 use Lareon\Steward\App\Http\Requests\Admin\CacheExecutionRequest;
-use Lareon\Steward\App\Service\CacheManagerService;
-use Teksite\Handler\Actions\ServiceWrapper;
+use Lareon\Steward\App\Http\Requests\Admin\ClearLogRequest;
+use Lareon\Steward\App\Logics\LogLogic;
 use Teksite\Handler\Facade\Responder;
-use Teksite\SystemInfo\Repo\DatabaseInfo;
-use Teksite\SystemInfo\Repo\LaravelInfo;
-use Teksite\SystemInfo\Repo\PhpInfo;
-use Teksite\SystemInfo\Support\DriverResolver;
 
 class LogsController extends Controller implements HasMiddleware
 {
-    public function __construct() {}
+    public function __construct(public LogLogic $logic) {}
 
     public static function middleware()
     {
@@ -32,19 +25,25 @@ class LogsController extends Controller implements HasMiddleware
         ];
     }
 
+    /**
+     * @throws BindingResolutionException
+     * @throws \Throwable
+     */
     public function index()
     {
+        $logs = $this->logic->getLogFiles()->result;
+        $content = $this->logic->getLogContent()->result;
+        $name = request()->input('name', 'laravel');
 
-
-        return view('lareon::admin.pages.settings.cache.index',  ['cacheTypes' => CacheType::cases()]);
+        return view('lareon::admin.pages.settings.log.index',  compact('logs', 'content', 'name'));
     }
 
     /**
-     * @throws \Throwable
-     * @throws BindingResolutionException
+     * Store a newly created resource in storage.
      */
-    public function clear(CacheExecutionRequest $request)
+    public function clear(ClearLogRequest $request)
     {
+        $res = $this->logic->clearContent($request->input('name'));
 
         return $res->success
             ? Responder::success(trans('lareon::global.crud.success.general'))->route('admin.settings.cache.index')->go()
@@ -52,13 +51,15 @@ class LogsController extends Controller implements HasMiddleware
 
     }
 
-    private function getLogFile()
-    {
-        $files = File::files(storage_path('logs'));
-        $files = array_map(function ($file) {
-            return $file->getRealPath();
-        }, $files);
-        dd($files);
-    }
+    /**
+     * Store a newly created resource in storage.
+     */
 
+    public function destroy(ClearLogRequest $request)
+    {
+        $res = $this->logic->delete($request->input('name'));
+        return $res->success
+            ? Responder::success(trans('lareon::global.crud.success.general'))->route('admin.settings.cache.index')->go()
+            : Responder::failed(trans('lareon::global.crud.error.general'))->route('admin.settings.cache.index')->go();
+    }
 }

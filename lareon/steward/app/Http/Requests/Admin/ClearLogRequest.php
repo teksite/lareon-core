@@ -3,9 +3,8 @@
 namespace Lareon\Steward\App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\Enum;
-use Lareon\Steward\App\Enums\CacheAction;
-use Lareon\Steward\App\Enums\CacheType;
+use Illuminate\Validation\Validator;
+use Lareon\Steward\App\Logics\LogLogic;
 
 class ClearLogRequest extends FormRequest
 {
@@ -27,5 +26,24 @@ class ClearLogRequest extends FormRequest
         return [
             'name'   => ['required', 'string',],
         ];
+    }
+
+    public function after(): array
+    {
+        return [
+            fn(Validator $validator) => $validator->validateFileName($validator),
+        ];
+    }
+
+    private function validateFileName(Validator $validator): void
+    {
+        if ($validator->errors()->isNotEmpty()) return;
+
+        $fileName = $this->request->get('name');
+        $files = (new LogLogic())->getLogFiles()->result;
+        if (in_array($fileName ,$files )){
+            $validator->errors()->add('name', trans('lareon::errors.the_file_not_exist' ,['attribute' => $fileName]));
+            return;
+        }
     }
 }
