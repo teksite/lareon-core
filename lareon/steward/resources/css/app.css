@@ -93,6 +93,16 @@
 
 }
 
+
+@keyframes toast-progress {
+    from { width: 0; }
+    to   { width: 100%; }
+}
+
+.animate-toast-progress {
+    animation: toast-progress 3000ms linear forwards;
+}
+
 ::-webkit-scrollbar {
     background: #986a0f;
     width: 10px;

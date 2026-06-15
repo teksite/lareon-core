@@ -24,6 +24,8 @@
     </div>
 </main>
 @include('lareon::admin.layouts.partials.footer')
+@include('lareon::admin.layouts.partials.response')
+
 @stack('footerScripts')
 </body>
 </html>
