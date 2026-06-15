@@ -33,9 +33,7 @@ class CacheController extends Controller implements HasMiddleware
 
     public function index()
     {
-
-
-        return view('lareon::admin.pages.settings.cache.index', compact(''));
+        return view('lareon::admin.pages.settings.cache.index',  ['cacheTypes' => CacheType::cases()]);
     }
 
     /**
