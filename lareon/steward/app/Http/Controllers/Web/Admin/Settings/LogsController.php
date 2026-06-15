@@ -6,6 +6,7 @@ namespace Lareon\Steward\App\Http\Controllers\Web\Admin\Settings;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Lareon\Steward\App\Enums\CacheAction;
 use Lareon\Steward\App\Enums\CacheType;
@@ -33,8 +34,8 @@ class LogsController extends Controller implements HasMiddleware
 
     public function index()
     {
-        $files = Storage::files('logs');
-        dd($files);
+
+
         return view('lareon::admin.pages.settings.cache.index',  ['cacheTypes' => CacheType::cases()]);
     }
 
@@ -49,6 +50,15 @@ class LogsController extends Controller implements HasMiddleware
             ? Responder::success(trans('lareon::global.crud.success.general'))->route('admin.settings.cache.index')->go()
             : Responder::failed(trans('lareon::global.crud.error.general'))->route('admin.settings.cache.index')->go();
 
+    }
+
+    private function getLogFile()
+    {
+        $files = File::files(storage_path('logs'));
+        $files = array_map(function ($file) {
+            return $file->getRealPath();
+        }, $files);
+        dd($files);
     }
 
 }
