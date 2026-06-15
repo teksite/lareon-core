@@ -11,12 +11,14 @@
                     <hr class="my-3 border-line_light">
                    <ul class="flex items-center gap-6 justify-center">
                        @foreach($type->actions() as $action)
+                           @php($isStore=$action === \Lareon\Steward\App\Enums\CacheAction::STORE)
                           <li>
                               <form method="POST" action="{{ route('admin.settings.cache.execute') }}">
                                   @csrf
                                   <input type="hidden" name="type" value="{{ $type->value }}">
                                   <input type="hidden" name="action" value="{{ $action->value }}">
-                                  <button type="submit" class="cursor-pointer bordering hover:bg-slate-100 text-shadow-slate-600 font-bold text-xs px-2 py-1 rounded-xl">
+                                  <button type="submit" class="{{$isStore ? 'hover:bg-blue-100 hover:text-blue-600' : 'hover:bg-red-100 hover:text-red-600'}} text-center cursor-pointer bordering  text-shadow-slate-600 font-bold text-xs px-2 py-1 rounded-xl">
+                                      <x-icon type="outline" class="fill-none stroke-current mx-auto mb-1" icon="{{$isStore ? 'box-arrow-in' : 'trash'}}"/>
                                       {{ $action->label() }}
                                   </button>
 
