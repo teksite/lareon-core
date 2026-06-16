@@ -1,20 +1,20 @@
-<aside class="fixed top-0 start-0 w-16 transition-all duration-100 " :class="sidebar ? '{{is_rtl() ? 'translate-x-full' : '-translate-x-full'}} xl:translate-x-0' : 'translate-x-0 {{is_rtl() ? 'xl:translate-x-full' :'xl:-translate-x-full'}}' ">
+<aside class="fixed xl:p-1 top-0 start-0 w-3/4 md:w-1/2 lg:w-1/3 xl:w-1/6 transition-all duration-100 " :class="sidebar ? '{{is_rtl() ? 'translate-x-full' : '-translate-x-full'}} xl:translate-x-0' : 'translate-x-0 {{is_rtl() ? 'xl:translate-x-full' :'xl:-translate-x-full'}}' ">
     <div class="h-dvh relative x-box !p-0 xl:border-none flex flex-col justify-between">
         <div class="overflow-auto flex flex-col gap-1">
-            <div class="">
-                <div class="flex flex-col items-center gap-1 p-1">
-                    <x-lareon::logo class="w-12"/>
-                    <h1 class="text-sm font-bold capitalize">
+            <div class="mb-6 ">
+                <div class="flex items-center gap-1 p-3">
+                    <x-lareon::logo class="w-16"/>
+                    <h1 class="text-3xl font-bold capitalize">
                         LAREON
                     </h1>
                 </div>
 
             </div>
             <nav class="h-full overflow-y-auto" id="aside-menu-nav">
-                <ul class="p-1 menu space-y-3">
+                <ul class="pe-3 menu space-y-3">
                     @foreach($menus as $menu)
                         <li>
-                              <x-lareon::aside.nav :menu="$menu"/>
+                            <x-lareon::accordion-nav.menu :menu="$menu"/>
                         </li>
                     @endforeach
                 </ul>

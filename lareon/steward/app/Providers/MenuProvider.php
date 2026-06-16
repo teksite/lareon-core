@@ -56,7 +56,7 @@ class MenuProvider implements MenuRegisteringContract
                       'permission' => 'admin.setting.read',
 
                   ], [
-                      'title'      => trans('caching'),
+                      'title'      => trans('cache'),
                       'order'      => 2,
                       'route'      => 'admin.settings.cache.index',
                       'active'     => request()->routeIs('admin.settings.cache.index'),
