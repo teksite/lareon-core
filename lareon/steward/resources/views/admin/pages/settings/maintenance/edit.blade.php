@@ -2,7 +2,7 @@
     @section('title', __('maintenance mode'))
     @section('description', __("on this page, you can enable or disable Maintenance Mode for the app"))
 
-    <section class="gap-6 grid md:grid-cols-2">
+    <section class="w-full mx-auto lg:w-1/2">
         <div>
             <div class="flex items-center justify-start gap-3 bordering p-3 rounded-lg my-6 {{$isDown ? 'bg-red-100' :'bg-green-100'}}">
                 <div class="">
@@ -31,12 +31,12 @@
                         {{url('{secrete-code}')}}
                     </p>
 
-                    {{--    <div>
-                            <x-lareon::sections.text :value="old('secret')" :title="__('secret code')" name="secret" :placeholder="__('write a :title',['title'=>__('secret code') ])" :required="false"/>
-                            <x-lareon::button.solid color="update" type="submit">
+                        <div class="flex items-end">
+                            <x-lareon::editor.input :value="old('secret')" :label="__('secret code')" name="secret" :placeholder="__('leave it empty to be disabled or enter a secret code')" :required="false"/>
+                            <x-lareon::buttons.nav rounded="md" size="xs" class="min-w-fit w-fit" color="update" type="submit" :fullWidth="false">
                                 {{__('update')}}
-                            </x-lareon::button.solid>
-                        </div>--}}
+                            </x-lareon::buttons.nav>
+                        </div>
                 </form>
             </x-lareon::box>
         </div>

@@ -11,6 +11,6 @@
     };
 
 @endphp
-<x-lareon::buttons.simple :type="$type" :size="$size" :variant="$variant" :color="$convertedColor" :disabled="$disabled" :fullWidth="$fullWidth" :rounded="$rounded"  :can="$can">
+<x-lareon::buttons.simple {{$attributes}} :type="$type" :size="$size" :variant="$variant" :color="$convertedColor" :disabled="$disabled" :fullWidth="$fullWidth" :rounded="$rounded"  :can="$can">
     {{$content ?? $slot}}
 </x-lareon::buttons.simple>

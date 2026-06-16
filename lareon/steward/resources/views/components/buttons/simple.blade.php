@@ -74,7 +74,7 @@
 @endphp
 
 @canany((array)$can)
-    <button type="{{ $type }}" class="{{ $classes }}" {{ $disabled ? 'disabled' : '' }} {{ $attributes }}>
+    <button type="{{ $type }}" {{ $disabled ? 'disabled' : '' }} {{ $attributes->merge(['class'=>"$classes"]) }}>
         {!! $content !!}
     </button>
 @endcanany
