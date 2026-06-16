@@ -70,8 +70,8 @@ class MenuProvider implements MenuRegisteringContract
                   ], [
                       'title'      => trans('maintenance'),
                       'order'      => 3,
-                      'route'      => 'admin.settings.maintenance.index',
-                      'active'     => request()->routeIs('admin.settings.maintenance.index'),
+                      'route'      => 'admin.settings.maintenance.edit',
+                      'active'     => request()->routeIs('admin.settings.maintenance.edit'),
                       'permission' => 'admin.setting.maintenance.edit',
                   ],
               ], 'settings');

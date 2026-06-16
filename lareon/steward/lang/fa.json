@@ -51,5 +51,12 @@
     "excerpt": "گزیده",
     "hierarchy": "سلسله مراتب",
     "caution": "احتیاط",
-    "maintenance": "تعمیر و نگهداری"
+    "maintenance": "تعمیر و نگهداری",
+    "maintenance mode": "حالت تعمیر و نگهداری",
+    "on this page, you can enable or disable Maintenance Mode for the app": "می‌توانید در این صفحه، حالت تعمیر و نگهداری برای اپلیکیشن فعال و یا غیر‌فعال کنید",
+    "if you enter a secret code, the application will be put into maintenance mode (and any new code will replace the previous one); if you leave it empty, the application will return to normal mode": "اگر کد مخفی را وارد کنید، اپلیکیشن در حالت تعمیر و نگهداری قرار می‌گیرد (و در صورت وارد کردن کد جدید، جایگزین کد قبلی می‌شود)؛ در صورت خالی گذاشتن، اپلیکیشن به حالت عادی بازمی‌گردد.",
+    "you can access the app using this address even when it is in maintenance mode": "شما می‌توانید حتی زمانی که اپلیکیشن در حالت تعمیر و نگهداری است، از طریق این آدرس به آن دسترسی داشته باشید",
+    "secret code": "کد مخفی",
+    "the app is down": "اپلیکیشن در حالت تعمیر نگهداری است",
+    "the app is up": "اپلیکیشن فعال است"
 }
