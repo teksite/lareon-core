@@ -4,7 +4,6 @@
        <x-lareon::aside.nav-link :menu="$menu"/>
     @else
         <x-lareon::aside.nav-item :menu="$menu"/>
-
     @endcan
 @endif
 

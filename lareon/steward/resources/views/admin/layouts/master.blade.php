@@ -16,7 +16,7 @@
 <body class="bg-slate-200 text-sm overflow-y-scroll" x-data="{sidebar:true ,togglesSidebar() { this.sidebar = !this.sidebar }}">
 <main class="p-3">
     @include('lareon::admin.layouts.partials.aside')
-    <div class="ms-auto me-0 p-3 transition-all duration-100 xl:w-5/6" :class="{'xl:w-5/6' : sidebar }">
+    <div class="ms-auto me-0 p-3 transition-all duration-100 xl:w-[calc(100%_-_4rem)]">
         @include('lareon::admin.layouts.partials.upper-header')
         @include('lareon::admin.layouts.partials.header')
         @include('lareon::admin.layouts.partials.errors')

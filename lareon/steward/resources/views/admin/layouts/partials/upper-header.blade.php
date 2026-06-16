@@ -2,8 +2,10 @@
     <div class="w-full sm:min-w-fit sm:w-fit sm:max-fit flex items-center justify-between sm:justify-start gap-3">
         <ul class="flex items-center justify-start gap-1 text-slate-600 font-semibold text-sm">
             <a href="{{route('admin.dashboard')}}" class="">
-                    {{__('dashboard')}}
+                {{__('dashboard')}}
             </a>
+            >
+            @yield('title')
         </ul>
         @if(isset($moduleData) && is_array($moduleData))
             <div class="flex items-center gap-3">
@@ -11,7 +13,7 @@
                     <div>
                         <a href="{{$data['link']}}" class="flex items-center gap-1 bg-slate-100 p-1 rounded-lg shadow">
                             @isset($data['icon'])
-                                <x-icon type="outline" icon="{{$data['icon']}}" />
+                                <x-icon type="outline" icon="{{$data['icon']}}"/>
                             @elseif($data['title'])
                                 <span>
                                   {{$data['title']}}
@@ -27,13 +29,13 @@
         @endisset
     </div>
     <hr class="border-dotted border-gray-300 w-full md:my-0 my-1">
-    <div class="w-full sm:min-w-fit sm:w-fit sm:max-fit inline-flex justify-between md:justify-end items-center p-2 gap-6 x-box">
-        @if(\Illuminate\Support\Facades\Route::has('admin.setlang'))
-            <a href="{{route('admin.setlang')}}" class="justify-self-start">
-                Fa\En
-            </a>
-        @endif
-        <div class="flex items-center gap-1">
+    <div class="flex min-w-fit w-full sm:w-fit items-center justify-between gap-1 x-box p-2 ">
+        <div>
+            @if(\Illuminate\Support\Facades\Route::has('admin.setlang'))
+                <a href="{{route('admin.setlang')}}" class="justify-self-start">
+                    Fa\En
+                </a>
+            @endif
             <a href="/">
                 <x-icon type="outline" icon="world"></x-icon>
             </a>
@@ -42,9 +44,9 @@
                     <x-icon type="outline" icon="user"></x-icon>
                 </a>
             @endif
-            <button class="hover:cursor-pointer" type="button" role="switch" @click="togglesSidebar()">
-                <x-icon type="outline" icon="bar-3"></x-icon>
-            </button>
         </div>
+        <button class="hover:cursor-pointer" type="button" role="switch" @click="togglesSidebar()">
+            <x-icon type="outline" icon="bar-3"></x-icon>
+        </button>
     </div>
 </div>
