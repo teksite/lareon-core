@@ -19,7 +19,7 @@ Route::name('settings.')->prefix('settings')->group(function () {
 
     Route::name('maintenance.')->prefix('maintenance')->group(function () {
         Route::get('/', [MaintenanceModeController::class, 'edit'])->name('edit');
-        Route::post('/', [MaintenanceModeController::class, 'update'])->name('update');
+        Route::patch('/', [MaintenanceModeController::class, 'update'])->name('update');
     });
     Route::name('logs.')->prefix('logs')->group(function () {
         Route::get('/', [LogsController::class, 'index'])->name('index');

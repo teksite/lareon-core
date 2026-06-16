@@ -20,9 +20,9 @@ class MaintenanceLogic
      * @throws \Throwable
      * @throws BindingResolutionException
      */
-    public function up(string $name): ServiceResult
+    public function up(): ServiceResult
     {
-        return ServiceWrapper::make(hasTransaction: false)->do(function () use ($name) {
+        return ServiceWrapper::make(hasTransaction: false)->do(function () {
             Artisan::call('up');
         })->run();
     }
@@ -33,10 +33,10 @@ class MaintenanceLogic
      * @throws BindingResolutionException|\Throwable
      *
  */
-    public function down(array $inputs): ServiceResult
+    public function down(string $secretString): ServiceResult
     {
-        return ServiceWrapper::make(hasTransaction: false)->do(function () use ($inputs) {
-            Artisan::call('down', ['--secret' => $inputs['secret']]);
+        return ServiceWrapper::make(hasTransaction: false)->do(function () use ($secretString) {
+            Artisan::call('down', ['--secret' => $secretString]);
         })->run();
     }
 }

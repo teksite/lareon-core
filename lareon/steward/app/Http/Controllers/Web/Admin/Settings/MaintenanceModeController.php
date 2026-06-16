@@ -9,6 +9,7 @@ use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\App;
 use Lareon\Steward\App\Http\Controllers\Controller;
 use Lareon\Steward\App\Http\Requests\Admin\CacheExecutionRequest;
+use Lareon\Steward\App\Http\Requests\Admin\MaintenanceModeRequest;
 use Lareon\Steward\App\Logics\MaintenanceLogic;
 use Teksite\Handler\Facade\Responder;
 
@@ -33,10 +34,10 @@ class MaintenanceModeController extends Controller implements HasMiddleware
      * @throws \Throwable
      * @throws BindingResolutionException
      */
-    public function update(CacheExecutionRequest $request)
+    public function update(MaintenanceModeRequest $request)
     {
         $secret = $request->input('secret' , null);
-        $res= $secret ? $this->logic->down($secret) :$this->logic->up($secret);
+        $res= $secret ? $this->logic->down($secret) :$this->logic->up();
         return  Responder::fromResult($res)->go();
     }
 
