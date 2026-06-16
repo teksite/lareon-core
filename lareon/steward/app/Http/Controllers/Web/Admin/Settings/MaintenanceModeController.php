@@ -7,17 +7,14 @@ use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\App;
-use Lareon\Steward\App\Enums\CacheAction;
-use Lareon\Steward\App\Enums\CacheType;
 use Lareon\Steward\App\Http\Controllers\Controller;
 use Lareon\Steward\App\Http\Requests\Admin\CacheExecutionRequest;
-use Lareon\Steward\App\Service\CacheManagerService;
-use Teksite\Handler\Actions\ServiceWrapper;
+use Lareon\Steward\App\Logics\MaintenanceLogic;
 use Teksite\Handler\Facade\Responder;
 
 class MaintenanceModeController extends Controller implements HasMiddleware
 {
-    public function __construct() {}
+    public function __construct(private MaintenanceLogic $logic) {}
 
     public static function middleware()
     {
@@ -38,7 +35,9 @@ class MaintenanceModeController extends Controller implements HasMiddleware
      */
     public function update(CacheExecutionRequest $request)
     {
-
+        $secret = $request->input('secret' , null);
+        $res= $secret ? $this->logic->down($secret) :$this->logic->up($secret);
+        return  Responder::fromResult($res)->go();
     }
 
 }
