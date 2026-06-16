@@ -75,6 +75,11 @@ class PermissionsSeeder extends Seeder
                 'title'=>'admin.setting.cache.execute',
                 'description'=>'have access to store aor clear caches data (in the admin panel)',
             ],
+            /* maintenance */
+            [
+                'title'=>'admin.setting.maintenance.edit',
+                'description'=>'have access to set maintenance mode on or off (in the admin panel)',
+            ],
             /* Log */
             [
                 'title'=>'admin.setting.log.read',

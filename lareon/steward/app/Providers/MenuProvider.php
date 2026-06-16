@@ -57,16 +57,22 @@ class MenuProvider implements MenuRegisteringContract
 
                   ], [
                       'title'      => trans('caching'),
-                      'order'      => 3,
+                      'order'      => 2,
                       'route'      => 'admin.settings.cache.index',
                       'active'     => request()->routeIs('admin.settings.cache.index'),
                       'permission' => 'admin.setting.cache.read',
                   ], [
                       'title'      => trans('log'),
-                      'order'      => 2,
+                      'order'      => 3,
                       'route'      => 'admin.settings.logs.index',
                       'active'     => request()->routeIs('admin.settings.logs.index'),
                       'permission' => 'admin.setting.log.read',
+                  ], [
+                      'title'      => trans('maintenance'),
+                      'order'      => 3,
+                      'route'      => 'admin.settings.maintenance.index',
+                      'active'     => request()->routeIs('admin.settings.maintenance.index'),
+                      'permission' => 'admin.setting.maintenance.edit',
                   ],
               ], 'settings');
 
