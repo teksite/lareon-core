@@ -17,7 +17,6 @@ class DecryptAuthenticationTokenMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-
         $headerToken = $request->header('authorization') ?? $request->header('Authorization');
         $cookieToken = $request->cookies->get(AuthTokenService::PREFIX);
         if (!!$headerToken || !!$cookieToken) {
@@ -29,7 +28,6 @@ class DecryptAuthenticationTokenMiddleware
             } elseif (is_null($headerToken) && !!$cookieToken) {
                 $res = $this->setInHeader($request, $cookieToken);
             }
-
             if (!$res) {
                 return Responder::Failed(['server_error' => trans('auth::messages.verification_code.invalid_auth_token')])->reply();
             }

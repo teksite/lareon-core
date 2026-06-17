@@ -33,7 +33,7 @@ return [
                 ],
                 [
                     'path'       => 'admin/api.php',
-                    'middleware' => ['api', 'auth', 'verified', 'auth:sanctum'],
+                    'middleware' => ['api','verified', 'auth:sanctum'],
                     'prefix'     => 'admin/api/v1',
                     'name'       => 'admin.api.v1.',  //DO NOT CHANGE IT,
                 ],
@@ -53,7 +53,7 @@ return [
                 ],
                 [
                     'path'       => 'panel/api.php',
-                    'middleware' => ['api', 'auth', 'verified', 'auth:sanctum'],
+                    'middleware' => ['api', 'verified', 'auth:sanctum'],
                     'prefix'     => 'panel/api/v1',
                     'name'       => 'panel.api.v1.',  //DO NOT CHANGE IT,
                 ],
@@ -135,7 +135,7 @@ return [
             ],
             [
                 'path'       => 'admin/api.php',
-                'middleware' => ['api', 'auth', 'verified', 'auth:sanctum'],
+                'middleware' => ['api', 'verified', 'auth:sanctum'],
                 'prefix'     => 'admin/api/v1',
                 'name'       => 'admin.api.v1.',  //DO NOT CHANGE IT,
             ],
@@ -155,7 +155,7 @@ return [
             ],
             [
                 'path'       => 'panel/api.php',
-                'middleware' => ['api', 'auth', 'verified', 'auth:sanctum'],
+                'middleware' => ['api', 'verified', 'auth:sanctum'],
                 'prefix'     => 'panel/api/v1',
                 'name'       => 'panel.api.v1.',  //DO NOT CHANGE IT,
             ],
