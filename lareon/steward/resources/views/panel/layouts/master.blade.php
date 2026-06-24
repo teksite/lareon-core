@@ -17,8 +17,6 @@
 <main class="p-3">
     @include('lareon::panel.layouts.partials.aside')
     <div class="ms-auto me-0 p-3 transition-all duration-100 xl:w-[calc(100%_-_4rem)]" :class="{ 'xl:w-[calc(100%_-_4rem)]': sidebar}">
-        @include('lareon::panel.layouts.partials.upper-header')
-        @include('lareon::panel.layouts.partials.header')
         @include('lareon::panel.layouts.partials.errors')
         {!! $slot !!}
     </div>
