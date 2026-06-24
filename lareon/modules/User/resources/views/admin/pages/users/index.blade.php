@@ -10,7 +10,7 @@
                 <tr>
                     <td class="p-3">{{$users->firstItem() + $key}}</td>
                     <td>
-                        <img src="{{asset('assets/images/avatar-default.jpg')}}" alt="{{$user->name}}" width="35" height="35" fetchpriority="low" decoding="async" loading="lazy">
+                        <img src="{{$user->avatar ?? asset('assets/images/avatar-default.jpg')}}" alt="{{$user->name}}" width="35" height="35" fetchpriority="low" decoding="async" loading="lazy">
                     </td>
                     <td>{{$user->fullname}}</td>
                     <td>{{$user->phone}}</td>

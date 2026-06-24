@@ -1,13 +1,13 @@
-<aside class="fixed xl:p-1 top-0 start-0 w-3/4 md:w-1/2 lg:w-1/3 xl:w-1/6 transition-all duration-100 " :class="sidebar ? '{{is_rtl() ? 'translate-x-full' : '-translate-x-full'}} xl:translate-x-0' : 'translate-x-0 {{is_rtl() ? 'xl:translate-x-full' :'xl:-translate-x-full'}}' ">
+<aside class="fixed z-10 xl:p-1 top-0 start-0 w-3/4 md:w-1/2 lg:w-1/3 xl:w-1/6 transition-all duration-100 " :class="sidebar ? '{{is_rtl() ? 'translate-x-full' : '-translate-x-full'}} xl:translate-x-0' : 'translate-x-0 {{is_rtl() ? 'xl:translate-x-full' :'xl:-translate-x-full'}}' ">
     <div class="h-dvh relative x-box !p-0 xl:border-none flex flex-col justify-between">
         <div class="overflow-auto flex flex-col gap-1">
             <div class="mb-6 ">
-                <div class="flex items-center gap-1 p-3">
-                    <x-lareon::logo class="w-16"/>
-                    <h1 class="text-3xl font-bold capitalize">
-                        LAREON
-                    </h1>
-                </div>
+            <figure>
+                <img src="{{auth()->user()->avatar ?? asset('assets/images/avatar-default.jpg')}}" alt="{{auth()->user()->fullname}}" width="200" height="200" fetchpriority="low" decoding="async" loading="lazy" class="mx-auto rounded-2xl">
+                <figcaption title="{{auth()->user()->fullname}}" class="mt-3 text-center font-bold text-2xl">
+                    {{auth()->user()->name}}
+                </figcaption>
+            </figure>
 
             </div>
             <nav class="h-full overflow-y-auto" id="aside-menu-nav">
