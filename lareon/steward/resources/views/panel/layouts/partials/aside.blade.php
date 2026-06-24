@@ -1,26 +1,26 @@
-<aside class="fixed z-10 xl:p-1 top-0 start-0 w-3/4 md:w-1/2 lg:w-1/3 xl:w-1/6 transition-all duration-100 " :class="sidebar ? '{{is_rtl() ? 'translate-x-full' : '-translate-x-full'}} xl:translate-x-0' : 'translate-x-0 {{is_rtl() ? 'xl:translate-x-full' :'xl:-translate-x-full'}}' ">
-    <div class="h-dvh relative x-box !p-0 xl:border-none flex flex-col justify-between">
-        <div class="overflow-auto flex flex-col gap-1">
-            <div class="mb-6 ">
-            <figure>
-                <img src="{{auth()->user()->avatar ?? asset('assets/images/avatar-default.jpg')}}" alt="{{auth()->user()->fullname}}" width="200" height="200" fetchpriority="low" decoding="async" loading="lazy" class="mx-auto rounded-2xl">
-                <figcaption title="{{auth()->user()->fullname}}" class="mt-3 text-center font-bold text-2xl">
-                    {{auth()->user()->name}}
-                </figcaption>
-            </figure>
-
-            </div>
-            <nav class="h-full overflow-y-auto" id="aside-menu-nav">
-                <ul class="pe-3 menu space-y-3">
-                    @foreach($menus as $menu)
-                        <li>
-                            <x-lareon::accordion-nav.menu :menu="$menu"/>
-                        </li>
-                    @endforeach
-                </ul>
-            </nav>
-        </div>
-        <div class="px-3 py-6">
+<aside class="fixed z-10 xl:p-1 top-0 start-0 w-3/4 md:w-1/2 lg:w-1/3 xl:w-1/9 transition-all duration-100 " :class="sidebar ? '{{is_rtl() ? 'translate-x-full' : '-translate-x-full'}} xl:translate-x-0' : 'translate-x-0 {{is_rtl() ? 'xl:translate-x-full' :'xl:-translate-x-full'}}' ">
+    <div class="h-dvh relative gap-2 !p-0 xl:border-none flex flex-col justify-between">
+        <figure class="p-1 x-box">
+            <img src="{{auth()->user()->avatar ?? asset('assets/images/avatar-default.jpg')}}" alt="{{auth()->user()->fullname}}" width="200" height="200" fetchpriority="low" decoding="async" loading="lazy" class="mx-auto rounded-lg">
+            <figcaption title="{{auth()->user()->fullname}}" class="mt-1 flex gap-3 items-center justify-center font-bold text-2xl">
+                    <span>
+                        {{auth()->user()->name}}
+                    </span>
+                @if(\Illuminate\Support\Facades\Route::has('users.show'))
+                    <x-lareon::links.action :href="route('users.show')"/>
+                @endif
+            </figcaption>
+        </figure>
+        <nav class="h-full p-1 x-box" id="aside-menu-nav">
+            <ul class=" menu space-y-3  overflow-y-auto">
+                @foreach($menus as $menu)
+                    <li>
+                        <x-lareon::aside.simple.nav-item :menu="$menu"/>
+                    </li>
+                @endforeach
+            </ul>
+        </nav>
+        <div class="p-1 x-box">
             <button class="logoutBtn p-2 min-h-fit h-fit flex w-full items-center justify-start gap-2 text-red-600 cursor-pointer hover:bg-red-100">
                 <x-icon type="outline" icon="turn-off" class="stroke-red-600" size="18"/>
                 <span>
