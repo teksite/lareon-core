@@ -2,7 +2,7 @@
     $hasBar= View::hasSection('header.start') || View::hasSection('header.end');
 
 @endphp
-<header class="mb-6 w-full rounded-xl bg-theme-4 bg-cover bg-no-repeat bg-fixed {{$hasBar ? 'mb-16' : ''}}">
+<header class="w-full rounded-xl bg-theme-4 bg-cover bg-no-repeat bg-fixed {{$hasBar ? 'mb-24 sm:mb-16' : ''}}">
     <div class="bg-linear-to-r from-cyan-500 to-blue-500 50 w-full h-full relative rounded-xl">
         <div class="w-full h-full p-3 min-h-64 flex items-center">
             <div class="px-3">

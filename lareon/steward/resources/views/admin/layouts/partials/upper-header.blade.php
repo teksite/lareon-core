@@ -30,7 +30,7 @@
     </div>
     <hr class="border-dotted border-gray-300 w-full md:my-0 my-1">
     <div class="flex min-w-fit w-full sm:w-fit items-center justify-between gap-1 x-box p-2 ">
-        <div>
+        <div class="flex items-center gap-2">
             @if(\Illuminate\Support\Facades\Route::has('admin.setlang'))
                 <a href="{{route('admin.setlang')}}" class="justify-self-start">
                     Fa\En

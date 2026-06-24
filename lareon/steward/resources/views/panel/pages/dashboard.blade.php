@@ -1,4 +1,4 @@
-<x-lareon::admin-layout>
+<x-lareon::panel-layout>
 
 
-</x-lareon::admin-layout>
+</x-lareon::panel-layout>
