@@ -152,7 +152,7 @@ class PermissionsSeeder extends Seeder
                 'description'=>'have access to edit profile data (in the user panel)',
             ],
             [
-                'title'=>'panel.profile.towfactor',
+                'title'=>'panel.profile.two_factor',
                 'description'=>'have access to enable\disable two factor authentication (in the user panel)',
             ],
             [

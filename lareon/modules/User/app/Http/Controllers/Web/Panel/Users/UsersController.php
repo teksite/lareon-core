@@ -2,7 +2,6 @@
 
 namespace Lareon\Modules\User\App\Http\Controllers\Web\Panel\Users;
 
-use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Lareon\Modules\User\App\Events\UserCrudEvent;
@@ -17,11 +16,9 @@ use Teksite\Handler\Facade\Responder;
 
 class UsersController extends Controller implements HasMiddleware
 {
-    public User|Authenticatable $user;
 
     public function __construct(public UserLogic $logic)
     {
-        $this->user = auth()->user();
     }
 
     public static function middleware()
