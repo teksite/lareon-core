@@ -41,10 +41,10 @@ class MenuProvider implements MenuRegisteringContract
             ], 'user')
               ->addManyItem([
                   [
-                      'title'  => trans('lareon::global.crud.titles.all', ['attribute' => trans('users')]),
-                      'order'  => 1,
-                      'route'  => 'admin.users.index',
-                      'active' => request()->routeIs('admin.users.index'),
+                      'title'      => trans('lareon::global.crud.titles.all', ['attribute' => trans('users')]),
+                      'order'      => 1,
+                      'route'      => 'admin.users.index',
+                      'active'     => request()->routeIs('admin.users.index'),
                       'permission' => 'admin.user.read',
 
                   ],
@@ -61,10 +61,11 @@ class MenuProvider implements MenuRegisteringContract
     protected function panel(MenuRegisteringEvent $event): void
     {
         $event->add([
-            'title' => 'profile',
-            'route' => 'panel.profile.edit',
-            'icon'  => 'user',
-            'order' => 2,
+            'title'  => 'profile',
+            'route'  => 'panel.profile.edit',
+            'icon'   => 'user',
+            'order'  => 2,
+            'active' => request()->routeIs('panel.profile.*'),
         ], 'profile');
 
     }

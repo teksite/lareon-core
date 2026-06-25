@@ -4,10 +4,10 @@
     $url = $menu['url'] ?? null ;
     $preActivation = isset($menu['active']) && $menu['active'];
     $href=$route ? route($route) : $url;
-
     $active= $preActivation
      ||($route && request()->routeIs($route)
      || ($url && str_starts_with($url , request()->url())));
+
 @endphp
 
 <div class="p-1">
