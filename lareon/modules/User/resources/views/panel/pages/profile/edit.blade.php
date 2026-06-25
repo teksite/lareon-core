@@ -1,29 +1,29 @@
-<x-lareon::admin-editor type="update" method="patch" :instance="$user" :action="route('admin.users.update', $user)">
-    @section('title', __('lareon::global.crud.titles.edit',['attribute'=>__('user')]) . "($user->fullname)")
-    @section('header.start')
-        <x-lareon::links.nav :href="route('admin.users.index')" :content="__('lareon::global.buttons.all_attribute' ,['attribute'=>__('users')])" color="index" can="admin.user.read"/>
-        <x-lareon::links.nav :href="route('admin.users.create')" :content="__('lareon::global.buttons.new_attribute' ,['attribute'=>__('user')])" color="create" can="admin.user.create"/>
-
+<x-lareon::panel-layout type="update" method="patch" :instance="$user" :action="route('admin.users.update', $user)">
+    @section('title', __('lareon::global.crud.titles.edit',['attribute'=>__('profile')]) . "($user->fullname)")
+    @section('nav')
+        <x-lareon::aside.tab.items :items="[
+'profile'=>route('panel.profile.edit') ,
+'password'=>route('panel.profile.edit') ,
+'passkey'=>route('panel.profile.edit') ,
+'2fa'=>route('panel.profile.edit') ,
+]"/>
     @endsection
-    @section('header.end')
-        <x-lareon::links.action type="delete" :href="route('admin.users.destroy', $user)" method="delete" :label="trans('lareon::global.buttons.delete')" can="admin.user.delete"/>
-    @endsection
+    <x-lareon::box type="y" class="space-y-3">
 
-    @section('form')
+        <div class="grid gap-6 lg:grid-cols-2">
+            <x-lareon::editor.input :required="true" labelPosition="start" :label="__('first name')" name="name" :value="$user->name" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('name') , 'item'=>__('user')])"/>
+            <x-lareon::editor.input :required="true" labelPosition="start" :label="__('last name')" name="lastname" :value="$user->lastname" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('last name') , 'item'=>__('user')])"/>
+        </div>
+        <div class="space-y-6">
+            <x-lareon::editor.input :required="true" type="tel" dir="ltr" :value="$user->phone" :label="__('phone')" name="phone" :placeholder="__('lareon::global.placeholders.write.unique.two',['attribute'=>__('phone') , 'item'=>__('user')])"/>
+            <x-lareon::editor.input :required="true" type="email" dir="ltr" :value="$user->email" :label="__('email')" name="email" :placeholder="__('lareon::global.placeholders.write.unique.two',['attribute'=>__('email') , 'item'=>__('user') ])"/>
+        </div>
+        <div>
+            <x-lareon::editor.input-slug :disabled="true" :readonly="true" :value="$user->slug" :label="__('slug')" name="slug" :placeholder="__('lareon::global.placeholders.write.unique.two',['attribute'=>__('slug') , 'item'=>__('user') ])" :showUrl="!!($user->path())"/>
+        </div>
+    </x-lareon::box>
 
-        <x-lareon::editor.tabs.item :title="__('basic data')">
-            <div class="grid gap-6 lg:grid-cols-2">
-                <x-lareon::editor.input :required="true" labelPosition="start" :label="__('first name')" name="name" :value="$user->name" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('name') , 'item'=>__('user')])"/>
-                <x-lareon::editor.input :required="true" labelPosition="start" :label="__('last name')" name="lastname" :value="$user->lastname" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('last name') , 'item'=>__('user')])"/>
-            </div>
-            <div class="space-y-6">
-                <x-lareon::editor.input :required="true" type="tel" dir="ltr" :value="$user->phone" :label="__('phone')" name="phone" :placeholder="__('lareon::global.placeholders.write.unique.two',['attribute'=>__('phone') , 'item'=>__('user')])"/>
-                <x-lareon::editor.input :required="true" type="email" dir="ltr" :value="$user->email" :label="__('email')" name="email" :placeholder="__('lareon::global.placeholders.write.unique.two',['attribute'=>__('email') , 'item'=>__('user') ])"/>
-            </div>
-            <div>
-                <x-lareon::editor.input-slug :disabled="true" :readonly="true" :value="$user->slug" :label="__('slug')" name="slug" :placeholder="__('lareon::global.placeholders.write.unique.two',['attribute'=>__('slug') , 'item'=>__('user') ])" :showUrl="!!($user->path())"/>
-            </div>
-        </x-lareon::editor.tabs.item>
+    <x-lareon::editor.tabs.layout>
 
         <x-lareon::editor.tabs.item :title="__('verifications')">
             <div class="grid gap-6 md:grid-cols-2">
@@ -57,7 +57,7 @@
         </x-lareon::editor.tabs.item>
 
         <x-lareon::editor.tabs.item :title="__('password')">
-                    <x-lareon::editor.password :label="__('password')" :confirm_label="__('confirm password')" name="password" :placeholder="__('lareon::global.placeholders.auth.password',['attribute'=>__('password')])" wrapperClass="grid gap-6 lg:grid-cols-2"/>
+            <x-lareon::editor.password :label="__('password')" :confirm_label="__('confirm password')" name="password" :placeholder="__('lareon::global.placeholders.auth.password',['attribute'=>__('password')])" wrapperClass="grid gap-6 lg:grid-cols-2"/>
         </x-lareon::editor.tabs.item>
 
         <x-lareon::editor.tabs.item :title="__('passkey')">
@@ -68,10 +68,10 @@
             </div>
         </x-lareon::editor.tabs.item>
 
-    @if(\Illuminate\Support\Facades\Route::has('two-factor.enable'))
-        <x-lareon::editor.tabs.item :title="__('two factor authentication')">
-            <x-auth::editor.2fa :user="$user"/>
-        </x-lareon::editor.tabs.item>
+        @if(\Illuminate\Support\Facades\Route::has('two-factor.enable'))
+            <x-lareon::editor.tabs.item :title="__('two factor authentication')">
+                <x-auth::editor.2fa :user="$user"/>
+            </x-lareon::editor.tabs.item>
         @endif
-    @endsection
-</x-lareon::admin-editor>
+    </x-lareon::editor.tabs.layout>
+</x-lareon::panel-layout>

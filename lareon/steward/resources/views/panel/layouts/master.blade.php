@@ -14,11 +14,16 @@
     @stack('headerScripts')
 </head>
 <body class="bg-slate-200 text-sm overflow-y-scroll" x-data="{sidebar:true ,togglesSidebar() { this.sidebar = !this.sidebar }}">
-<main class="p-3">
+<main class="">
     @include('lareon::panel.layouts.partials.aside')
-    <div class="ms-auto me-0 p-3 transition-all duration-100 xl:w-[calc(100%_-_4rem)]" :class="{ 'xl:w-[calc(100%_-_4rem)]': sidebar}">
+    <div class="ms-auto me-0  transition-all duration-100 xl:w-8/9" :class="{'xl:w-8/9' : sidebar }">
+        @include('lareon::panel.layouts.partials.header')
+        @include('lareon::panel.layouts.partials.upper-header')
         @include('lareon::panel.layouts.partials.errors')
+        <div class="p-3">
         {!! $slot !!}
+
+        </div>
     </div>
 </main>
 @include('lareon::panel.layouts.partials.footer')

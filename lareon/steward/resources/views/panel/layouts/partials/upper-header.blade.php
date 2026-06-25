@@ -1,12 +1,12 @@
-<div class="p-0.5 mb-6 flex flex-col sm:flex-row items-center justify-between">
+<div class="p-0.5 bg-slate-50 mb-6 flex flex-col-reverse sm:flex-row items-center justify-between">
     <div class="w-full sm:min-w-fit sm:w-fit sm:max-fit flex items-center justify-between sm:justify-start gap-3">
-        <ul class="flex items-center justify-start gap-1 text-slate-600 font-semibold text-sm">
-            <a href="{{route('admin.dashboard')}}" class="">
-                {{__('dashboard')}}
-            </a>
-            >
-            @yield('title')
-        </ul>
+        <div class="flex items-center justify-start gap-1 text-slate-600 font-semibold text-sm">
+            @yield('nav')
+        </div>
+
+    </div>
+    <hr class="border-dotted border-gray-300 w-full md:my-0 my-1">
+    <div class="flex min-w-fit w-full sm:w-fit items-center justify-between gap-1 p-3">
         @if(isset($moduleData) && is_array($moduleData))
             <div class="flex items-center gap-3">
                 @foreach($moduleData as $data )
@@ -27,26 +27,23 @@
                 @endforeach
             </div>
         @endisset
-    </div>
-    <hr class="border-dotted border-gray-300 w-full md:my-0 my-1">
-    <div class="flex min-w-fit w-full sm:w-fit items-center justify-between gap-1 x-box p-2 ">
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-3">
             @if(\Illuminate\Support\Facades\Route::has('admin.setlang'))
                 <a href="{{route('admin.setlang')}}" class="justify-self-start">
                     Fa\En
                 </a>
             @endif
             <a href="/">
-                <x-icon type="outline" icon="world"></x-icon>
+                <x-icon type="outline" icon="world" size="20"></x-icon>
             </a>
-            @if(\Illuminate\Support\Facades\Route::has('panel.dashboard'))
-                <a href="{{route('panel.dashboard')}}">
-                    <x-icon type="outline" icon="user"></x-icon>
+            @can('admin')
+                <a href="{{route('admin.dashboard')}}">
+                    <x-icon type="outline" icon="gear" size="20"></x-icon>
                 </a>
-            @endif
+            @endcan
         </div>
         <button class="hover:cursor-pointer" type="button" role="switch" @click="togglesSidebar()">
-            <x-icon type="outline" icon="bar-3"></x-icon>
+            <x-icon type="outline" icon="bar-3" size="20"></x-icon>
         </button>
     </div>
 </div>

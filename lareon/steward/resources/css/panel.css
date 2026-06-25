@@ -16,7 +16,7 @@
     }
 
     h1 {
-        @apply text-2xl font-bold mb-1
+        @apply text-xl font-bold mb-1 text-slate-500
     }
 
     h2 {
