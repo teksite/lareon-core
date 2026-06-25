@@ -1,7 +1,9 @@
-@props(['user' , 'enabling'=>false])
+@props(['user' , 'disabling'=>true ,'enabling'=>false])
 @if($user->two_factor_secret)
     <div class="">
-        <x-lareon::editor.input-check :options="[[__('disable 2FA') , 0 ]]" name="enable_2fa" value="null"/>
+        @if($disabling)
+            <x-lareon::editor.input-check :options="[[__('disable 2FA') , 0 ]]" name="enable_2fa" value="null"/>
+        @endif
         @if(auth()->id() === $user->id)
             <hr class="bordering my-12">
             <div class="grid gap-6 md:grid-cols-2 items-center">
@@ -57,8 +59,9 @@
         <p class="mb-6">
             {{__("two-factor authentication has not been enabled yet")}}.
         </p>
+
         @if($enabling)
-            <x-lareon::editor.input-check :options="[[__('enable 2FA') , 0 ]]" name="enable_2fa" value="1"/>
+            <x-lareon::editor.input-check :options="[[__('enable 2FA') , 1 ]]" name="enable_2fa" value="1"/>
         @endif
     </div>
 @endif

@@ -7,6 +7,7 @@
 'hasTab' => true,
 'id' => 'editor-form',
 'hasFile' => false,
+'buttonText'=>null
 ])
 
 @php
@@ -34,7 +35,7 @@
         default => 'create'
     };
 
-    $buttonText = match(true) {
+    $buttonText = $buttonText ?? match(true) {
         $isDeleteMode => trans('lareon::global.buttons.delete'),
         $isEditMode => trans('lareon::global.buttons.update'),
         default => trans('lareon::global.buttons.create')
