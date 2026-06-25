@@ -29,7 +29,7 @@
         @endisset
     </div>
     <hr class="border-dotted border-gray-300 w-full md:my-0 my-1">
-    <div class="flex min-w-fit w-full sm:w-fit items-center justify-between gap-1 x-box p-2 ">
+    <div class="flex min-w-fit w-full sm:w-fit items-center justify-between gap-3 x-box p-2 ">
         <div class="flex items-center gap-2">
             @if(\Illuminate\Support\Facades\Route::has('admin.setlang'))
                 <a href="{{route('admin.setlang')}}" class="justify-self-start">
@@ -37,16 +37,16 @@
                 </a>
             @endif
             <a href="/">
-                <x-icon type="outline" icon="world"></x-icon>
+                <x-icon type="outline" icon="world" size="20"/>
             </a>
             @if(\Illuminate\Support\Facades\Route::has('panel.dashboard'))
                 <a href="{{route('panel.dashboard')}}">
-                    <x-icon type="outline" icon="user"></x-icon>
+                    <x-icon type="outline" icon="user" size="20"/>
                 </a>
             @endif
         </div>
         <button class="hover:cursor-pointer" type="button" role="switch" @click="togglesSidebar()">
-            <x-icon type="outline" icon="bar-3"></x-icon>
+            <x-icon type="outline" icon="bar-3" size="20"/>
         </button>
     </div>
 </div>

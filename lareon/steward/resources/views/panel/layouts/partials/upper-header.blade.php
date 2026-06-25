@@ -6,7 +6,7 @@
 
     </div>
     <hr class="border-dotted border-gray-300 w-full md:my-0 my-1">
-    <div class="flex min-w-fit w-full sm:w-fit items-center justify-between gap-1 p-3">
+    <div class="flex gap-3 min-w-fit w-full sm:w-fit items-center justify-between p-3">
         @if(isset($moduleData) && is_array($moduleData))
             <div class="flex items-center gap-3">
                 @foreach($moduleData as $data )
@@ -34,16 +34,16 @@
                 </a>
             @endif
             <a href="/">
-                <x-icon type="outline" icon="world" size="20"></x-icon>
+                <x-icon type="outline" icon="world" size="20" />
             </a>
             @can('admin')
                 <a href="{{route('admin.dashboard')}}">
-                    <x-icon type="outline" icon="gear" size="20"></x-icon>
+                    <x-icon type="outline" icon="gear" size="20" />
                 </a>
             @endcan
         </div>
         <button class="hover:cursor-pointer" type="button" role="switch" @click="togglesSidebar()">
-            <x-icon type="outline" icon="bar-3" size="20"></x-icon>
+            <x-icon type="outline" icon="bar-3" size="20" />
         </button>
     </div>
 </div>

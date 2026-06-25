@@ -1,13 +1,6 @@
 <x-lareon::panel-editor type="update" method="patch" :instance="$user" :action="route('panel.profile.update')" :hasTab="false">
     @section('title', __('lareon::global.crud.titles.edit',['attribute'=>__('profile')]) . "($user->fullname)")
-    @section('nav')
-        <x-lareon::aside.tab.items :items="[
-'profile'=>route('panel.profile.edit') ,
-'password'=>route('panel.profile.password') ,
-'passkey'=>route('panel.profile.passkey') ,
-'2fa'=>route('panel.profile.2fa') ,
-]"/>
-    @endsection
+    @section('nav' ,view('user::panel.pages.profile.partials.nav'))
     @section('form')
         <section class="grid gap-6 md:grid-cols-2 xl:grid-cols-5">
             <x-lareon::box type="y" class="space-y-3 xl:col-span-3">
