@@ -4,8 +4,8 @@
         <x-lareon::aside.tab.items :items="[
 'profile'=>route('panel.profile.edit') ,
 'password'=>route('panel.profile.passwrod') ,
+'passkey'=>route('panel.profile.edit') ,
 '2fa'=>route('panel.profile.2fa') ,
-'passkey'=>route('panel.profile.passkey') ,
 ]"/>
     @endsection
     @section('form')

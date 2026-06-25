@@ -32,7 +32,6 @@ class ProfileController extends Controller implements HasMiddleware
         ];
     }
 
-
     public function show()
     {
         if ($this->user->path()) return redirect()->to($this->user->path());
@@ -64,6 +63,7 @@ class ProfileController extends Controller implements HasMiddleware
         return Responder::failed(trans('lareon::global.updated_failed', ['attribute' => __('user')]))->go();
 
     }
+
 
     /**
      * Remove the specified resource from storage.

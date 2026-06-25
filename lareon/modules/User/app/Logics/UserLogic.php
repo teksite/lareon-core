@@ -72,9 +72,8 @@ class UserLogic
     public function update(Authenticatable|User $user, array $inputs = []): ServiceResult
     {
         return ServiceWrapper::make(false)->do(function () use ($user, $inputs) {
-            if (!isset($inputs['password']) || $inputs['password'] === null) {
-                unset($inputs['password']);
-            }
+            if (!isset($inputs['password']) || $inputs['password'] === null)  unset($inputs['password']);
+
             $user->fill(Arr::except($inputs, ['permissions', 'roles', 'enable_2fa', 'meta', 'seo']));
             $this->toggle2fa($user, $inputs['enable_2fa'] ?? null);
             $user->save();
