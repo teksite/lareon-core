@@ -3,9 +3,9 @@
     @section('nav')
         <x-lareon::aside.tab.items :items="[
 'profile'=>route('panel.profile.edit') ,
-'password'=>route('panel.profile.passwrod') ,
-'2fa'=>route('panel.profile.2fa') ,
+'password'=>route('panel.profile.password') ,
 'passkey'=>route('panel.profile.passkey') ,
+'2fa'=>route('panel.profile.2fa') ,
 ]"/>
     @endsection
     @section('form')
@@ -23,5 +23,16 @@
                 <x-lareon::editor.input-slug :disabled="true" :readonly="true" :value="$user->slug" :label="__('slug')" name="slug" :placeholder="__('lareon::global.placeholders.write.unique.two',['attribute'=>__('slug') , 'item'=>__('user') ])" :showUrl="!!($user->path())"/>
             </div>
         </x-lareon::box>
+        <aside class="xl:col-span-2">
+            <div class="sticky top-6 space-y-6">
+                @hasSection('aside')
+                    @yield('aside')
+                @endif
+                    <x-lareon::editor.publish-data :instance="$user"/>
+
+
+
+            </div>
+        </aside>
     @endsection
 </x-lareon::panel-editor>

@@ -3,10 +3,11 @@
     @section('nav')
         <x-lareon::aside.tab.items :items="[
 'profile'=>route('panel.profile.edit') ,
-'password'=>route('panel.profile.passwrod') ,
-'passkey'=>route('panel.profile.edit') ,
+'password'=>route('panel.profile.password') ,
+'passkey'=>route('panel.profile.passkey') ,
 '2fa'=>route('panel.profile.2fa') ,
-]"/>    @endsection
+]"/>
+    @endsection
 
     <x-lareon::box type="y" class="space-y-3">
         <x-lareon::editor.tabs.item :title="__('password')">

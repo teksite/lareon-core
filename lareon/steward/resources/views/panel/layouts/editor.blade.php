@@ -88,19 +88,11 @@
 
             <aside class="xl:col-span-2">
                 <div class="sticky top-6 space-y-6">
-                    @hasSection('aside')
-                        @yield('aside')
-                    @endif
-                    @if($publishStatus && !$isDeleteMode && !$hasTab && $instance)
-                        <x-lareon::editor.publish-data :instance="$instance"/>
-                    @endif
-
                     <div class="mt-6">
                         <x-lareon::buttons.nav :fullWidth="false" type="submit" role="submit" :color="$buttonColor" :icon="$buttonIcon">
                             {{ __($buttonText)}}
                         </x-lareon::buttons.nav>
                     </div>
-
                 </div>
             </aside>
         </div>
