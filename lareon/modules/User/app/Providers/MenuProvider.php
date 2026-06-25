@@ -60,7 +60,6 @@ class MenuProvider implements MenuRegisteringContract
 
     protected function panel(MenuRegisteringEvent $event): void
     {
-        /*
         $event->add([
             'title' => 'panel',
             'url'   => '/tkadmin',
@@ -68,7 +67,7 @@ class MenuProvider implements MenuRegisteringContract
             'icon'  => 'fas fa-blog',
             'order' => 1,
         ], 'steward');
-        */
+
     }
 
 

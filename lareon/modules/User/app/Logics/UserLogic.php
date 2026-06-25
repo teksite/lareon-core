@@ -18,7 +18,6 @@ use Teksite\Handler\Services\FetchDataService;
 class UserLogic
 {
     /**
-     *
      * @throws \Throwable
      */
     public function all(mixed $fetchData = []): ServiceResult
@@ -27,6 +26,17 @@ class UserLogic
                              ->do(fn() => FetchDataService::get(User::class, ['name', 'lastname', 'email', 'phone']))
                              ->run();
     }
+
+    /**
+     * @throws \Throwable
+     */
+    public function allByParent(mixed $fetchData = []): ServiceResult
+    {
+        return ServiceWrapper::make(false)
+                             ->do(fn() => FetchDataService::get(auth()->user()->children(), ['name', 'lastname', 'email', 'phone']))
+                             ->run();
+    }
+
 
     /**
      * @throws BindingResolutionException
@@ -71,8 +81,6 @@ class UserLogic
             return $user->refresh();
         })->run();
     }
-
-
 
 
     /**

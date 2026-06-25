@@ -77,6 +77,12 @@ class User extends Authenticatable implements MustVerifyEmail , PasskeyUser
         return $this->belongsTo(User::class, 'parent_id');
     }
 
+    public function children(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->hasMany(User::class, 'parent_id');
+    }
+
+
     public function sendPhoneVerificationNotification(): void
     {
         // TODO: Implement sendPhoneVerificationNotification() method.
