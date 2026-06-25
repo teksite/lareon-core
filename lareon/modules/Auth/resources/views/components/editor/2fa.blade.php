@@ -1,8 +1,7 @@
-@props(['user'])
+@props(['user' , 'enabling'=>false])
 @if($user->two_factor_secret)
     <div class="">
         <x-lareon::editor.input-check :options="[[__('disable 2FA') , 0 ]]" name="enable_2fa" value="null"/>
-
         @if(auth()->id() === $user->id)
             <hr class="bordering my-12">
             <div class="grid gap-6 md:grid-cols-2 items-center">
@@ -15,7 +14,7 @@
                     </p>
                     <a class="regular flex gap-3 mb-3"
                        href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en&gl=US">
-                        <x-icon type="outline" icon="googleplay" />
+                        <x-icon type="outline" icon="googleplay"/>
                         {{__('download')}}
                     </a>
 
@@ -44,19 +43,22 @@
                         </p>
                     </div>
                 </div>
-
-
                 <ul class="space-y-3">
                     @foreach($user->recoveryCodes() as $recovery)
                         <li class="text-start" dir="ltr">{{$recovery}}</li>
                     @endforeach
                 </ul>
-                @endif
             </div>
-        @else
-            <div class="">
-                <p>
-                    {{__("two-factor authentication has not been enabled yet")}}.
-                </p>
-            </div>
+        @endif
+
+    </div>
+@else
+    <div class="">
+        <p class="mb-6">
+            {{__("two-factor authentication has not been enabled yet")}}.
+        </p>
+        @if($enabling)
+            <x-lareon::editor.input-check :options="[[__('enable 2FA') , 0 ]]" name="enable_2fa" value="1"/>
+        @endif
+    </div>
 @endif

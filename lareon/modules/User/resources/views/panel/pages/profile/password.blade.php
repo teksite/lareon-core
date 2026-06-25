@@ -1,5 +1,5 @@
-<x-lareon::panel-editor type="update" method="patch" :instance="$user" :action="route('panel.profile.update')" :hasTab="false">
-    @section('title', __('lareon::global.crud.titles.edit',['attribute'=>__('profile')]) . "($user->fullname)")
+<x-lareon::panel-editor type="update" method="patch" :instance="$user" :action="route('panel.profile.password.update')" :hasTab="false">
+@section('title', __('lareon::global.crud.titles.edit',['attribute'=>__('profile')]) . "($user->fullname)")
     @section('nav')
         <x-lareon::aside.tab.items :items="[
 'profile'=>route('panel.profile.edit') ,

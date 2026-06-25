@@ -23,6 +23,7 @@
     "Save these codes in a safe place and don't share them": "این کدها را در جای امنی ذخیره کنید و با کسی به اشتراک نگذارید",
     "recovery code": "کد بازیابی",
     "disable 2FA": "غیرفعال کردن 2FA",
+    "enable 2FA": "فعال کردن 2FA",
     "enter the code from your authentication app": "کد دریافتی از اپلیکیشن احراز هویت (Authenticator) خود را وارد کنید",
     "enter the recovery code": "کد بازیابی (recovery code) را وارد کنید",
     "send via email": "ارسال توسط ایمیل",
