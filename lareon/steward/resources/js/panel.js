@@ -258,12 +258,6 @@ class PasskeyLogin {
 
                 });
 
-
-            /*
-             package ممکن است redirect کند
-             اگر نکرد:
-            */
-
             if(response?.redirect){
 
                 window.location.href=
