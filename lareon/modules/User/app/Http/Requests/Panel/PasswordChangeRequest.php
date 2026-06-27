@@ -14,7 +14,7 @@ class PasswordChangeRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return userCan('panel.profile.edit');
     }
 
     /**
@@ -33,7 +33,6 @@ class PasswordChangeRequest extends FormRequest
             }],
             'password_confirmation' => 'required|string',
             'current_password'      => 'required|string|min:6',
-
         ];
     }
 }

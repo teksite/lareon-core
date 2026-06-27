@@ -27,8 +27,7 @@ class TwoFactorController extends Controller implements HasMiddleware
     public static function middleware()
     {
         return [
-            new Middleware('can:panel.profile.edit'),
-            new Middleware('can:panel.profile.delete', only: ['destroy']),
+            new Middleware('can:panel.profile.two_factor'),
         ];
     }
     /**
@@ -39,14 +38,5 @@ class TwoFactorController extends Controller implements HasMiddleware
         return view('user::panel.pages.profile.2fa', ['user'=>$this->user]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @throws \Throwable
-     */
-    public function update(UpdateUserRequest $request)
-    {
-
-    }
 
 }
