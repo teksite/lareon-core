@@ -32,5 +32,6 @@
     "or continue with username and password": "یا با نام‌کاربری و گذر‌واژه ادامه دهید",
     "authenticating...": "در حال احراز هویت...",
     "passkey": "کلید عبور",
-    "add passkey": "افزودن کلید عبور"
+    "add passkey": "افزودن کلید عبور",
+    "no passkeys registered yet": "هنوز هیچ کلید عبوری ثبت نشده‌است"
 }

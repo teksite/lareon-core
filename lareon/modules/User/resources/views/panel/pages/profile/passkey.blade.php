@@ -2,73 +2,46 @@
     @section('title', __('lareon::global.crud.titles.edit',['attribute'=>__('profile')]) . "($user->fullname)")
     @section('nav' ,view('user::panel.pages.profile.partials.nav'))
 
-    @if($passkeys->isNotEmpty())
-        <x-lareon::box type="y" class="mb-6">
-            <ul>
-                @foreach($passkeys as $passkey)
-                    <li class="flex justify-between items-center py-2">
-                        <div>
-                            <div class="font-medium">{{ $passkey->name }}</div>
-                            <small class="text-gray-500">
-                                <x-lareon::date :date="$passkey->last_used_at"/>
-                            </small>
-                        </div>
 
-                        <x-lareon::links.action type="delete" method="delete" :href="route('panel.profile.passkeys.destroy', $passkey)" can="panel.profile.passkey"/>
-                    </li>
-                @endforeach
-            </ul>
-        </x-lareon::box>
-    @endif
+    <x-auth::editor.passkeys :passkeys="$passkeys"/>
 
 
-    <div
-        x-data="passkeyManager({
-            optionsUrl: @js(route('passkey.registration-options')),
-            storeUrl: @js(route('passkey.store'))
-        })"
-        x-init="init()">
+    <div data-option-url="{{route('passkey.registration-options')}}" data-store-url="{{route('passkey.store')}}">
 
-        <template x-if="!supported">
-            <div class="text-sm text-red-600">
-                {{ __('Passkeys are not supported in this browser.') }}
-            </div>
-        </template>
-
-
+        {{-- ADD BUTTON --}}
         <x-lareon::buttons.simple variant="outline" size="xs" color="teal" x-on:click="$dispatch('open-modal', 'addPasskey')">
-            {{ __('add passkey') }}
+            {{ __('add') }}
         </x-lareon::buttons.simple>
 
         <x-lareon::modal name="addPasskey">
 
-            <x-lareon::editor.input label="{{ __('passkey name') }}" placeholder="{{ __('e.g., MacBook Pro, iPhone') }}" x-model="name" x-ref="input" x-on:keydown.enter.prevent="register()"/>
-            <p class="text-xs text-gray-500 mt-1">
+            <x-lareon::editor.input label="{{ __('passkey name') }}" placeholder="{{ __('e.g., MacBook Pro, iPhone') }}" name="name" x-ref="input" x-on:keydown.enter.prevent="register()"/>
+
+            <p class="text-xs text-gray-600 mt-1">
                 {{ __('give this passkey a name to help you identify it later') }}
             </p>
-            <p x-show="error" x-text="error" x-cloak class="text-sm text-red-600 mt-2"></p>
 
+
+            {{-- ACTIONS --}}
             <div class="flex gap-3 mt-6">
-
-                <x-lareon::buttons.simple size="xs" variant="solid" class="w-24" x-bind:disabled="loading" x-on:click="register()">
-                    <span>{{ __('register') }}
-                         <span x-show="loading" x-cloak>...</span>
-                    </span>
-
+                <x-lareon::buttons.simple size="xs" variant="solid" class="w-24" x-bind:disabled="loading || !name.trim()" x-on:click="register()">
+                    <span x-show="!loading">{{ __('register') }}</span>
+                    <span x-show="loading" x-cloak>...</span>
                 </x-lareon::buttons.simple>
 
                 <x-lareon::buttons.simple size="xs" variant="outline" class="w-24" x-on:click="reset()">
                     {{ __('cancel') }}
                 </x-lareon::buttons.simple>
-
             </div>
-        </x-lareon::modal>
 
+        </x-lareon::modal>
     </div>
 </x-lareon::panel-layout>
 @pushonce('footerScripts')
     <script>
         document.addEventListener('alpine:init', () => {
+            if (!window.Alpine) return;
+
             Alpine.data('passkeyManager', (config) => ({
                 supported: false,
                 name: '',
@@ -77,7 +50,7 @@
 
                 init() {
                     this.detectSupport();
-                    this.name = this.generateDeviceName();
+                    this.name = this.defaultDeviceName();
 
                     window.addEventListener('passkeys:ready', () => {
                         this.detectSupport();
@@ -85,33 +58,36 @@
                 },
 
                 detectSupport() {
-                    this.supported = !!window.Passkeys?.isSupported?.();
+                    this.supported = Boolean(window.Passkeys?.isSupported?.());
                 },
 
-                generateDeviceName() {
+                defaultDeviceName() {
                     const ua = navigator.userAgent;
 
-                    const browser = [
+                    const pick = (list) =>
+                        list.find(([r]) => r.test(ua))?.[1];
+
+                    const browser = pick([
                         [/Edg|Edge/, 'Edge'],
-                        [/OPR|Opera|OPiOS/, 'Opera'],
+                        [/OPR|Opera/, 'Opera'],
                         [/Firefox|FxiOS/, 'Firefox'],
                         [/Chrome|CriOS/, 'Chrome'],
                         [/Safari/, 'Safari'],
-                    ].find(([r]) => r.test(ua))?.[1];
+                    ]);
 
-                    const os = [
+                    const os = pick([
                         [/iPhone/, 'iPhone'],
                         [/iPad|Macintosh(?=.*Mobile)/, 'iPad'],
                         [/Android/, 'Android'],
                         [/Mac/, 'Mac'],
                         [/Windows/, 'Windows'],
-                    ].find(([r]) => r.test(ua))?.[1];
+                    ]);
 
                     return [browser, os].filter(Boolean).join(' on ') || 'My Device';
                 },
 
                 async register() {
-                    if (!this.name.trim()) return;
+                    if (this.loading || !this.name.trim()) return;
 
                     this.loading = true;
                     this.error = null;
@@ -119,18 +95,21 @@
                     try {
                         await window.Passkeys.register({
                             name: this.name,
-                            routes: {
-                                options: config.optionsUrl,
-                                submit: config.storeUrl,
+                            routes: config,
+                            meta: {
+                                device_name: this.name,
+                                user_agent: navigator.userAgent
                             }
                         });
 
                         this.reset();
 
                     } catch (e) {
-                        if (e?.constructor?.name !== 'UserCancelledError') {
-                            this.error = e?.message || 'Unknown error';
-                        }
+
+                        if (e?.name === 'UserCancelledError') return;
+
+                        this.error = e?.message || 'Something went wrong';
+
                     } finally {
                         this.loading = false;
                     }
@@ -140,9 +119,11 @@
                     this.name = '';
                     this.error = null;
                     this.loading = false;
+
                     this.$dispatch('close-modal');
                 }
             }));
+
         });
     </script>
 @endpushonce

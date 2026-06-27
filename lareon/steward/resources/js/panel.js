@@ -9,6 +9,9 @@ import { Passkeys } from '@laravel/passkeys';
 window.Passkeys = Passkeys;
 window.dispatchEvent(new CustomEvent('passkeys:ready'));
 
+
+
+
 document.addEventListener('DOMContentLoaded', function () {
     logout();
     initiateOTP()
