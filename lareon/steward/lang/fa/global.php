@@ -19,7 +19,7 @@ return [
         'sign_up'            => 'ثبت‌نام در سیستم',
         'email_verification' => 'تأیید ایمیل',
         'phone_verification' => 'تأیید نلفن',
-        'confirm_password'   => 'تایید گذر واژه',
+        'confirm_password'   => 'تایید گذر‌واژه',
         '2fa'                => 'اهراز هویت دو مرحله‌ای',
 
     ],
@@ -153,7 +153,7 @@ return [
     ],
 
     "links"         => [
-        "forget_password" => "گذر واژه خود را فراموش کرده‌اید؟",
+        "forget_password" => "گذر‌واژه خود را فراموش کرده‌اید؟",
         "back_home"       => "برگشت به خانه",
 
     ],

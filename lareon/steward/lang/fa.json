@@ -63,5 +63,7 @@
     "leave it empty to be disabled or enter a secret code": "خالی بگذارید تا غیر فعال شود یا یک کد مخفی وارد کنید",
     "secret code": "کد مخفی",
     "the app is down": "اپلیکیشن در حالت تعمیر نگهداری است",
-    "the app is up": "اپلیکیشن فعال است"
+    "the app is up": "اپلیکیشن فعال است",
+    "enable": "فعال کردن",
+    "disable": "غیر‌فعال کردن"
 }

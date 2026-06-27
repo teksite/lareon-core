@@ -52,6 +52,7 @@ class FortifyServiceProvider extends ServiceProvider
 
 
     }
+
     private function configureActions(): void
     {
         Fortify::authenticateUsing($this->authenticationUser());
@@ -59,7 +60,7 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
         Fortify::redirectUserForTwoFactorAuthenticationUsing(RedirectIfTwoFactorAuthenticatable::class);
-        Fortify::redirectUserForTwoFactorAuthenticationUsing(RedirectIfTwoFactorAuthenticatable::class);
+        Fortify::confirmPasswordsUsing($this->confirmPassword());
 //        Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
 //        Fortify::confirmPasswordsUsing($this->confirmPassword());
 
@@ -75,10 +76,10 @@ class FortifyServiceProvider extends ServiceProvider
             $username = $request->input('username');
             $password = $request->input('password');
 
-            $user= User::query()
-                       ->where('email', $username)
-                       ->orWhere('phone', $username)
-                       ->first();
+            $user = User::query()
+                        ->where('email', $username)
+                        ->orWhere('phone', $username)
+                        ->first();
 
             if ($user && Hash::check($password, $user->password)) {
                 return $user;
@@ -88,15 +89,12 @@ class FortifyServiceProvider extends ServiceProvider
     }
 
 
-
     /**
      * @return \Closure
      */
     protected function confirmPassword(): \Closure
     {
-        return function (User $user, string $password): bool {
-            return Hash::check($password, $user->password);
-        };
+        return fn(User $user, string $password): bool => Hash::check($password, $user->password);
     }
 
     private function configureRateLimiting(): void
@@ -106,7 +104,7 @@ class FortifyServiceProvider extends ServiceProvider
         });
 
         RateLimiter::for('login', function (Request $request) {
-            $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())).'|'.$request->ip());
+            $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())) . '|' . $request->ip());
 
             return Limit::perMinute(5)->by($throttleKey);
         });
@@ -115,7 +113,7 @@ class FortifyServiceProvider extends ServiceProvider
             $credentialId = $request->input('credential.id');
 
             return Limit::perMinute(10)->by(
-                ($credentialId ?: $request->session()->getId()).'|'.$request->ip(),
+                ($credentialId ?: $request->session()->getId()) . '|' . $request->ip(),
             );
         });
     }
