@@ -10,6 +10,7 @@ use Lareon\Modules\User\App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Lareon\Modules\User\App\Http\Requests\Admin\NewUserRequest;
 use Lareon\Modules\User\App\Http\Requests\Admin\UpdateUserRequest;
+use Lareon\Modules\User\App\Http\Requests\Panel\UpdateProfileRequest;
 use Lareon\Modules\User\App\Logics\UserLogic;
 use Lareon\Modules\User\App\Models\User;
 use Lareon\Steward\App\Enums\CrudTypeEnum;
@@ -51,33 +52,14 @@ class ProfileController extends Controller implements HasMiddleware
      *
      * @throws \Throwable
      */
-    public function update(UpdateUserRequest $request)
+    public function update(UpdateProfileRequest $request)
     {
         $res = $this->logic->update($this->user, $request->validated());
 
         if ($res->success) {
-            $this->logic->markAsVerified($this->user, $request->validated('email_verified_at'), $request->validated('phone_verified_at'));
             event(new UserCrudEvent($this->user, CrudTypeEnum::UPDATE, $request->validated()));
             return Responder::success(trans('lareon::global.updated_successfully', ['attribute' => __('user')]))->go();
         }
         return Responder::failed(trans('lareon::global.updated_failed', ['attribute' => __('user')]))->go();
-
-    }
-
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @throws \Throwable
-     */
-    public function destroy()
-    {
-        $res = $this->logic->delete($this->user);
-
-        if ($res->success) {
-            event(new UserCrudEvent($this->user, CrudTypeEnum::DELETE));
-            return Responder::success(trans('lareon::global.delete_successfully', ['attribute' => __('user')]))->route('panel.users.index')->go();
-        }
-        return Responder::failed(trans('lareon::global.delete_failed', ['attribute' => __('user')]))->go();
     }
 }

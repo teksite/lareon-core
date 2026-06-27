@@ -20,9 +20,9 @@ class UserCrudEvent
     /**
      * Create a new event instance.
      */
-    public function __construct(public User|Authenticatable $user, public CrudTypeEnum $operation, public array $data = [])
+    public function __construct(public User|Authenticatable $user, public CrudTypeEnum $operation, public array $data = [] , public Authenticatable|User|null $by =null)
     {
-        //
+        if (is_null($by)) $this->by = auth()->user();
     }
 
     /**
