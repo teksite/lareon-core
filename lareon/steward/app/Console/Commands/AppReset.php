@@ -37,6 +37,7 @@ class AppReset extends Command
             ['admin', null, InputOption::VALUE_OPTIONAL, 'make admin user'],
             ['seed', null, InputOption::VALUE_NONE, 'Indicates if the seed task should be re-run'],
             ['restore', null, InputOption::VALUE_OPTIONAL, 'restore backups from storage'],
+            ['composer', null, InputOption::VALUE_OPTIONAL, 'dump autoload of composer'],
         ];
     }
 
@@ -100,6 +101,11 @@ class AppReset extends Command
 
             Artisan::call('schedule:clear-cache');
             $this->components->twoColumnDetail("<fg=gray>  └─ schedule cache</>", "<fg=green>✓ cleared</>");
+
+            if ($this->option('composer')) {
+                $this->call('composer:dump-autoload');
+            }
+
 
             $this->info('The site is refreshed successfully :)');
 
