@@ -4,4 +4,5 @@
     @section('form')
 
     @endsection
+
 </x-lareon::panel-layout>
