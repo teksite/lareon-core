@@ -156,6 +156,10 @@ class PermissionsSeeder extends Seeder
                 'description'=>'have access to enable\disable two factor authentication (in the user panel)',
             ],
             [
+                'title'=>'panel.profile.passkey',
+                'description'=>'have access to enable\disable two factor authentication (in the user panel)',
+            ],
+            [
                 'title'=>'panel.profile.delete',
                 'description'=>'have access to delete the account (in the user panel)',
             ],

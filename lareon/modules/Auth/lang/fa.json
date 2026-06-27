@@ -30,5 +30,7 @@
     "send via SMS": "ارسال توسط پیامک",
     "enter the sent otp code via email/SMS": "کد OTP ارسال شده توسط ایمیل/پیامک را وارد کنید",
     "or continue with username and password": "یا با نام‌کاربری و گذر‌واژه ادامه دهید",
-    "authenticating...": "در حال احراز هویت..."
+    "authenticating...": "در حال احراز هویت...",
+    "passkey": "کلید عبور",
+    "add passkey": "افزودن کلید عبور"
 }

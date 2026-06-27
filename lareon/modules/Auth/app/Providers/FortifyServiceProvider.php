@@ -73,7 +73,7 @@ class FortifyServiceProvider extends ServiceProvider
     protected function authenticationUser(): \Closure
     {
         return function (Request $request) {
-            $username = $request->input('username');
+            $username = trim($request->input('username'));
             $password = $request->input('password');
 
             $user = User::query()

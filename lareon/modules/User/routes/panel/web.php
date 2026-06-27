@@ -18,8 +18,12 @@ Route::prefix('profile')->name('profile.')->group(function () {
     Route::get('/2fa', [TwoFactorController::class, 'edit'])->name('2fa');
     Route::patch('/2fa', [TwoFactorController::class, 'update'])->name('2fa.update');
 
-    Route::get('/passkey', [PasskeyController::class, 'edit'])->name('passkey');
-    Route::patch('/passkey', [PasskeyController::class, 'update'])->name('passkey.update');
+    Route::prefix('passkeys')->name('passkeys.')->group(function () {
+        Route::patch('{passkey}', [PasskeyController::class, 'update'])->name('update');
+        Route::delete('{passkey}', [PasskeyController::class, 'destroy'])->name('destroy');
+        Route::delete('/flush', [PasskeyController::class, 'flush'])->name('flush');
+        Route::get('/', [PasskeyController::class, 'index'])->name('index');
+    });
 });
 
 //Route::resource('users', UsersController::class);
