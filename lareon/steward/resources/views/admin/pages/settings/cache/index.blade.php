@@ -1,7 +1,7 @@
 <x-lareon::admin-layout>
     @section('title', __('caches'))
     @section('description', __("manage, clear, and optimize your application's caches from a single place"))
-    <ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch mt-12">
+    <ul class="grid sm:grid-cols-2 lg:grid-cols-3  xl:grid-cols-4 gap-6 items-stretch mt-12">
         @foreach($cacheTypes as $type)
             <li>
                 <x-lareon::box type="y">
