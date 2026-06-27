@@ -13,7 +13,7 @@ Route::prefix('profile')->name('profile.')->group(function () {
     Route::patch('/', [ProfileController::class, 'update'])->name('update');
 
     Route::get('/password', [PasswordController::class, 'edit'])->name('password');
-    Route::patch('/password', [ProfileController::class, 'update'])->name('password.update');
+    Route::patch('/password', [PasswordController::class, 'update'])->name('password.update');
 
     Route::get('/2fa', [TwoFactorController::class, 'edit'])->name('2fa');
     Route::patch('/2fa', [TwoFactorController::class, 'update'])->name('2fa.update');

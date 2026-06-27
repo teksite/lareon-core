@@ -10,6 +10,7 @@ use Lareon\Modules\User\App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Lareon\Modules\User\App\Http\Requests\Admin\NewUserRequest;
 use Lareon\Modules\User\App\Http\Requests\Admin\UpdateUserRequest;
+use Lareon\Modules\User\App\Http\Requests\Panel\PasswordChangeRequest;
 use Lareon\Modules\User\App\Logics\UserLogic;
 use Lareon\Modules\User\App\Models\User;
 use Lareon\Steward\App\Enums\CrudTypeEnum;
@@ -37,7 +38,7 @@ class PasswordController extends Controller implements HasMiddleware
      */
     public function edit()
     {
-        return view('user::panel.pages.profile.password', ['user'=>$this->user]);
+        return view('user::panel.pages.profile.password', ['user' => $this->user]);
     }
 
     /**
@@ -45,9 +46,10 @@ class PasswordController extends Controller implements HasMiddleware
      *
      * @throws \Throwable
      */
-    public function update(UpdateUserRequest $request)
+    public function update(PasswordChangeRequest $request)
     {
-
+       $res= $this->logic->changePassword(auth()->user(), $request->validated());
+       return Responder::fromResult($res)->go();
     }
 
 }
