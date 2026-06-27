@@ -62,9 +62,9 @@ class UsersController extends Controller implements HasMiddleware
         if ($res->success) {
             $this->logic->markAsVerified($res->result, $request->validated('email_verified_at'), $request->validated('phone_verified_at'));
             event(new UserCrudEvent($res->result, CrudTypeEnum::CREATE, $request->validated()));
-            return Responder::success(trans('lareon::global.created_successfully', ['attribute' => __('user')]))->route('admin.users.edit', $res->result)->go();
+            return Responder::success(trans('lareon::global.crud.success.created', ['attribute' => __('user')]))->route('admin.users.edit', $res->result)->go();
         }
-        return Responder::failed(trans('lareon::global.created_failed', ['attribute' => __('user')]));
+        return Responder::failed(trans('lareon::global.crud.error.created', ['attribute' => __('user')]));
 
     }
 
@@ -97,9 +97,9 @@ class UsersController extends Controller implements HasMiddleware
         if ($res->success) {
             $this->logic->markAsVerified($user, $request->validated('email_verified_at'), $request->validated('phone_verified_at'));
             event(new UserCrudEvent($user, CrudTypeEnum::UPDATE, $request->validated()));
-            return Responder::success(trans('lareon::global.updated_successfully', ['attribute' => __('user')]))->go();
+            return Responder::success(trans('lareon::global.crud.success.updated', ['attribute' => __('user')]))->go();
         }
-        return Responder::failed(trans('lareon::global.updated_failed', ['attribute' => __('user')]))->go();
+        return Responder::failed(trans('lareon::global.crud.error.updated', ['attribute' => __('user')]))->go();
 
     }
 
@@ -114,8 +114,8 @@ class UsersController extends Controller implements HasMiddleware
 
         if ($res->success) {
             event(new UserCrudEvent($user, CrudTypeEnum::DELETE));
-            return Responder::success(trans('lareon::global.delete_successfully', ['attribute' => __('user')]))->route('admin.users.index')->go();
+            return Responder::success(trans('lareon::global.crud.success.deleted', ['attribute' => __('user')]))->route('admin.users.index')->go();
         }
-        return Responder::failed(trans('lareon::global.delete_failed', ['attribute' => __('user')]))->go();
+        return Responder::failed(trans('lareon::global.crud.error.deleted', ['attribute' => __('user')]))->go();
     }
 }

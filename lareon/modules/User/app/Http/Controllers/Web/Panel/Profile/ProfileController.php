@@ -58,8 +58,8 @@ class ProfileController extends Controller implements HasMiddleware
 
         if ($res->success) {
             event(new UserCrudEvent($this->user, CrudTypeEnum::UPDATE, $request->validated()));
-            return Responder::success(trans('lareon::global.updated_successfully', ['attribute' => __('user')]))->go();
+            return Responder::success(trans('lareon::global.crud.success.general', ['attribute' => __('user')]))->go();
         }
-        return Responder::failed(trans('lareon::global.updated_failed', ['attribute' => __('user')]))->go();
+        return Responder::failed(trans('lareon::global.crud.error.general', ['attribute' => __('user')]))->go();
     }
 }
