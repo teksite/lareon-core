@@ -23,7 +23,7 @@
     };
 @endphp
 
-<div class="overflow-hidden y-box !p-0">
+<div class="overflow-x-auto y-box !p-0">
     <table {{ $attributes->merge(['class' => 'min-w-full text-sm divide-y divide-line_light']) }}>
         <thead class="">
         <tr>
