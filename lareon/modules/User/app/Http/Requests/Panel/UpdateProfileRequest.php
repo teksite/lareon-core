@@ -21,6 +21,8 @@ class UpdateProfileRequest extends FormRequest
      */
     public function rules(): array
     {
-        return  User::rules('update' , auth()->id());
+        $rules= User::rules('update' , auth()->id());
+        unset($rules['password'] ,$rules['phone'] ,$rules['email']);
+        return $rules;
     }
 }
