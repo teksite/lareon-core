@@ -1,0 +1,10 @@
+{
+    "version":"1.0.0",
+    "id": "FileManager",
+    "title": "FileManager",
+    "alias": "filemanager",
+    "description": "",
+    "keywords": [],
+    "providers": "Lareon\\Modules\\FileManager\\App\\Providers\\FileManagerServiceProvider"
+}
+

@@ -90,6 +90,13 @@
       0 => 'Teksite\\IconLaravel\\IconLaravelServiceProvider',
     ),
   ),
+  'teksite/laravel-filemanager' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Teksite\\FileManager\\FileManagerServiceProvider',
+    ),
+  ),
   'teksite/module' => 
   array (
     'providers' => 

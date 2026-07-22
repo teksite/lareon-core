@@ -18,6 +18,7 @@
         "teksite/extralaravel": "^2.0",
         "teksite/handler": "^2.0",
         "teksite/icon-laravel": "*",
+        "teksite/laravel-filemanager": "^0.1.0",
         "teksite/module": "^3.0",
         "teksite/systeminfo-laravel": "^0.0.1"
     },

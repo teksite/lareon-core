@@ -1,0 +1,51 @@
+{
+    "name": "teksite/filemanager",
+    "description": "This package is made for lareon (laravel)",
+    "keywords": ["laravel", "laravel" , "FileManager"],
+
+    "authors": [
+        {
+            "name": "Sina Zangiband",
+            "email": "sina.zangiband@gmail.com",
+            "homepage": "https://teksite.net",
+            "role":"manager"
+        },
+        {
+            "name": "Sina zb",
+            "email": "sina.zangiband@laratek.ir",
+            "homepage": "https://laratek.ir",
+            "role": "developer"
+        }
+    ],
+    "require": {
+
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Lareon\\Modules\\FileManager\\App\\Providers\\FileManagerServiceProvider"
+            ],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Lareon\\Modules\\FileManager\\App\\": "app/",
+            "Lareon\\Modules\\FileManager\\Database\\Factories\\": "database/factories/",
+            "Lareon\\Modules\\FileManager\\Database\\Seeders\\": "database/seeders/"
+        },
+         "files": [
+
+         ]
+    },
+    "require-dev": {
+
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Lareon\\Modules\\FileManager\\Tests\\": "tests/"
+        }
+    }
+}
