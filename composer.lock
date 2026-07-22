@@ -7334,16 +7334,16 @@
         },
         {
             "name": "teksite/laravel-filemanager",
-            "version": "0.1.0",
+            "version": "0.1.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/teksite/laravel-filemanager.git",
-                "reference": "843619f608a37c7c838d0c3e1e8f4c33d8827dfe"
+                "reference": "9164a178597e2fdf722e61b7dceb0ed7c04e7f2f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/teksite/laravel-filemanager/zipball/843619f608a37c7c838d0c3e1e8f4c33d8827dfe",
-                "reference": "843619f608a37c7c838d0c3e1e8f4c33d8827dfe",
+                "url": "https://api.github.com/repos/teksite/laravel-filemanager/zipball/9164a178597e2fdf722e61b7dceb0ed7c04e7f2f",
+                "reference": "9164a178597e2fdf722e61b7dceb0ed7c04e7f2f",
                 "shasum": ""
             },
             "require": {
@@ -7380,9 +7380,9 @@
             ],
             "support": {
                 "issues": "https://github.com/teksite/laravel-filemanager/issues",
-                "source": "https://github.com/teksite/laravel-filemanager/tree/0.1.0"
+                "source": "https://github.com/teksite/laravel-filemanager/tree/0.1.21"
             },
-            "time": "2026-07-22T10:05:13+00:00"
+            "time": "2026-07-22T13:32:07+00:00"
         },
         {
             "name": "teksite/module",

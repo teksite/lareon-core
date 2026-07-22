@@ -1,0 +1,64 @@
+<?php
+
+namespace Lareon\Modules\FileManager\App\Providers;
+
+use Lareon\Steward\App\Contracts\MenuRegisteringContract;
+use Lareon\Steward\App\Enums\MenuAreaType;
+use Lareon\Steward\App\Events\MenuRegisteringEvent;
+use Lareon\Steward\App\Traits\HasMenu;
+
+class MenuProvider implements MenuRegisteringContract
+{
+
+    use HasMenu;
+
+    public function priority(): int
+    {
+        return 100;
+    }
+
+    public function areas(): array
+    {
+        return [MenuAreaType::ADMIN, MenuAreaType::PANEL];
+    }
+
+    public function register(MenuRegisteringEvent $event): void
+    {
+        match ($event->area) {
+            MenuAreaType::ADMIN => $this->admin($event),
+            MenuAreaType::PANEL => $this->panel($event),
+        };
+    }
+
+    protected function admin(MenuRegisteringEvent $event): void
+    {
+        $event->add(
+            [
+                'title'  => 'media',
+                'order'  => 120,
+                'icon'   => 'home',
+                'active' => request()->routeIs('admin.filemanager.*'),
+            ], 'media')->addManyItem([
+            [
+                'title'  => 'browser',
+                'order'  => 1,
+                'route'  => 'admin.filemanager.browser.index',
+                'active' => request()->routeIs('admin.filemanager.browser.index'),
+            ],
+
+        ], 'media');
+    }
+
+    protected function panel(MenuRegisteringEvent $event): void
+    {
+        /* $event->add([
+             'title' => 'panel',
+             'url'   => '/tkadmin',
+             'route' => 'panel.dashboard',
+             'icon'  => 'fas fa-blog',
+             'order' => 1,
+         ], 'steward');*/
+    }
+
+
+}
