@@ -12,6 +12,6 @@
   'FileManager' => [
     'provider' => 'Lareon\\Modules\\FileManager\\App\\Providers\\FileManagerServiceProvider',
     'active' => true,
-    'type' => 'self',
+    'type' => 'steward',
   ],
 ];
