@@ -13,7 +13,7 @@ class FileManagerServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected string $moduleName = "filemanager";
+    protected string $moduleName = "FileManager";
 
     /**
      * The lowercase version of the module name.
@@ -21,6 +21,7 @@ class FileManagerServiceProvider extends ServiceProvider
      * @var string
      */
     protected string $lowerModuleName = "filemanager";
+
 
     /**
      * Module type (self|steward)
@@ -64,7 +65,6 @@ class FileManagerServiceProvider extends ServiceProvider
     public function boot(): void
     {
         parent::boot();
-
     }
 
     /**
