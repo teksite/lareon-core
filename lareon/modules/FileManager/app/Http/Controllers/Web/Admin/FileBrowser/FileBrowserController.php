@@ -9,6 +9,6 @@ class FileBrowserController extends Controller
 {
     public function index()
     {
-        return view('filemanager::admin.browser.index');
+        return view('filemanager::admin.pages.browser.index');
     }
 }
