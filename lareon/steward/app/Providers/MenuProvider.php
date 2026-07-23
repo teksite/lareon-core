@@ -14,7 +14,7 @@ class MenuProvider implements MenuRegisteringContract
 
     public function priority(): int
     {
-        return 10;
+        return 1;
     }
 
     public function areas(): array
@@ -43,7 +43,7 @@ class MenuProvider implements MenuRegisteringContract
 
         $event->add([
             'title'  => trans('settings'),
-            'order'  => 2,
+            'order'  => 10,
             'icon'   => 'gears',
             'active' => request()->routeIs('admin.settings.*'),
         ], 'settings')

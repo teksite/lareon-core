@@ -66,7 +66,7 @@ return [
         'Image/Jpeg', 'Image/Jpg',
     ],
 
-    'allow_upload_disks' =>[            // allowed disk to be uploaded to
+    'allow_upload_disks' => [            // allowed disk to be uploaded to
         'public', 'local', 's3'],
 
     'forbidden_file_types' => [],       // Forbidden mime types or extensions (empty = allow all)

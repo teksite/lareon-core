@@ -1,6 +1,6 @@
 <?php
 
-namespace Lareon\Modules\FileManager\App\Http\Controllers\Web\Admin\FileBrowser;
+namespace Lareon\Modules\FileManager\App\Http\Controllers\Web\Admin\Files;
 
 use Lareon\Modules\FileManager\App\Http\Controllers\Controller;
 use Illuminate\Http\Request;

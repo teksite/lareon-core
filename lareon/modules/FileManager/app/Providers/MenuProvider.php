@@ -14,7 +14,7 @@ class MenuProvider implements MenuRegisteringContract
 
     public function priority(): int
     {
-        return 100;
+        return 101;
     }
 
     public function areas(): array
@@ -35,15 +35,20 @@ class MenuProvider implements MenuRegisteringContract
         $event->add(
             [
                 'title'  => 'media',
-                'order'  => 120,
+                'order'  => 2,
                 'icon'   => 'home',
-                'active' => request()->routeIs('admin.filemanager.*'),
+                'active' => request()->routeIs('admin.media.*'),
             ], 'media')->addManyItem([
             [
                 'title'  => 'browser',
                 'order'  => 1,
-                'route'  => 'admin.filemanager.browser.index',
-                'active' => request()->routeIs('admin.filemanager.browser.index'),
+                'route'  => 'admin.media.browser.index',
+                'active' => request()->routeIs('admin.media.browser.index'),
+            ], [
+                'title'  => 'icons',
+                'order'  => 2,
+                'route'  => 'admin.media.icons.index',
+                'active' => request()->routeIs('admin.media.icons.index'),
             ],
 
         ], 'media');
