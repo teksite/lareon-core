@@ -35,7 +35,7 @@
             @if($instance->$col)
                 <li class="flex items-center gap-3 justify-between text-xs">
                     <div class="font-bold inline-flex items-center gap-2  min-w-fit  {{$colors[$col] ?? $colors['default']}}">
-                        <x-icon type="outline" icon="{{$icons[$col] ?? $icons['default']}}" size="14" class="fill-none stroke-current"/>
+                        <x-tkicon type="outline" icon="{{$icons[$col] ?? $icons['default']}}" size="14" class="fill-none stroke-current"/>
                         <span>
                             {{__($title)}}
                         </span>

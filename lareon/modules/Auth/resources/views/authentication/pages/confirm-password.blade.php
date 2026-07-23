@@ -1,7 +1,7 @@
 <x-auth::layout :title="trans('lareon::global.auth.sign_in')" layput="center">
     <section class="w-11/12 md:2-3/4 mx-auto space-y-6">
         <div class="text-center">
-            <x-icon type="outline" icon="password" size="32" class="mx-auto mb-3"></x-icon>
+            <x-tkicon type="outline" icon="password" size="32" class="mx-auto mb-3"></x-icon>
             <h1 class="text-center !mb-0 text-xl">{{__('lareon::global.auth.confirm_password')}}</h1>
         </div>
         <p class="text-center">

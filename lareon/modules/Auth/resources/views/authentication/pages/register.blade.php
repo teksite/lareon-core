@@ -1,7 +1,7 @@
 <x-auth::layout :title="trans('lareon::global.auth.sign_up')" :indexable="true">
     <div class="w-full">
         <div class="text-center">
-            <x-icon type="outline" icon="user" size="32" class="mx-auto mb-3"></x-icon>
+            <x-tkicon type="outline" icon="user" size="32" class="mx-auto mb-3"></x-icon>
             <h1 class="text-center !mb-0 text-xl">{{__('lareon::global.auth.register')}}</h1>
         </div>
         <hr class="my-6 border-zinc-300">
@@ -39,7 +39,7 @@
         @section('footer')
             <section class="">
                 <a href="/" class="text-sm inline-flex items-center gap-1">
-                    <x-icon icon="home" type="outline" size="20"></x-icon>
+                    <x-tkicon icon="home" type="outline" size="20"></x-icon>
                     {{__('lareon::global.links.back_home')}}
                 </a>
             </section>

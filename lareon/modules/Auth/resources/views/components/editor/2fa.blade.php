@@ -16,7 +16,7 @@
                     </p>
                     <a class="regular flex gap-3 mb-3"
                        href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en&gl=US">
-                        <x-icon type="outline" icon="googleplay"/>
+                        <x-tkicon type="outline" icon="googleplay"/>
                         {{__('download')}}
                     </a>
 

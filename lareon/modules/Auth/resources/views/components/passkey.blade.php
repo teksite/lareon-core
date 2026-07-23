@@ -12,7 +12,7 @@
     <div id="passkey-login-wrapper" class="hidden">
         <x-lareon::buttons.simple id="passkey-login-button" variant="outline" color="gray" class="mb-3" :fullWidth="true">
             <div class="flex items-center gap-2 justify-center">
-                <x-icon type="outline" icon="fingerprint"/>
+                <x-tkicon type="outline" icon="fingerprint"/>
                 <span id="passkey-login-label">
                     {{ $label }}
                 </span>

@@ -7631,16 +7631,16 @@
         },
         {
             "name": "teksite/icon-laravel",
-            "version": "0.1.1",
+            "version": "0.1.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/teksite/laravel-icon.git",
-                "reference": "af761d27dbd8230d915be977e78f2812fe927fda"
+                "reference": "f7332205392c00b1ef3ecc85f79f8154e81fa6ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/teksite/laravel-icon/zipball/af761d27dbd8230d915be977e78f2812fe927fda",
-                "reference": "af761d27dbd8230d915be977e78f2812fe927fda",
+                "url": "https://api.github.com/repos/teksite/laravel-icon/zipball/f7332205392c00b1ef3ecc85f79f8154e81fa6ae",
+                "reference": "f7332205392c00b1ef3ecc85f79f8154e81fa6ae",
                 "shasum": ""
             },
             "require": {
@@ -7672,9 +7672,9 @@
             "description": "This package is a simple and tiny SVG icons font laravel",
             "support": {
                 "issues": "https://github.com/teksite/laravel-icon/issues",
-                "source": "https://github.com/teksite/laravel-icon/tree/0.1.1"
+                "source": "https://github.com/teksite/laravel-icon/tree/0.1.21"
             },
-            "time": "2026-06-08T09:48:32+00:00"
+            "time": "2026-07-23T10:31:26+00:00"
         },
         {
             "name": "teksite/laravel-filemanager",

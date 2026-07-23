@@ -43,7 +43,7 @@
 
         <div class="flex items-center gap-1 shrink-0">
             <button type="submit" title="{{ __($placeholder) }}" class="flex items-center justify-center px-2 py-1 text-zinc-600 hover:text-blue-600 transition-colors duration-200 {{ $hasValue ? 'text-blue-600' : '' }}">
-                <x-icon type="outline" icon="{{ $buttonIcon }}" size="{{ $iconSize }}"/>
+                <x-tkicon type="outline" icon="{{ $buttonIcon }}" size="{{ $iconSize }}"/>
             </button>
 
             @if($showReset && $hasValue)

@@ -22,7 +22,7 @@
         </div>
         <div class="p-3">
             <button title="{{__('logout')}}" class="logoutBtn mx-auto p-2 flex items-center justify-start text-red-600 cursor-pointer hover:bg-red-100 rounded-xl">
-                <x-icon type="outline" icon="turn-off" class="stroke-red-600 mx-auto " size="18"/>
+                <x-tkicon type="outline" icon="turn-off" class="stroke-red-600 mx-auto " size="18"/>
             </button>
         </div>
     </div>

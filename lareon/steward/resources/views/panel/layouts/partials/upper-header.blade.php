@@ -13,7 +13,7 @@
                     <div>
                         <a href="{{$data['link']}}" class="flex items-center gap-1 bg-slate-100 p-1 rounded-lg shadow">
                             @isset($data['icon'])
-                                <x-icon type="outline" icon="{{$data['icon']}}"/>
+                                <x-tkicon type="outline" icon="{{$data['icon']}}"/>
                             @elseif($data['title'])
                                 <span>
                                   {{$data['title']}}
@@ -34,16 +34,16 @@
                 </a>
             @endif
             <a href="/">
-                <x-icon type="outline" icon="world" size="20" />
+                <x-tkicon type="outline" icon="world" size="20" />
             </a>
             @can('admin')
                 <a href="{{route('admin.dashboard')}}">
-                    <x-icon type="outline" icon="gear" size="20" />
+                    <x-tkicon type="outline" icon="gear" size="20" />
                 </a>
             @endcan
         </div>
         <button class="hover:cursor-pointer" type="button" role="switch" @click="togglesSidebar()">
-            <x-icon type="outline" icon="bar-3" size="20" />
+            <x-tkicon type="outline" icon="bar-3" size="20" />
         </button>
     </div>
 </div>

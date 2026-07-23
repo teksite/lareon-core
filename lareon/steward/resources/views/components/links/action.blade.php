@@ -91,7 +91,7 @@
             @method($method)
 
             <button type="submit" {{ $attributes }} @if($confirm) data-action_confirm @endif data-type="{{$method}}">
-                <x-icon type="outline" icon="{{ $config['icon'] }}" size="18" class="fill-none stroke-current" />
+                <x-tkicon type="outline" icon="{{ $config['icon'] }}" size="18" class="fill-none stroke-current" />
                 @if($label)
                     <span class="text-sm">{{ $label }}</span>
                 @endif
@@ -99,14 +99,14 @@
         </form>
     @elseif($href)
         <a href="{{ $href }}" {{ $attributes }} @if($target) target="{{ $target }}" @endif  @if($confirm) data-action_confirm @endif data-type="{{$method}}">
-            <x-icon type="outline" icon="{{ $config['icon'] }}" size="18" class="fill-none stroke-current" />
+            <x-tkicon type="outline" icon="{{ $config['icon'] }}" size="18" class="fill-none stroke-current" />
             @if($label)
                 <span class="text-sm">{{ $label }}</span>
             @endif
         </a>
     @else
         <button type="button" {{ $attributes }} @if($confirm) data-action_confirm @endif data-type="{{$method}}">
-            <x-icon type="outline" icon="{{ $config['icon'] }}" size="18" class="fill-none stroke-current" />
+            <x-tkicon type="outline" icon="{{ $config['icon'] }}" size="18" class="fill-none stroke-current" />
             @if($label)
                 <span class="text-sm">{{ $label }}</span>
             @endif
