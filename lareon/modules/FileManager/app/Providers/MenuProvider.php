@@ -45,7 +45,7 @@ class MenuProvider implements MenuRegisteringContract
                 'route'  => 'admin.media.browser.index',
                 'active' => request()->routeIs('admin.media.browser.index'),
             ], [
-                'title'  => 'icons',
+                'title'  => 'icons library',
                 'order'  => 2,
                 'route'  => 'admin.media.icons.index',
                 'active' => request()->routeIs('admin.media.icons.index'),
