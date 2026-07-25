@@ -3,7 +3,7 @@
     <x-lareon::inputs.select id="publishStatus_data" class="block mt-1 w-full" name="publish_status" aria-label="{{__('publish status')}}">
         @foreach(\Lareon\Steward\App\Enums\PublishStatusEnum::cases() as $case)
             <option value="{{ $case->value }}" {{ (old('publish_status', $value[0]?->value ?? null) == $case->value) ? 'selected' : '' }}>
-                {{ __($case->getName()) }}
+                {{ __($case->label()) }}
             </option>
         @endforeach
     </x-lareon::inputs.select>
