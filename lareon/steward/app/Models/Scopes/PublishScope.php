@@ -17,14 +17,11 @@ class PublishScope implements Scope
     protected static array $columnExistsCache = [];
     private const string AdminRoutePattern = 'admin.*';
 
-    protected static ?bool $canSeeAllRecordsCache = null;
+    protected static ?array $canSeeAllRecordsCache = null;
 
 
     public function apply(Builder $builder, Model $model): void
     {
-
-        $table = $model->getTable();
-
 
         if ($this->canSeeAllRecords()) return;
 

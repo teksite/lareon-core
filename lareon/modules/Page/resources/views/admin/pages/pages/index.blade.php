@@ -1,0 +1,50 @@
+<x-lareon::admin-list>
+    @section('title', __('lareon::global.crud.titles.list',['attribute'=>__('pages')]))
+    @section('description', __('Manage all registered pages, view their details and control account status'))
+    @section('header.start')
+        <x-lareon::links.nav :href="route('admin.pages.create')" :content="__('lareon::global.buttons.new_one')" color="create" can="admin.page.create"/>
+    @endsection
+    @section('list')
+        <x-lareon::table :rows="$pages" :headers="['id'=>'#',__('image') ,'name'=>__('name'),'phone'=>__('phone'),'email'=>__('email'),'created_at'=>__('created at') ,'parent_id'=> __('creator') ,'']">
+            @foreach($pages as $key=>$page)
+                <tr>
+                    <td class="p-3">{{$pages->firstItem() + $key}}</td>
+                    <td>
+                        <img src="{{$page->image ?? asset('assets/images/avatar-default.jpg')}}" alt="{{$page->name}}" width="35" height="35" fetchpriority="low" decoding="async" loading="lazy">
+                    </td>
+                    <td>{{$page->fullname}}</td>
+                    <td>{{$page->phone}}</td>
+                    <td>{{$page->email}}</td>
+                    <td>
+                        <x-lareon::date :date="$page->created_at"/>
+                    </td>
+                    <td> {{$page->parent()?->fullname ?? '-'}} </td>
+                    <td>
+                        <x-lareon::action-box class="action">
+                            @if(\Illuminate\Support\Facades\Route::has('admin.pages.meta.edit'))
+                                <x-lareon::links.action type="sub" :href="route('admin.pages.meta.edit' , $page)"/>
+                            @endif
+                            @if($page->path())
+                                <x-lareon::links.action type="show" :href="route('ages.show' , $page)"/>
+                            @endif
+                            @if(\Illuminate\Support\Facades\Route::has('admin.pages.acl.edit'))
+                                <x-lareon::links.action type="setting" :href="route('admin.pages.acl.edit' , $page)" can="admin.page.acl.edit"/>
+                            @endif
+                            <x-lareon::links.action type="edit" :href="route('admin.pages.edit' , $page)" can="admin.page.edit"/>
+                            <x-lareon::links.action type="delete" method="delete" :href="route('admin.pages.destroy' , $page)" can="admin.page.delete"/>
+                        </x-lareon::action-box>
+                    </td>
+                </tr>
+            @endforeach
+            <x-slot:foot>
+                <tr>
+                    <td colspan="9" class="p-2">
+                        {!! $pages->appends(request()->query())->links() !!}
+                    </td>
+                </tr>
+            </x-slot:foot>
+        </x-lareon::table>
+
+    @endsection
+
+</x-lareon::admin-list>

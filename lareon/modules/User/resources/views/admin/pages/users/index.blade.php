@@ -5,7 +5,7 @@
         <x-lareon::links.nav :href="route('admin.users.create')" :content="__('lareon::global.buttons.new_one')" color="create" can="admin.user.create"/>
     @endsection
     @section('list')
-        <x-lareon::table :rows="$users" :headers="['id'=>'#',__('featured image') ,'name'=>__('name'),'phone'=>__('phone'),'email'=>__('email'),'created_at'=>__('created at') ,'parent_id'=> __('creator') ,'']">
+        <x-lareon::table :rows="$users" :headers="['id'=>'#',__('avatar') ,'name'=>__('name'),'phone'=>__('phone'),'email'=>__('email'),'created_at'=>__('created at') ,'parent_id'=> __('creator') ,'']">
             @foreach($users as $key=>$user)
                 <tr>
                     <td class="p-3">{{$users->firstItem() + $key}}</td>
