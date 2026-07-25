@@ -47,6 +47,14 @@
     <div>
         <x-lareon::inputs.text name="{{$name}}" id="input_{{$finalId}}" :value="$consideredValue" :disabled="$disabled" :required="$required" :readonly="$readonly" class="{{$errorStyle}}" dir="ltr"  placeholder="{{$placeholder['src']}}" {{$attributes}}/>
         <x-lareon::inputs.error :messages="$errorMessage ?? null"/>
+        <button
+            id="imageBtn"
+            data-filemanager
+            data-mode="single"
+            data-mime="image">
+            Image
+        </button>
+
     </div>
 
 </div>
