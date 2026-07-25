@@ -1,0 +1,10 @@
+{
+    "version":"1.0.0",
+    "id": "Page",
+    "title": "Page",
+    "alias": "page",
+    "description": "",
+    "keywords": [],
+    "providers": "Lareon\\Modules\\Page\\App\\Providers\\PageServiceProvider"
+}
+
