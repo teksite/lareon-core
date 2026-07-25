@@ -19,4 +19,9 @@
     'active' => true,
     'type' => 'steward',
   ],
+  'Meta' => [
+    'provider' => 'Lareon\\Modules\\Meta\\App\\Providers\\MetaServiceProvider',
+    'active' => true,
+    'type' => 'steward',
+  ],
 ];
