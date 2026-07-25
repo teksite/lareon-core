@@ -5,20 +5,21 @@
         <x-lareon::links.nav :href="route('admin.pages.create')" :content="__('lareon::global.buttons.new_one')" color="create" can="admin.page.create"/>
     @endsection
     @section('list')
-        <x-lareon::table :rows="$pages" :headers="['id'=>'#',__('image') ,'name'=>__('name'),'phone'=>__('phone'),'email'=>__('email'),'created_at'=>__('created at') ,'parent_id'=> __('creator') ,'']">
+        <x-lareon::table :rows="$pages" :headers="['id'=>'#',__('image') ,'title'=>__('title') ,'status','created_at'=>__('created at') ,'published_at'=>__('published at') ,'']">
             @foreach($pages as $key=>$page)
                 <tr>
                     <td class="p-3">{{$pages->firstItem() + $key}}</td>
                     <td>
-                        <img src="{{$page->image ?? asset('assets/images/avatar-default.jpg')}}" alt="{{$page->name}}" width="35" height="35" fetchpriority="low" decoding="async" loading="lazy">
+                        <img src="{{$page->image ?? asset('assets/images/image-default.jpg')}}" alt="{{$page->name}}" width="35" height="35" fetchpriority="low" decoding="async" loading="lazy">
                     </td>
-                    <td>{{$page->fullname}}</td>
-                    <td>{{$page->phone}}</td>
-                    <td>{{$page->email}}</td>
+                    <td>{{$page->title}}</td>
+                    <td>{{$page->publis_status->value}}</td>
                     <td>
                         <x-lareon::date :date="$page->created_at"/>
                     </td>
-                    <td> {{$page->parent()?->fullname ?? '-'}} </td>
+                    <td>
+                        <x-lareon::date :date="$page->published_at"/>
+                    </td>
                     <td>
                         <x-lareon::action-box class="action">
                             @if(\Illuminate\Support\Facades\Route::has('admin.pages.meta.edit'))
