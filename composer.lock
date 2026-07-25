@@ -7730,16 +7730,16 @@
         },
         {
             "name": "teksite/module",
-            "version": "3.0.12",
+            "version": "3.0.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/teksite/module.git",
-                "reference": "cb03eb710f65078cf4e965e83c128ab733c4c8bf"
+                "reference": "50bce27cca59735ac53155397c090bfa7d7ea301"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/teksite/module/zipball/cb03eb710f65078cf4e965e83c128ab733c4c8bf",
-                "reference": "cb03eb710f65078cf4e965e83c128ab733c4c8bf",
+                "url": "https://api.github.com/repos/teksite/module/zipball/50bce27cca59735ac53155397c090bfa7d7ea301",
+                "reference": "50bce27cca59735ac53155397c090bfa7d7ea301",
                 "shasum": ""
             },
             "require": {
@@ -7791,9 +7791,9 @@
             ],
             "support": {
                 "issues": "https://github.com/teksite/module/issues",
-                "source": "https://github.com/teksite/module/tree/3.0.12"
+                "source": "https://github.com/teksite/module/tree/3.0.13"
             },
-            "time": "2026-06-06T17:27:25+00:00"
+            "time": "2026-07-25T18:00:51+00:00"
         },
         {
             "name": "teksite/systeminfo-laravel",
