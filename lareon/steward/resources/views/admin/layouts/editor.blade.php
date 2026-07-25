@@ -80,7 +80,7 @@
                                 <x-lareon::editor.tabs.layout>
                                     @yield('form')
 
-                                    @if($publishStatus && !$isDeleteMode && $instance)
+                                    @if($publishStatus && $instance)
                                         <x-lareon::editor.tabs.item :title="__('publish data')">
                                             <x-lareon::editor.publish-data :instance="$instance"/>
                                         </x-lareon::editor.tabs.item>
@@ -100,7 +100,7 @@
                     @hasSection('aside')
                         @yield('aside')
                     @endif
-                    @if($publishStatus && !$isDeleteMode && !$hasTab && $instance)
+                    @if($publishStatus &&  !$hasTab && $instance)
                         <x-lareon::editor.publish-data :instance="$instance"/>
                     @endif
                 </div>
@@ -113,5 +113,5 @@
         </div>
     </form>
     @yield('form.after')
-
 </x-lareon::admin-layout>
+

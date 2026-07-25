@@ -12,14 +12,19 @@ enum PublishStatusEnum: int
 
     public function label(): string
     {
-        return __('enums.publish_status.' . $this->key());
+        return match ($this) {
+            self::PUBLISHED => 'published',
+            self::DRAFTED   => 'drafted',
+            self::POSTPONE  => 'postponed',
+            self::REDIRECT  => 'redirected',
+        };
     }
 
     public function key(): string
     {
         return match ($this) {
             self::PUBLISHED => 'published',
-            self::DRAFTED     => 'drafted',
+            self::DRAFTED   => 'drafted',
             self::POSTPONE  => 'postponed',
             self::REDIRECT  => 'redirected',
         };
@@ -29,7 +34,7 @@ enum PublishStatusEnum: int
     {
         return match ($this) {
             self::PUBLISHED => 'text-green-600 bg-green-100',
-            self::DRAFTED     => 'text-gray-600 bg-gray-100',
+            self::DRAFTED   => 'text-gray-600 bg-gray-100',
             self::POSTPONE  => 'text-amber-600 bg-amber-100',
             self::REDIRECT  => 'text-cyan-600 bg-cyan-100',
         };
