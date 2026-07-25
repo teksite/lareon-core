@@ -25,10 +25,7 @@ return new class extends Migration {
             $table->timestamps();
             $table->softDeletes();
 
-
             $table->index(['publish_status', 'published_at', 'deleted_at']);
-            $table->index(['deleted_at', 'published_at', 'slug', 'publish_status']);
-
             $table->fullText(['title', 'excerpt', 'body']);
 
         });
