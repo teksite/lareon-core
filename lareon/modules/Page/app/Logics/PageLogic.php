@@ -2,6 +2,7 @@
 
 namespace Lareon\Modules\Page\App\Logics;
 
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Lareon\Modules\Page\App\Models\Page;
 use Teksite\Handler\Actions\ServiceWrapper;
 use Teksite\Handler\contracts\ServiceResult;
@@ -16,7 +17,7 @@ class PageLogic
     public function all(mixed $fetchData = []): ServiceResult
     {
         return ServiceWrapper::make(false)
-                             ->do(fn() => FetchDataService::get(Page::class, ['title', 'slug']))
+                             ->do(fn() => FetchDataService::get(Page::class, ['title', 'slug','publish_status']))
                              ->run();
     }
 

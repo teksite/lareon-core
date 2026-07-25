@@ -1,0 +1,10 @@
+{
+    "version":"1.0.0",
+    "id": "Meta",
+    "title": "Meta",
+    "alias": "meta",
+    "description": "",
+    "keywords": [],
+    "providers": "Lareon\\Modules\\Meta\\App\\Providers\\MetaServiceProvider"
+}
+
