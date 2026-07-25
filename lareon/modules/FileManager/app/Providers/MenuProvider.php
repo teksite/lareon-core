@@ -36,11 +36,11 @@ class MenuProvider implements MenuRegisteringContract
             [
                 'title'  => 'media',
                 'order'  => 2,
-                'icon'   => 'home',
+                'icon'   => 'skill-art',
                 'active' => request()->routeIs('admin.media.*'),
             ], 'media')->addManyItem([
             [
-                'title'  => 'browser',
+                'title'  => 'media',
                 'order'  => 1,
                 'route'  => 'admin.media.browser.index',
                 'active' => request()->routeIs('admin.media.browser.index'),
