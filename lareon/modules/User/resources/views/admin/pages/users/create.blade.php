@@ -39,7 +39,4 @@
             </fieldset>
         </x-lareon::box>
     @endsection
-    @section('aside')
-
-    @endsection
 </x-lareon::admin-editor>

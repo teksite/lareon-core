@@ -33,6 +33,5 @@
 
     @endsection
     @section('aside')
-sdfsfdsfs
     @endsection
 </x-lareon::admin-editor>
