@@ -6,12 +6,13 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Validation\Rule;
+use Lareon\Steward\App\Casts\PublishAt;
 use Lareon\Steward\App\Enums\PublishStatusEnum;
 use Lareon\Steward\App\Models\Scopes\PublishScope;
 use Teksite\Extralaravel\Casts\SlugCast;
 
 
-#[Fillable(['parent_id', 'slug', 'title', 'excerpt', 'body', 'image', 'template', 'publish_status', 'published_at'])]
+#[Fillable(['parent_id', 'label', 'slug', 'title', 'excerpt', 'body', 'image', 'template', 'publish_status', 'published_at'])]
 class Page extends Model
 {
     use SoftDeletes;
@@ -19,9 +20,9 @@ class Page extends Model
     protected function casts(): array
     {
         return [
-            'published_at' => 'datetime',
+            'published_at'     => PublishAt::class,
             'published_status' => PublishStatusEnum::class,
-            'slug' => SlugCast::class,
+            'slug'             => SlugCast::class,
 
         ];
     }
@@ -30,15 +31,15 @@ class Page extends Model
     public static function rules(): array
     {
         return [
-            'parent_id' => 'nullable|exists:pages,id',
-            'slug' => 'required|string|max:255|unique:pages,slug',
-            'title' => 'required|string|max:255',
-            'excerpt' => 'nullable|string',
-            'body' => 'nullable|string',
-            'image' => 'nullable|string|max:255',
-            'template' => 'nullable|string',
+            'parent_id'      => 'nullable|exists:pages,id',
+            'slug'           => 'required|string|max:255|unique:pages,slug',
+            'title'          => 'required|string|max:255',
+            'excerpt'        => 'nullable|string',
+            'body'           => 'nullable|string',
+            'image'          => 'nullable|string|max:255',
+            'template'       => 'nullable|string',
             'publish_status' => ['required', 'string', Rule::in(array_column(PublishStatusEnum::cases(), 'value'))],
-            'published_at' => 'nullable|date',
+            'published_at'   => 'nullable|date',
         ];
     }
 
@@ -49,23 +50,8 @@ class Page extends Model
     }
 
 
-    public function path(): string
-    {
-        return route('pages.show', $this);
-    }
-
-    public function breadcrumb(): array
-    {
-        $breadcrumb = [];
-        $breadcrumb[$this->attributes['title']] = $this->path();
-
-        return $breadcrumb;
-    }
-
-
     public function breadCrumb()
     {
-        if
         return [
             $this->attributes['title'] = $this->path(),
         ];
@@ -77,5 +63,11 @@ class Page extends Model
     {
         return 'pages';
     }
+
+    public function path(): string
+    {
+        return route('pages.show', $this);
+    }
+
 
 }
