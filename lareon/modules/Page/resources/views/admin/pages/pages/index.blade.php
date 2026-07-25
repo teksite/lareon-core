@@ -1,6 +1,6 @@
 <x-lareon::admin-list>
     @section('title', __('lareon::global.crud.titles.list',['attribute'=>__('pages')]))
-    @section('description', __('Manage all registered pages, view their details and control account status'))
+    @section('description', __('pages are fixed content on a website that rarely changes and displays the same information to visitors'))
     @section('header.start')
         <x-lareon::links.nav :href="route('admin.pages.create')" :content="__('lareon::global.buttons.new_one')" color="create" can="admin.page.create"/>
     @endsection
