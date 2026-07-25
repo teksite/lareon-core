@@ -7,11 +7,11 @@
         default => null
     };
 
-        $status = old('publish_status', $value[0]?->value ?? null);
+    $status = old('publish_status', $value[0]?->value ?? null);
 
 @endphp
 
-<section class="{{ $wrapperClass . ' space-y-6'}}"x-data="{publishStatus: '{{ $status }}',postpone: '{{ \Lareon\Steward\App\Enums\PublishStatusEnum::POSTPONE->value }}'}">
+<section class="{{ $wrapperClass . ' space-y-6'}}" x-data="{publishStatus: '{{ $status }}',postpone: '{{ \Lareon\Steward\App\Enums\PublishStatusEnum::POSTPONE->value }}'}">
     <div>
         <x-lareon::inputs.label for="publishStatus_data" :title="__('publish status')" class="mb-3"/>
         <x-lareon::inputs.select id="publishStatus_data" name="publish_status" class="block mt-1 w-full" x-model="publishStatus">
