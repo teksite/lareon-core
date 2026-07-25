@@ -14,4 +14,9 @@
     'active' => true,
     'type' => 'steward',
   ],
+  'Page' => [
+    'provider' => 'Lareon\\Modules\\Page\\App\\Providers\\PageServiceProvider',
+    'active' => true,
+    'type' => 'steward',
+  ],
 ];
