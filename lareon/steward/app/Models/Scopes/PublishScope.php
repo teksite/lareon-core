@@ -25,19 +25,16 @@ class PublishScope implements Scope
 
         $table = $model->getTable();
 
-        $hasPublishedAtColumn = $this->hasPublishedAtColumn($table);
-
-        if (!$hasPublishedAtColumn) return;
 
         if ($this->canSeeAllRecords()) return;
 
+        $hasPublishedAtColumn = $this->hasPublishedAtColumn($model->getTable());
 
         $builder->where(function (Builder $query) use ($hasPublishedAtColumn) {
             $query->where('publish_status', PublishStatusEnum::PUBLISHED->value)
                   ->orWhere(function (Builder $subQuery) use ($hasPublishedAtColumn) {
                       $subQuery->where('publish_status', PublishStatusEnum::POSTPONE->value)
-                               ->when($hasPublishedAtColumn, fn(Builder $q) => $q->where('published_at', '<=', now())
-                               );
+                               ->when($hasPublishedAtColumn, fn(Builder $q) => $q->where('published_at', '<=', now()));
                   });
         });
     }
@@ -49,15 +46,19 @@ class PublishScope implements Scope
 
     protected function canSeeAllRecords(): bool
     {
-        return self::$canSeeAllRecordsCache ??= $this->resolveCanSeeAllRecords();
+        $key = is_array($this->permissions)
+            ? implode('|', $this->permissions)
+            : (string)$this->permissions;
+
+        return self::$canSeeAllRecordsCache[$key] ??= $this->resolveCanSeeAllRecords();
     }
 
     protected function resolveCanSeeAllRecords(): bool
     {
-
         if (app()->runningInConsole() && !app()->runningUnitTests()) return true;
-
         if (!request()->routeIs(self::AdminRoutePattern)) return false;
+        if (empty($this->permissions)) return true;
+
 
         return Auth::check() && Auth::user()->canAny($this->permissions);
     }

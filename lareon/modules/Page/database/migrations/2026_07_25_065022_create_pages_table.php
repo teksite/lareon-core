@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -13,18 +12,25 @@ return new class extends Migration
     {
         Schema::create('pages', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('parent_id')->default(0);
+            $table->foreignId('parent_id')->nullable()->constrained('pages')->nullOnDelete();
             $table->string('slug')->unique();
             $table->string('label')->nullable();
             $table->string('title');
             $table->text('excerpt')->nullable();
-            $table->fullText('body')->nullable();
-            $table->string('image' ,200)->nullable();
+            $table->text('body')->nullable();
+            $table->string('image', 200)->nullable();
             $table->string('template')->nullable();
             $table->tinyInteger('publish_status')->default(\Lareon\Steward\App\Enums\PublishStatusEnum::PUBLISHED->value);
             $table->timestamp('published_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
+
+
+            $table->index(['publish_status', 'published_at', 'deleted_at']);
+            $table->index(['deleted_at', 'published_at', 'slug', 'publish_status']);
+
+            $table->fullText(['title', 'excerpt', 'body']);
+
         });
     }
 

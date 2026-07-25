@@ -20,27 +20,33 @@ class Page extends Model
     protected function casts(): array
     {
         return [
-            'published_at'     => PublishAt::class,
-            'published_status' => PublishStatusEnum::class,
-            'slug'             => SlugCast::class,
-
+            'published_at'   => PublishAt::class,
+            'publish_status' => PublishStatusEnum::class,
+            'slug'           => SlugCast::class,
         ];
     }
 
 
-    public static function rules(): array
+    public static function rules(string $operation, int|null $id = null): array
     {
-        return [
-            'parent_id'      => 'nullable|exists:pages,id',
-            'slug'           => 'required|string|max:255|unique:pages,slug',
+        $rules = [
+            'parent_id'      => 'nullable|integer|min:0|exists:pages,id',
             'title'          => 'required|string|max:255',
             'excerpt'        => 'nullable|string',
             'body'           => 'nullable|string',
             'image'          => 'nullable|string|max:255',
             'template'       => 'nullable|string',
-            'publish_status' => ['required', 'string', Rule::in(array_column(PublishStatusEnum::cases(), 'value'))],
+            'publish_status' => ['required', 'integer', Rule::in(array_column(PublishStatusEnum::cases(), 'value'))],
             'published_at'   => 'nullable|date',
         ];
+
+        $rules['slug'] = match (true) {
+            $operation === 'create' => 'required|string|max:255|unique:pages,slug',
+            $operation === 'update' => ['required', 'string', 'max:255', Rule::unique('pages', 'slug')->ignore($id)],
+            default                 => throw new \InvalidArgumentException("Operation '{$operation}' is not valid. Allowed: create, update")
+        };
+
+        return $rules;
     }
 
     protected static function boot(): void
@@ -50,10 +56,13 @@ class Page extends Model
     }
 
 
-    public function breadCrumb()
+    public function breadCrumb(): array
     {
         return [
-            $this->attributes['title'] = $this->path(),
+            [
+                'title' => $this->attributes['title'],
+                'url'   => $this->path(),
+            ],
         ];
 
     }
