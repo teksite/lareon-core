@@ -3,8 +3,8 @@
     @section('header.start')
         <x-lareon::links.nav :href="route('admin.users.index')" :content="__('lareon::global.buttons.all_attribute' ,['attribute'=>__('users')])" color="index" can="admin.user.read"/>
         <x-lareon::links.nav :href="route('admin.users.create')" :content="__('lareon::global.buttons.new_attribute' ,['attribute'=>__('user')])" color="create" can="admin.user.create"/>
-
     @endsection
+
     @section('header.end')
         <x-lareon::links.action type="delete" :href="route('admin.users.destroy', $user)" method="delete" :label="trans('lareon::global.buttons.delete')" can="admin.user.delete"/>
     @endsection
@@ -26,48 +26,46 @@
         </x-lareon::editor.tabs.item>
 
         <x-lareon::editor.tabs.item :title="__('verifications')">
-            <div class="grid gap-6 md:grid-cols-2">
-                <div class="space-y-6">
-                    <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('ignore') ,-1 ] ,[__('no') ,0] , [__('yes') ,1]]" :label="__('mark phone as verified')" name="phone_verified_at" inputsClass="flex items-center gap-1" :value="-1"/>
-                    <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('ignore') ,-1 ] ,[__('no') ,0] , [__('yes') ,1]]" :label="__('mark email as verified')" name="email_verified_at" inputsClass="flex items-center gap-1" :value="-1"/>
-                </div>
-                <div class="">
-                    <table class="w-full">
-                        <tbody class="divide-y divide-line_light bg-slate-50 *:hover:bg-blue-50">
-                        <tr>
-                            <td class="px-3 py-2 font-bold">
-                                {{__('phone verified at')}}
-                            </td>
-                            <td class="px-3 py-2 ">
-                                <x-lareon::date :date="$user->phone_verified_at ?? null"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="px-3 py-2 font-bold">
-                                {{__('email verified at')}}
-                            </td>
-                            <td class="px-3 py-2 ">
-                                <x-lareon::date :date="$user->email_verified_at ?? null"/>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
+            <div class="space-y-6">
+                <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('ignore') ,-1 ] ,[__('no') ,0] , [__('yes') ,1]]" :label="__('mark phone as verified')" name="phone_verified_at" inputsClass="flex items-center gap-1" :value="-1"/>
+                <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('ignore') ,-1 ] ,[__('no') ,0] , [__('yes') ,1]]" :label="__('mark email as verified')" name="email_verified_at" inputsClass="flex items-center gap-1" :value="-1"/>
             </div>
+            <x-slot:aside>
+                <table class="w-full">
+                    <tbody class="divide-y divide-line_light bg-slate-50 *:hover:bg-blue-50">
+                    <tr>
+                        <td class="px-3 py-2 font-bold">
+                            {{__('phone verified at')}}
+                        </td>
+                        <td class="px-3 py-2 ">
+                            <x-lareon::date :date="$user->phone_verified_at ?? null"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="px-3 py-2 font-bold">
+                            {{__('email verified at')}}
+                        </td>
+                        <td class="px-3 py-2 ">
+                            <x-lareon::date :date="$user->email_verified_at ?? null"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </x-slot:aside>
         </x-lareon::editor.tabs.item>
 
         <x-lareon::editor.tabs.item :title="__('password')">
-                    <x-lareon::editor.password :label="__('password')" :confirm_label="__('confirm password')" name="password" :placeholder="__('lareon::global.placeholders.auth.password',['attribute'=>__('password')])" wrapperClass="grid gap-6 lg:grid-cols-2"/>
+            <x-lareon::editor.password :label="__('password')" :confirm_label="__('confirm password')" name="password" :placeholder="__('lareon::global.placeholders.auth.password',['attribute'=>__('password')])" wrapperClass="grid gap-6 lg:grid-cols-2"/>
         </x-lareon::editor.tabs.item>
 
         <x-lareon::editor.tabs.item :title="__('passkey')">
             <x-auth::editor.passkeys :passkeys="$user->passkeys"/>
         </x-lareon::editor.tabs.item>
 
-    @if(\Illuminate\Support\Facades\Route::has('two-factor.enable'))
-        <x-lareon::editor.tabs.item :title="__('two factor authentication')">
-            <x-auth::editor.2fa :user="$user"/>
-        </x-lareon::editor.tabs.item>
+        @if(\Illuminate\Support\Facades\Route::has('two-factor.enable'))
+            <x-lareon::editor.tabs.item :title="__('two factor authentication')">
+                <x-auth::editor.2fa :user="$user"/>
+            </x-lareon::editor.tabs.item>
         @endif
     @endsection
 </x-lareon::admin-editor>

@@ -27,12 +27,14 @@
         @apply font-bold mb-1
     }
 
+    p {
+        @apply leading-6
+    }
+
     .x-box {
         @apply bg-slate-50 p-6 rounded-lg border-line_light shadow-lg shadow-slate-400
     }
-    p{
-        @apply leading-6
-    }
+
 
     .y-box {
         @apply bg-slate-50 p-6 rounded-lg border-line_light

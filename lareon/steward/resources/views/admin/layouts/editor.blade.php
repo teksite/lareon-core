@@ -58,6 +58,7 @@
 <x-lareon::admin-layout>
     <x-slot:title> @yield('title') </x-slot:title>
     <x-slot:description> @yield('description') </x-slot:description>
+
     @yield('form.before')
 
     <form id="{{ $id }}" class="inner-content" method="{{ $method === 'GET' ? 'GET' : 'POST' }}" action="{{ $action ?? url()->current() }}" {{$hasFile ?  'enctype="multipart/form-data"' : ''}}>
@@ -72,7 +73,6 @@
                         @if($hasTab)
                             <x-lareon::editor.tabs.layout>
                                 @yield('form')
-
                                 @if($publishStatus && $instance)
                                     <x-lareon::editor.tabs.item :title="__('publish data')">
                                         <x-lareon::editor.publish-data :instance="$instance"/>
