@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3875bbfce8b08b30d7a4d1f237f2c9bc",
+    "content-hash": "4d0867ee704d487a5ef5f007c1062bc3",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -7678,16 +7678,16 @@
         },
         {
             "name": "teksite/laravel-filemanager",
-            "version": "0.2.1",
+            "version": "0.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/teksite/laravel-filemanager.git",
-                "reference": "c0fb07e2cf57063b655bfa49fdde860cf93f3747"
+                "reference": "8be0a940ba33160467444614983c90c53cacb246"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/teksite/laravel-filemanager/zipball/c0fb07e2cf57063b655bfa49fdde860cf93f3747",
-                "reference": "c0fb07e2cf57063b655bfa49fdde860cf93f3747",
+                "url": "https://api.github.com/repos/teksite/laravel-filemanager/zipball/8be0a940ba33160467444614983c90c53cacb246",
+                "reference": "8be0a940ba33160467444614983c90c53cacb246",
                 "shasum": ""
             },
             "require": {
@@ -7724,9 +7724,9 @@
             ],
             "support": {
                 "issues": "https://github.com/teksite/laravel-filemanager/issues",
-                "source": "https://github.com/teksite/laravel-filemanager/tree/0.2.1"
+                "source": "https://github.com/teksite/laravel-filemanager/tree/0.2.2"
             },
-            "time": "2026-07-26T08:15:09+00:00"
+            "time": "2026-07-26T10:20:12+00:00"
         },
         {
             "name": "teksite/module",
