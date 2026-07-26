@@ -8,9 +8,10 @@ import {Standalone} from "./browser.min.js";
 function bindSingleImageButton(button) {
 
     const container = button.closest('[data-single-image]');
+    const btnId = button.id;
 
-    if (!container) return;
-    
+    if (!container || !btnId) return;
+
     const type = button.dataset.type ?? 'object';
     const preview = container.querySelector('img');
     const input = container.querySelector('input');
@@ -22,9 +23,8 @@ function bindSingleImageButton(button) {
         if (preview) preview.src = placeholder ?? '';
         input.value = '';
     });
-
-    Standalone(selector, {
-        trigger: selector,
+    Standalone(`#${btnId}`, {
+        trigger: `#${btnId}`,
         config: {
             load: {
                 types: ["image"],
@@ -56,6 +56,5 @@ function initSingleImageSelector() {
 document.addEventListener('DOMContentLoaded', function () {
 
     logout();
-
     initSingleImageSelector('.imageBtn');
 });
