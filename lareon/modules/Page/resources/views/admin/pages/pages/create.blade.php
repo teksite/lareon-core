@@ -21,6 +21,7 @@
     @endsection
     @section('aside')
         <x-lareon::editor.input-image :required="false" wrapperMode="y-box" :value="old('image')" name="image"/>
+        <x-lareon::editor.input-image :required="false" wrapperMode="y-box" :value="old('banner')" name="banner"/>
         <x-lareon::editor.section.template :required="false" wrapperMode="y-box"/>
         <x-lareon::editor.section.status-publish :required="false" wrapperMode="y-box" />
     @endsection
