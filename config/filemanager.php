@@ -150,6 +150,8 @@ return [
 
     'authorization' => [
 
+        'get_browser' => \Teksite\FileManager\Http\Requests\Authorization\CanGetBrowser::class,
+
         'upload' => \Teksite\FileManager\Http\Requests\Authorization\CanUpload::class,
 
         'get_one' => \Teksite\FileManager\Http\Requests\Authorization\CanGetOne::class,

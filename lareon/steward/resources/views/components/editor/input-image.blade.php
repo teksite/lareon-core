@@ -42,19 +42,18 @@
 <div class="w-full {{ $wrapperClass }}">
     <x-lareon::inputs.label :title="$label" for="input_{{$finalId}}" class="mb-1" :markAsRequire="$required"/>
     @if($preview)
-        <img src="{{$value ?? $placeholder['src']}}" alt="{{$label ?? __('select an image')}}" width="{{$placeholder['width'] ?? 300}}" height="{{$placeholder['height'] ?? 200}}">
+        <img data-filemanager-preview src="{{$value ?? $placeholder['src']}}" alt="{{$label ?? __('select an image')}}" width="{{$placeholder['width'] ?? 300}}" height="{{$placeholder['height'] ?? 200}}">
     @endif
     <div>
         <x-lareon::inputs.text name="{{$name}}" id="input_{{$finalId}}" :value="$consideredValue" :disabled="$disabled" :required="$required" :readonly="$readonly" class="{{$errorStyle}}" dir="ltr"  placeholder="{{$placeholder['src']}}" {{$attributes}}/>
         <x-lareon::inputs.error :messages="$errorMessage ?? null"/>
         <button
-            id="imageBtn"
+            class="imageBtn"
             data-filemanager
             data-mode="single"
             data-mime="image">
             Image
         </button>
-
     </div>
 
 </div>

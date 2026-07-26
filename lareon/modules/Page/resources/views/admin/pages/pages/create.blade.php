@@ -1,7 +1,7 @@
-<x-lareon::admin-editor :action="route('admin.users.store')" :hasTab="false">
-    @section('title', __('lareon::global.crud.titles.create',['attribute'=>__('user')]))
+<x-lareon::admin-editor :action="route('admin.pages.store')" :hasTab="false">
+    @section('title', __('lareon::global.crud.titles.create',['attribute'=>__('page')]))
     @section('header.start')
-        <x-lareon::links.nav :href="route('admin.users.index')" :content="__('lareon::global.buttons.all_attribute' ,['attribute'=>__('users')])" color="index"/>
+        <x-lareon::links.nav :href="route('admin.pages.index')" :content="__('lareon::global.buttons.all_attribute' ,['attribute'=>__('pages')])" color="index"/>
     @endsection
     @section('form')
         <div class="space-y-6">
