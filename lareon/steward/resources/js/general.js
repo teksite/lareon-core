@@ -16,15 +16,98 @@ export function logout (){
 }
 
 
-function loadAjaxForm() {
-    const formEls = document.querySelectorAll('form.formAction[data-ajax]');
-    if (!formEls.length) return;
 
-    formEls.forEach(formEl => {
-        formEl.addEventListener('submit', e => {
-            e.preventDefault();
+//     Slug maker and Changer     //
+export class SlugMaker {
+    constructor(separator = '-') {
+        this.separator = separator;
+        this.farsiToEnglishNumbers = {
+            '۰': '0', '۱': '1', '۲': '2', '۳': '3', '۴': '4',
+            '۵': '5', '۶': '6', '۷': '7', '۸': '8', '۹': '9',
+            '٠': '0', '١': '1', '٢': '2', '٣': '3', '٤': '4',
+            '٥': '5', '٦': '6', '٧': '7', '٨': '8', '٩': '9'
+        };
+        this.arabicToFarsiLetters = {
+            'ي': 'ی', 'ك': 'ک', 'ة': 'ه', 'أ': 'ا', 'إ': 'ا', 'ؤ': 'و', 'ئ': 'ی', 'ى': 'ی'
+        };
+    }
+
+    normalizeNumbers(str) {
+        return str.replace(/[۰-۹٠-٩]/g, num => this.farsiToEnglishNumbers[num] || num);
+    }
+
+    normalizeArabicLetters(str) {
+        return str.replace(/[يكةأإؤئى]/g, char => this.arabicToFarsiLetters[char] || char);
+    }
+
+    normalizeAccents(str) {
+        let map = {
+            a: /[áàảạãăắằẳẵặâấầẩẫậ]/gi,
+            e: /[éèẻẽẹêếềểễệ]/gi,
+            i: /[iíìỉĩị]/gi,
+            o: /[óòỏõọôốồổỗộơớờởỡợ]/gi,
+            u: /[úùủũụưứừửữự]/gi,
+            y: /[ýỳỷỹỵ]/gi,
+            d: /[đ]/gi
+        };
+        for (let key in map) {
+            str = str.replace(map[key], key);
+        }
+        return str;
+    }
+
+    cleanSpecialChars(str) {
+        return str.replace(/[`~!@#|$%^&*()+,./?><'":;]/gi, '');
+    }
+
+    camelToDash(str) {
+        return str.replace(/[A-Z]/g, letter => this.separator + letter.toLowerCase());
+    }
+
+    removeDuplicateSeparators(str) {
+        const sep = this.separator;
+        const regex = new RegExp(`${sep}{2,}`, 'g');
+        return str.replace(regex, sep);
+    }
+
+    trimSeparators(str) {
+        const sep = this.separator;
+        return str.replace(new RegExp(`(^${sep}|${sep}$)`, 'g'), '');
+    }
+
+    makeSlug(str) {
+        if (!str) return '';
+        str = this.normalizeArabicLetters(str);
+        str = this.normalizeNumbers(str);
+        str = this.normalizeAccents(str);
+        str = this.camelToDash(str);
+        str = this.cleanSpecialChars(str);
+        str = str.replace(/\s+/g, this.separator);
+        str = this.removeDuplicateSeparators(str);
+        str = this.trimSeparators(str);
+        return str.toLowerCase();
+    }
+
+    attachToInput(selector = 'input[name="slug"]') {
+        const inputs = document.querySelectorAll(selector);
+        inputs.forEach(input => {
+            input.addEventListener('focusout', () => {
+                input.value = this.makeSlug(input.value);
+            });
         });
-    });
+    }
+}
+
+export function slugify(){
+    const inputEls = document.querySelectorAll('.slug-input');
+
+    if (inputEls.length){
+        inputEls.forEach(el=>{
+            el.addEventListener('change' , e=>{
+
+            })
+        })
+    }
 }
 
 

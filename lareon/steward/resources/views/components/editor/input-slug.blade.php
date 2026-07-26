@@ -43,7 +43,7 @@
             @if($showSiteUrl)
                 <span class="text-xs font-bold text-gray-600">{{url('/')}}/</span>
             @endif
-            <x-lareon::inputs.text name="{{$name}}" id="{{$finalId}}" type="text" :value="$consideredValue" :disabled="$disabled" :required="$required" :readonly="$readonly" class="{{$inputClasses .' ' . $errorStyle}}" dir="ltr" autocomplete="{{$autocomplete}}" placeholder="{{$placeholder}}"/>
+            <x-lareon::inputs.text name="{{$name}}" id="{{$finalId}}" type="text" :value="$consideredValue" :disabled="$disabled" :required="$required" :readonly="$readonly" class="slug-input {{$inputClasses .' ' . $errorStyle}}" dir="ltr" autocomplete="{{$autocomplete}}" placeholder="{{$placeholder}}"/>
             @if($value  && $showUrl)
                 <x-lareon::links.action type="show" :href="$value"/>
             @endif

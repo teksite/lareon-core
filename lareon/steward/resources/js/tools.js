@@ -71,7 +71,6 @@ export function singleArrayInput() {
         if (completed) {
             submitBtn.click();
 
-            // یا:
             // submitBtn.closest('form').submit();
         }
     }
@@ -211,6 +210,9 @@ export function startOtpCooldown(button, originalHtml, seconds = 120) {
 
     }, 1000);
 }
+
+
+
 
 export default function initiateOTP(){
     singleArrayInput();

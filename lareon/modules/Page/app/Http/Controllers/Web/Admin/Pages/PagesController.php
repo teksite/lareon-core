@@ -15,7 +15,7 @@ use Teksite\Handler\Facade\Responder;
 class PagesController extends Controller implements HasMiddleware
 {
 
-    public function __construct( public PageLogic $logic) {}
+    public function __construct(public PageLogic $logic) {}
 
     public static function middleware(): array
     {
@@ -59,6 +59,7 @@ class PagesController extends Controller implements HasMiddleware
      */
     public function store(NewPageRequest $request)
     {
+        dd($request->validated());
         $res = $this->logic->create($request->validated());
 
         return Responder::fromResult($res,

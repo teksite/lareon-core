@@ -1,7 +1,7 @@
 import './bootstrap.js'
 import './general.js'
 import './tools.js'
-import {logout} from "./general.js";
+import {logout, SlugMaker} from "./general.js";
 import {Standalone} from "./browser.min.js";
 
 
@@ -54,7 +54,7 @@ function initSingleImageSelector() {
 
 
 document.addEventListener('DOMContentLoaded', function () {
-
     logout();
     initSingleImageSelector('.imageBtn');
+    new SlugMaker('-').attachToInput();
 });

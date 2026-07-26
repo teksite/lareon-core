@@ -6,7 +6,7 @@
     @section('form')
         <div class="space-y-6">
             <x-lareon::editor.input :required="true" labelPosition="start" :label="__('title')" name="title" :value="old('title')" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('title') , 'item'=>__('page')])"/>
-            <x-lareon::editor.input-slug :required="true" labelPosition="start" :label="__('slug')" name="slug" :value="old('slug')" :placeholder="__('lareon::global.placeholders.write.unique.two',['attribute'=>__('slug') , 'item'=>__('page')])"/>
+            <x-lareon::editor.input-slug :required="true" labelPosition="start" :label="__('slug')" :value="old('slug')" :placeholder="__('lareon::global.placeholders.write.unique.two',['attribute'=>__('slug') , 'item'=>__('page')])"/>
         </div>
           <x-lareon::box type="y">
               <fieldset class="fieldset space-y-6">
