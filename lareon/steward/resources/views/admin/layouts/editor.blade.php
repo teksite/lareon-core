@@ -56,56 +56,51 @@
 @endphp
 
 <x-lareon::admin-layout>
-    <x-slot:title>
-        @yield('title')
-    </x-slot:title>
-
-    <x-slot:description>
-        @yield('description')
-    </x-slot:description>
-
+    <x-slot:title> @yield('title') </x-slot:title>
+    <x-slot:description> @yield('description') </x-slot:description>
     @yield('form.before')
 
     <form id="{{ $id }}" class="inner-content" method="{{ $method === 'GET' ? 'GET' : 'POST' }}" action="{{ $action ?? url()->current() }}" {{$hasFile ?  'enctype="multipart/form-data"' : ''}}>
         @csrf
         @method($method)
+        @yield('form.start')
 
         <div class="grid grid-cols-1 gap-6 {{$styleClass}} ">
             <div class="md:col-span-2 lg:col-span-2 xl:col-span-5">
                 <div class="space-y-6">
-                    @yield('form.start')
-                    <div class="space-y-6">
-                        @hasSection('form')
-                            @if($hasTab)
-                                <x-lareon::editor.tabs.layout>
-                                    @yield('form')
-
-                                    @if($publishStatus && $instance)
-                                        <x-lareon::editor.tabs.item :title="__('publish data')">
-                                            <x-lareon::editor.publish-data :instance="$instance"/>
-                                        </x-lareon::editor.tabs.item>
-                                    @endif
-                                </x-lareon::editor.tabs.layout>
-                            @else
+                    @hasSection('form')
+                        @if($hasTab)
+                            <x-lareon::editor.tabs.layout>
                                 @yield('form')
-                            @endif
+
+                                @if($publishStatus && $instance)
+                                    <x-lareon::editor.tabs.item :title="__('publish data')">
+                                        <x-lareon::editor.publish-data :instance="$instance"/>
+                                    </x-lareon::editor.tabs.item>
+                                @endif
+                            </x-lareon::editor.tabs.layout>
+                        @else
+                            @yield('form')
                         @endif
-                    </div>
-                    @yield('form.end')
+                    @endif
                 </div>
             </div>
 
             <aside class="xl:col-span-2">
                 <div class="sticky top-6 space-y-6">
                     @hasSection('aside')
-                        @yield('aside')
+                        @yield ('aside')
                     @endif
+
                     @if($publishStatus &&  !$hasTab && $instance)
                         <x-lareon::editor.publish-data :instance="$instance"/>
                     @endif
                 </div>
             </aside>
         </div>
+
+        @yield('form.end')
+
         <div class="mt-6">
             <x-lareon::buttons.nav :fullWidth="false" type="submit" role="submit" :color="$buttonColor" :icon="$buttonIcon">
                 {{ __($buttonText)}}
@@ -114,4 +109,23 @@
     </form>
     @yield('form.after')
 </x-lareon::admin-layout>
+
+
+
+@props(['aside' => null,])
+
+@if(isset($aside))
+    <div class="grid grid-cols-1 gap-6 xl:grid-cols-7">
+        <main class="space-y-6 xl:col-span-5">
+            {{ $slot }}
+        </main>
+        <aside class="space-y-6 xl:col-span-2">
+            {{ $aside }}
+        </aside>
+    </div>
+@else
+    <div class="space-y-6">
+        {{ $slot }}
+    </div>
+@endif
 

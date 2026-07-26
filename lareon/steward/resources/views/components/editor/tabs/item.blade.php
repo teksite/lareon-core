@@ -1,10 +1,19 @@
-@props(['title', 'index' => 0])
+@props(['title'])
 
-<div x-show="activeTab === {{ $index }}" data-title="{{ $title }}" x-cloak class="tab-item">
-    <section class="y-box">
-        <fieldset class="fieldset space-y-6">
-            <legend class="legend">{{$title}}</legend>
+<fieldset class="tab-item bordering p-6" data-title="{{ $title }}" x-show="$parent.active===Array.from($el.parentElement.children).indexOf($el)" x-cloak>
+    <legend class="font-bold ">{{$title}}</legend>
+    @if(isset($aside))
+        <div class="grid grid-cols-1 gap-6 xl:grid-cols-7">
+            <main class="space-y-6 xl:col-span-5">
+                {{ $slot }}
+            </main>
+            <aside class="space-y-6 xl:col-span-2">
+                {{ $aside }}
+            </aside>
+        </div>
+    @else
+        <div class="space-y-6">
             {{ $slot }}
-        </fieldset>
-    </section>
-</div>
+        </div>
+    @endif
+</fieldset>
