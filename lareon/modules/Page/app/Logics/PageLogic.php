@@ -17,7 +17,7 @@ class PageLogic
     public function all(mixed $fetchData = []): ServiceResult
     {
         return ServiceWrapper::make(false)
-                             ->do(fn() => FetchDataService::get(Page::class, ['title', 'slug','publish_status']))
+                             ->do(fn() => FetchDataService::get(Page::class, ['title', 'slug','publish_status'] , with: ['getImage']))
                              ->run();
     }
 

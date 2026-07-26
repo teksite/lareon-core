@@ -10,10 +10,10 @@
                 <tr>
                     <td class="p-3">{{$pages->firstItem() + $key}}</td>
                     <td>
-                        <img src="{{$page->image ?? asset('assets/images/image-default.jpg')}}" alt="{{$page->name}}" width="35" height="35" fetchpriority="low" decoding="async" loading="lazy">
+                        <x-lareon::image-placeholder  alt="{{$page->name}}"  src="{{$page->getImage->url}}"/>
                     </td>
                     <td>{{$page->title}}</td>
-                    <td>{{$page->publis_status->value}}</td>
+                    <td>{!! $page->publish_status->toHtml()!!}</td>
                     <td>
                         <x-lareon::date :date="$page->created_at"/>
                     </td>

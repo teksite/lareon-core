@@ -8,6 +8,7 @@ import {Standalone} from "./browser.min.js";
 function bindSingleImageButton(button) {
 
     const container = button.closest('[data-single-image]');
+
     const btnId = button.id;
 
     if (!container || !btnId) return;
@@ -20,7 +21,9 @@ function bindSingleImageButton(button) {
 
     deleteButton?.addEventListener('click', e => {
         e.preventDefault();
+
         if (preview) preview.src = placeholder ?? '';
+
         input.value = '';
     });
     Standalone(`#${btnId}`, {
@@ -54,7 +57,10 @@ function initSingleImageSelector() {
 
 
 document.addEventListener('DOMContentLoaded', function () {
+
     logout();
+
     initSingleImageSelector('.imageBtn');
+
     new SlugMaker('-').attachToInput();
 });

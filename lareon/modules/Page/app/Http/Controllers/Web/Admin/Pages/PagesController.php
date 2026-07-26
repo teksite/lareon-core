@@ -59,13 +59,12 @@ class PagesController extends Controller implements HasMiddleware
      */
     public function store(NewPageRequest $request)
     {
-        dd($request->validated());
         $res = $this->logic->create($request->validated());
 
         return Responder::fromResult($res,
             trans('lareon::global.crud.success.created', ['attribute' => __('page')]),
             trans('lareon::global.crud.error.created', ['attribute' => __('page')]),
-            route('admin.pages.index')
+            route('admin.pages.edit', $res->result)
         )->go();
 
     }

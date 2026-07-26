@@ -44,7 +44,7 @@ enum PublishStatusEnum: int
     public function toHtml(): string
     {
         return sprintf(
-            "<span class='%s font-bold text-xs px-3 py-1 rounded-xl'>%s</span>",
+            "<span class='%s font-bold text-xs px-3 py-1 rounded-xl select-none'>%s</span>",
             $this->badgeClasses(),
             e($this->label())
         );

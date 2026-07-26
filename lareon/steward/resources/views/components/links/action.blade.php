@@ -80,7 +80,7 @@
     $target = $target ?? ($href ? $config['target'] : null);
     $hasForm = $method && in_array(strtoupper($method), ['POST', 'PUT', 'PATCH', 'DELETE']);
 
-    $baseClasses = "inline-flex items-center gap-1 rounded-md transition-colors duration-200 {$sizeClass} {$config['color']} focus:outline-none focus:ring-2 focus:ring-offset-1";
+    $baseClasses = "cursor-pointer select-none inline-flex items-center gap-1 rounded-md transition-colors duration-200 {$sizeClass} {$config['color']} focus:outline-none focus:ring-2 focus:ring-offset-1";
     $attributes = $attributes->merge(['class' => $baseClasses, 'title' => $title]);
 @endphp
 
@@ -91,7 +91,7 @@
             @method($method)
 
             <button type="submit" {{ $attributes }} @if($confirm) data-action_confirm @endif data-type="{{$method}}">
-                <x-tkicon type="outline" icon="{{ $config['icon'] }}" size="18" class="fill-none stroke-current" />
+                <x-tkicon type="outline" icon="{{ $config['icon'] }}"  class="fill-none stroke-current size-4" />
                 @if($label)
                     <span class="text-sm">{{ $label }}</span>
                 @endif
@@ -99,7 +99,7 @@
         </form>
     @elseif($href)
         <a href="{{ $href }}" {{ $attributes }} @if($target) target="{{ $target }}" @endif  @if($confirm) data-action_confirm @endif data-type="{{$method}}">
-            <x-tkicon type="outline" icon="{{ $config['icon'] }}" size="18" class="fill-none stroke-current" />
+            <x-tkicon type="outline" icon="{{ $config['icon'] }}" class="fill-none stroke-current size-4" />
             @if($label)
                 <span class="text-sm">{{ $label }}</span>
             @endif

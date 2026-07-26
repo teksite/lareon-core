@@ -5,7 +5,9 @@ namespace Lareon\Modules\Page\App\Models;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Validation\Rule;
+use Lareon\Modules\FileManager\App\Traits\HasImages;
 use Lareon\Steward\App\Casts\PublishAt;
 use Lareon\Steward\App\Enums\PublishStatusEnum;
 use Lareon\Steward\App\Models\Scopes\PublishScope;
@@ -15,7 +17,7 @@ use Teksite\Extralaravel\Casts\SlugCast;
 #[Fillable(['parent_id', 'label', 'slug', 'title', 'excerpt', 'body', 'image', 'template', 'publish_status', 'published_at'])]
 class Page extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes , HasImages;
 
     protected function casts(): array
     {
@@ -73,9 +75,9 @@ class Page extends Model
         return 'pages';
     }
 
-    public function path(): string
+    public function path(): ?string
     {
-        return route('pages.show', $this);
+        return Route::has('pages.show') ? route('pages.show', $this) : null;
     }
 
 
