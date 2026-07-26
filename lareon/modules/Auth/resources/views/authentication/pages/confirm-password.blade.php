@@ -9,7 +9,7 @@
         </p>
         <form method="POST" action="{{ route('password.confirm') }}" >
             @csrf
-            <x-lareon::editor.password :label="__('password')" name="password" :placeholder="__('lareon::global.placeholders.auth.password',['attribute'=>__('password')])" :showConfirm="false" :strength="false"/>
+            <x-lareon::editor.input-password :label="__('password')" name="password" :placeholder="__('lareon::global.placeholders.auth.password',['attribute'=>__('password')])" :showConfirm="false" :strength="false"/>
             <div class="flex justify-end mt-3">
                 <x-lareon::buttons.nav>
                     {{ __('lareon::global.buttons.confirm') }}

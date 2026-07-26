@@ -22,7 +22,7 @@
                             </a>
                         @endif
                     </div>
-                    <x-lareon::editor.password name="password" :strength="false" :showConfirm="false" :placeholder="__('lareon::global.placeholders.auth.password')" :required="true"/>
+                    <x-lareon::editor.input-password name="password" :strength="false" :showConfirm="false" :placeholder="__('lareon::global.placeholders.auth.password')" :required="true"/>
                 </div>
             </div>
 

@@ -17,7 +17,7 @@
                 </div>
             </x-lareon::box>
             <aside class="xl:col-span-2 y-box">
-                <x-lareon::editor.publish-data :instance="$user"/>
+                <x-lareon::editor.section.publish-data :instance="$user"/>
             </aside>
         </section>
     @endsection

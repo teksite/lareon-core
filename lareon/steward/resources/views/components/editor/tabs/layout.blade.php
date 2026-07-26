@@ -13,9 +13,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             document.querySelectorAll('.tab-contents .tab-item').forEach((el, i) => {
-
                 el.setAttribute('x-show', `activeTab === ${i}`)
-
                 el.removeAttribute('style')
             })
         })

@@ -17,7 +17,7 @@
                     <x-lareon::editor.input :label="__('phone')" name="phone" autocomplete="phone" :placeholder="__('lareon::global.placeholders.write.unique.one',['attribute'=>__('phone')])" :required="true"/>
                 </div>
                 <div>
-                    <x-lareon::editor.password wrapperClass="grid gap-6 md:grid-cols-2" name="password" :label="__('password')" :placeholder="__('lareon::global.placeholders.auth.password')" :confirmLabel="__('lareon::global.placeholders.auth.password')" :required="true"/>
+                    <x-lareon::editor.input-password wrapperClass="grid gap-6 md:grid-cols-2" name="password" :label="__('password')" :placeholder="__('lareon::global.placeholders.auth.password')" :confirmLabel="__('lareon::global.placeholders.auth.password')" :required="true"/>
 
                 </div>
             </div>

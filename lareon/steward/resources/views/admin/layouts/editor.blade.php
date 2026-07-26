@@ -75,7 +75,7 @@
                                 @yield('form')
                                 @if($publishStatus && $instance)
                                     <x-lareon::editor.tabs.item :title="__('publish data')">
-                                        <x-lareon::editor.publish-data :instance="$instance"/>
+                                        <x-lareon::editor.section.publish-data :instance="$instance"/>
                                     </x-lareon::editor.tabs.item>
                                 @endif
                             </x-lareon::editor.tabs.layout>
@@ -93,7 +93,7 @@
                     @endif
 
                     @if($publishStatus &&  !$hasTab && $instance)
-                        <x-lareon::editor.publish-data :instance="$instance"/>
+                        <x-lareon::editor.section.publish-data :instance="$instance"/>
                     @endif
                 </div>
             </aside>
