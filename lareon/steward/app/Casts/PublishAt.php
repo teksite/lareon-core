@@ -16,9 +16,12 @@ class PublishAt implements CastsAttributes
 
     public function set($model, string $key, $value, array $attributes)
     {
-        if ($attributes['publish_status'] === PublishStatusEnum::PUBLISHED->value && $value === null){
-            $value= now();
-        }
+
+        if ($attributes['publish_status'] === PublishStatusEnum::DRAFTED->value) return null;
+
+        if ($attributes['publish_status'] === PublishStatusEnum::PUBLISHED->value && $value === null) return now();
+
         return $value;
+
     }
 }

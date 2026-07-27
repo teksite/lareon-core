@@ -10,6 +10,15 @@
       default =>'gray'
     };
 
+       $icon = match ($color){
+      'index'=>  'bar-3',
+      'create'=>  'green',
+      'update'=>  'blue',
+      'delete'=>  'red',
+      'show'=>  'violet',
+      default =>'gray'
+    };
+
 @endphp
 <x-lareon::links.simple class="min-w-fit w-fit" :size="$size" :variant="$variant" :color="$convertedColor" :disabled="$disabled" :fullWidth="$fullWidth" :rounded="$rounded" :href="$href" :target="$target" :can="$can">
     {{$content ?? $slot}}

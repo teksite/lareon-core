@@ -57,7 +57,7 @@ class PageLogic
     public function update(Page $page, array $inputs = []): ServiceResult
     {
         return ServiceWrapper::make(false)->do(function () use ($page, $inputs) {
-            $page->update($inputs);
+            $page->update(Arr::except($inputs, ['seo', 'meta']));
             return $page->refresh();
         })->run();
     }

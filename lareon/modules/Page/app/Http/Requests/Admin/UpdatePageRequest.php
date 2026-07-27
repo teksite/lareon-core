@@ -1,7 +1,9 @@
 <?php
+
 namespace Lareon\Modules\Page\App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Lareon\Modules\Page\App\Models\Page;
 
 class UpdatePageRequest extends FormRequest
 {
@@ -10,7 +12,7 @@ class UpdatePageRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return userCan('admin.user.edit');
     }
 
     /**
@@ -20,8 +22,6 @@ class UpdatePageRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
-        ];
+        return Page::rules('update' , $this->page->id);
     }
 }

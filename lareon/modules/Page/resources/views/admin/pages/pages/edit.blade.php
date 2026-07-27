@@ -4,11 +4,12 @@
         <x-lareon::links.nav :href="route('admin.pages.index')" :content="__('lareon::global.buttons.all_attribute' ,['attribute'=>__('pages')])" color="index"/>
         <x-lareon::links.nav :href="route('admin.pages.create')" :content="__('lareon::global.buttons.new_one')" color="create" can="admin.page.create"/>
     @endsection
+    @section('header.end')
+        <x-lareon::links.nav :href="route('admin.pages.destroy', $page)" :content="__('lareon::global.buttons.delete' ,['attribute'=>__('pages')])" color="delete"/>
+    @endsection
 
     @section('form')
-
         <x-lareon::editor.tabs.item :title="__('content')">
-
             <div class="space-y-6">
                 <x-lareon::editor.input :required="true" labelPosition="start" :label="__('title')" name="title" :value="old('title', $page->title)" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('title') , 'item'=>__('page')])"/>
                 <x-lareon::editor.input-slug :required="true" labelPosition="start" :label="__('slug')" :value="old('slug', $page->slug)" :placeholder="__('lareon::global.placeholders.write.unique.two',['attribute'=>__('slug') , 'item'=>__('page')])"/>
