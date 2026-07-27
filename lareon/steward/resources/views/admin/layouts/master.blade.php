@@ -14,9 +14,9 @@
     @stack('headerScripts')
 </head>
 <body class="bg-slate-200 text-sm overflow-y-scroll" x-data="{sidebar:true ,togglesSidebar() { this.sidebar = !this.sidebar }}">
-<main class="p-3">
+<main class="">
     @include('lareon::admin.layouts.partials.aside')
-    <div class="ms-auto me-0 p-3 transition-all duration-100 xl:w-[calc(100%_-_4rem)]" :class="{ 'xl:w-[calc(100%_-_4rem)]': sidebar}">
+    <div class="ms-auto me-0 p-1 sm:p-3 transition-all duration-100 xl:w-[calc(100%_-_4rem)]" :class="{ 'xl:w-[calc(100%_-_4rem)]': sidebar}">
         @include('lareon::admin.layouts.partials.upper-header')
         @include('lareon::admin.layouts.partials.header')
         @include('lareon::admin.layouts.partials.errors')

@@ -111,7 +111,7 @@
         @yield('form.end')
 
         <div class="mt-6">
-            <x-lareon::buttons.nav :fullWidth="false" type="submit" role="submit" :color="$buttonColor" :icon="$buttonIcon">
+            <x-lareon::buttons.nav class="w-24" :fullWidth="false" type="submit" role="submit" :color="$buttonColor" :icon="$buttonIcon">
                 {{ __($buttonText)}}
             </x-lareon::buttons.nav>
         </div>

@@ -28,7 +28,6 @@
                 <x-lareon::editor.input-radio type="inline" :required="true" value="0" :options="[[__('no') , 0] , [__('yes') ,1]]" :label="__('mark phone as verified')" name="phone_verified_at" inputsClass="flex items-center gap-1"/>
             </fieldset>
         </x-lareon::editor.tabs.section>
-
         <x-lareon::editor.tabs.section>
             <fieldset class="fieldset space-y-6">
                 <legend class="legend">{{__('send notification')}}</legend>

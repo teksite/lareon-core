@@ -4,7 +4,7 @@
         <x-lareon::links.nav :href="route('admin.authorize.roles.index')" :content="__('lareon::global.buttons.all_attribute' ,['attribute'=>__('users')])" color="index"/>
     @endsection
     @section('form')
-        <x-lareon::box type="y">
+        <x-lareon::editor.tabs.section>
             <fieldset class="fieldset space-y-6">
                 <legend class="legend">{{__('basic data')}}</legend>
                 <div class="grid gap-6 lg:grid-cols-2">
@@ -14,13 +14,14 @@
 
                 </div>
             </fieldset>
-        </x-lareon::box>
-        <x-lareon::box type="y">
+        </x-lareon::editor.tabs.section>
+
+        <x-lareon::editor.tabs.section>
             <fieldset class="fieldset space-y-6">
                 <legend class="legend">{{__('permissions')}}</legend>
-                <x-auth::editor.permissions-tree :permissions="$permissions" />
+                <x-auth::editor.permissions-tree :permissions="$permissions"/>
             </fieldset>
-        </x-lareon::box>
+        </x-lareon::editor.tabs.section>
     @endsection
 
 </x-lareon::admin-editor>

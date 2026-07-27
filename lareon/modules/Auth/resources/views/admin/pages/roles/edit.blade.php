@@ -9,7 +9,7 @@
     @endsection
 
     @section('form')
-        <x-lareon::box type="y">
+        <x-lareon::editor.tabs.section>
             <fieldset class="fieldset space-y-6">
                 <legend class="legend">{{__('basic data')}}</legend>
                 <div class="grid gap-6 lg:grid-cols-2">
@@ -18,8 +18,8 @@
                     <x-lareon::editor.input :required="true" min="0" max="100" step="1" :label="__('hierarchy')" name="hierarchy" :value="$role->hierarchy" :placeholder="__('lareon::global.placeholders.write.one',['attribute'=>__('description')])"/>
                 </div>
             </fieldset>
-        </x-lareon::box>
-        <x-lareon::box type="y">
+        </x-lareon::editor.tabs.section>
+        <x-lareon::editor.tabs.section>
             <fieldset class="fieldset space-y-6">
                 <legend class="legend">{{__('permissions')}}</legend>
 
@@ -34,6 +34,6 @@
                 </div>
                 <x-auth::editor.permissions-tree :permissions="$permissions" :value="$role->permissions?->pluck('id')->toArray() ?? []" />
             </fieldset>
-        </x-lareon::box>
+        </x-lareon::editor.tabs.section>
     @endsection
 </x-lareon::admin-editor>
