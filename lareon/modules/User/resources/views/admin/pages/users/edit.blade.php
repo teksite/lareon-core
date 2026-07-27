@@ -1,4 +1,4 @@
-<x-lareon::admin-editor type="update" method="patch" :instance="$user" :action="route('admin.users.update', $user)">
+<x-lareon::admin-editor type="update" method="patch" :instance="$user" :action="route('admin.users.update', $user)" :publishInfo="true" :publishData="false">
     @section('title', __('lareon::global.crud.titles.edit',['attribute'=>__('user')]) . "($user->fullname)")
     @section('header.start')
         <x-lareon::links.nav :href="route('admin.users.index')" :content="__('lareon::global.buttons.all_attribute' ,['attribute'=>__('users')])" color="index" can="admin.user.read"/>
@@ -11,7 +11,7 @@
 
     @section('form')
 
-        <x-lareon::editor.tabs.item :title="__('basic data')">
+        <x-lareon::editor.tabs.item :title="__('basic data')" >
             <div class="grid gap-6 lg:grid-cols-2">
                 <x-lareon::editor.input :required="true" labelPosition="start" :label="__('first name')" name="name" :value="$user->name" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('name') , 'item'=>__('user')])"/>
                 <x-lareon::editor.input :required="true" labelPosition="start" :label="__('last name')" name="lastname" :value="$user->lastname" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('last name') , 'item'=>__('user')])"/>
@@ -31,7 +31,7 @@
                 <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('ignore') ,-1 ] ,[__('no') ,0] , [__('yes') ,1]]" :label="__('mark email as verified')" name="email_verified_at" inputsClass="flex items-center gap-1" :value="-1"/>
             </div>
             <x-slot:aside>
-                <table class="w-full">
+                <table class="w-full y-box">
                     <tbody class="divide-y divide-line_light bg-slate-50 *:hover:bg-blue-50">
                     <tr>
                         <td class="px-3 py-2 font-bold">

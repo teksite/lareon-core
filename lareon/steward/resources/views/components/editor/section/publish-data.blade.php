@@ -1,4 +1,4 @@
-@props(['instance', 'wrapperMode'=>null ] )
+@props(['instance', 'wrapperMode'=>'y-box' ] )
 @php
 
     $wrapperClass=match ($wrapperMode){
@@ -36,8 +36,8 @@
 @endphp
 
 
-@if($instance)
-    <section class="{{ $wrapperClass . ' space-y-6'}}">
+<section class="{{ $wrapperClass . ' space-y-6'}}">
+    @if($instance)
         <ul class="space-y-6">
             @foreach($types as $col=>$title)
                 @if($instance->$col)
@@ -56,5 +56,9 @@
                 @endif
             @endforeach
         </ul>
-    </section>
-@endif
+    @else
+        <div>
+            {{__('no data')}}
+        </div>
+    @endif
+</section>

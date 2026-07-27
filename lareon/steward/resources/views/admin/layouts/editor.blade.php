@@ -1,7 +1,7 @@
 @props([
 'type' => 'create', // create, edit, update, delete, restore
 'instance' => null,
-'publishStatus' => true,
+'publishInfo' => true,
 'publishData' => true,
 'action' => null,
 'method' => null,
@@ -74,14 +74,17 @@
                         @if($hasTab)
                             <x-lareon::editor.tabs.layout>
                                 @yield('form')
-                                @if($publishStatus || $publishData)
+
+                                @if($publishInfo || $publishData)
                                     <x-lareon::editor.tabs.item :title="__('publish data')">
-                                        @if($publishStatus)
-                                            <x-lareon::editor.section.publish-data :instance="$instance"/>
-                                        @endif
-                                        @if($publishData)
-                                            <x-lareon::editor.section.status-publish :instance="$instance"/>
-                                        @endif
+                                        <div @class($publishInfo && $publishData ? 'grid gap-6 md:grid-cols-2': '')>
+                                            @if($publishData)
+                                                <x-lareon::editor.section.status-publish :instance="$instance"/>
+                                            @endif
+                                            @if($publishInfo)
+                                                <x-lareon::editor.section.publish-data :instance="$instance"/>
+                                            @endif
+                                        </div>
                                     </x-lareon::editor.tabs.item>
                                 @endif
                             </x-lareon::editor.tabs.layout>
@@ -98,7 +101,7 @@
                         @yield ('aside')
                     @endif
 
-                    @if($publishStatus &&  !$hasTab && $instance)
+                    @if($publishInfo &&  !$hasTab && $instance)
                         <x-lareon::editor.section.publish-data :instance="$instance"/>
                     @endif
                 </div>
