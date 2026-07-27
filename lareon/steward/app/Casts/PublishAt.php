@@ -4,6 +4,7 @@ namespace Lareon\Steward\App\Casts;
 
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
+use Lareon\Steward\App\Enums\PublishStatusEnum;
 
 
 class PublishAt implements CastsAttributes
@@ -15,6 +16,9 @@ class PublishAt implements CastsAttributes
 
     public function set($model, string $key, $value, array $attributes)
     {
+        if ($attributes['publish_status'] === PublishStatusEnum::PUBLISHED->value && $value === null){
+            $value= now();
+        }
         return $value;
     }
 }
