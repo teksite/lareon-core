@@ -57,7 +57,7 @@
             @endforeach
         </ul>
     @else
-        <div>
+        <div class="flex items-center justify-center h-full">
             {{__('no data')}}
         </div>
     @endif

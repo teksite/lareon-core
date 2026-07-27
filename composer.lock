@@ -7583,16 +7583,16 @@
         },
         {
             "name": "teksite/handler",
-            "version": "2.1.8",
+            "version": "2.1.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/teksite/handler.git",
-                "reference": "940351729723e0a5a9eb1a269499f2291ad1b499"
+                "reference": "4247e1a20f9bd97a80d32cebac2cbbfbf3e9c7a2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/teksite/handler/zipball/940351729723e0a5a9eb1a269499f2291ad1b499",
-                "reference": "940351729723e0a5a9eb1a269499f2291ad1b499",
+                "url": "https://api.github.com/repos/teksite/handler/zipball/4247e1a20f9bd97a80d32cebac2cbbfbf3e9c7a2",
+                "reference": "4247e1a20f9bd97a80d32cebac2cbbfbf3e9c7a2",
                 "shasum": ""
             },
             "require": {
@@ -7625,9 +7625,9 @@
             "description": "Some features to work with error handling in Laravel codes",
             "support": {
                 "issues": "https://github.com/teksite/handler/issues",
-                "source": "https://github.com/teksite/handler/tree/2.1.8"
+                "source": "https://github.com/teksite/handler/tree/2.1.10"
             },
-            "time": "2026-07-27T09:11:40+00:00"
+            "time": "2026-07-27T12:27:30+00:00"
         },
         {
             "name": "teksite/icon-laravel",
