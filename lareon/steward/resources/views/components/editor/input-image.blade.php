@@ -34,7 +34,6 @@
 
     if ($consideredValue)  $previewImage = \Teksite\FileManager\Models\UploadFile::find($consideredValue)?->url;
 
-
      $placeholder = match ($placeholder){
          'avatar'=>['src'=>'/assets/images/avatar-default.avif' ,'width'=>300 , 'height'=>300],
          default=>['src'=>'/assets/images/image-default.avif' ,'width'=>600 , 'height'=>400]
@@ -46,7 +45,7 @@
 <div class="w-full relative {{ $wrapperClass }}" data-single-image>
     <x-lareon::inputs.label :title="$label" for="input_{{$finalId}}" class="mb-1" :markAsRequire="$required"/>
     @if($preview)
-        <img data-filemanager-preview-id="input_{{$finalId}}" data-placehoder="{{$placeholder['src']}}" src="{{$value ?? $placeholder['src']}}" alt="{{$label ?? __('select an image')}}" width="{{$placeholder['width'] ?? 300}}" height="{{$placeholder['height'] ?? 200}}">
+        <img data-filemanager-preview-id="input_{{$finalId}}" data-placehoder="{{$placeholder['src']}}" src="{{$previewImage ?? $placeholder['src']}}" alt="{{$label ?? __('select an image')}}" width="{{$placeholder['width'] ?? 300}}" height="{{$placeholder['height'] ?? 200}}">
     @endif
     <div>
         <x-lareon::inputs.text name="{{$name}}" id="input_{{$finalId}}" :value="$consideredValue" :disabled="$disabled" :required="$required" :readonly="$readonly" class="{{$errorStyle}}" dir="ltr" placeholder="{{$placeholder['src']}}" {{$attributes}}/>

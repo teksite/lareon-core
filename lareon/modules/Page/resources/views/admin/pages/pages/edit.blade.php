@@ -20,7 +20,7 @@
             </div>
 
             <x-slot:aside>
-                <x-lareon::editor.input-image :required="false" wrapperMode="y-box" :value="old('primary_media_id' , $page->primaryMedia)" name="primary_media_id"/>
+                <x-lareon::editor.input-image :required="false" wrapperMode="y-box" :value="old('primary_media_id' , $page->primaryMedia?->id)" name="primary_media_id"/>
                 <x-lareon::editor.section.template :required="false" wrapperMode="y-box"/>
             </x-slot:aside>
 
