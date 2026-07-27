@@ -18,7 +18,7 @@
                 </div>
             </fieldset>
             <x-slot:aside>
-                <x-lareon::editor.input-image :required="false" wrapperMode="y-box" :value="old('image', $page->getImage->url)" name="image"/>
+                <x-lareon::editor.input-image :required="false" wrapperMode="y-box" :value="old('primary_media_id' , $page->primaryMedia)" name="primary_media_id"/>
                 <x-lareon::editor.section.template :required="false" wrapperMode="y-box"/>
                 <x-lareon::editor.section.status-publish :required="false" wrapperMode="y-box"/>
             </x-slot:aside>

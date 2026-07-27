@@ -16,10 +16,10 @@ use Teksite\FileManager\Concerts\HasAttachedFile;
 use Teksite\FileManager\Models\UploadFile;
 
 
-#[Fillable(['parent_id', 'label', 'slug', 'title', 'excerpt', 'body', 'image', 'template', 'publish_status', 'published_at' ,'image'])]
+#[Fillable(['parent_id', 'label', 'slug', 'title', 'excerpt', 'body', 'template', 'publish_status', 'published_at', 'primary_media_id'])]
 class Page extends Model
 {
-    use SoftDeletes , HasImages , HasAttachedFile;
+    use SoftDeletes, HasImages, HasAttachedFile;
 
     protected function casts(): array
     {
@@ -34,14 +34,14 @@ class Page extends Model
     public static function rules(string $operation, int|null $id = null): array
     {
         $rules = [
-            'parent_id'      => 'nullable|integer|min:0|exists:pages,id',
-            'title'          => 'required|string|max:255',
-            'excerpt'        => 'nullable|string',
-            'body'           => 'nullable|string',
-            'image'          => 'nullable|string|max:255',
-            'template'       => 'nullable|string',
-            'publish_status' => ['required', 'integer', Rule::in(array_column(PublishStatusEnum::cases(), 'value'))],
-            'published_at'   => 'nullable|date',
+            'parent_id'        => 'nullable|integer|min:0|exists:pages,id',
+            'title'            => 'required|string|max:255',
+            'excerpt'          => 'nullable|string',
+            'body'             => 'nullable|string',
+            'primary_media_id' => 'nullable|string|max:255|exists:uploaded_files,id',
+            'template'         => 'nullable|string',
+            'publish_status'   => ['required', 'integer', Rule::in(array_column(PublishStatusEnum::cases(), 'value'))],
+            'published_at'     => 'nullable|date',
         ];
 
         $rules['slug'] = match (true) {
@@ -82,26 +82,10 @@ class Page extends Model
         return Route::has('pages.show') ? route('pages.show', $this) : null;
     }
 
-
-    public function firstAttachedFile(string $collection): \Illuminate\Database\Eloquent\Model|UploadFile|null
-    {
-        return $this->files()
-                    ->wherePivot('collection', $collection)
-                    ->first();
-    }
-
-    public function attachedFiles(?string $collection = null): \Illuminate\Support\Collection
-    {
-        return $collection === null
-            ? $this->files()->get()
-            : $this->files()->wherePivot('collection', $collection)->get();
-    }
-
-
     public function scopeWithCollection($query, string $collection)
     {
         return $query->with([
-            'files' => fn ($q) => $q->wherePivot('collection', $collection)
+            'files' => fn($q) => $q->wherePivot('collection', $collection),
         ]);
     }
 }

@@ -21,7 +21,7 @@ class PageLogic
     {
         return ServiceWrapper::make(false)
                              ->do(
-                                 fn() => FetchDataService::get(Page::class, ['title', 'slug', 'publish_status'])
+                                 fn() => FetchDataService::get(Page::class, ['title', 'slug', 'publish_status'], with: ['primaryMedia'])
                              )->run();
     }
 
@@ -46,18 +46,7 @@ class PageLogic
     public function create(array $inputs = []): ServiceResult
     {
         return ServiceWrapper::make(true)->do(function () use ($inputs) {
-            $page = Page::query()->create(Arr::except($inputs, ['image', 'seo', 'meta']));
-            if (isset($inputs['image'])) {
-
-                UploadFileRelation::query()->create([
-                    'file_id'    => $inputs['image'],
-                    'model_id'   => $page->getKey(),
-                    'model_type' => $page->getMorphClass(),
-                    'collection' => 'featured_image',
-                    'order'      => 0,
-                    'name'       => $page->title,
-                ]);
-            }
+            $page = Page::query()->create(Arr::except($inputs, ['seo', 'meta']));
             return $page;
         })->run();
     }

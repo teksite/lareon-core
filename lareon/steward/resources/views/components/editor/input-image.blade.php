@@ -32,6 +32,8 @@
 
      $consideredValue= $old ? old($dotName , $value) : $value ;
 
+    if ($consideredValue)  $previewImage = \Teksite\FileManager\Models\UploadFile::find($consideredValue)?->url;
+
 
      $placeholder = match ($placeholder){
          'avatar'=>['src'=>'/assets/images/avatar-default.avif' ,'width'=>300 , 'height'=>300],

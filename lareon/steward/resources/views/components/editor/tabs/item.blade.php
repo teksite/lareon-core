@@ -4,10 +4,10 @@
     <legend class="font-bold ">{{$title}}</legend>
     @if(isset($aside))
         <div class="grid grid-cols-1 gap-6 xl:grid-cols-7">
-            <main class="space-y-6 xl:col-span-5 y-box">
+            <main class="space-y-6 xl:col-span-5 ">
                 {{ $slot }}
             </main>
-            <aside class="space-y-6 xl:col-span-2 y-box">
+            <aside class="space-y-6 xl:col-span-2">
                 {{ $aside }}
             </aside>
         </div>

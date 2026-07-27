@@ -13,6 +13,7 @@ return new class extends Migration {
         Schema::create('pages', function (Blueprint $table) {
             $table->id();
             $table->foreignId('parent_id')->nullable()->constrained('pages')->nullOnDelete();
+            $table->string('primary_media_id')->nullable();
             $table->string('slug')->unique();
             $table->string('label')->nullable();
             $table->string('title');
