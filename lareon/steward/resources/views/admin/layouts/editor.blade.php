@@ -2,6 +2,7 @@
 'type' => 'create', // create, edit, update, delete, restore
 'instance' => null,
 'publishStatus' => true,
+'publishData' => true,
 'action' => null,
 'method' => null,
 'hasTab' => true,
@@ -73,9 +74,14 @@
                         @if($hasTab)
                             <x-lareon::editor.tabs.layout>
                                 @yield('form')
-                                @if($publishStatus && $instance)
+                                @if($publishStatus || $publishData)
                                     <x-lareon::editor.tabs.item :title="__('publish data')">
-                                        <x-lareon::editor.section.publish-data :instance="$instance"/>
+                                        @if($publishStatus)
+                                            <x-lareon::editor.section.publish-data :instance="$instance"/>
+                                        @endif
+                                        @if($publishData)
+                                            <x-lareon::editor.section.status-publish :instance="$instance"/>
+                                        @endif
                                     </x-lareon::editor.tabs.item>
                                 @endif
                             </x-lareon::editor.tabs.layout>
@@ -109,7 +115,6 @@
     </form>
     @yield('form.after')
 </x-lareon::admin-layout>
-
 
 
 @props(['aside' => null,])
