@@ -1,4 +1,4 @@
-<x-lareon::admin-editor type="update" method="patch" :instance="$user" :action="route('admin.users.update', $user)" :publishInfo="true" :publishData="false">
+<x-lareon::admin-editor type="update" method="patch" :instance="$user" :action="route('admin.users.update', $user)" :publishInfo="true" :publishStatus="false">
     @section('title', __('lareon::global.crud.titles.edit',['attribute'=>__('user')]) . "($user->fullname)")
     @section('header.start')
         <x-lareon::links.nav :href="route('admin.users.index')" :content="__('lareon::global.buttons.all_attribute' ,['attribute'=>__('users')])" color="index" can="admin.user.read"/>

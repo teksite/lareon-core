@@ -2,7 +2,7 @@
 'type' => 'create', // create, edit, update, delete, restore
 'instance' => null,
 'publishInfo' => true,
-'publishData' => true,
+'publishStatus' => true,
 'action' => null,
 'method' => null,
 'hasTab' => true,
@@ -75,11 +75,11 @@
                             <x-lareon::editor.tabs.layout>
                                 @yield('form')
 
-                                @if($publishInfo || $publishData)
+                                @if($publishInfo || $publishStatus)
                                     <x-lareon::editor.tabs.item :title="__('publish data')">
-                                        <div @class($publishInfo && $publishData ? 'grid gap-6 md:grid-cols-2': '')>
-                                            @if($publishData)
-                                                <x-lareon::editor.section.status-publish :instance="$instance"/>
+                                        <div @class($publishInfo && $publishStatus ? 'grid gap-6 md:grid-cols-2': '')>
+                                            @if($publishStatus)
+                                                <x-lareon::editor.section.publish-status :instance="$instance"/>
                                             @endif
                                             @if($publishInfo)
                                                 <x-lareon::editor.section.publish-info :instance="$instance"/>

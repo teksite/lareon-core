@@ -1,4 +1,4 @@
-<x-lareon::admin-editor type="update" method="patch" :action="route('admin.users.acl.update', $user)" :publishInfo="false" :publishData="false">
+<x-lareon::admin-editor type="update" method="patch" :action="route('admin.users.acl.update', $user)" :publishInfo="false" :publishStatus="false">
     @section('title', __('user accessibility') . "($user->name)")
     @section('header.start')
         <x-lareon::links.nav :href="route('admin.users.index')" :content="__('lareon::global.buttons.all_attribute' ,['attribute'=>__('users')])" color="index" can="admin.user.read"/>
