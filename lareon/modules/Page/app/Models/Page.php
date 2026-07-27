@@ -41,7 +41,7 @@ class Page extends Model
             'primary_media_id' => 'nullable|string|max:255|exists:uploaded_files,id',
             'template'         => 'nullable|string',
             'publish_status'   => ['required', 'integer', Rule::in(array_column(PublishStatusEnum::cases(), 'value'))],
-            'published_at'     => 'nullable|date',
+            'published_at'     => 'nullable|required_if:publish_status,3',
         ];
 
         $rules['slug'] = match (true) {

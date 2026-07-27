@@ -74,7 +74,7 @@
                                     @yield('form')
                                     @if($publishStatus && !$isDeleteMode && $instance)
                                         <x-lareon::editor.tabs.item :title="__('publish data')">
-                                            <x-lareon::editor.section.publish-data :instance="$instance"/>
+                                            <x-lareon::editor.section.publish-info :instance="$instance"/>
                                         </x-lareon::editor.tabs.item>
                                     @endif
                                 </x-lareon::editor.tabs.layout>

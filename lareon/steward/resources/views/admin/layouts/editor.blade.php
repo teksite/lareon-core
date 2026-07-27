@@ -82,7 +82,7 @@
                                                 <x-lareon::editor.section.status-publish :instance="$instance"/>
                                             @endif
                                             @if($publishInfo)
-                                                <x-lareon::editor.section.publish-data :instance="$instance"/>
+                                                <x-lareon::editor.section.publish-info :instance="$instance"/>
                                             @endif
                                         </div>
                                     </x-lareon::editor.tabs.item>
@@ -102,7 +102,7 @@
                     @endif
 
                     @if($publishInfo &&  !$hasTab && $instance)
-                        <x-lareon::editor.section.publish-data :instance="$instance"/>
+                        <x-lareon::editor.section.publish-info :instance="$instance"/>
                     @endif
                 </div>
             </aside>
