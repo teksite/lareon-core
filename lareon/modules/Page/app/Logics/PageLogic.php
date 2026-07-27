@@ -3,7 +3,10 @@
 namespace Lareon\Modules\Page\App\Logics;
 
 use Illuminate\Contracts\Container\BindingResolutionException;
+use Illuminate\Support\Arr;
 use Lareon\Modules\Page\App\Models\Page;
+use Teksite\FileManager\Models\UploadFile;
+use Teksite\FileManager\Models\UploadFileRelation;
 use Teksite\Handler\Actions\ServiceWrapper;
 use Teksite\Handler\contracts\ServiceResult;
 use Teksite\Handler\Services\FetchDataService;
@@ -17,8 +20,9 @@ class PageLogic
     public function all(mixed $fetchData = []): ServiceResult
     {
         return ServiceWrapper::make(false)
-                             ->do(fn() => FetchDataService::get(Page::class, ['title', 'slug','publish_status'] , with: ['getImage']))
-                             ->run();
+                             ->do(
+                                 fn() => FetchDataService::get(Page::class, ['title', 'slug', 'publish_status'])
+                             )->run();
     }
 
 
@@ -42,7 +46,18 @@ class PageLogic
     public function create(array $inputs = []): ServiceResult
     {
         return ServiceWrapper::make(true)->do(function () use ($inputs) {
-            $page = Page::create($inputs);
+            $page = Page::query()->create(Arr::except($inputs, ['image', 'seo', 'meta']));
+            if (isset($inputs['image'])) {
+
+                UploadFileRelation::query()->create([
+                    'file_id'    => $inputs['image'],
+                    'model_id'   => $page->getKey(),
+                    'model_type' => $page->getMorphClass(),
+                    'collection' => 'featured_image',
+                    'order'      => 0,
+                    'name'       => $page->title,
+                ]);
+            }
             return $page;
         })->run();
     }
@@ -68,9 +83,6 @@ class PageLogic
             $page->delete();
         })->run();
     }
-
-
-
 
 
 }

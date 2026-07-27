@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4d0867ee704d487a5ef5f007c1062bc3",
+    "content-hash": "4c45fce0f46011808e8009dd0161fa7b",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -1013,16 +1013,16 @@
         },
         {
             "name": "guzzlehttp/guzzle",
-            "version": "7.15.1",
+            "version": "7.15.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "61443dfb33c62f308ee8add20f45b4d6e4bf8d2f"
+                "reference": "744101956d78b7c1384d0cbf379db13e859167bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/61443dfb33c62f308ee8add20f45b4d6e4bf8d2f",
-                "reference": "61443dfb33c62f308ee8add20f45b4d6e4bf8d2f",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/744101956d78b7c1384d0cbf379db13e859167bf",
+                "reference": "744101956d78b7c1384d0cbf379db13e859167bf",
                 "shasum": ""
             },
             "require": {
@@ -1121,7 +1121,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/guzzle/issues",
-                "source": "https://github.com/guzzle/guzzle/tree/7.15.1"
+                "source": "https://github.com/guzzle/guzzle/tree/7.15.2"
             },
             "funding": [
                 {
@@ -1137,7 +1137,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-07-18T11:23:11+00:00"
+            "time": "2026-07-26T23:23:20+00:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -7583,16 +7583,16 @@
         },
         {
             "name": "teksite/handler",
-            "version": "2.1.7",
+            "version": "2.1.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/teksite/handler.git",
-                "reference": "15a30ef052b34d6aed6bc90d8770da28d6a69ced"
+                "reference": "940351729723e0a5a9eb1a269499f2291ad1b499"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/teksite/handler/zipball/15a30ef052b34d6aed6bc90d8770da28d6a69ced",
-                "reference": "15a30ef052b34d6aed6bc90d8770da28d6a69ced",
+                "url": "https://api.github.com/repos/teksite/handler/zipball/940351729723e0a5a9eb1a269499f2291ad1b499",
+                "reference": "940351729723e0a5a9eb1a269499f2291ad1b499",
                 "shasum": ""
             },
             "require": {
@@ -7625,9 +7625,9 @@
             "description": "Some features to work with error handling in Laravel codes",
             "support": {
                 "issues": "https://github.com/teksite/handler/issues",
-                "source": "https://github.com/teksite/handler/tree/2.1.7"
+                "source": "https://github.com/teksite/handler/tree/2.1.8"
             },
-            "time": "2026-05-31T14:52:20+00:00"
+            "time": "2026-07-27T09:11:40+00:00"
         },
         {
             "name": "teksite/icon-laravel",
@@ -7678,16 +7678,16 @@
         },
         {
             "name": "teksite/laravel-filemanager",
-            "version": "0.2.2",
+            "version": "0.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/teksite/laravel-filemanager.git",
-                "reference": "8be0a940ba33160467444614983c90c53cacb246"
+                "reference": "dbbb57ef0c79188af699871c6de4485b4f2787c2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/teksite/laravel-filemanager/zipball/8be0a940ba33160467444614983c90c53cacb246",
-                "reference": "8be0a940ba33160467444614983c90c53cacb246",
+                "url": "https://api.github.com/repos/teksite/laravel-filemanager/zipball/dbbb57ef0c79188af699871c6de4485b4f2787c2",
+                "reference": "dbbb57ef0c79188af699871c6de4485b4f2787c2",
                 "shasum": ""
             },
             "require": {
@@ -7724,9 +7724,9 @@
             ],
             "support": {
                 "issues": "https://github.com/teksite/laravel-filemanager/issues",
-                "source": "https://github.com/teksite/laravel-filemanager/tree/0.2.2"
+                "source": "https://github.com/teksite/laravel-filemanager/tree/0.2.3"
             },
-            "time": "2026-07-26T10:20:12+00:00"
+            "time": "2026-07-27T07:15:33+00:00"
         },
         {
             "name": "teksite/module",

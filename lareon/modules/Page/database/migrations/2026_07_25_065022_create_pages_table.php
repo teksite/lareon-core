@@ -18,7 +18,6 @@ return new class extends Migration {
             $table->string('title');
             $table->text('excerpt')->nullable();
             $table->text('body')->nullable();
-            $table->string('image', 200)->nullable();
             $table->string('template')->nullable();
             $table->tinyInteger('publish_status')->default(\Lareon\Steward\App\Enums\PublishStatusEnum::PUBLISHED->value);
             $table->timestamp('published_at')->nullable();

@@ -10,7 +10,7 @@
                 <tr>
                     <td class="p-3">{{$pages->firstItem() + $key}}</td>
                     <td>
-                        <x-lareon::image-placeholder  alt="{{$page->name}}"  src="{{$page->getImage->url}}"/>
+                        <x-lareon::media-placeholder  alt="{{$page->firstAttachedFile('featured_image')?->url}}"  src="{{$page->getImage->url}}" type="image"/>
                     </td>
                     <td>{{$page->title}}</td>
                     <td>{!! $page->publish_status->toHtml()!!}</td>

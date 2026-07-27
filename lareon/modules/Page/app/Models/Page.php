@@ -12,12 +12,14 @@ use Lareon\Steward\App\Casts\PublishAt;
 use Lareon\Steward\App\Enums\PublishStatusEnum;
 use Lareon\Steward\App\Models\Scopes\PublishScope;
 use Teksite\Extralaravel\Casts\SlugCast;
+use Teksite\FileManager\Concerts\HasAttachedFile;
+use Teksite\FileManager\Models\UploadFile;
 
 
-#[Fillable(['parent_id', 'label', 'slug', 'title', 'excerpt', 'body', 'image', 'template', 'publish_status', 'published_at'])]
+#[Fillable(['parent_id', 'label', 'slug', 'title', 'excerpt', 'body', 'image', 'template', 'publish_status', 'published_at' ,'image'])]
 class Page extends Model
 {
-    use SoftDeletes , HasImages;
+    use SoftDeletes , HasImages , HasAttachedFile;
 
     protected function casts(): array
     {
@@ -81,4 +83,25 @@ class Page extends Model
     }
 
 
+    public function firstAttachedFile(string $collection): \Illuminate\Database\Eloquent\Model|UploadFile|null
+    {
+        return $this->files()
+                    ->wherePivot('collection', $collection)
+                    ->first();
+    }
+
+    public function attachedFiles(?string $collection = null): \Illuminate\Support\Collection
+    {
+        return $collection === null
+            ? $this->files()->get()
+            : $this->files()->wherePivot('collection', $collection)->get();
+    }
+
+
+    public function scopeWithCollection($query, string $collection)
+    {
+        return $query->with([
+            'files' => fn ($q) => $q->wherePivot('collection', $collection)
+        ]);
+    }
 }
