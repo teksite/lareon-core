@@ -42,7 +42,6 @@ return new class extends Migration {
             $table->json('content')->nullable();
             $table->timestamps();
 
-            $table->index(['model_type', 'model_id']);
             $table->unique(['field_id', 'model_type', 'model_id']);
         });
     }

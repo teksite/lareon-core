@@ -2,36 +2,97 @@
 
 namespace Lareon\Modules\Meta\App\Logics;
 
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Support\Facades\File;
+use Lareon\Modules\Meta\App\Models\MetaElement;
+use Teksite\Handler\Actions\ServiceResult;
+use Teksite\Handler\Actions\ServiceWrapper;
+use Teksite\Handler\Services\FetchDataService;
 
 class MeteaElementLogic
 {
-   public function all(mixed $fetchData = [])
-   {
+    /**
+     * @throws \Throwable
+     */
+    public function all(mixed $fetchData = []): ServiceResult
+    {
+        return ServiceWrapper::make(false)
+                             ->do(
+                                 fn() => FetchDataService::get(MetaElement::class, ['title', 'path'])
+                             )->run();
+    }
 
-   }
 
-   public function first(array $inputs =[])
-   {
+    /**
+     * @throws BindingResolutionException
+     * @throws \Throwable
+     */
+    public function first(array $inputs = [], bool $any = true): ServiceResult
+    {
+        return ServiceWrapper::make(false)->do(function () use ($inputs) {
+            $query = MetaElement::query();
+            foreach ($inputs as $key => $value) {
+                $query->where($key, $value);
+            }
+        })->run();
+    }
 
-   }
+    /**
+     * @throws \Throwable
+     */
+    public function create(array $inputs = []): ServiceResult
+    {
+        return ServiceWrapper::make(true)->do(function () use ($inputs) {
+            return MetaElement::query()->create($inputs);
+        })->run();
+    }
 
-   public function create(array $inputs =[])
-   {
+    /**
+     * @throws \Throwable
+     */
+    public function update(MetaElement $elements, array $inputs = []): ServiceResult
+    {
+        return ServiceWrapper::make(false)->do(function () use ($elements, $inputs) {
+            $elements->update($inputs);
+            return $elements->refresh();
+        })->run();
+    }
 
-   }
+    /**
+     * @throws \Throwable
+     */
+    public function delete(MetaElement $elements): ServiceResult
+    {
+        return ServiceWrapper::make(false)->do(function () use ($elements) {
+            $elements->delete();
+        })->run();
+    }
 
-   public function update(Model $model ,array $inputs=[])
-   {
 
-   }
+    /**
+     * @throws BindingResolutionException
+     * @throws \Throwable
+     */
+    public function getFiles(?string $path = null): ServiceResult
+    {
+        $files= [];
+        $path ??= modulePath('meta', 'resources/views/components/editor' ,true);
 
-   public function delete(Model $model)
-   {
+        if (!is_dir($path)) return new ServiceResult(true, $files);
 
-   }
+       foreach (File::allFiles($path) as $file) {
+           if ($file->getExtension() === 'php') {
+               $r= str_replace($path , '', $file->getPathname());
+               $r= trim($r ,'\\');
+               $r= trim($r ,'/');
+               $r= rtrim($r ,'.php');
+               $files[] =$r;
+           }
+       }
+     return new ServiceResult(true, $files);
 
+    }
 }
 

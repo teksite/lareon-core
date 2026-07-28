@@ -5,8 +5,6 @@ namespace Lareon\Modules\Page\App\Logics;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Arr;
 use Lareon\Modules\Page\App\Models\Page;
-use Teksite\FileManager\Models\UploadFile;
-use Teksite\FileManager\Models\UploadFileRelation;
 use Teksite\Handler\Actions\ServiceWrapper;
 use Teksite\Handler\contracts\ServiceResult;
 use Teksite\Handler\Services\FetchDataService;
@@ -62,7 +60,6 @@ class PageLogic
         })->run();
     }
 
-
     /**
      * @throws \Throwable
      */
@@ -72,7 +69,6 @@ class PageLogic
             $page->delete();
         })->run();
     }
-
 
 }
 
