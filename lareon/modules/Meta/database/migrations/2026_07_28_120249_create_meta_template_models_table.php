@@ -13,31 +13,35 @@ return new class extends Migration {
 
         Schema::create('meta_elements', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->unique();
-            $table->timestamps();
-        });
-
-        Schema::create('meta_templates', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->string('title');
-            $table->string('model_type');
-            $table->string('template_path');
             $table->timestamps();
-
-            $table->unique(['model_type', 'template_path', 'name' ,'title']);
         });
 
-        Schema::create('meta_template_models', function (Blueprint $table) {
+        Schema::create('meta_template_fields', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('meta_template_id')->constrained('meta_templates')->cascadeOnDelete();
+            $table->string('model_type');
+            $table->string('template', 100);
             $table->foreignId('meta_element_id')->constrained('meta_elements')->cascadeOnDelete();
-            $table->string('key');
-            $table->string('label')->nullable();
+            $table->string('title');
+            $table->string('name');
             $table->json('settings')->nullable();
+            $table->unsignedInteger('sort')->default(0);
             $table->timestamps();
 
-            $table->index(['meta_template_id', 'sort',]);
+            $table->index(['model_type', 'template']);
+            $table->unique(['model_type', 'template', 'name']);
+        });
+
+        Schema::create('meta_models', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('meta_template_field_id')->constrained('meta_template_fields')->cascadeOnDelete();
+            $table->morphs('model');
+            $table->json('content')->nullable();
+            $table->timestamps();
+
+            $table->index(['model_type', 'model_id']);
+            $table->unique(['meta_template_field_id', 'model_type', 'model_id']);
         });
     }
 
@@ -46,8 +50,8 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('meta_template_models');
-        Schema::dropIfExists('meta_templates');
+        Schema::dropIfExists('meta_models');
+        Schema::dropIfExists('meta_template_fields');
         Schema::dropIfExists('meta_elements');
 
     }
