@@ -94,12 +94,12 @@ class PagesController extends Controller implements HasMiddleware
      */
     public function update(UpdatePageRequest $request, Page $page)
     {
-        $response = $this->logic->update($page, $request->validated());
+        $res = $this->logic->update($page, $request->validated());
 
-        return Responder::fromResult($response,
+        return Responder::fromResult($res,
             trans('lareon::global.crud.success.updated', ['attribute' => __('page')]),
             trans('lareon::global.crud.error.updated', ['attribute' => __('page')]),
-            route('admin.pages.edit', $response->result)
+            route('admin.pages.edit', $res->result)
         )->go();
 
     }
@@ -111,12 +111,12 @@ class PagesController extends Controller implements HasMiddleware
      */
     public function destroy(Page $page)
     {
-        $response = $this->logic->delete($page);
+        $res = $this->logic->delete($page);
 
-        return Responder::fromResult($response,
+        return Responder::fromResult($res,
             trans('lareon::global.crud.success.deleted', ['attribute' => __('page')]),
             trans('lareon::global.crud.error.deleted', ['attribute' => __('page')]),
-            route('admin.pages.index', $response->result)
+            route('admin.pages.index', $res->result)
         )->go();
     }
 }
