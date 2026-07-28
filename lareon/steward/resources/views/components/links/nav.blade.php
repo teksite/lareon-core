@@ -11,15 +11,16 @@
     };
 
        $icon = match ($color){
-      'index'=>  'bar-3',
-      'create'=>  'green',
-      'update'=>  'blue',
-      'delete'=>  'red',
-      'show'=>  'violet',
-      default =>'gray'
+      'index'=>  'list-number',
+      'create'=>  'plus',
+
+      default =>null
     };
 
 @endphp
-<x-lareon::links.simple class="min-w-fit w-fit" :size="$size" :variant="$variant" :color="$convertedColor" :disabled="$disabled" :fullWidth="$fullWidth" :rounded="$rounded" :href="$href" :target="$target" :can="$can">
+<x-lareon::links.simple class="min-w-fit w-fit flex gap-3 py-2 items-center" :size="$size" :variant="$variant" :color="$convertedColor" :disabled="$disabled" :fullWidth="$fullWidth" :rounded="$rounded" :href="$href" :target="$target" :can="$can">
+    @if($icon)
+        <x-tkicon icon="{{$icon}}" class="fill-none  text-slate-50 size-4 stroke-2"/>
+    @endif
     {{$content ?? $slot}}
 </x-lareon::links.simple>
