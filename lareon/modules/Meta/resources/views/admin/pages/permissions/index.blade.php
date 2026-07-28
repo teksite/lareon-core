@@ -1,23 +1,25 @@
-<x-lareon::admin-list-creator :href="route('admin.authorize.permissions.store')">
+<x-lareon::admin-list-creator :href="route('admin.settings.meta.elements.store')">
     @section('title', __('lareon::global.crud.titles.list',['attribute'=>__('permissions')]))
     @section('description', __('each permission determines access to a specific section or feature in the application'))
     @section('form')
      <div class="space-y-6">
          <x-lareon::editor.input :required="true" type="text" :label="__('title')" name="title" :placeholder="__('lareon::global.placeholders.write.unique.one',['attribute'=>__('title')])"/>
-         <x-lareon::editor.input type="text" :label="__('description')" name="description" :placeholder="__('lareon::global.placeholders.write.one',['attribute'=>__('description')])"/>
+         <x-lareon::editor.select :label="__('description')" name="description" >
+
+         </x-lareon::editor.select>
      </div>
     @endsection
     @section('list')
-        <x-lareon::table :rows="$permissions" :headers="['id'=>'#','title'=>__('title'),'created_at'=>__('created at') ,'']">
-            @foreach($permissions as $key=>$permission)
+        <x-lareon::table :rows="$registered" :headers="['id'=>'#','title'=>__('title'),'created_at'=>__('created at') ,'']">
+            @foreach($registered as $key=>$element)
                 <tr>
-                    <td class="p-3">{{$permissions->firstItem() + $key}}</td>
-                    <td>{{$permission->title}}</td>
-                    <td> <x-lareon::date :date="$permission->created_at"/> </td>
+                    <td class="p-3">{{$registered->firstItem() + $key}}</td>
+                    <td>{{$element->title}}</td>
+                    <td> <x-lareon::date :date="$element->created_at"/> </td>
                     <td>
                         <x-lareon::action-box class="action">
-                            <x-lareon::links.action type="edit" :href="route('admin.authorize.permissions.edit' , $permission)" can="admin.permission.edit"/>
-                            <x-lareon::links.action type="delete" method="delete"  :href="route('admin.authorize.permissions.destroy' , $permission)" can="admin.permission.delete"/>
+                            <x-lareon::links.action type="edit" :href="route('admin.settings.meta.elements.edit' , $element)" can="admin.meta.element.edit"/>
+                            <x-lareon::links.action type="delete" method="delete"  :href="route('admin.settings.meta.elements.destroy' , $element)" can="admin.meta.element.delete"/>
                         </x-lareon::action-box>
                     </td>
                 </tr>
@@ -25,7 +27,7 @@
                 <x-slot:foot>
                     <tr>
                         <td  colspan="9" class="p-2">
-                            {!! $permissions->appends(request()->query())->links() !!}
+                            {!! $registered->appends(request()->query())->links() !!}
                         </td>
                     </tr>
                 </x-slot:foot>
