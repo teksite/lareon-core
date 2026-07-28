@@ -35,9 +35,10 @@ class ElementsController extends Controller implements HasMiddleware
     public function index()
     {
         $registered = $this->logic->all()->result;
-        $files = $this->logic->getFiles()->result;
+        $unregistered = $this->logic->getFiles()->result;
 
-        return view('meta::admin.pages.elements.index', compact('registered'));
+
+        return view('meta::admin.pages.elements.index', compact('registered' ,'unregistered'));
     }
 
     /**

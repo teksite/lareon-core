@@ -6,6 +6,7 @@ use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 use Lareon\Modules\Meta\App\Models\MetaElement;
 use Teksite\Handler\Actions\ServiceResult;
 use Teksite\Handler\Actions\ServiceWrapper;
@@ -77,22 +78,23 @@ class MeteaElementLogic
      */
     public function getFiles(?string $path = null): ServiceResult
     {
-        $files= [];
-        $path ??= modulePath('meta', 'resources/views/components/editor' ,true);
+        $path ??= modulePath('meta', 'resources/views/components/editor', true);
 
-        if (!is_dir($path)) return new ServiceResult(true, $files);
+        if (!File::isDirectory($path)) return new ServiceResult(true, []);
 
-       foreach (File::allFiles($path) as $file) {
-           if ($file->getExtension() === 'php') {
-               $r= str_replace($path , '', $file->getPathname());
-               $r= trim($r ,'\\');
-               $r= trim($r ,'/');
-               $r= rtrim($r ,'.php');
-               $files[] =$r;
-           }
-       }
-     return new ServiceResult(true, $files);
 
+        $files = collect(File::allFiles($path))
+            ->map(function ($file) use ($path) {
+                return Str::of($file->getPathname())
+                          ->after($path . DIRECTORY_SEPARATOR)
+                          ->replace('\\', '/')
+                          ->replaceLast('.php', '')
+                          ->toString();
+            })
+            ->values()
+            ->all();
+
+        return new ServiceResult(true, $files);
     }
 }
 

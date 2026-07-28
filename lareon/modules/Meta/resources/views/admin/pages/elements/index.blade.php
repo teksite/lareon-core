@@ -1,12 +1,14 @@
 <x-lareon::admin-list-creator :href="route('admin.settings.meta.elements.store')">
-    @section('title', __('lareon::global.crud.titles.list',['attribute'=>__('permissions')]))
+    @section('title', __('lareon::global.crud.titles.list',['attribute'=>__('elements')]))
     @section('description', __('each permission determines access to a specific section or feature in the application'))
     @section('form')
      <div class="space-y-6">
          <x-lareon::editor.input :required="true" type="text" :label="__('title')" name="title" :placeholder="__('lareon::global.placeholders.write.unique.one',['attribute'=>__('title')])"/>
-         <x-lareon::editor.select :label="__('description')" name="description" >
-
-         </x-lareon::editor.select>
+         <x-lareon::editor.input-select :label="__('path')" name="path" >
+            @foreach($unregistered as $newOne)
+                <option value="{{$newOne}}">{{$newOne}}</option>
+            @endforeach
+         </x-lareon::editor.input-select>
      </div>
     @endsection
     @section('list')
