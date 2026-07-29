@@ -50,9 +50,9 @@
     if ($hasFile) $formClasses .= " enctype='multipart/form-data'";
 
 
-   $styleClass = View::hasSection('aside')? ' lg:grid-cols-5 xl:grid-cols-7 ': '';
-
    $hasAside = \Illuminate\Support\Facades\View::hasSection('aside') || ($publishInfo &&  !$hasTab && $instance);
+   $styleClass = $hasAside ? 'flex flex-col lg:flex-row gap-6': '';
+
 @endphp
 
 <x-lareon::admin-layout>
@@ -66,8 +66,8 @@
         @method($method)
         @yield('form.start')
 
-        <div class="grid grid-cols-1 gap-6 {{$styleClass}} ">
-            <div class="lg:col-span-3 xl:col-span-5">
+        <div class="{{$styleClass}}">
+            <div class="w-full">
                 <div class="space-y-6">
                     @hasSection('form')
                         @if($hasTab)
@@ -94,7 +94,7 @@
                 </div>
             </div>
             @if($hasAside)
-                <aside class="lg:col-span-2 xl:col-span-2">
+                <aside class="w-full lg:max-w-[350px]">
                     <div class="sticky top-6 space-y-6">
                         @hasSection('aside')
                             @yield ('aside')

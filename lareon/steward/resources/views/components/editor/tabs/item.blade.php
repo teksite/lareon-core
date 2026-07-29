@@ -1,13 +1,12 @@
-@props(['title'])
-
-<fieldset class="tab-item bordering p-2 md:p-3 sm:p-6 rounded-xl" data-title="{{ $title }}" x-show="$parent.active===Array.from($el.parentElement.children).indexOf($el)" x-cloak>
-    <legend class="font-bold">{{$title}}</legend>
+<fieldset class="@container tab-item bordering p-2 md:p-3 sm:p-6 rounded-xl" data-title="{{ $title }}" x-show="$parent.active===Array.from($el.parentElement.children).indexOf($el)" x-cloak>
+    <legend class="font-bold">{{ $title }}</legend>
     @if(isset($aside))
-        <div class="grid grid-cols-1 gap-6 xl:grid-cols-7">
-            <main class="space-y-6 xl:col-span-5 ">
+        <div class="flex flex-col @[900px]:flex-row gap-6">
+            <main class="space-y-6 w-full">
                 {{ $slot }}
             </main>
-            <aside class="space-y-6 xl:col-span-2">
+
+            <aside class="space-y-6 w-full @[900px]:max-w-[350px]">
                 {{ $aside }}
             </aside>
         </div>
