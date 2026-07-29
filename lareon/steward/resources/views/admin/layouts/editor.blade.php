@@ -47,13 +47,12 @@
         default => 'plus'
     };
 
-    if ($hasFile) {
-        $formClasses .= " enctype='multipart/form-data'";
-    }
+    if ($hasFile) $formClasses .= " enctype='multipart/form-data'";
 
-   $styleClass = View::hasSection('aside')
-    ? ' lg:grid-cols-3 xl:grid-cols-7'
-    : '';
+
+   $styleClass = View::hasSection('aside')? ' lg:grid-cols-5 xl:grid-cols-7 ': '';
+
+   $hasAside = \Illuminate\Support\Facades\View::hasSection('aside') || ($publishInfo &&  !$hasTab && $instance);
 @endphp
 
 <x-lareon::admin-layout>
@@ -68,7 +67,7 @@
         @yield('form.start')
 
         <div class="grid grid-cols-1 gap-6 {{$styleClass}} ">
-            <div class="lg:col-span-2 xl:col-span-5">
+            <div class="lg:col-span-3 xl:col-span-5">
                 <div class="space-y-6">
                     @hasSection('form')
                         @if($hasTab)
@@ -77,7 +76,7 @@
 
                                 @if($publishInfo || $publishStatus)
                                     <x-lareon::editor.tabs.item :title="__('publish data')">
-                                        <div @class($publishInfo && $publishStatus ? 'grid gap-6 md:grid-cols-2': '')>
+                                        <div @class($publishInfo && $publishStatus ? 'grid gap-6 lg:grid-cols-2': '')>
                                             @if($publishStatus)
                                                 <x-lareon::editor.section.publish-status :instance="$instance"/>
                                             @endif
@@ -94,16 +93,18 @@
                     @endif
                 </div>
             </div>
-            <aside class="xl:col-span-2">
-                <div class="sticky top-6 space-y-6">
-                    @hasSection('aside')
-                        @yield ('aside')
-                    @endif
-                    @if($publishInfo &&  !$hasTab && $instance)
-                        <x-lareon::editor.section.publish-info :instance="$instance"/>
-                    @endif
-                </div>
-            </aside>
+            @if($hasAside)
+                <aside class="lg:col-span-2 xl:col-span-2">
+                    <div class="sticky top-6 space-y-6">
+                        @hasSection('aside')
+                            @yield ('aside')
+                        @endif
+                        @if($publishInfo &&  !$hasTab && $instance)
+                            <x-lareon::editor.section.publish-info :instance="$instance"/>
+                        @endif
+                    </div>
+                </aside>
+            @endif
         </div>
 
         @yield('form.end')

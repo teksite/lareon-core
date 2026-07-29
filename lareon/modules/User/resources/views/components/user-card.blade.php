@@ -7,7 +7,7 @@
     ]
 @endphp
 <div class="y-box">
-    <div class="bordering rounded-xl p-6 space-y-6">
+    <div class="bordering rounded-xl p-3 space-y-6">
         <figure class="mb-6">
             <img src="{{asset('assets/images/avatar-default.jpg')}}" alt="{{$user->fullname}}" width="100" height="100" class="rounded-full mx-auto" loading="lazy">
             <figcaption class="block text-center mt-3 font-bold">
