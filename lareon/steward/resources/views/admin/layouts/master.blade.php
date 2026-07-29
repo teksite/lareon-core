@@ -20,7 +20,9 @@
         @include('lareon::admin.layouts.partials.upper-header')
         @include('lareon::admin.layouts.partials.header')
         @include('lareon::admin.layouts.partials.errors')
-        {!! $slot !!}
+       <div class="p-3">
+           {!! $slot !!}
+       </div>
     </div>
 </main>
 @include('lareon::admin.layouts.partials.footer')

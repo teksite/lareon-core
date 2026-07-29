@@ -11,8 +11,8 @@
         <x-lareon::search/>
     @endsection
 
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div class="space-y-6">
+    <div class="@container flex flex-col lg:flex-row gap-6">
+        <div class="space-y-6 w-full lg:max-w-[400px]">
             @yield('form.before')
             @if(View::hasSection('form'))
                 <x-lareon::box typ="y">
@@ -32,7 +32,7 @@
             @endif
             @yield('form.after')
         </div>
-        <div class="lg:col-span-2 flex flex-col gap-6">
+        <div class="flex flex-col gap-6 w-full">
             @yield('list')
         </div>
     </div>
