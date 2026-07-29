@@ -79,5 +79,10 @@
                 </x-lareon::editor.tabs.section>
             </x-lareon::editor.tabs.item>
         @endif
+
+
+    @endsection
+    @section('aside')
+        <x-user::user-card :user="$user"/>
     @endsection
 </x-lareon::admin-editor>
