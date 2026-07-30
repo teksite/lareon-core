@@ -1,6 +1,6 @@
 <x-lareon::admin-list-creator :href="route('admin.settings.meta.elements.store')">
     @section('title', __('lareon::global.crud.titles.list',['attribute'=>__('elements')]))
-    @section('description', __('each permission determines access to a specific section or feature in the application'))
+    @section('description', __('elements are collections of content fields that can be assigned to different templates, allowing you to add template-specific content to each one'))
     @section('form')
      <div class="space-y-6">
          <x-lareon::editor.input :required="true" type="text" :label="__('title')" name="title" :placeholder="__('lareon::global.placeholders.write.unique.one',['attribute'=>__('title')])"/>
@@ -12,11 +12,12 @@
      </div>
     @endsection
     @section('list')
-        <x-lareon::table :rows="$registered" :headers="['id'=>'#','title'=>__('title'),'created_at'=>__('created at') ,'']">
+        <x-lareon::table :rows="$registered" :headers="['id'=>'#','title'=>__('title'),'element'=>__('element'),'created_at'=>__('created at') ,'']">
             @foreach($registered as $key=>$element)
                 <tr>
                     <td class="p-3">{{$registered->firstItem() + $key}}</td>
                     <td>{{$element->title}}</td>
+                    <td>{{$element->element}}</td>
                     <td> <x-lareon::date :date="$element->created_at"/> </td>
                     <td>
                         <x-lareon::action-box class="action">

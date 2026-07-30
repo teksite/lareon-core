@@ -21,7 +21,7 @@ class MeteaElementLogic
     {
         return ServiceWrapper::make(false)
                              ->do(
-                                 fn() => FetchDataService::get(MetaElement::class, ['title', 'path'])
+                                 fn() => FetchDataService::get(MetaElement::class, ['title', 'element'])
                              )->run();
     }
 
@@ -95,6 +95,15 @@ class MeteaElementLogic
             ->all();
 
         return new ServiceResult(true, $files);
+    }
+
+
+    public function getUnregistered(?string $path = null)
+    {
+        $files= $this->getFiles($path)->result ??[];
+        $registeredPath=MetaElement::query()->select('element')->get()->pluck('element')->toArray();
+
+        return array_diff($files, $registeredPath);
     }
 }
 
