@@ -21,6 +21,7 @@ return new class extends Migration {
             $table->id();
             $table->string('element' , 150)->unique();
             $table->string('title' , 150)->unique();
+            $table->json('settings')->nullable();
             $table->timestamps();
         });
 
