@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('meta_templates', function (Blueprint $table) {
             $table->id();
-            $table->string('path' , 150)->unique();
+            $table->string('template' , 150)->unique();
             $table->string('title' , 150)->unique();
             $table->timestamps();
         });

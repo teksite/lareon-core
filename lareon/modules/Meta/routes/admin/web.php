@@ -6,5 +6,5 @@ use Lareon\Modules\Meta\App\Http\Controllers\Web\Admin\Templates\TemplatesContro
 
 Route::name('settings.meta.')->prefix('settings')->group(function () {
     Route::resource('elements', ElementsController::class);
-    Route::resource('template', TemplatesController::class);
+    Route::resource('templates', TemplatesController::class);
 });

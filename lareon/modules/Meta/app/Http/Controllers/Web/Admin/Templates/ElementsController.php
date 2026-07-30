@@ -8,14 +8,14 @@ use Illuminate\Routing\Controllers\Middleware;
 use Lareon\Modules\Meta\App\Http\Controllers\Controller;
 use Lareon\Modules\Meta\App\Http\Requests\Admin\NewElementRequest;
 use Lareon\Modules\Meta\App\Http\Requests\Admin\UpdateElementRequest;
-use Lareon\Modules\Meta\App\Logics\MeteaElementLogic;
+use Lareon\Modules\Meta\App\Logics\MetaElementLogic;
 use Lareon\Modules\Meta\App\Models\MetaElement;
 use Teksite\Handler\Facade\Responder;
 
 class ElementsController extends Controller implements HasMiddleware
 {
 
-    public function __construct(public MeteaElementLogic $logic) {}
+    public function __construct(public MetaElementLogic $logic) {}
 
     public static function middleware()
     {

@@ -7,12 +7,12 @@ use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-use Lareon\Modules\Meta\App\Models\MetaElement;
+use Lareon\Modules\Meta\App\Models\MetaTemplate;
 use Teksite\Handler\Actions\ServiceResult;
 use Teksite\Handler\Actions\ServiceWrapper;
 use Teksite\Handler\Services\FetchDataService;
 
-class MeteaElementLogic
+class MetaTemplateLogic
 {
     /**
      * @throws \Throwable
@@ -21,7 +21,7 @@ class MeteaElementLogic
     {
         return ServiceWrapper::make(false)
                              ->do(
-                                 fn() => FetchDataService::get(MetaElement::class, ['title', 'element'])
+                                 fn() => FetchDataService::get(MetaTemplate::class, ['title', 'template'])
                              )->run();
     }
 
@@ -33,7 +33,7 @@ class MeteaElementLogic
     public function first(array $inputs = [], bool $any = true): ServiceResult
     {
         return ServiceWrapper::make(false)->do(function () use ($inputs) {
-            $query = MetaElement::query();
+            $query = MetaTemplate::query();
             foreach ($inputs as $key => $value) {
                 $query->where($key, $value);
             }
@@ -46,28 +46,28 @@ class MeteaElementLogic
     public function create(array $inputs = []): ServiceResult
     {
         return ServiceWrapper::make(true)->do(function () use ($inputs) {
-            return MetaElement::query()->create($inputs);
+            return MetaTemplate::query()->create($inputs);
         })->run();
     }
 
     /**
      * @throws \Throwable
      */
-    public function update(MetaElement $elements, array $inputs = []): ServiceResult
+    public function update(MetaTemplate $templates, array $inputs = []): ServiceResult
     {
-        return ServiceWrapper::make(false)->do(function () use ($elements, $inputs) {
-            $elements->update(['title'=>$inputs['title']]);
-            return $elements->refresh();
+        return ServiceWrapper::make(false)->do(function () use ($templates, $inputs) {
+            $templates->update(['title'=>$inputs['title']]);
+            return $templates->refresh();
         })->run();
     }
 
     /**
      * @throws \Throwable
      */
-    public function delete(MetaElement $elements): ServiceResult
+    public function delete(MetaTemplate $templates): ServiceResult
     {
-        return ServiceWrapper::make(false)->do(function () use ($elements) {
-            $elements->delete();
+        return ServiceWrapper::make(false)->do(function () use ($templates) {
+            $templates->delete();
         })->run();
     }
 
@@ -101,7 +101,7 @@ class MeteaElementLogic
     public function getUnregistered(?string $path = null)
     {
         $files= $this->getFiles($path)->result ??[];
-        $registeredPath=MetaElement::query()->select('element')->get()->pluck('element')->toArray();
+        $registeredPath=MetaTemplate::query()->select('template')->get()->pluck('template')->toArray();
 
         return array_diff($files, $registeredPath);
     }

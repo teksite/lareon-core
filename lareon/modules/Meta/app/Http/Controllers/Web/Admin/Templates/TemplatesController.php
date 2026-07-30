@@ -6,24 +6,24 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Lareon\Modules\Meta\App\Http\Controllers\Controller;
-use Lareon\Modules\Meta\App\Http\Requests\Admin\NewElementRequest;
-use Lareon\Modules\Meta\App\Http\Requests\Admin\UpdateElementRequest;
-use Lareon\Modules\Meta\App\Logics\MeteaElementLogic;
-use Lareon\Modules\Meta\App\Models\MetaElement;
+use Lareon\Modules\Meta\App\Http\Requests\Admin\NewTemplateRequest;
+use Lareon\Modules\Meta\App\Http\Requests\Admin\UpdateTemplateRequest;
+use Lareon\Modules\Meta\App\Logics\MetaTemplateLogic;
+use Lareon\Modules\Meta\App\Models\MetaTemplate;
 use Teksite\Handler\Facade\Responder;
 
 class TemplatesController extends Controller implements HasMiddleware
 {
 
-    public function __construct(public MeteaElementLogic $logic) {}
+    public function __construct(public MetaTemplateLogic $logic) {}
 
     public static function middleware()
     {
         return [
-            new Middleware('can:admin.meta.element.read'),
-            new Middleware('can:admin.meta.element.create', only: ['create', 'store']),
-            new Middleware('can:admin.meta.element.edit', only: ['edit', 'update']),
-            new Middleware('can:admin.meta.element.delete', only: ['destroy']),
+            new Middleware('can:admin.meta.template.read'),
+            new Middleware('can:admin.meta.template.create', only: ['create', 'store']),
+            new Middleware('can:admin.meta.template.edit', only: ['edit', 'update']),
+            new Middleware('can:admin.meta.template.delete', only: ['destroy']),
         ];
     }
 
@@ -37,7 +37,7 @@ class TemplatesController extends Controller implements HasMiddleware
         $registered = $this->logic->all()->result;
         $unregistered = $this->logic->getUnregistered();
 
-        return view('meta::admin.pages.elements.index', compact('registered' ,'unregistered'));
+        return view('meta::admin.pages.templates.index', compact('registered' ,'unregistered'));
     }
 
     /**
@@ -53,21 +53,21 @@ class TemplatesController extends Controller implements HasMiddleware
      *
      * @throws \Throwable
      */
-    public function store(NewElementRequest $request)
+    public function store(NewTemplateRequest $request)
     {
         $res = $this->logic->create($request->validated());
 
         return Responder::fromResult($res,
-            trans('lareon::global.crud.success.created', ['attribute' => __('element')]),
-            trans('lareon::global.crud.error.created', ['attribute' => __('element')]),
-            route('admin.settings.meta.elements.index')
+            trans('lareon::global.crud.success.created', ['attribute' => __('template')]),
+            trans('lareon::global.crud.error.created', ['attribute' => __('template')]),
+            route('admin.settings.meta.templates.index')
         )->go();
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(MetaElement $element)
+    public function show(MetaTemplate $template)
     {
         abort(404);
     }
@@ -75,9 +75,9 @@ class TemplatesController extends Controller implements HasMiddleware
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(MetaElement $element)
+    public function edit(MetaTemplate $template)
     {
-        return view('meta::admin.pages.elements.edit', compact('element'));
+        return view('meta::admin.pages.templates.edit', compact('template'));
     }
 
     /**
@@ -85,13 +85,13 @@ class TemplatesController extends Controller implements HasMiddleware
      *
      * @throws \Throwable
      */
-    public function update(UpdateElementRequest $request, MetaElement $element)
+    public function update(UpdateTemplateRequest $request, MetaTemplate $template)
     {
-        $res = $this->logic->update($element, $request->validated());
+        $res = $this->logic->update($template, $request->validated());
         return Responder::fromResult($res,
-            trans('lareon::global.crud.success.updated', ['attribute' => __('element')]),
-            trans('lareon::global.crud.error.updated', ['attribute' => __('element')]),
-            route('admin.settings.meta.elements.edit', $res->result)
+            trans('lareon::global.crud.success.updated', ['attribute' => __('template')]),
+            trans('lareon::global.crud.error.updated', ['attribute' => __('template')]),
+            route('admin.settings.meta.templates.edit', $res->result)
         )->go();
     }
 
@@ -100,14 +100,14 @@ class TemplatesController extends Controller implements HasMiddleware
      *
      * @throws \Throwable
      */
-    public function destroy(MetaElement $element)
+    public function destroy(MetaTemplate $template)
     {
-        $res = $this->logic->delete($element);
+        $res = $this->logic->delete($template);
 
         return Responder::fromResult($res,
-            trans('lareon::global.crud.success.deleted', ['attribute' => __('element')]),
-            trans('lareon::global.crud.error.deleted', ['attribute' => __('element')]),
-            route('admin.settings.meta.elements.index')
+            trans('lareon::global.crud.success.deleted', ['attribute' => __('template')]),
+            trans('lareon::global.crud.error.deleted', ['attribute' => __('template')]),
+            route('admin.settings.meta.templates.index')
         )->go();
     }
 }

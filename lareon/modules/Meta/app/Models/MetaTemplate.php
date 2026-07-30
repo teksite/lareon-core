@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Validation\Rule;
 
-#[Fillable(['title' ,'path'])]
+#[Fillable(['title' ,'template'])]
 #[Table('meta_templates')]
 class MetaTemplate extends Model
 {
@@ -19,7 +19,7 @@ class MetaTemplate extends Model
         return match (true) {
             $operation === 'create'          => [
                 'title' => 'required|string|max:100|unique:meta_templates,title',
-                'path'  => 'required|string|max:100|unique:meta_templates,template',
+                'template'  => 'required|string|max:100|unique:meta_templates,template',
             ],
             ($operation === 'update' && $id) => [
                 'title' => ['required', 'string', Rule::unique('meta_templates', 'title')->ignore($id)],
