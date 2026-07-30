@@ -50,8 +50,6 @@ class PermissionsSeeder extends Seeder
                 'title'=>'admin.meta.template.delete',
                 'description'=>'have access to delete attached components to model (in the admin panel)',
             ],
-
-
         ]);
 
     }

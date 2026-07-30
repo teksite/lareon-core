@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Validation\Rule;
 
-#[Fillable(['title' ,'element'])]
-#[Table('meta_elements')]
-class MetaElement extends Model
+#[Fillable(['title' ,'path'])]
+#[Table('meta_templates')]
+class MetaTemplate extends Model
 {
 
 
@@ -18,12 +18,12 @@ class MetaElement extends Model
     {
         return match (true) {
             $operation === 'create'          => [
-                'title' => 'required|string|max:100|unique:meta_elements,title',
-                'element'  => 'required|string|max:100|unique:meta_elements,element',
+                'title' => 'required|string|max:100|unique:meta_templates,title',
+                'path'  => 'required|string|max:100|unique:meta_templates,template',
             ],
             ($operation === 'update' && $id) => [
-                'title' => ['required', 'string', Rule::unique('meta_elements', 'title')->ignore($id)],
-//                'element'  => ['required', 'string', Rule::unique('meta_elements', 'element')->ignore($id)],
+                'title' => ['required', 'string', Rule::unique('meta_templates', 'title')->ignore($id)],
+                'template'  => ['required', 'string', Rule::unique('meta_templates', 'template')->ignore($id)],
             ],
             default                          => throw new \InvalidArgumentException("Operation '{$operation}' is not valid. Allowed: create, update")
         };
@@ -31,7 +31,7 @@ class MetaElement extends Model
 
     public function templates(): HasMany
     {
-        return $this->hasMany(MetaFieldTemplate::class, 'meta_element_id');
+        return $this->hasMany(MetaFieldTemplate::class, 'meta_template_id');
     }
 
 }

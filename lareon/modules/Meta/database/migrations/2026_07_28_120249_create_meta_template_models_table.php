@@ -10,6 +10,12 @@ return new class extends Migration {
      */
     public function up(): void
     {
+        Schema::create('meta_templates', function (Blueprint $table) {
+            $table->id();
+            $table->string('path' , 150)->unique();
+            $table->string('title' , 150)->unique();
+            $table->timestamps();
+        });
 
         Schema::create('meta_elements', function (Blueprint $table) {
             $table->id();
@@ -22,7 +28,7 @@ return new class extends Migration {
         Schema::create('meta_template_fields', function (Blueprint $table) {
             $table->id();
             $table->string('model_type');
-            $table->string('template', 150);
+            $table->foreignId('meta_templates_id')->constrained('meta_templates')->cascadeOnDelete();
             $table->foreignId('meta_element_id')->constrained('meta_elements')->cascadeOnDelete();
             $table->string('title');
             $table->string('name');
@@ -30,19 +36,19 @@ return new class extends Migration {
             $table->unsignedInteger('sort')->default(0);
             $table->timestamps();
 
-            $table->index(['model_type', 'template']);
-            $table->unique(['model_type', 'template', 'name']);
+            $table->index(['model_type', 'meta_templates_id']);
+            $table->unique(['model_type', 'meta_templates_id', 'name']);
         });
 
 
         Schema::create('meta_models', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('field_id')->constrained('meta_template_fields')->cascadeOnDelete();
+            $table->foreignId('meta_template_id')->constrained('meta_elements')->cascadeOnDelete();
             $table->morphs('model');
             $table->json('content')->nullable();
             $table->timestamps();
 
-            $table->unique(['field_id', 'model_type', 'model_id']);
+            $table->unique(['meta_template_id', 'model_type', 'model_id']);
         });
     }
 
@@ -54,6 +60,7 @@ return new class extends Migration {
         Schema::dropIfExists('meta_models');
         Schema::dropIfExists('meta_template_fields');
         Schema::dropIfExists('meta_elements');
+        Schema::dropIfExists('meta_templates');
 
     }
 };
