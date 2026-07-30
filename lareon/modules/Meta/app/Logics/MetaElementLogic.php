@@ -56,7 +56,7 @@ class MetaElementLogic
     public function update(MetaElement $elements, array $inputs = []): ServiceResult
     {
         return ServiceWrapper::make(false)->do(function () use ($elements, $inputs) {
-            $elements->update(['title'=>$inputs['title']]);
+            $elements->update(['title' => $inputs['title']]);
             return $elements->refresh();
         })->run();
     }
@@ -98,12 +98,24 @@ class MetaElementLogic
     }
 
 
-    public function getUnregistered(?string $path = null)
+    public function getUnregistered(?string $path = null): array
     {
-        $files= $this->getFiles($path)->result ??[];
-        $registeredPath=MetaElement::query()->select('element')->get()->pluck('element')->toArray();
+        $files = $this->getFiles($path)->result ?? [];
+        $registeredPath = MetaElement::query()->select('element')->get()->pluck('element')->toArray();
 
         return array_diff($files, $registeredPath);
     }
+
+    /**
+     * @throws \Throwable
+     */
+    public function list(): ServiceResult
+    {
+        return ServiceWrapper::make(false)
+                             ->do(
+                                 fn() => MetaElement::query()->select(['id', 'title'])->get()
+                             )->run();
+    }
+
 }
 

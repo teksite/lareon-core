@@ -8,6 +8,7 @@ use Illuminate\Routing\Controllers\Middleware;
 use Lareon\Modules\Meta\App\Http\Controllers\Controller;
 use Lareon\Modules\Meta\App\Http\Requests\Admin\NewTemplateRequest;
 use Lareon\Modules\Meta\App\Http\Requests\Admin\UpdateTemplateRequest;
+use Lareon\Modules\Meta\App\Logics\MetaElementLogic;
 use Lareon\Modules\Meta\App\Logics\MetaTemplateLogic;
 use Lareon\Modules\Meta\App\Models\MetaTemplate;
 use Teksite\Handler\Facade\Responder;
@@ -74,10 +75,13 @@ class TemplatesController extends Controller implements HasMiddleware
 
     /**
      * Show the form for editing the specified resource.
+     *
+     * @throws \Throwable
      */
     public function edit(MetaTemplate $template)
     {
-        return view('meta::admin.pages.templates.edit', compact('template'));
+        $elements=(new MetaElementLogic())->list()->result ?? null;
+        return view('meta::admin.pages.templates.edit', compact('template' ,'elements'));
     }
 
     /**
