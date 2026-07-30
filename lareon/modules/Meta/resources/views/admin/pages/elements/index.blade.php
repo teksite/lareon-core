@@ -4,7 +4,7 @@
     @section('form')
      <div class="space-y-6">
          <x-lareon::editor.input :required="true" type="text" :label="__('title')" name="title" :placeholder="__('lareon::global.placeholders.write.unique.one',['attribute'=>__('title')])"/>
-         <x-lareon::editor.input-select :label="__('path')" name="path" >
+         <x-lareon::editor.input-select :label="__('element')" name="element" >
             @foreach($unregistered as $newOne)
                 <option value="{{$newOne}}">{{$newOne}}</option>
             @endforeach

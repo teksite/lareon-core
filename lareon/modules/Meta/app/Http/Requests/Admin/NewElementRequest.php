@@ -2,6 +2,7 @@
 namespace Lareon\Modules\Meta\App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Lareon\Modules\Meta\App\Models\MetaElement;
 
 class NewElementRequest extends FormRequest
 {
@@ -10,7 +11,7 @@ class NewElementRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return userCan('admin.meta.element.create');
     }
 
     /**
@@ -20,8 +21,6 @@ class NewElementRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
-        ];
+        return MetaElement::rules('create');
     }
 }

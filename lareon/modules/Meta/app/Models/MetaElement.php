@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Validation\Rule;
 
-#[Fillable(['title'])]
+#[Fillable(['title' ,'element'])]
 #[Table('meta_elements')]
 class MetaElement extends Model
 {
@@ -18,12 +18,12 @@ class MetaElement extends Model
     {
         return match (true) {
             $operation === 'create'          => [
-                'title' => 'required|string|max:100',
-                'path'  => 'required|string|max:100',
+                'title' => 'required|string|max:100|unique:meta_elements,title',
+                'element'  => 'required|string|max:100|unique:meta_elements,element',
             ],
             ($operation === 'update' && $id) => [
                 'title' => ['required', 'string', Rule::unique('meta_elements', 'title')->ignore($id)],
-                'path'  => ['required', 'string', Rule::unique('meta_elements', 'path')->ignore($id)],
+                'element'  => ['required', 'string', Rule::unique('meta_elements', 'element')->ignore($id)],
             ],
             default                          => throw new \InvalidArgumentException("Operation '{$operation}' is not valid. Allowed: create, update")
         };

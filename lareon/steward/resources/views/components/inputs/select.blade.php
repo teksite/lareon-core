@@ -2,7 +2,7 @@
 @php
     $selectedValues = is_array($selected) ? $selected : (array)$selected;
 
-    $classes = 'input';
+    $classes = 'input block w-full';
     if ($multiple) {
         $classes .= ' multiple-select';
     }

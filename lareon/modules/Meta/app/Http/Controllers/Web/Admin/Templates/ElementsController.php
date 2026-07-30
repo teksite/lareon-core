@@ -61,7 +61,7 @@ class ElementsController extends Controller implements HasMiddleware
         return Responder::fromResult($res,
             trans('lareon::global.crud.success.created', ['attribute' => __('element')]),
             trans('lareon::global.crud.error.created', ['attribute' => __('element')]),
-            route('admin.settings.meta.elemetns.edit', $res->result)
+            route('admin.settings.meta.elements.index')
         )->go();
     }
 
