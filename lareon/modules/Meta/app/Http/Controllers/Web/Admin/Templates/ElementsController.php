@@ -91,7 +91,7 @@ class ElementsController extends Controller implements HasMiddleware
         return Responder::fromResult($res,
             trans('lareon::global.crud.success.updated', ['attribute' => __('element')]),
             trans('lareon::global.crud.error.updated', ['attribute' => __('element')]),
-            route('admin.settings.meta.elemetns.edit', $res->result)
+            route('admin.settings.meta.elements.edit', $res->result)
         )->go();
     }
 
@@ -107,7 +107,7 @@ class ElementsController extends Controller implements HasMiddleware
         return Responder::fromResult($res,
             trans('lareon::global.crud.success.deleted', ['attribute' => __('element')]),
             trans('lareon::global.crud.error.deleted', ['attribute' => __('element')]),
-            route('admin.settings.meta.elemetns.index', $res->result)
+            route('admin.settings.meta.elements.index')
         )->go();
     }
 }

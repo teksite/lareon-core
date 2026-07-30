@@ -23,7 +23,7 @@ class MetaElement extends Model
             ],
             ($operation === 'update' && $id) => [
                 'title' => ['required', 'string', Rule::unique('meta_elements', 'title')->ignore($id)],
-                'element'  => ['required', 'string', Rule::unique('meta_elements', 'element')->ignore($id)],
+//                'element'  => ['required', 'string', Rule::unique('meta_elements', 'element')->ignore($id)],
             ],
             default                          => throw new \InvalidArgumentException("Operation '{$operation}' is not valid. Allowed: create, update")
         };

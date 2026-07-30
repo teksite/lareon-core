@@ -1,7 +1,9 @@
 <?php
+
 namespace Lareon\Modules\Meta\App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Lareon\Modules\Meta\App\Models\MetaElement;
 
 class UpdateElementRequest extends FormRequest
 {
@@ -10,7 +12,7 @@ class UpdateElementRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return userCan('admin.meta.element.edit');
     }
 
     /**
@@ -20,8 +22,7 @@ class UpdateElementRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
-        ];
+        return MetaElement::rules('update', $this->element->id);
+
     }
 }
