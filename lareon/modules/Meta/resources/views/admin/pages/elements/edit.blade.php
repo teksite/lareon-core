@@ -2,6 +2,7 @@
     @section('title', __('lareon::global.crud.titles.edit_current',['attribute'=>__('element') , 'item'=>($element->title)]))
     @section('header.start')
         <x-lareon::links.nav :href="route('admin.settings.meta.elements.index')" :content="__('lareon::global.buttons.all_attribute' ,['attribute'=>__('elements')])" color="index" can="admin.meta.element.read"/>
+        <x-lareon::links.nav :href="route('admin.settings.meta.elements.create')" :content="__('lareon::global.buttons.new_attribute' ,['attribute'=>__('element')])" color="create" can="admin.meta.element.create"/>
     @endsection
     @section('header.end')
         <x-lareon::links.action type="delete" :href="route('admin.settings.meta.elements.destroy', $element)" method="delete" :label="trans('lareon::global.buttons.delete')" can="admin.meta.element.delete"/>
