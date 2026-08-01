@@ -38,7 +38,6 @@ class TemplatesController extends Controller implements HasMiddleware
         $registered = $this->logic->all()->result;
         $unregistered = $this->logic->getUnregistered();
 
-        dd($unregistered);
         return view('meta::admin.pages.templates.index', compact('registered' ,'unregistered'));
     }
 

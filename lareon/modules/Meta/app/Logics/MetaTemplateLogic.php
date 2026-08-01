@@ -100,13 +100,11 @@ class MetaTemplateLogic
     {
         $models = config('meta.models', []);
         $files = [];
-        foreach ($models as ['model' => $model, 'path' => $path]) {
+        foreach ($models as $key => ['model' => $model, 'path' => $path]) {
             $dir = resource_path('views/' . $path);
             if (!File::isDirectory($dir)) return new ServiceResult(true, []);
 
-            $files[$model]['model'] = $model;
-
-            $files[$model]['pathes'] = collect(File::allFiles($dir))
+            $files[$key] = collect(File::allFiles($dir))
                 ->map(function ($file) use ($path) {
 
                     return Str::of($file->getRelativePathname())
@@ -124,7 +122,7 @@ class MetaTemplateLogic
     }
 
 
-    public function getUnregistered(?string $path = null) :array
+    public function getUnregistered(?string $path = null): array
     {
         $files = $this->getFiles($path)->result ?? [];
 
@@ -132,19 +130,18 @@ class MetaTemplateLogic
 
         $unregistered = [];
 
-        foreach ($files as ['pathes' => $pathes, 'model' => $model]) {
-            foreach ($pathes as $path) {
-                $isRegistered = MetaTemplate::query()->where(function ($q) use ($model, $path) {
-                    $q->where('model_type', $model)->where('template', $path);
+        foreach ($files as $key => $files) {
+            foreach ($files as $file) {
+
+                $isRegistered = MetaTemplate::query()->where(function ($q) use ($file, $key) {
+                    $q->where('model_type', $key)->where('template', $file);
 
                 })->exists();
                 if ($isRegistered) continue;
-                $unregistered[] = ['path' => $path, 'model' => $model];
+                $unregistered[$key][] = $file;
             }
         }
-
         return $unregistered;
-
     }
 }
 
