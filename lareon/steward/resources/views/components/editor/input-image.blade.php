@@ -51,7 +51,9 @@
         <x-lareon::inputs.text name="{{$name}}" id="input_{{$finalId}}" :value="$consideredValue" :disabled="$disabled" :required="$required" :readonly="$readonly" class="{{$errorStyle}}" dir="ltr" placeholder="{{$placeholder['src']}}" {{$attributes}}/>
         <x-lareon::inputs.error :messages="$errorMessage ?? null"/>
         <button role="button" type="button" data-delete-btn class="text-red-600 bg-red-50  min-w-fit w-fit rounded-xl text-xs font-semibold absolute top-5 left-5 p-0.5">x {{__('delete')}}</button>
-        <button role="button" type="button" class="imageBtn" data-filemanager data-type="object" id="button_{{$finalId}}" data-id="input_{{$finalId}}">{{$title}}</button>
+        <x-lareon::buttons.simple :fullWidth="true" color="gray" role="button" type="button" class="imageBtn" data-filemanager data-type="object" id="button_{{$finalId}}" data-id="input_{{$finalId}}">
+            {{$title}}
+        </x-lareon::buttons.simple>
     </div>
 
 </div>

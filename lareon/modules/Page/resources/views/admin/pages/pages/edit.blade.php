@@ -6,7 +6,7 @@
     @endsection
     @section('header.end')
         <x-lareon::links.action type="delete" :href="route('admin.pages.destroy', $page)" method="delete"  :label="trans('lareon::global.buttons.delete')" can="admin.page.delete"/>
-        
+
     @endsection
 
     @section('form')
