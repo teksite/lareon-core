@@ -1,6 +1,6 @@
 <x-lareon::admin-list-creator :href="route('admin.settings.meta.templates.store')">
     @section('title', __('lareon::global.crud.titles.list',['attribute'=>__('templates')]))
-    @section('description', __('templates are collections of content fields that can be assigned to different templates, allowing you to add template-specific content to each one'))
+    @section('description', __('templates are custom views that can contain additional fields and a different layout. They can be assigned to pages, allowing them to store extra data and display content with a layout different from the default page template'))
 
     @section('header.start')
         <x-lareon::links.nav :href="route('admin.settings.meta.elements.index')" :content="__('lareon::global.buttons.all_attribute' ,['attribute'=>__('elements')])" color="index" can="admin.meta.element.read"/>
