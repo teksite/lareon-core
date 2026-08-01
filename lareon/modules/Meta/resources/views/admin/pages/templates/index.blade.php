@@ -1,6 +1,11 @@
 <x-lareon::admin-list-creator :href="route('admin.settings.meta.templates.store')">
     @section('title', __('lareon::global.crud.titles.list',['attribute'=>__('templates')]))
     @section('description', __('templates are collections of content fields that can be assigned to different templates, allowing you to add template-specific content to each one'))
+
+    @section('header.start')
+        <x-lareon::links.nav :href="route('admin.settings.meta.elements.index')" :content="__('lareon::global.buttons.all_attribute' ,['attribute'=>__('elements')])" color="index" can="admin.meta.element.read"/>
+    @endsection
+
     @section('form')
      <div class="space-y-6">
          <x-lareon::editor.input :required="true" type="text" :label="__('title')" name="title" :placeholder="__('lareon::global.placeholders.write.unique.one',['attribute'=>__('title')])"/>

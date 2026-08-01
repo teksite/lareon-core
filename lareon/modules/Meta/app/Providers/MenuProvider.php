@@ -36,9 +36,9 @@ class MenuProvider implements MenuRegisteringContract
             [
                 'title'      => trans('template editor'),
                 'order'      => 5,
-                'route'      => 'admin.settings.meta.elements.index',
-                'active'     => request()->routeIs('admin.settings.meta.elements.index'),
-                'permission' => 'admin.meta.element.read',
+                'route'      => 'admin.settings.meta.templates.index',
+                'active'     => request()->routeIs('admin.settings.meta.*'),
+                'permission' => 'admin.meta.template.read',
             ],
         ], 'settings');
 

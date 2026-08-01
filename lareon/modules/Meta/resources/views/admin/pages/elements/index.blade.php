@@ -3,6 +3,8 @@
     @section('description', __('elements are collections of content fields that can be assigned to different templates, allowing you to add template-specific content to each one'))
     @section('header.start')
         <x-lareon::links.nav :href="route('admin.settings.meta.elements.create')" :content="__('lareon::global.buttons.new_one')" color="create" can="admin.meta.element.create"/>
+        <x-lareon::links.nav :href="route('admin.settings.meta.templates.index')" :content="__('lareon::global.buttons.all_attribute' ,['attribute'=>__('templates')])" color="index" can="admin.meta.template.read"/>
+
     @endsection
     @section('list')
         <x-lareon::table :rows="$registered" :headers="['id'=>'#','title'=>__('title'),'element'=>__('element'),'created_at'=>__('created at') ,'']">

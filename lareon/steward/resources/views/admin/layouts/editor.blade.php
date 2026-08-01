@@ -67,8 +67,7 @@
         @yield('form.start')
 
         <div class="{{$styleClass}}">
-            <div class="w-full">
-                <div class="space-y-6">
+                <div class="w-full space-y-6">
                     @hasSection('form')
                         @if($hasTab)
                             <x-lareon::editor.tabs.layout>
@@ -92,7 +91,6 @@
                         @endif
                     @endif
                 </div>
-            </div>
             @if($hasAside)
                 <aside class="w-full lg:max-w-[350px]">
                     <div class="sticky top-6 space-y-6">

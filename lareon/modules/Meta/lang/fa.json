@@ -1,5 +1,7 @@
 {
     "element": "المان",
     "elements": "المان‌ها",
+    "template": "تمپلیت",
+    "templates": "تمپلیت‌ها",
     "elements are collections of content fields that can be assigned to different templates, allowing you to add template-specific content to each one": "المان ها مجموعه ای از فیلدهای محتوایی هستند که با انتساب آن ها به قالب های مختلف، امکان افزودن محتوای اختصاصی به هر قالب را فراهم می کنند"
 }

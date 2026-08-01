@@ -114,7 +114,7 @@ class MetaElementLogic
     {
         return ServiceWrapper::make(false)
                              ->do(
-                                 fn() => MetaElement::query()->select(['id', 'title'])->get()
+                                 fn() => MetaElement::query()->select(['id', 'title' ,'settings'])->get()
                              )->run();
     }
 
