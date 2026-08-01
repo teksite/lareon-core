@@ -1,4 +1,4 @@
-<x-lareon::admin-layout >
+<x-lareon::admin-layout>
     @pushonce('headerScripts')
         @vite(['lareon/modules/Meta/resources/js/app.js','lareon/modules/Meta/resources/css/app.css'])
     @endpushonce
@@ -23,38 +23,49 @@
 
         <section class="flex flex-col lg:flex-row gap-6">
             <div class="w-full lg:max-w-[350px]">
-                <div id="elements-list" data-elmenet-list="elements-list">
-                    @foreach($elements as $element)
-                        @php
-                            $args= json_encode(($element->settings)['args']['items'] ?? []);
-                        @endphp
-                        <x-lareon::box data-element-item data-element-id="{{ $element->id }}" data-arguments="{{$args}}">
-                            <div class="flex items-center justify-start gap-3 handler" data-element-handler="handler">
-                                <x-tkicon icon="arrow-move" class="size-4 stroke-2"/>
-                                {{ $element->title }}
-                            </div>
-                        </x-lareon::box>
+                <fieldset class="p-3 rounded-lg bordering">
+                    <legend class="px-3">
+                        {{__('elements')}}
+                    </legend>
+
+                    <div id="elements-list" class="space-y-6" data-elmenet-list="elements-list">
+                        @foreach($elements as $element)
+                            @php
+                                $args= json_encode(($element->settings)['args']['items'] ?? []);
+                            @endphp
+                            <x-lareon::box data-element-item data-element-id="{{ $element->id }}" data-arguments="{{$args}}">
+                                <div class="flex items-center justify-between gap-3">
+                                    <div class="flex items-center justify-start gap-3 handler" data-element-handler="handler">
+                                        <x-tkicon icon="arrow-move" class="size-4 stroke-2"/>
+                                        {{ $element->title }}
+                                    </div>
+                                    <button class="text-blue-600 text-xs font-semibold outline-none hover:bg-blue-50 rounded p-0.5" type="button" role="button">
+                                        {{__('add')}} ->
+                                    </button>
+                                </div>
+                            </x-lareon::box>
                     @endforeach
-                </div>
+                </fieldset>
             </div>
-
-
-            <div class="w-full p-3 bordering rounded-lg">
+            <fieldset class="w-full p-3 rounded-lg bordering">
+                <legend class="px-3">
+                    {{__('items')}}
+                </legend>
                 <div id="template-elements-list"
                      data-initial-elements="{{ json_encode(
-         $template->elements->map(fn ($el) => [
-             'element_id' => $el->id,
-             'name'       => $el->pivot->name,
-             'title'      => $el->pivot->title,
-             'args'       => $el->pivot->settings
-                 ? (is_array($el->pivot->settings)
-                     ? $el->pivot->settings
-                     : json_decode($el->pivot->settings, true))
-                 : [],
-         ])->values()
-     ) }}">
+                        $template->elements->map(fn ($el) => [
+                            'element_id' => $el->id,
+                            'name'       => $el->pivot->name,
+                            'title'      => $el->pivot->title,
+                            'args'       => $el->pivot->settings
+                                ? (is_array($el->pivot->settings)
+                                    ? $el->pivot->settings
+                                    : json_decode($el->pivot->settings, true))
+                                : [],
+                        ])->values()
+                    ) }}">
                 </div>
-            </div>
+            </fieldset>
         </section>
         <x-lareon::buttons.nav class="w-24" :fullWidth="false" type="submit" role="submit" color="create">
             {{ __('update')}}
