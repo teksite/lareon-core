@@ -53,21 +53,24 @@ class MetaTemplateLogic
     /**
      * @throws \Throwable
      */
-    public function update(MetaTemplate $templates, array $inputs = []): ServiceResult
+    public function update(MetaTemplate $template, array $inputs = []): ServiceResult
     {
-        return ServiceWrapper::make(false)->do(function () use ($templates, $inputs) {
-            $templates->update(['title'=>$inputs['title']]);
-            return $templates->refresh();
+        return ServiceWrapper::make(false)->do(function () use ($template, $inputs) {
+            $template->update(['title' => $inputs['title']]);
+
+            $this->attachElements($template, $inputs['elements'] ?? []);
+
+            return $template->refresh();
         })->run();
     }
 
     /**
      * @throws \Throwable
      */
-    public function delete(MetaTemplate $templates): ServiceResult
+    public function delete(MetaTemplate $template): ServiceResult
     {
-        return ServiceWrapper::make(false)->do(function () use ($templates) {
-            $templates->delete();
+        return ServiceWrapper::make(false)->do(function () use ($template) {
+            $template->delete();
         })->run();
     }
 
@@ -100,10 +103,30 @@ class MetaTemplateLogic
 
     public function getUnregistered(?string $path = null)
     {
-        $files= $this->getFiles($path)->result ??[];
-        $registeredPath=MetaTemplate::query()->select('template')->get()->pluck('template')->toArray();
+        $files = $this->getFiles($path)->result ?? [];
+        $registeredPath = MetaTemplate::query()->select('template')->get()->pluck('template')->toArray();
 
         return array_diff($files, $registeredPath);
     }
+
+
+    public function attachElements(MetaTemplate $template, array $elements = []): void
+    {
+        $template->elements()->detach();
+        $model_type = $elements['model_type'];
+
+        foreach ($elements['items'] ?? [] as $element) {
+
+            $template->elements()->attach($element['element_id'], [
+                'model_type' => $model_type,
+                'name'=>$element['name'],
+                'title'=>$element['title'],
+
+            ]);
+        }
+
+
+    }
+
 }
 

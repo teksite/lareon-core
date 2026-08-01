@@ -38,7 +38,7 @@ class MetaElement extends Model
 
     public function templates(): HasMany
     {
-        return $this->hasMany(MetaFieldTemplate::class, 'meta_element_id');
+        return $this->belongsToMany(MetaTemplate::class, 'meta_templates_elements','meta_element_id','meta_template_id')->withPivot(['name' , 'title' ,'model_type' , 'settings']);
     }
 
 }

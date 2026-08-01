@@ -22,7 +22,6 @@ class UpdateTemplateRequest extends FormRequest
      */
     public function rules(): array
     {
-        return MetaTemplate::rules('update', $this->element->id);
-
+        return MetaTemplate::rules('update', $this->template->id);
     }
 }

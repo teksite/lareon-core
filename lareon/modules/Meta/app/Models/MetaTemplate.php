@@ -5,6 +5,7 @@ namespace Lareon\Modules\Meta\App\Models;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Validation\Rule;
 
@@ -23,15 +24,18 @@ class MetaTemplate extends Model
             ],
             ($operation === 'update' && $id) => [
                 'title' => ['required', 'string', Rule::unique('meta_templates', 'title')->ignore($id)],
-                'template'  => ['required', 'string', Rule::unique('meta_templates', 'template')->ignore($id)],
+                'elements' => 'nullable|array',
+//                'template'  => ['required', 'string', Rule::unique('meta_templates', 'template')->ignore($id)],
+
             ],
             default                          => throw new \InvalidArgumentException("Operation '{$operation}' is not valid. Allowed: create, update")
         };
     }
 
-    public function templates(): HasMany
+
+    public function elements() : BelongsToMany
     {
-        return $this->hasMany(MetaFieldTemplate::class, 'meta_template_id');
+        return $this->belongsToMany(MetaElement::class, 'meta_templates_elements','meta_template_id','meta_element_id')->withPivot(['name' , 'title' ,'model_type' , 'settings']);
     }
 
 }

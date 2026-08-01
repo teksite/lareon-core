@@ -9,8 +9,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Validation\Rule;
 
 
-#[Fillable(['model_type', 'template', 'element_id', 'title', 'name', 'settings', 'sort'])]
-#[Table('meta_template_fields')]
+#[Fillable(['model_type', 'meta_template_id', 'element_id', 'title', 'name', 'settings', 'sort'])]
+#[Table('meta_templates_elements')]
 class MetaFieldTemplate extends Model
 {
     protected function casts(): array
@@ -25,7 +25,7 @@ class MetaFieldTemplate extends Model
     {
         return [
             'model_type' => 'required|string',
-            'template'   => 'required|string|max:100',
+            'meta_template_id' => 'required|integer|exists:meta_templates,id',
             'meta_element_id' => 'required|integer|exists:meta_elements,id',
             'title'      => 'required|string|max:100',
             'name'       => 'required|string',
@@ -37,5 +37,10 @@ class MetaFieldTemplate extends Model
     public function element(): BelongsTo
     {
         return $this->belongsTo(MetaElement::class, 'meta_element_id');
+    }
+
+    public function template(): BelongsTo
+    {
+        return $this->belongsTo(MetaElement::class, 'meta_template_id');
     }
 }

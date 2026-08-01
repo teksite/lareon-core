@@ -26,19 +26,15 @@ return new class extends Migration {
         });
 
 
-        Schema::create('meta_template_fields', function (Blueprint $table) {
-            $table->id();
-            $table->string('model_type');
-            $table->foreignId('meta_templates_id')->constrained('meta_templates')->cascadeOnDelete();
+        Schema::create('meta_templates_elements', function (Blueprint $table) {
+            $table->foreignId('meta_template_id')->constrained('meta_templates')->cascadeOnDelete();
             $table->foreignId('meta_element_id')->constrained('meta_elements')->cascadeOnDelete();
+            $table->string('model_type');
             $table->string('title');
             $table->string('name');
             $table->json('settings')->nullable();
-            $table->unsignedInteger('sort')->default(0);
-            $table->timestamps();
 
-            $table->index(['model_type', 'meta_templates_id']);
-            $table->unique(['model_type', 'meta_templates_id', 'name']);
+            $table->unique(['model_type', 'meta_template_id' , 'meta_element_id', 'name'] ,'meta_model_temp_el_name');
         });
 
 
@@ -59,7 +55,7 @@ return new class extends Migration {
     public function down(): void
     {
         Schema::dropIfExists('meta_models');
-        Schema::dropIfExists('meta_template_fields');
+        Schema::dropIfExists('meta_templates_elements');
         Schema::dropIfExists('meta_elements');
         Schema::dropIfExists('meta_templates');
 
