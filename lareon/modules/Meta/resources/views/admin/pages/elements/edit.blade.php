@@ -14,6 +14,11 @@
                     <x-lareon::editor.input :required="true" :label="__('title')" name="title" :value="$element->title" :placeholder="__('lareon::global.placeholders.write.unique.two',['attribute'=>__('title') , 'item'=>__('element')])"/>
                 </div>
             </x-lareon::editor.tabs.section>
+
+            <x-lareon::editor.tabs.section>
+                <x-meta::admin.element-args :value="old('args.settings' , $element->settings)"/>
+            </x-lareon::editor.tabs.section>
+
         </x-lareon::editor.tabs.item>
     @endsection
 </x-lareon::admin-editor>

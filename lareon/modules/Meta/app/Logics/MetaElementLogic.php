@@ -55,8 +55,9 @@ class MetaElementLogic
      */
     public function update(MetaElement $elements, array $inputs = []): ServiceResult
     {
+
         return ServiceWrapper::make(false)->do(function () use ($elements, $inputs) {
-            $elements->update(['title' => $inputs['title']]);
+            $elements->update(Arr::except($inputs, ['element']));
             return $elements->refresh();
         })->run();
     }

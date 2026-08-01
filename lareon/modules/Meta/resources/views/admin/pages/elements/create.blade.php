@@ -13,7 +13,7 @@
             </x-lareon::editor.input-select>
         </x-lareon::editor.tabs.section>
         <x-lareon::editor.tabs.section>
-            <x-lareon::meta.admin.rules :value="old('rules')" />
+            <x-meta::admin.element-args :value="old('args')" />
         </x-lareon::editor.tabs.section>
 
     @endsection

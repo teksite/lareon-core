@@ -37,7 +37,7 @@ class ElementsController extends Controller implements HasMiddleware
         $registered = $this->logic->all()->result;
         $unregistered = $this->logic->getUnregistered();
 
-        return view('meta::admin.pages.elements.index', compact('registered' ,'unregistered'));
+        return view('meta::admin.pages.elements.index', compact('registered', 'unregistered'));
     }
 
     /**
@@ -47,7 +47,8 @@ class ElementsController extends Controller implements HasMiddleware
     {
         $unregistered = $this->logic->getUnregistered();
 
-        return view('meta::admin.pages.elements.create', compact('unregistered'));    }
+        return view('meta::admin.pages.elements.create', compact('unregistered'));
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -61,7 +62,7 @@ class ElementsController extends Controller implements HasMiddleware
         return Responder::fromResult($res,
             trans('lareon::global.crud.success.created', ['attribute' => __('element')]),
             trans('lareon::global.crud.error.created', ['attribute' => __('element')]),
-            route('admin.settings.meta.elements.index')
+            route('admin.settings.meta.elements.edit' , $res->result)
         )->go();
     }
 
