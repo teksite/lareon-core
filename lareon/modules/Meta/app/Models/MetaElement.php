@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Validation\Rule;
 
-#[Fillable(['title' ,'element'])]
+#[Fillable(['title' ,'element' ,'settings'])]
 #[Table('meta_elements')]
 class MetaElement extends Model
 {

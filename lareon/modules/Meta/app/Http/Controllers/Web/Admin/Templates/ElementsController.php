@@ -45,8 +45,9 @@ class ElementsController extends Controller implements HasMiddleware
      */
     public function create()
     {
-        return redirect()->action([self::class , 'index']);
-    }
+        $unregistered = $this->logic->getUnregistered();
+
+        return view('meta::admin.pages.elements.create', compact('unregistered'));    }
 
     /**
      * Store a newly created resource in storage.
