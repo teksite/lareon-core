@@ -13,8 +13,6 @@
     <form method="POST" action="{{route('admin.settings.meta.templates.update', $template)}}" class="space-y-6">
         @method('PATCH')
         @csrf
-        <input type="hidden" name="elements[model_type]" value="{{\Lareon\Modules\Page\App\Models\Page::class}}">
-        <input type="hidden" name="elements[meta_template_id]" value="{{$template->id}}">
         <x-lareon::editor.tabs.section>
             <div class="grid gap-6 lg:grid-cols-2">
                 <x-lareon::editor.input :required="true" :label="__('title')" name="title" :value="$template->title" :placeholder="__('lareon::global.placeholders.write.unique.two',['attribute'=>__('title') , 'item'=>__('template')])"/>
@@ -51,9 +49,8 @@
                 <legend class="px-3">
                     {{__('items')}}
                 </legend>
-                <div id="template-elements-list"
-                     data-initial-elements="{{ json_encode(
-                        $template->elements->map(fn ($el) => [
+                    <div id="template-elements-list" data-initial-elements="{{ json_encode(
+                        $template->elements?->map(fn ($el) => [
                             'element_id' => $el->id,
                             'name'       => $el->pivot->name,
                             'title'      => $el->pivot->title,
@@ -64,7 +61,8 @@
                                 : [],
                         ])->values()
                     ) }}">
-                </div>
+                    </div>
+
             </fieldset>
         </section>
         <x-lareon::buttons.nav class="w-24" :fullWidth="false" type="submit" role="submit" color="create">

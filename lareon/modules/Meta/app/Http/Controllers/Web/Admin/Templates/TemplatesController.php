@@ -82,7 +82,7 @@ class TemplatesController extends Controller implements HasMiddleware
     {
         $elements=(new MetaElementLogic())->list()->result ?? null;
 
-        return view('meta::admin.pages.templates.edit', compact('template' ,'elements' ,'models'));
+        return view('meta::admin.pages.templates.edit', compact('template' ,'elements' ));
     }
 
     /**
