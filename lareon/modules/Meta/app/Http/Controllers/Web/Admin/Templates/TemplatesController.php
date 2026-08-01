@@ -38,6 +38,7 @@ class TemplatesController extends Controller implements HasMiddleware
         $registered = $this->logic->all()->result;
         $unregistered = $this->logic->getUnregistered();
 
+        dd($unregistered);
         return view('meta::admin.pages.templates.index', compact('registered' ,'unregistered'));
     }
 
@@ -81,7 +82,8 @@ class TemplatesController extends Controller implements HasMiddleware
     public function edit(MetaTemplate $template)
     {
         $elements=(new MetaElementLogic())->list()->result ?? null;
-        return view('meta::admin.pages.templates.edit', compact('template' ,'elements'));
+
+        return view('meta::admin.pages.templates.edit', compact('template' ,'elements' ,'models'));
     }
 
     /**

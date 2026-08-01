@@ -75,58 +75,76 @@ class MetaTemplateLogic
     }
 
 
+    public function attachElements(MetaTemplate $template, array $elements = []): void
+    {
+        $template->elements()->detach();
+        $model_type = $elements['model_type'];
+
+        foreach ($elements['items'] ?? [] as $key => $element) {
+            $template->elements()->attach($element['element_id'], [
+                'model_type' => $model_type,
+                'name'       => $element['name'],
+                'title'      => $element['title'],
+                'sort'       => $key,
+
+            ]);
+        }
+    }
+
+
     /**
      * @throws BindingResolutionException
      * @throws \Throwable
      */
     public function getFiles(?string $path = null): ServiceResult
     {
-        $path ??= modulePath('meta', 'resources/views/components/editor', true);
+        $models = config('meta.models', []);
+        $files = [];
+        foreach ($models as ['model' => $model, 'path' => $path]) {
+            $dir = resource_path('views/' . $path);
+            if (!File::isDirectory($dir)) return new ServiceResult(true, []);
 
-        if (!File::isDirectory($path)) return new ServiceResult(true, []);
+            $files[$model]['model'] = $model;
 
+            $files[$model]['pathes'] = collect(File::allFiles($dir))
+                ->map(function ($file) use ($path) {
 
-        $files = collect(File::allFiles($path))
-            ->map(function ($file) use ($path) {
-                return Str::of($file->getPathname())
-                          ->after($path . DIRECTORY_SEPARATOR)
-                          ->replace('\\', '/')
-                          ->replaceLast('.php', '')
-                          ->toString();
-            })
-            ->values()
-            ->all();
+                    return Str::of($file->getRelativePathname())
+                              ->prepend($path . '/')
+                              ->after($path . DIRECTORY_SEPARATOR)
+                              ->replace('\\', '/')
+                              ->replaceLast('.php', '')
+                              ->toString();
+                })
+                ->all();
+
+        }
 
         return new ServiceResult(true, $files);
     }
 
 
-    public function getUnregistered(?string $path = null)
+    public function getUnregistered(?string $path = null) :array
     {
         $files = $this->getFiles($path)->result ?? [];
-        $registeredPath = MetaTemplate::query()->select('template')->get()->pluck('template')->toArray();
 
-        return array_diff($files, $registeredPath);
-    }
+        if (empty($files)) return [];
 
+        $unregistered = [];
 
-    public function attachElements(MetaTemplate $template, array $elements = []): void
-    {
-        $template->elements()->detach();
-        $model_type = $elements['model_type'];
+        foreach ($files as ['pathes' => $pathes, 'model' => $model]) {
+            foreach ($pathes as $path) {
+                $isRegistered = MetaTemplate::query()->where(function ($q) use ($model, $path) {
+                    $q->where('model_type', $model)->where('template', $path);
 
-        foreach ($elements['items'] ?? [] as $key=>$element) {
-            $template->elements()->attach($element['element_id'], [
-                'model_type' => $model_type,
-                'name'=>$element['name'],
-                'title'=>$element['title'],
-                'sort'=>$key
-
-            ]);
+                })->exists();
+                if ($isRegistered) continue;
+                $unregistered[] = ['path' => $path, 'model' => $model];
+            }
         }
 
+        return $unregistered;
 
     }
-
 }
 

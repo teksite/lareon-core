@@ -22,7 +22,7 @@
 
             <x-slot:aside>
                 <x-lareon::editor.input-image :required="false" wrapperMode="y-box" :value="old('primary_media_id' , $page->primaryMedia?->id)" name="primary_media_id"/>
-                <x-lareon::editor.section.template :required="false" wrapperMode="y-box"/>
+                <x-lareon::editor.section.template path="pages/pages/templates" :required="false" wrapperMode="y-box" :value="old('template' , $page->template ?? null)"/>
             </x-slot:aside>
 
         </x-lareon::editor.tabs.item>

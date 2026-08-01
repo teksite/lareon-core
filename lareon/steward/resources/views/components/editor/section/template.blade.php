@@ -1,11 +1,11 @@
-@props(['required'=>false , 'path'=>'pages/templates' , 'value'=>null , 'wrapperMode'=>null ] )
+@props(['required'=>false , 'path' , 'value'=>null , 'wrapperMode'=>null ] )
 @php
     $wrapperClass=match ($wrapperMode){
         'x-box'=>'x-box',
         'y-box'=>'y-box',
         default => null
     };
-
+   $path=trim(trim($path ,'/') , '\\');
    $files = collect();
    $templatePath = resource_path("views/{$path}");
    if (\Illuminate\Support\Facades\File::isDirectory($templatePath)) {

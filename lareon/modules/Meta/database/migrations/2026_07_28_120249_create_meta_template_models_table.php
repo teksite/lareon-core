@@ -14,6 +14,8 @@ return new class extends Migration {
             $table->id();
             $table->string('template' , 150)->unique();
             $table->string('title' , 150)->unique();
+            $table->string('model_type');
+
             $table->timestamps();
         });
 
@@ -29,13 +31,12 @@ return new class extends Migration {
         Schema::create('meta_templates_elements', function (Blueprint $table) {
             $table->foreignId('meta_template_id')->constrained('meta_templates')->cascadeOnDelete();
             $table->foreignId('meta_element_id')->constrained('meta_elements')->cascadeOnDelete();
-            $table->string('model_type');
             $table->string('title');
             $table->string('name');
             $table->json('settings')->nullable();
             $table->tinyInteger('sort' ,false ,true)->default(0);
 
-            $table->unique(['model_type', 'meta_template_id' , 'meta_element_id', 'name'] ,'meta_model_temp_el_name');
+            $table->unique(['meta_template_id' , 'meta_element_id', 'name'] ,'meta_template_element_name');
         });
 
 

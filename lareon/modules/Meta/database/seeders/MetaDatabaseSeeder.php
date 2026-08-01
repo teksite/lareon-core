@@ -14,6 +14,7 @@ class MetaDatabaseSeeder extends Seeder
     {
         $this->call([
             PermissionsSeeder::class,
+            ElementsSeeder::class,
         ]);
     }
 }
