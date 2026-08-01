@@ -13,13 +13,13 @@ return new class extends Migration {
         Schema::create('pages', function (Blueprint $table) {
             $table->id();
             $table->foreignId('parent_id')->nullable()->constrained('pages')->nullOnDelete();
+            $table->foreignId('template_id')->nullable()->constrained('meta_templates')->nullOnDelete();
             $table->string('primary_media_id')->nullable();
             $table->string('slug')->unique();
             $table->string('label')->nullable();
             $table->string('title');
             $table->text('excerpt')->nullable();
             $table->text('body')->nullable();
-            $table->string('template')->nullable();
             $table->tinyInteger('publish_status')->default(\Lareon\Steward\App\Enums\PublishStatusEnum::PUBLISHED->value);
             $table->timestamp('published_at')->nullable();
             $table->timestamps();

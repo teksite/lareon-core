@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('template' , 150)->unique();
             $table->string('title' , 150)->unique();
-            $table->string('model_type');
+            $table->string('model_type')->index();
 
             $table->timestamps();
         });

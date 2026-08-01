@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Validation\Rule;
 use Lareon\Modules\FileManager\App\Traits\HasImages;
+use Lareon\Modules\Meta\App\Traits\HasTemplate;
 use Lareon\Steward\App\Casts\PublishAt;
 use Lareon\Steward\App\Enums\PublishStatusEnum;
 use Lareon\Steward\App\Models\Scopes\PublishScope;
@@ -16,10 +17,10 @@ use Teksite\FileManager\Concerts\HasAttachedFile;
 use Teksite\FileManager\Models\UploadFile;
 
 
-#[Fillable(['parent_id', 'label', 'slug', 'title', 'excerpt', 'body', 'template', 'publish_status', 'published_at', 'primary_media_id'])]
+#[Fillable(['parent_id', 'label', 'slug', 'title', 'excerpt', 'body', 'template_id', 'publish_status', 'published_at', 'primary_media_id'])]
 class Page extends Model
 {
-    use SoftDeletes, HasImages, HasAttachedFile;
+    use SoftDeletes, HasImages, HasAttachedFile, HasTemplate;
 
     protected function casts(): array
     {
@@ -39,7 +40,7 @@ class Page extends Model
             'excerpt'          => 'nullable|string',
             'body'             => 'nullable|string',
             'primary_media_id' => 'nullable|string|max:255|exists:uploaded_files,id',
-            'template'         => 'nullable|string',
+            'template_id'      => 'nullable|exists:meta_templates,id',
             'publish_status'   => ['required', 'integer', Rule::in(array_column(PublishStatusEnum::cases(), 'value'))],
             'published_at'     => 'nullable|date',
         ];

@@ -5,7 +5,8 @@
         <x-lareon::links.nav :href="route('admin.pages.create')" :content="__('lareon::global.buttons.new_one')" color="create" can="admin.page.create"/>
     @endsection
     @section('header.end')
-        <x-lareon::links.nav :href="route('admin.pages.destroy', $page)" :content="__('lareon::global.buttons.delete' ,['attribute'=>__('pages')])" color="delete"/>
+        <x-lareon::links.action type="delete" :href="route('admin.pages.destroy', $page)" method="delete"  :label="trans('lareon::global.buttons.delete')" can="admin.page.delete"/>
+        
     @endsection
 
     @section('form')
@@ -22,7 +23,7 @@
 
             <x-slot:aside>
                 <x-lareon::editor.input-image :required="false" wrapperMode="y-box" :value="old('primary_media_id' , $page->primaryMedia?->id)" name="primary_media_id"/>
-                <x-lareon::editor.section.template path="pages/pages/templates" :required="false" wrapperMode="y-box" :value="old('template' , $page->template ?? null)"/>
+                <x-lareon::editor.section.template type="page" :required="false" wrapperMode="y-box" :value="old('template' , $page->template_id ?? null)"/>
             </x-slot:aside>
 
         </x-lareon::editor.tabs.item>
