@@ -115,12 +115,12 @@ class MetaTemplateLogic
         $template->elements()->detach();
         $model_type = $elements['model_type'];
 
-        foreach ($elements['items'] ?? [] as $element) {
-
+        foreach ($elements['items'] ?? [] as $key=>$element) {
             $template->elements()->attach($element['element_id'], [
                 'model_type' => $model_type,
                 'name'=>$element['name'],
                 'title'=>$element['title'],
+                'sort'=>$key
 
             ]);
         }

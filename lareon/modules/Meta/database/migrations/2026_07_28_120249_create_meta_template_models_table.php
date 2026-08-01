@@ -33,6 +33,7 @@ return new class extends Migration {
             $table->string('title');
             $table->string('name');
             $table->json('settings')->nullable();
+            $table->tinyInteger('sort' ,false ,true)->default(0);
 
             $table->unique(['model_type', 'meta_template_id' , 'meta_element_id', 'name'] ,'meta_model_temp_el_name');
         });

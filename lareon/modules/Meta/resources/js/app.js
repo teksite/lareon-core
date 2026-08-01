@@ -24,7 +24,10 @@ document.addEventListener('DOMContentLoaded', () => {
         preventOnFilter: false,
 
         onAdd(evt) {
-            buildRow(evt.item);
+            const elementId = evt.item.dataset.elementId;
+            const row = createRow(elementId);
+            if (row) evt.item.replaceWith(row);
+            else evt.item.remove();
             reindex();
         },
         onSort: reindex,
@@ -38,23 +41,35 @@ document.addEventListener('DOMContentLoaded', () => {
         reindex();
     });
 
-    function buildRow(clonedEl) {
-        const elementId = clonedEl.dataset.elementId;
-        const sourceTitle = clonedEl.querySelector('[data-element-handler]')
+    // ---------------------------------------------------------------
+    // saved = { name, title, args: { argName: value, ... } }
+    // ---------------------------------------------------------------
+    function createRow(elementId, saved = {}) {
+        const sourceEl = sourceList.querySelector(
+            `[data-element-item][data-element-id="${CSS.escape(elementId)}"]`
+        );
+        if (!sourceEl) return null;
+
+        const sourceTitle = sourceEl.querySelector('[data-element-handler]')
             ?.textContent.trim() ?? '';
 
-        let args = [];
+        let elArguments = {};
         try {
-            args = JSON.parse(clonedEl.getAttribute('data-arguments') ?? '[]');
+            elArguments = JSON.parse(sourceEl.getAttribute('data-arguments') ?? '{}');
         } catch {
-            args = [];
+            elArguments = {};
         }
+        const argNames = Array.isArray(elArguments)
+            ? elArguments
+            : Object.values(elArguments);
+
+        const savedArgs = saved.args ?? {};
 
         const row = document.createElement('div');
         row.className = 'template-element-item border border-zinc-300 rounded-lg p-3 bg-white';
         row.dataset.elementId = elementId;
 
-        // ---------- هدر ----------
+        // ---------- header ----------
         const header = document.createElement('div');
         header.className = 'flex items-center justify-between gap-3 mb-3';
 
@@ -67,17 +82,15 @@ document.addEventListener('DOMContentLoaded', () => {
         handle.textContent = '⠿';
         left.appendChild(handle);
 
-        // اسم نوع المان (ثابت، از منبع)
         const sourceTitleEl = document.createElement('span');
         sourceTitleEl.className = 'font-medium text-gray-500';
         sourceTitleEl.textContent = sourceTitle;
         left.appendChild(sourceTitleEl);
 
-        // عنوان real-time که با اینپوت title همگام می‌شود
         const liveTitleEl = document.createElement('span');
         liveTitleEl.className = 'text-gray-400';
         liveTitleEl.dataset.liveTitle = '';
-        liveTitleEl.textContent = '';
+        liveTitleEl.textContent = saved.title ? `— ${saved.title}` : '';
         left.appendChild(liveTitleEl);
 
         const removeBtn = document.createElement('button');
@@ -90,28 +103,23 @@ document.addEventListener('DOMContentLoaded', () => {
         header.appendChild(removeBtn);
         row.appendChild(header);
 
-        // ---------- element_id مخفی ----------
+        // ---------- element_id ----------
         const idInput = document.createElement('input');
         idInput.type = 'hidden';
         idInput.dataset.field = 'element_id';
         idInput.value = elementId;
         row.appendChild(idInput);
 
-        // ---------- فیلدهای ثابت name / title ----------
+        // ---------- name / title ----------
         const fixedGrid = document.createElement('div');
         fixedGrid.className = 'grid sm:grid-cols-2 gap-4 mb-4';
 
-        const nameField = createField({
-            label: 'name',
-            field: 'name',
-        });
+        const nameField = createField({ label: 'name', field: 'name' });
+        nameField.input.value = saved.name ?? '';
 
-        const titleField = createField({
-            label: 'title',
-            field: 'title',
-        });
+        const titleField = createField({ label: 'title', field: 'title' });
+        titleField.input.value = saved.title ?? '';
 
-        // به‌محض تایپ در title، متن کنار هندل هم آپدیت شود
         titleField.input.addEventListener('input', () => {
             liveTitleEl.textContent = titleField.input.value
                 ? `— ${titleField.input.value}`
@@ -122,27 +130,27 @@ document.addEventListener('DOMContentLoaded', () => {
         fixedGrid.appendChild(titleField.wrap);
         row.appendChild(fixedGrid);
 
-        // ---------- فیلدهای args ----------
-        if (args.length) {
+        // ---------- args ----------
+        if (argNames.length) {
             const grid = document.createElement('div');
             grid.className = 'grid sm:grid-cols-2 gap-4';
 
-            args.forEach((argName) => {
-                const { wrap } = createField({
+            argNames.forEach((argName) => {
+                const { wrap, input } = createField({
                     label: argName,
                     field: 'arg',
                     argName,
                 });
+                input.value = savedArgs[argName] ?? '';
                 grid.appendChild(wrap);
             });
 
             row.appendChild(grid);
         }
 
-        clonedEl.replaceWith(row);
+        return row;
     }
 
-    // سازنده‌ی عمومی یک فیلد label+input تا کد name/title/arg تکرار نشود
     function createField({ label, field, argName = null }) {
         const wrap = document.createElement('div');
 
@@ -178,4 +186,22 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+
+    function loadInitialElements() {
+        let initial = [];
+        try {
+            initial = JSON.parse(targetList.dataset.initialElements ?? '[]');
+        } catch {
+            initial = [];
+        }
+
+        initial.forEach((saved) => {
+            const row = createRow(String(saved.element_id), saved);
+            if (row) targetList.appendChild(row);
+        });
+
+        reindex();
+    }
+
+    loadInitialElements();
 });
