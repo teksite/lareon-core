@@ -67,36 +67,36 @@
         @yield('form.start')
 
         <div class="{{$styleClass}}">
-                <div class="w-full space-y-6">
-                    @hasSection('form')
-                        @if($hasTab)
-                            <x-lareon::editor.tabs.layout>
-                                @yield('form')
-
-                                @if($instance && method_exists($instance , 'template'))
-                                    <x-lareon::editor.tabs.item :title="__('meta data')">
-                                                <x-meta::elements-loader :template="$instance->template"/>
-                                    </x-lareon::editor.tabs.item>
-                                @endif
-
-                                @if($publishInfo || $publishStatus)
-                                    <x-lareon::editor.tabs.item :title="__('publish data')">
-                                        <div @class($publishInfo && $publishStatus ? 'grid gap-6 lg:grid-cols-2': '')>
-                                            @if($publishStatus)
-                                                <x-lareon::editor.section.publish-status :instance="$instance"/>
-                                            @endif
-                                            @if($publishInfo)
-                                                <x-lareon::editor.section.publish-info :instance="$instance"/>
-                                            @endif
-                                        </div>
-                                    </x-lareon::editor.tabs.item>
-                                @endif
-                            </x-lareon::editor.tabs.layout>
-                        @else
+            <div class="w-full space-y-6">
+                @hasSection('form')
+                    @if($hasTab)
+                        <x-lareon::editor.tabs.layout>
                             @yield('form')
-                        @endif
+
+                            @if($instance && method_exists($instance , 'template'))
+                                <x-lareon::editor.tabs.item :title="__('meta data')">
+                                    <x-meta::elements-loader :template="$instance->template"/>
+                                </x-lareon::editor.tabs.item>
+                            @endif
+
+                            @if($publishInfo || $publishStatus)
+                                <x-lareon::editor.tabs.item :title="__('publish data')">
+                                    <div @class($publishInfo && $publishStatus ? 'grid gap-6 lg:grid-cols-2': '')>
+                                        @if($publishStatus)
+                                            <x-lareon::editor.section.publish-status :instance="$instance"/>
+                                        @endif
+                                        @if($publishInfo)
+                                            <x-lareon::editor.section.publish-info :instance="$instance"/>
+                                        @endif
+                                    </div>
+                                </x-lareon::editor.tabs.item>
+                            @endif
+                        </x-lareon::editor.tabs.layout>
+                    @else
+                        @yield('form')
                     @endif
-                </div>
+                @endif
+            </div>
             @if($hasAside)
                 <aside class="w-full lg:max-w-[350px]">
                     <div class="sticky top-6 space-y-6">

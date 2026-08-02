@@ -1,6 +1,6 @@
 @props(['title', 'name','value'=>[], 'placeholder'=>null, 'required'=>false ,'open'=>false ,'accordion'=>false] )
-@php($randomItem=content-content.blade.phprand(100,9999).\Illuminate\Support\Str::random(6).rand(100,9999))
-<x-lareon::accordion.box :title="__($title)" :open="$open" :accordion="$accordion">
+@php($randomItem=rand(100,9999).\Illuminate\Support\Str::random(6).rand(100,9999))
+<x-lareon::accordion.single :title="__($title)" :open="$open" :accordion="$accordion">
 
     <div>
         <div class="grid gap-3 md:grid-cols-2">
@@ -37,7 +37,7 @@
         </legend>
         <div>
             @foreach($value['items'] ?? [] as $key=>$item)
-                @php($rand=content-content.blade.php\Illuminate\Support\Str::random(6).rand(100,9999))
+                @php($rand=Illuminate\Support\Str::random(6).rand(100,9999))
                 <div class="dynamicGroup_{{$randomItem}} border border-zinc-600 mb-3 rounded-lg p-3" id="content-content-{{$rand}}-{{$loop->index}}" x-data="{ removeField() { document.getElementById('content-content-{{$rand}}-{{$loop->index}}').remove(); }}">
                     <div class=" mb-3 flex justify-between items-center gap-6">
                         <div class="w-full md:grid-cols-2 gap-3 grid">
@@ -109,16 +109,17 @@
                                     <x-lareon::inputs.text x-bind:id="`dynamic_new_item_link_url-${index + lngth + 1}`" class="block w-full" x-model="field.txt5" x-bind:name="`{{$name}}[items][${index + lngth + 1}][link_url]`" dir="ltr"/>
                                 </div>
                             </div>
+                        </div>
                     </template>
                     <div class="my-3">
-                        <x-lareon::button.solid type="button" role="button" title="{{__('add title')}}" id="addDynamic_{{$randomItem}}" @click="addNewField()">
+                        <x-lareon::buttons.simple type="button" role="button" title="{{__('add title')}}" id="addDynamic_{{$randomItem}}" @click="addNewField()">
                             {{__('add')}}
-                        </x-lareon::button.solid>
+                        </x-lareon::buttons.simple>
 
                     </div>
                 </div>
             </div>
         </div>
     </fieldset>
-</x-lareon::accordion.box>
+</x-lareon::accordion.single>
 

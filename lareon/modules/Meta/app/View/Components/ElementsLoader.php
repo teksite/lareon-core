@@ -20,7 +20,6 @@ class ElementsLoader extends Component
             ? $template
             : MetaTemplate::find($template);
 
-        $this->loadElements();
 
     }
 
@@ -29,32 +28,32 @@ class ElementsLoader extends Component
      */
     public function render(): View|Closure|string|null
     {
-        return view('meta::components.editor.section.elements-loader');
+        return view('meta::components.editor.section.elements-loader', ['elements' => $this->loadElements()]);
     }
 
     /**
      * @throws \Throwable
      * @throws BindingResolutionException
      */
-    private function loadElements()
+    private function loadElements(): array
     {
-
-        $views = [];
-
-        if ($this->template === null) return $views;
-
-        $logic = (new MetaElementLogic());
-
-        $elements = $this->template->elements;
-        foreach ($elements as $element) {
-           $name=$element->pivot->name;
-           $title=$element->pivot->title;
-           dd($element);
-            $res = $logic->getElementView($element->element);
-            if (!$res->result) continue;
-            $elementPath =  view($res->result , )->render();
-            dd($elementPath);
-        }
-
+        return $this->template->elements
+            ->sortBy('pivot.sort')
+            ->map(function ($element) {
+                return [
+                    'view' => app(MetaElementLogic::class)
+                        ->getElementView($element->element)
+                        ->result,
+                    'props' => [
+                        'name' => $element->pivot->name,
+                        'title' => $element->pivot->title,
+                        'arguments' => $element->pivot->settings['arguments'] ?? [],
+                        'settings' => $element->settings,
+                        'element' => $element,
+                        'pivot' => $element->pivot,
+                    ],
+                ];
+            })
+            ->all();
     }
 }

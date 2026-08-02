@@ -1,6 +1,6 @@
 @props(['title', 'name','value'=>[], 'placeholder'=>null, 'required'=>false ,'open'=>false ,'accordion'=>false] )
 @php($randomItem=rand(100,9999).\Illuminate\Support\Str::random(6).rand(100,9999))
-<x-lareon::accordion.box :title="__($title)" :open="$open" :accordion="$accordion">
+<x-lareon::accordion.single :title="__($title)" :open="$open" :accordion="$accordion">
     <fieldset class="fieldset">
         <legend class="legend">
             {{$title}}
@@ -55,14 +55,14 @@
                         </div>
                     </template>
                     <div class="my-3">
-                        <x-lareon::button.solid type="button" role="button" title="{{__('add title')}}" id="addDynamic_{{$randomItem}}" @click="addNewField()">
+                        <x-lareon::buttons.simple type="button" role="button" title="{{__('add title')}}" id="addDynamic_{{$randomItem}}" @click="addNewField()">
                             {{__('add')}}
-                        </x-lareon::button.solid>
+                        </x-lareon::buttons.simple>
 
                     </div>
                 </div>
             </div>
         </div>
     </fieldset>
-</x-lareon::accordion.box>
+</x-lareon::accordion.single>
 

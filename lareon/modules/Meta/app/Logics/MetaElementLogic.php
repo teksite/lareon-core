@@ -136,8 +136,9 @@ class MetaElementLogic
 
         if (!File::exists($file)) return new ServiceResult(false, null);
 
+        $element = trim(str_replace('/', '.', $element), '.blade');
 
-        return new ServiceResult(true, 'meta::components.editor.extra.' . str_replace('/', '.', $element));
+        return new ServiceResult(true, 'meta::components.editor.extra.' . $element);
     }
 
 

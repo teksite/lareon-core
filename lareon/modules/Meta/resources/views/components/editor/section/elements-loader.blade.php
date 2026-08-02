@@ -10,4 +10,9 @@
      };
 @endphp
 <section class="{{ $wrapperClass . ' space-y-6'}}">
+    @foreach($elements as $element)
+
+        @includeIf($element['view'],$element['props'] )
+
+    @endforeach
 </section>

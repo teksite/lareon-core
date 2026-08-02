@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-#[Fillable(['field_id', 'model_type', 'model_id', 'content'])]
+#[Fillable(['meta_template_id', 'model_type', 'model_id', 'content'])]
 #[Table('meta_models')]
 class MetaModel extends Model
 {
@@ -21,7 +21,7 @@ class MetaModel extends Model
     public static function rules(string $operation, int|null $id = null): array
     {
         return [
-            'field_id'   => 'required|integer',
+            'meta_template_id'   => 'required|integer',
             'model_id'   => 'required|integer',
             'model_type' => 'required|string',
             'content'    => 'nullable|array',
@@ -31,12 +31,7 @@ class MetaModel extends Model
 
     public function template(): BelongsTo
     {
-        return $this->belongsTo(MetaFieldTemplate::class, 'field_id');
-    }
-
-    public function element()
-    {
-        return $this->hasOneThrough(MetaElement::class, MetaFieldTemplate::class, 'id', 'id', 'field_id', 'meta_element_id');
+        return $this->belongsTo(MetaFieldTemplate::class, 'meta_template_id');
     }
 
 
