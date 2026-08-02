@@ -1,11 +1,9 @@
 import Sortable from 'sortablejs';
-
 document.addEventListener('DOMContentLoaded', () => {
     const sourceList = document.getElementById('elements-list');
     const targetList = document.getElementById('template-elements-list');
 
     if (!sourceList || !targetList) return;
-
     Sortable.create(sourceList, {
         group: { name: 'template-elements', pull: 'clone', put: false },
         sort: false,
@@ -24,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
         preventOnFilter: false,
 
         onAdd(evt) {
+            console.log(evt)
             const elementId = evt.item.dataset.elementId;
             const row = createRow(elementId);
             if (row) evt.item.replaceWith(row);
@@ -32,6 +31,24 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         onSort: reindex,
         onUpdate: reindex,
+    });
+
+
+    sourceList.addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-add-element]');
+        if (!btn) return;
+
+        const sourceItem = btn.closest('[data-element-item]');
+        if (!sourceItem) return;
+
+        const elementId = sourceItem.dataset.elementId;
+        if (!elementId) return;
+
+        const row = createRow(elementId);
+        if (row) {
+            targetList.appendChild(row);
+            reindex();
+        }
     });
 
     targetList.addEventListener('click', (e) => {

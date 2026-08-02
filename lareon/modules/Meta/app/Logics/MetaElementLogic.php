@@ -57,7 +57,7 @@ class MetaElementLogic
     {
         return ServiceWrapper::make(false)->do(function () use ($elements, $inputs) {
             $elements->update([
-                'title' => $inputs['title'],
+                'title'    => $inputs['title'],
                 'settings' => $inputs['settings'] ?? [],
             ]);
             return $elements->refresh();
@@ -81,7 +81,10 @@ class MetaElementLogic
      */
     public function getFiles(?string $path = null): ServiceResult
     {
-        $path ??= modulePath('meta', 'resources/views/components/editor', true);
+        $config = config('meta.elements');
+        $module = $config['modules'] ?? 'meta';
+        $pathModule = $config['path'] ?? 'resources/views/components/editor/extra';
+        $path ??= modulePath($module, $pathModule, true);
 
         if (!File::isDirectory($path)) return new ServiceResult(true, []);
 
@@ -101,6 +104,43 @@ class MetaElementLogic
     }
 
 
+    /**
+     * @throws BindingResolutionException
+     * @throws \Throwable
+     */
+    public function getElementPath(string $element, ?string $path = null): ServiceResult
+    {
+        $config = config('meta.elements');
+        $module = $config['modules'] ?? 'meta';
+        $pathModule = $config['path'] ?? 'resources/views/components/editor/extra';
+        $path ??= modulePath($module, $pathModule, true);
+
+        $element = trim($element, '/');
+
+        $file = $path . DIRECTORY_SEPARATOR . $element . '.php';
+
+        if (!File::exists($file)) return new ServiceResult(false, null);
+
+        return new ServiceResult(true, $file);
+    }
+
+    /**
+     * @throws BindingResolutionException
+     * @throws \Throwable
+     */
+    public function getElementView(string $element): ServiceResult
+    {
+        $base = modulePath('meta', 'resources/views/components/editor/extra', true);
+
+        $file = $base . DIRECTORY_SEPARATOR . $element . '.php';
+
+        if (!File::exists($file)) return new ServiceResult(false, null);
+
+
+        return new ServiceResult(true, 'meta::components.editor.extra.' . str_replace('/', '.', $element));
+    }
+
+
     public function getUnregistered(?string $path = null): array
     {
         $files = $this->getFiles($path)->result ?? [];
@@ -116,7 +156,7 @@ class MetaElementLogic
     {
         return ServiceWrapper::make(false)
                              ->do(
-                                 fn() => MetaElement::query()->select(['id', 'title' ,'settings'])->get()
+                                 fn() => MetaElement::query()->select(['id', 'title', 'settings'])->get()
                              )->run();
     }
 

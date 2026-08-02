@@ -36,7 +36,7 @@ class MetaTemplate extends Model
 
     public function elements(): BelongsToMany
     {
-        return $this->belongsToMany(MetaElement::class, 'meta_templates_elements', 'meta_template_id', 'meta_element_id')->withPivot(['name', 'title', 'settings', 'sort'])->orderByPivot('sort');
+        return $this->belongsToMany(MetaElement::class, 'meta_templates_elements', 'meta_template_id', 'meta_element_id')->using(MetaFieldTemplate::class)->withPivot(['name', 'title', 'settings', 'sort'])->orderByPivot('sort');
     }
 
 }

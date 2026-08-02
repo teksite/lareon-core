@@ -29,7 +29,7 @@
                     <div id="elements-list" class="space-y-6" data-elmenet-list="elements-list">
                         @foreach($elements as $element)
                             @php
-                                $args= json_encode(($element->settings)['args']['items'] ?? []);
+                                $args = json_encode(($element->settings)['args']['items'] ?? []);
                             @endphp
                             <x-lareon::box data-element-item data-element-id="{{ $element->id }}" data-arguments="{{$args}}">
                                 <div class="flex items-center justify-between gap-3">
@@ -37,19 +37,21 @@
                                         <x-tkicon icon="arrow-move" class="size-4 stroke-2"/>
                                         {{ $element->title }}
                                     </div>
-                                    <button class="text-blue-600 text-xs font-semibold outline-none hover:bg-blue-50 rounded p-0.5" type="button" role="button">
+                                    <button class="text-blue-600 text-xs font-semibold outline-none hover:bg-blue-50 rounded p-0.5"
+                                            type="button" role="button" data-add-element>
                                         {{__('add')}} ->
                                     </button>
                                 </div>
                             </x-lareon::box>
-                    @endforeach
+                        @endforeach
+                    </div>
                 </fieldset>
             </div>
             <fieldset class="w-full p-3 rounded-lg bordering">
                 <legend class="px-3">
                     {{__('items')}}
                 </legend>
-                    <div id="template-elements-list" data-initial-elements="{{ json_encode(
+                <div id="template-elements-list" data-initial-elements="{{ json_encode(
                         $template->elements?->map(fn ($el) => [
                             'element_id' => $el->id,
                             'name'       => $el->pivot->name,
@@ -61,7 +63,7 @@
                                 : [],
                         ])->values()
                     ) }}">
-                    </div>
+                </div>
 
             </fieldset>
         </section>

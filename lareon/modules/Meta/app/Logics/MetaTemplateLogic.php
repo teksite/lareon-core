@@ -78,12 +78,15 @@ class MetaTemplateLogic
     public function attachElements(MetaTemplate $template, array $elements = []): void
     {
         $template->elements()->detach();
-
         foreach ($elements['items'] ?? [] as $key => $element) {
             $template->elements()->attach($element['element_id'], [
-                'name'       => $element['name'],
-                'title'      => $element['title'],
-                'sort'       => $key,
+
+                'name'     => $element['name'],
+                'title'    => $element['title'],
+                'settings' => [
+                    'arguments'=> $element['args'] ?? [],
+                ],
+                'sort'     => $key,
 
             ]);
         }

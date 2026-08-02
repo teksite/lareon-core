@@ -6,12 +6,13 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Validation\Rule;
 
 
 #[Fillable(['model_type', 'meta_template_id', 'element_id', 'title', 'name', 'settings', 'sort'])]
 #[Table('meta_templates_elements')]
-class MetaFieldTemplate extends Model
+class MetaFieldTemplate extends Pivot
 {
     protected function casts(): array
     {

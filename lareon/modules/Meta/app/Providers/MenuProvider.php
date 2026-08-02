@@ -34,7 +34,7 @@ class MenuProvider implements MenuRegisteringContract
 
         $event->addManyItem([
             [
-                'title'      => trans('template editor'),
+                'title'      => trans('template and elements'),
                 'order'      => 5,
                 'route'      => 'admin.settings.meta.templates.index',
                 'active'     => request()->routeIs('admin.settings.meta.*'),

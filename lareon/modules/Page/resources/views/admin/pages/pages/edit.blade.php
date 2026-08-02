@@ -27,7 +27,6 @@
             </x-slot:aside>
 
         </x-lareon::editor.tabs.item>
-
     @endsection
 
 </x-lareon::admin-editor>

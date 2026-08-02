@@ -73,6 +73,12 @@
                             <x-lareon::editor.tabs.layout>
                                 @yield('form')
 
+                                @if($instance && method_exists($instance , 'template'))
+                                    <x-lareon::editor.tabs.item :title="__('meta data')">
+                                                <x-meta::elements-loader :template="$instance->template"/>
+                                    </x-lareon::editor.tabs.item>
+                                @endif
+
                                 @if($publishInfo || $publishStatus)
                                     <x-lareon::editor.tabs.item :title="__('publish data')">
                                         <div @class($publishInfo && $publishStatus ? 'grid gap-6 lg:grid-cols-2': '')>

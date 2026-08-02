@@ -2,13 +2,14 @@
 
 namespace Lareon\Modules\Meta\App\Traits;
 
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Lareon\Modules\Meta\App\Models\MetaTemplate;
 
 trait HasTemplate
 {
-    public function template() :HasOne
+    public function template() :BelongsTo
     {
-        return $this->hasOne(MetaTemplate::class, 'template_id', 'id');
+        return $this->belongsTo(MetaTemplate::class, 'template_id', 'id');
     }
+
 }
