@@ -112,7 +112,7 @@ class MetaTemplateLogic
                               ->prepend($path . '/')
                               ->after($path . DIRECTORY_SEPARATOR)
                               ->replace('\\', '/')
-                              ->replaceLast('.php', '')
+                              ->replaceLast('.blade.php', '')
                               ->toString();
                 })
                 ->all();

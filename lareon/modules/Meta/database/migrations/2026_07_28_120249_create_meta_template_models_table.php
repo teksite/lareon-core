@@ -29,26 +29,26 @@ return new class extends Migration {
 
 
         Schema::create('meta_templates_elements', function (Blueprint $table) {
-            $table->foreignId('meta_template_id')->constrained('meta_templates')->cascadeOnDelete();
-            $table->foreignId('meta_element_id')->constrained('meta_elements')->cascadeOnDelete();
+            $table->foreignId('template_id')->constrained('meta_templates')->cascadeOnDelete();
+            $table->foreignId('element_id')->constrained('meta_elements')->cascadeOnDelete();
             $table->string('title');
             $table->string('name');
             $table->json('settings')->nullable();
             $table->tinyInteger('sort' ,false ,true)->default(0);
 
-            $table->unique(['meta_template_id' , 'meta_element_id', 'name'] ,'meta_template_element_name');
+            $table->unique(['template_id' , 'element_id', 'name'] ,'meta_templates_elements_name');
         });
 
 
         Schema::create('meta_models', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('meta_template_id')->constrained('meta_elements')->cascadeOnDelete();
-            $table->foreignId('meta_template_id')->constrained('meta_templates')->cascadeOnDelete();
+            $table->foreignId('element_id')->constrained('meta_elements')->cascadeOnDelete();
+            $table->foreignId('template_id')->constrained('meta_templates')->cascadeOnDelete();
             $table->morphs('model');
             $table->json('content')->nullable();
             $table->timestamps();
 
-            $table->unique(['meta_template_id', 'meta_template_id', 'model_type', 'model_id']);
+            $table->unique(['element_id', 'template_id', 'model_type', 'model_id'] ,'meta_element_template_model');
         });
     }
 

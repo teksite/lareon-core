@@ -17,12 +17,12 @@ class ElementsSeeder extends Seeder
         MetaElement::query()->insert([
             /* Elements */
             [
-                'element'  => 'content-content.blade',
+                'element'  => 'content-content',
                 'title'    => 'content +  dynamic_content',
                 'settings' => null,
             ],
             [
-                'element'  => 'faq.blade',
+                'element'  => 'faq',
                 'title'    => 'dynamic_faq',
                 'settings' => null,
             ],
@@ -32,17 +32,17 @@ class ElementsSeeder extends Seeder
         MetaTemplate::query()->insert([
             /* Elements */
             [
-                'template'   => 'pages/pages/templates/about-us.blade',
+                'template'   => 'pages/pages/templates/about-us',
                 'title'      => 'about page',
                 'model_type' => 'page',
             ],
             [
-                'template'   => 'pages/pages/templates/contact-us.blade',
+                'template'   => 'pages/pages/templates/contact-us',
                 'title'      => 'contact page',
                 'model_type' => 'page',
             ],
             [
-                'template'   => 'pages/pages/templates/faq.blade',
+                'template'   => 'pages/pages/templates/faq',
                 'title'      => 'faq page',
                 'model_type' => 'page',
             ],

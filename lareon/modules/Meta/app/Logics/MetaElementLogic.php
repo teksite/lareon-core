@@ -94,7 +94,7 @@ class MetaElementLogic
                 return Str::of($file->getPathname())
                           ->after($path . DIRECTORY_SEPARATOR)
                           ->replace('\\', '/')
-                          ->replaceLast('.php', '')
+                          ->replaceLast('.blade.php', '')
                           ->toString();
             })
             ->values()

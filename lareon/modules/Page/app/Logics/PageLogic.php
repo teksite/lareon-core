@@ -4,7 +4,7 @@ namespace Lareon\Modules\Page\App\Logics;
 
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Arr;
-use Lareon\Modules\Meta\App\Models\MetaFieldTemplate;
+use Lareon\Modules\Meta\App\Models\MetaElementTemplate;
 use Lareon\Modules\Meta\App\Models\MetaModel;
 use Lareon\Modules\Page\App\Models\Page;
 use Teksite\Handler\Actions\ServiceWrapper;

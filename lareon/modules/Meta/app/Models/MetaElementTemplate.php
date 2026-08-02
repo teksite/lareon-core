@@ -10,9 +10,9 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Validation\Rule;
 
 
-#[Fillable(['model_type', 'meta_template_id', 'element_id', 'title', 'name', 'settings', 'sort'])]
+#[Fillable(['model_type', 'template_id', 'element_id', 'title', 'name', 'settings', 'sort'])]
 #[Table('meta_templates_elements')]
-class MetaFieldTemplate extends Pivot
+class MetaElementTemplate extends Pivot
 {
     protected function casts(): array
     {
@@ -26,8 +26,8 @@ class MetaFieldTemplate extends Pivot
     {
         return [
             'model_type' => 'required|string',
-            'meta_template_id' => 'required|integer|exists:meta_templates,id',
-            'meta_element_id' => 'required|integer|exists:meta_elements,id',
+            'template_id' => 'required|integer|exists:meta_templates,id',
+            'element_id' => 'required|integer|exists:meta_elements,id',
             'title'      => 'required|string|max:100',
             'name'       => 'required|string',
             'settings'   => 'required|array',
@@ -37,11 +37,11 @@ class MetaFieldTemplate extends Pivot
 
     public function element(): BelongsTo
     {
-        return $this->belongsTo(MetaElement::class, 'meta_element_id');
+        return $this->belongsTo(MetaElement::class, 'element_id');
     }
 
     public function template(): BelongsTo
     {
-        return $this->belongsTo(MetaElement::class, 'meta_template_id');
+        return $this->belongsTo(MetaElement::class, 'template_id');
     }
 }
