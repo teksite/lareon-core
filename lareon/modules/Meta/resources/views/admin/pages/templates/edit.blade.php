@@ -52,16 +52,14 @@
                     {{__('items')}}
                 </legend>
                 <div id="template-elements-list" data-initial-elements="{{ json_encode(
-                        $template->elements?->map(fn ($el) => [
+                        $template->elements?->map(function($el){
+                          return [
                             'element_id' => $el->id,
                             'name'       => $el->pivot->name,
                             'title'      => $el->pivot->title,
-                            'args'       => $el->pivot->settings
-                                ? (is_array($el->pivot->settings)
-                                    ? $el->pivot->settings
-                                    : json_decode($el->pivot->settings, true))
-                                : [],
-                        ])->values()
+                            'args'       => ($el->pivot->settings)['arguments'] ?? []
+                        ];
+                        })->values()
                     ) }}">
                 </div>
 
