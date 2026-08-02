@@ -12,4 +12,10 @@ trait HasTemplate
         return $this->belongsTo(MetaTemplate::class, 'template_id', 'id');
     }
 
+    public function metaData()
+    {
+        return $this->morphToMany(MetaTemplate::class, 'model', 'meta_models' ,'model_id' , 'model_type' ,'meta_template_id' );
+    }
+
+
 }

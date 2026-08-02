@@ -43,6 +43,7 @@ class Page extends Model
             'template_id'      => 'nullable|exists:meta_templates,id',
             'publish_status'   => ['required', 'integer', Rule::in(array_column(PublishStatusEnum::cases(), 'value'))],
             'published_at'     => 'nullable|date',
+            'meta_data'=>'nullable|array',
         ];
 
         $rules['slug'] = match (true) {

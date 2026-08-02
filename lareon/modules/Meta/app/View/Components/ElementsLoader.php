@@ -45,7 +45,7 @@ class ElementsLoader extends Component
                         ->getElementView($element->element)
                         ->result,
                     'props' => [
-                        'name' => $element->pivot->name,
+                        'name' => "meta_data[".$element->pivot->name."]",
                         'title' => $element->pivot->title,
                         'arguments' => $element->pivot->settings['arguments'] ?? [],
                         'settings' => $element->settings,

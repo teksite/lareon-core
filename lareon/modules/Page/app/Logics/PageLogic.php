@@ -4,6 +4,8 @@ namespace Lareon\Modules\Page\App\Logics;
 
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Arr;
+use Lareon\Modules\Meta\App\Models\MetaFieldTemplate;
+use Lareon\Modules\Meta\App\Models\MetaModel;
 use Lareon\Modules\Page\App\Models\Page;
 use Teksite\Handler\Actions\ServiceWrapper;
 use Teksite\Handler\contracts\ServiceResult;
@@ -54,9 +56,23 @@ class PageLogic
      */
     public function update(Page $page, array $inputs = []): ServiceResult
     {
-        dd($inputs);
         return ServiceWrapper::make(false)->do(function () use ($page, $inputs) {
+
             $page->update(Arr::except($inputs, ['seo', 'meta']));
+            $page->metaData()->detach();
+
+            foreach ($inputs['meta_data'] as $key => $value) {
+                MetaModel::query()->updateOrCreate(
+                    [
+                        'meta_template_id' => $page->template_id,
+                        'model_type'       => Page::class,
+                        'model_id'         => $page->id,
+
+                    ],[
+                        'content'          => $value,
+                    ]
+                );
+            }
             return $page->refresh();
         })->run();
     }
