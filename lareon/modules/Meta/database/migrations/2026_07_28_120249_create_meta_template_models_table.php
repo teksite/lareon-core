@@ -41,14 +41,13 @@ return new class extends Migration {
 
 
         Schema::create('meta_models', function (Blueprint $table) {
-            $table->id();
             $table->foreignId('element_id')->constrained('meta_elements')->cascadeOnDelete();
             $table->foreignId('template_id')->constrained('meta_templates')->cascadeOnDelete();
             $table->morphs('model');
+            $table->string('key');
             $table->json('content')->nullable();
-            $table->timestamps();
 
-            $table->unique(['element_id', 'template_id', 'model_type', 'model_id'] ,'meta_element_template_model');
+            $table->unique(['element_id', 'template_id', 'model_type', 'model_id' ,'key'] ,'meta_element_template_model_key');
         });
     }
 

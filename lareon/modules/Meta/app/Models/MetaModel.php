@@ -8,10 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphPivot;
 
-#[Fillable(['template_id', 'model_type', 'model_id', 'content'])]
+#[Fillable(['template_id', 'element_id', 'model_type', 'model_id', 'key', 'content'])]
 #[Table('meta_models')]
 class MetaModel extends Model
 {
+
+    public $timestamps = false;
     protected function casts(): array
     {
         return [
@@ -22,12 +24,13 @@ class MetaModel extends Model
     public static function rules(string $operation, int|null $id = null): array
     {
         return [
-            'template_id'   => 'required|integer',
-            'model_id'   => 'required|integer',
-            'model_type' => 'required|string',
-            'content'    => 'nullable|array',
+            'template_id' => 'required|integer',
+            'element_id'  => 'required|integer',
+            'model_id'    => 'required|integer',
+            'model_type'  => 'required|string',
+            'key'         => 'required|string',
+            'content'     => 'nullable|array',
         ];
-
     }
 
     public function template(): BelongsTo

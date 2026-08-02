@@ -75,7 +75,7 @@
 
                             @if($instance && method_exists($instance , 'template'))
                                 <x-lareon::editor.tabs.item :title="__('meta data')">
-                                    <x-meta::elements-loader :template="$instance->template"/>
+                                    <x-meta::elements-loader :template="$instance->template" :value="$instance->metaData"/>
                                 </x-lareon::editor.tabs.item>
                             @endif
 

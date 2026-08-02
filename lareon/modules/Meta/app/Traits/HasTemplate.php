@@ -3,6 +3,7 @@
 namespace Lareon\Modules\Meta\App\Traits;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Lareon\Modules\Meta\App\Models\MetaModel;
 use Lareon\Modules\Meta\App\Models\MetaTemplate;
 
 trait HasTemplate
@@ -14,7 +15,13 @@ trait HasTemplate
 
     public function metaData()
     {
-        return $this->morphToMany(MetaTemplate::class, 'model', 'meta_models' ,'model_id' , 'model_type' ,'meta_template_id' );
+        return $this->morphMany(MetaModel::class, 'model');
+    }
+    public function getMetaData(string|null $key = null)
+    {
+        return $key === null
+            ? $this->metaData
+            : $this->metaData()->where('key' ,$key)->first();
     }
 
 

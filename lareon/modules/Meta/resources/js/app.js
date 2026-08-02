@@ -168,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return row;
     }
 
-    function createField({ label, field, argName = null }) {
+    function createField({ label, field, argName = null}) {
         const wrap = document.createElement('div');
 
         const labelEl = document.createElement('label');

@@ -1,6 +1,7 @@
-@props(['title', 'name','value'=>[], 'placeholder'=>null, 'required'=>false ,'open'=>false ,'accordion'=>false] )
+@props(['title', 'name' ,'elementId' ,'value'=>[] ,'open'=>false ,'accordion'=>false] )
 @php($randomItem=rand(100,9999).\Illuminate\Support\Str::random(6).rand(100,9999))
 <x-lareon::accordion.single :title="__($title)" :open="$open" :accordion="$accordion">
+    <input type="hidden" name="{{$name}}[element_id]" value="{{$elementId}}">
     <fieldset class="fieldset">
         <legend class="legend">
             {{$title}}
@@ -13,7 +14,7 @@
                         <div class="w-full md:grid-cols-2 gap-3 grid">
                             <div class="w-full">
                                 <x-lareon::inputs.label :title="__('title') . ' #'. ($loop->iteration)" for="dynamic_item_title-{{$rand}}-{{$loop->index}}"/>
-                                <x-lareon::inputs.text  name="{{$name}}[{{$loop->index}}][question]" id="dynamic_item_title-{{$rand}}-{{$loop->index}}" class="block w-full" :value="$item['question'] ?? ''"/>
+                                <x-lareon::inputs.text name="{{$name}}[data][{{$loop->index}}][question]" id="dynamic_item_title-{{$rand}}-{{$loop->index}}" class="block w-full" :value="$item['question'] ?? ''"/>
                             </div>
                         </div>
                         <button type="button" class="text-red-600 deleteItemBtn" data-target="dynamic_item-{{$rand}}-{{$loop->index}}" @dblclick="removeField">
@@ -22,7 +23,7 @@
                     </div>
                     <div class="w-full">
                         <x-lareon::inputs.label :title="__('answer') . ' #'. ($loop->iteration)" for="dynamic_item_answer-{{$rand}}-{{$loop->index}}"/>
-                        <x-lareon::inputs.textarea  name="{{$name}}[{{$loop->index}}][answer]" id="dynamic_item_answer-{{$rand}}-{{$loop->index}}" class="block w-full" >{{$item['answer'] ?? ''}}</x-lareon::inputs.textarea>
+                        <x-lareon::inputs.textarea name="{{$name}}[data][{{$loop->index}}][answer]" id="dynamic_item_answer-{{$rand}}-{{$loop->index}}" class="block w-full">{{$item['answer'] ?? ''}}</x-lareon::inputs.textarea>
                     </div>
                     <x-lareon::inputs.error :messages="get_error($errors , $name.'['.$loop->index.']')" class="my-2"/>
                 </div>
@@ -36,7 +37,7 @@
                                 <div class="grid gap-3 md:grid-cols-2 w-full">
                                     <div class="w-full">
                                         <label x-text:="`{{__('question')}} #${index + lngth + 1}`" x-bind:for="`dynamic_new_item_question-${index + lngth + 1}`" class="block font-medium text-xs text-gray-600  mb-2">{{__('new :title',['title'=>__('question')])}}</label>
-                                        <x-lareon::inputs.text  x-bind:id="`dynamic_new_item_question-${index + lngth + 1}`" class="block w-full" x-model="field.txt1" x-bind:name="`{{$name}}[${index + lngth + 1}][question]`"/>
+                                        <x-lareon::inputs.text x-bind:id="`dynamic_new_item_question-${index + lngth + 1}`" class="block w-full" x-model="field.txt1" x-bind:name="`{{$name}}[data][${index + lngth + 1}][question]`"/>
                                     </div>
 
                                 </div>
@@ -49,7 +50,7 @@
                             <div>
                                 <div class="w-full">
                                     <label x-text:="`{{__('answer')}} #${index + lngth + 1}`" x-bind:for="`dynamic_new_item_answer-${index + lngth + 1}`" class="block font-medium text-xs text-gray-600  mb-2">{{__('new :title',['title'=>__('answer')])}}</label>
-                                    <x-lareon::inputs.textarea  x-bind:id="`dynamic_new_item_answer-${index + lngth + 1}`" class="block w-full" x-model="field.txt3" x-bind:name="`{{$name}}[${index + lngth + 1}][answer]`"></x-lareon::inputs.textarea>
+                                    <x-lareon::inputs.textarea x-bind:id="`dynamic_new_item_answer-${index + lngth + 1}`" class="block w-full" x-model="field.txt3" x-bind:name="`{{$name}}[data][${index + lngth + 1}][answer]`"></x-lareon::inputs.textarea>
                                 </div>
                             </div>
                         </div>
