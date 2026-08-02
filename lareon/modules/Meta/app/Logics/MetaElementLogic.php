@@ -132,11 +132,11 @@ class MetaElementLogic
     {
         $base = modulePath('meta', 'resources/views/components/editor/extra', true);
 
-        $file = $base . DIRECTORY_SEPARATOR . $element . '.php';
+        $file = $base . DIRECTORY_SEPARATOR . $element . '.blade.php';
 
         if (!File::exists($file)) return new ServiceResult(false, null);
 
-        $element = trim(str_replace('/', '.', $element), '.blade');
+        $element = str_replace('/', '.', $element);
 
         return new ServiceResult(true, 'meta::components.editor.extra.' . $element);
     }
