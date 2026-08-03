@@ -14,25 +14,28 @@ use Lareon\Modules\Meta\App\Models\MetaTemplate;
 class ElementsLoader extends Component
 {
     private MetaTemplate $template;
+
     /**
      * Create a new component instance.
      */
-    public function __construct(int|MetaTemplate $template ,public  $value)
+    public function __construct(int|MetaTemplate $template, public $value)
     {
         $this->template = $template instanceof MetaTemplate
             ? $template
-            : MetaTemplate::find($template);
-
-
+            : MetaTemplate::findOrFail($template);
     }
+
 
     /**
      * Get the view / contents that represent the component.
      */
     public function render(): View|Closure|string|null
     {
-        return view('meta::components.editor.section.elements-loader', ['elements' => $this->loadElements()]);
+        return view('meta::components.editor.section.elements-loader', [
+            'elements' => $this->loadElements(),
+        ]);
     }
+
 
     /**
      * @throws \Throwable
@@ -40,15 +43,19 @@ class ElementsLoader extends Component
      */
     private function loadElements(): array
     {
+
+        $elementLogic = app(MetaElementLogic::class);
+
         return $this->template->elements
             ->sortBy('pivot.sort')
-            ->map(function ($element) {
-              $name=$element->pivot->name;
-              $value = $this->value->where('key', $name)->first()?->content;
+            ->map(function (Model $element) use ($elementLogic) {
+
+                $name = $element->pivot->name;
+                $value = $this->value->firstWhere('key', $name)?->content;
+
                 return [
-                    'view'  => app(MetaElementLogic::class)
-                        ->getElementView($element->element)
-                        ->result,
+                    'view' => $elementLogic->getElementView($element->element)->result,
+
                     'props' => [
                         'elementId' => $element->id,
                         'name'      => "meta_data[$name]",
@@ -57,10 +64,13 @@ class ElementsLoader extends Component
                         'settings'  => $element->settings,
                         'element'   => $element,
                         'pivot'     => $element->pivot,
-                        'value'=> $value,
+                        'value'     => $value,
                     ],
                 ];
             })
+            ->values()
             ->all();
+
+
     }
 }

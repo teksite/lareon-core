@@ -10,6 +10,5 @@ return [
     ],
 
     'relations_on_trash'=>[
-        'ca'
     ]
 ];

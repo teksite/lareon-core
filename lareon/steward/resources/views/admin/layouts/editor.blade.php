@@ -1,13 +1,16 @@
 @props([
 'type' => 'create', // create, edit, update, delete, restore
 'instance' => null,
-'publishInfo' => true,
-'publishStatus' => true,
 'action' => null,
 'method' => null,
-'hasTab' => true,
 'id' => 'editor-form',
+'publishInfo' => true,
+'publishStatus' => true,
+'hasTab' => true,
 'hasFile' => false,
+'hasMeta' => true,
+'hasSeo' => true,
+
 ])
 
 @php
