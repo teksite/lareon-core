@@ -65,6 +65,8 @@ return [
             'delete'       => 'حذف :attribute',
             'update'       => 'به‌روزرسانی :attribute',
             'create_item'  => 'ایجاد مورد جدید',
+            'trash_list'   => 'حذف‌شده :attribute',
+
         ],
 
         // اقدامات

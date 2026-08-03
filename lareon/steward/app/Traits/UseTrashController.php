@@ -2,15 +2,22 @@
 
 namespace Lareon\Steward\App\Traits;
 
+use Illuminate\Support\Str;
 use Teksite\Handler\Facade\Responder;
 
 trait UseTrashController
 {
 
-    public function index(): \Illuminate\Contracts\View\View|\Illuminate\View\View
+    public function index(): \Illuminate\View\View
     {
         $items = $this->logic->getTrashes()->result;
-        return view($this->view, compact('items'));
+        return view($this->view ?? 'lareon::admin.layouts.trash',
+            [
+                'items'      => $items,
+                'trashIndex' => $this->trashIndex,
+                'backTo'     => $this->backTo,
+                'pageTitle' => Str::of($this->attribute)->plural()->toString(),
+            ]);
     }
 
 

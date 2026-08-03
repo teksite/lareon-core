@@ -5,22 +5,22 @@ return [
     // Authentication & User Management
     // ============================================
     'auth'          => [
-        'logout'       => 'Logout',
-        'login'        => 'Login to your account',
-        'register'     => 'Register',
-        'profile'      => 'Profile',
-        'settings'     => 'Settings',
-        'dashboard'    => 'Dashboard',
-        'welcome_user' => 'Welcome :attribute',
-        'welcome_back' => 'Welcome back, :name!',
-        'unauthorized' => 'You are not authorized to perform this action',
-        'forbidden'    => 'Access forbidden',
-        'sign_in' => 'Sign In',
-        'sign_up' => 'Sign Up',
+        'logout'             => 'Logout',
+        'login'              => 'Login to your account',
+        'register'           => 'Register',
+        'profile'            => 'Profile',
+        'settings'           => 'Settings',
+        'dashboard'          => 'Dashboard',
+        'welcome_user'       => 'Welcome :attribute',
+        'welcome_back'       => 'Welcome back, :name!',
+        'unauthorized'       => 'You are not authorized to perform this action',
+        'forbidden'          => 'Access forbidden',
+        'sign_in'            => 'Sign In',
+        'sign_up'            => 'Sign Up',
         'email_verification' => 'Email Verification',
         'phone_verification' => 'Phone Verification',
-        'confirm_password' => 'confirm the password',
-        '2fa' => 'two factor authentication',
+        'confirm_password'   => 'confirm the password',
+        '2fa'                => 'two factor authentication',
 
     ],
 
@@ -30,26 +30,26 @@ return [
     'crud'          => [
         // Success messages
         'success' => [
-            'created' => ':attribute created successfully',
-            'updated' => ':attribute updated successfully',
-            'deleted' => ':attribute deleted successfully',
-            'restored' => ':attribute restored successfully',
+            'created'     => ':attribute created successfully',
+            'updated'     => ':attribute updated successfully',
+            'deleted'     => ':attribute deleted successfully',
+            'restored'    => ':attribute restored successfully',
             'allRestored' => 'all items restored successfully',
-            'pruned' => ':attribute pruned successfully',
-            'allPruned' => 'all items pruned successfully',
-            'general' => 'successfully done'
+            'pruned'      => ':attribute pruned successfully',
+            'allPruned'   => 'all items pruned successfully',
+            'general'     => 'successfully done',
         ],
 
         // Error messages
         'error'   => [
-            'created' => 'Error: The :attribute could not be created!',
-            'updated' => 'Error: The :attribute could not be updated!',
-            'deleted' => 'Error: The :attribute could not be deleted!',
-            'restored' => 'Error: The :attribute could not be restored!',
+            'created'     => 'Error: The :attribute could not be created!',
+            'updated'     => 'Error: The :attribute could not be updated!',
+            'deleted'     => 'Error: The :attribute could not be deleted!',
+            'restored'    => 'Error: The :attribute could not be restored!',
             'allRestored' => 'Error: all items could not be restored!',
-            'pruned' => 'Error: The :attribute could not be pruned!',
-            'allPruned' => 'Error: all items could not be pruned!',
-            'general' => 'unfortunately  failed'
+            'pruned'      => 'Error: The :attribute could not be pruned!',
+            'allPruned'   => 'Error: all items could not be pruned!',
+            'general'     => 'unfortunately  failed',
 
         ],
 
@@ -59,6 +59,7 @@ return [
             'create'       => 'Create New :attribute',
             'edit'         => 'Edit :attribute',
             'edit_current' => 'edit :attribute (:item)',
+            'trash_list'   => 'deleted :attribute',
 
             'show'        => 'Show :attribute',
             'list'        => ':attribute List',
@@ -119,38 +120,38 @@ return [
     // Buttons
     // ============================================
     'buttons'       => [
-        'submit'   => 'Submit',
-        'update'   => 'Update',
-        'create'   => 'Create',
-        'cancel'   => 'Cancel',
-        'delete'   => 'Delete',
-        'edit'     => 'Edit',
-        'save'     => 'Save',
-        'back'     => 'Back',
-        'export'   => 'Export',
-        'import'   => 'Import',
-        'print'    => 'Print',
-        'refresh'  => 'Refresh',
-        'view'     => 'View',
-        'search'   => 'Search',
-        'reset'    => 'Reset',
-        'confirm'  => 'Confirm',
-        'close'    => 'Close',
-        'upload'   => 'Upload',
-        'download' => 'Download',
-        'copy'     => 'Copy',
-        'share'    => 'Share',
+        'submit'       => 'Submit',
+        'update'       => 'Update',
+        'create'       => 'Create',
+        'cancel'       => 'Cancel',
+        'delete'       => 'Delete',
+        'edit'         => 'Edit',
+        'save'         => 'Save',
+        'back'         => 'Back',
+        'export'       => 'Export',
+        'import'       => 'Import',
+        'print'        => 'Print',
+        'refresh'      => 'Refresh',
+        'view'         => 'View',
+        'search'       => 'Search',
+        'reset'        => 'Reset',
+        'confirm'      => 'Confirm',
+        'close'        => 'Close',
+        'upload'       => 'Upload',
+        'download'     => 'Download',
+        'copy'         => 'Copy',
+        'share'        => 'Share',
         'send'         => 'Send',
         'send_email'   => 'Send Email',
         'send_sms'     => 'Send SMS',
         'resend_email' => 'Send Email Again',
-        'resend_sms'  => 'Send SMS Again',
+        'resend_sms'   => 'Send SMS Again',
 
         'logout'   => 'Logout',
         'login'    => 'Login',
         'register' => 'Register',
-        'sign_in' => 'Sign In',
-        'sign_up' => 'Sign Up',
+        'sign_in'  => 'Sign In',
+        'sign_up'  => 'Sign Up',
 
         'new_one'        => 'create new one',
         'new_attribute'  => 'create :attribute',
@@ -169,7 +170,7 @@ return [
             'select' => 'Select :attribute',
             'search' => 'Search...',
 
-            'unique'  => [
+            'unique' => [
                 'one' => 'Enter a unique :attribute',
                 'two' => 'Enter a unique :attribute for :item',
             ],
@@ -183,7 +184,7 @@ return [
                 'document' => 'Upload document for :attribute',
             ],
         ],
-        'auth'=>[
+        'auth'   => [
             'email'            => 'Enter email address',
             'password'         => 'Enter password',
             'confirm_password' => 'renter the password',
@@ -194,9 +195,9 @@ return [
             "remember" => "remember me",
         ],
     ],
-    "links"=>[
+    "links"         => [
         "forget_password" => "do you forget your password?",
-        "back_home" => "back to home",
+        "back_home"       => "back to home",
     ],
 
     // ============================================

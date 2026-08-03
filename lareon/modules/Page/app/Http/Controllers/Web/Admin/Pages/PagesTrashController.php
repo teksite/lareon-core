@@ -16,9 +16,11 @@ class PagesTrashController extends Controller implements HasMiddleware
 
     public string $attribute = 'page';
 
-    public string $view = 'page::admin.pages.pages.trash';
+    public ?string $view = null;
     public string $trashIndex = 'admin.pages.trash.index';
     public string $backTo = 'admin.pages.index';
+    public string $title = 'admin.pages.index';
+
 
     public function __construct(public PageLogic $logic) {}
 
