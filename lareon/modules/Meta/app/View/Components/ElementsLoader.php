@@ -13,10 +13,11 @@ use Lareon\Modules\Meta\App\Models\MetaTemplate;
 
 class ElementsLoader extends Component
 {
+    private MetaTemplate $template;
     /**
      * Create a new component instance.
      */
-    public function __construct(public int|MetaTemplate $template ,public  $value)
+    public function __construct(int|MetaTemplate $template ,public  $value)
     {
         $this->template = $template instanceof MetaTemplate
             ? $template

@@ -1,11 +1,12 @@
 import Sortable from 'sortablejs';
+
 document.addEventListener('DOMContentLoaded', () => {
     const sourceList = document.getElementById('elements-list');
     const targetList = document.getElementById('template-elements-list');
 
     if (!sourceList || !targetList) return;
     Sortable.create(sourceList, {
-        group: { name: 'template-elements', pull: 'clone', put: false },
+        group: {name: 'template-elements', pull: 'clone', put: false},
         sort: false,
         handle: '[data-element-handler]',
         animation: 150,
@@ -14,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     Sortable.create(targetList, {
-        group: { name: 'template-elements', pull: false, put: true },
+        group: {name: 'template-elements', pull: false, put: true},
         sort: true,
         handle: '[data-element-handler]',
         animation: 150,
@@ -54,6 +55,9 @@ document.addEventListener('DOMContentLoaded', () => {
     targetList.addEventListener('click', (e) => {
         const btn = e.target.closest('[data-remove-template-element]');
         if (!btn) return;
+        const answer = confirm('are you sure? delete elements from template directly effect on contents of pages');
+
+        if (!answer) return;
         btn.closest('.template-element-item')?.remove();
         reindex();
     });
@@ -131,10 +135,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const fixedGrid = document.createElement('div');
         fixedGrid.className = 'grid sm:grid-cols-2 gap-4 mb-4';
 
-        const nameField = createField({ label: 'name', field: 'name' });
+        const nameField = createField({label: 'name', field: 'name'});
         nameField.input.value = saved.name ?? '';
 
-        const titleField = createField({ label: 'title', field: 'title' });
+        const titleField = createField({label: 'title', field: 'title'});
         titleField.input.value = saved.title ?? '';
 
         titleField.input.addEventListener('input', () => {
@@ -153,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
             grid.className = 'grid sm:grid-cols-2 gap-4';
 
             argNames.forEach((argName) => {
-                const { wrap, input } = createField({
+                const {wrap, input} = createField({
                     label: argName,
                     field: 'arg',
                     argName,
@@ -168,7 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return row;
     }
 
-    function createField({ label, field, argName = null}) {
+    function createField({label, field, argName = null}) {
         const wrap = document.createElement('div');
 
         const labelEl = document.createElement('label');
@@ -184,7 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
         wrap.appendChild(labelEl);
         wrap.appendChild(input);
 
-        return { wrap, input };
+        return {wrap, input};
     }
 
     function reindex() {
