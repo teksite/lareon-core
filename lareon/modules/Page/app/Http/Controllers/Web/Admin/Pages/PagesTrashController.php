@@ -20,7 +20,7 @@ class PagesTrashController extends Controller implements HasMiddleware
     public string $backTo = 'admin.pages.index';
 
     public string $indexRoute = 'admin.pages.trash.index';
-    public string $pruneRoute = 'admin.pages.trash.index';
+    public string $pruneRoute = 'admin.pages.trash.prune';
     public string $reinstateRoute = 'admin.pages.trash.reinstate';
     public string $flushRoute = 'admin.pages.trash.flush';
     public string $restoreRoute = 'admin.pages.trash.restore';

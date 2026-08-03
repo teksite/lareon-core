@@ -33,7 +33,7 @@ trait UseTrashController
         return Responder::fromResult($res,
             trans('lareon::global.crud.success.restored', ['attribute' => __($this->attribute)]),
             trans('lareon::global.crud.error.restored', ['attribute' => __($this->attribute)]),
-            route($this->trashIndex)
+            route($this->indexRoute)
         )->go();
 
     }
@@ -46,7 +46,7 @@ trait UseTrashController
         return Responder::fromResult($res,
             trans('lareon::global.crud.success.pruned', ['attribute' => __($this->attribute)]),
             trans('lareon::global.crud.error.pruned', ['attribute' => __($this->attribute)]),
-            route($this->trashIndex)
+            route($this->indexRoute)
         )->go();
     }
 
