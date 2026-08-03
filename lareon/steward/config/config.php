@@ -5,7 +5,11 @@ return [
 
     'admin' => [
         'layout' => [
-            'navbar' => 'accordion',
+            'navbar' => 'simple',
         ],
     ],
+
+    'relations_on_trash'=>[
+        'ca'
+    ]
 ];

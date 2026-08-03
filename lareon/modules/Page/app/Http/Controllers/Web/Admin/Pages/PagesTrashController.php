@@ -3,50 +3,59 @@
 namespace Lareon\Modules\Page\App\Http\Controllers\Web\Admin\Pages;
 
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Lareon\Modules\Page\App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Lareon\Modules\Page\App\Logics\PageLogic;
 
-class PagesTrashController extends Controller
+class PagesTrashController extends Controller  implements HasMiddleware
 {
 
-    /**
-     * Display  a list of the resource.
-     */
-    public function index(): \Illuminate\Contracts\View\View
+    public function __construct(public PageLogic $logic)
     {
 
     }
 
-    /**
-     * restore one instance from trash
-     */
-    public function reinstate($id): RedirectResponse
+    public static function middleware(): array
     {
-        //
+        return [
+            new Middleware('can:admin.page.delete'),
+            new Middleware('can:admin.page.trash', only: ['prune', 'flush']),
+        ];
     }
 
-    /**
-     * delete one instance from DB forever
-     */
-    public function prune($id): RedirectResponse
+    public function index()
     {
-      //;
+        $pages = $this->logic->getTrashes()->result;
+        return view('page::admin.pages.pages.trash', compact('pages'));
     }
 
-    /**
-     *  restore all instances.
-     */
-    public function restore(): RedirectResponse
+
+    public function reinstate($id)
     {
-       //
+        $result = $this->logic->restoreOne($id);
+        return WebResponse::byResult($result, route('admin.pages.trash.index'))->go();
     }
 
-    /**
-     * delete all instances forever.
-     */
-    public function flush(): RedirectResponse
+
+    public function prune($id)
     {
-        //
+        $result = $this->logic->wipeOne($id);
+        return WebResponse::byResult($result, route('admin.pages.trash.index'))->go();
+    }
+
+    public function restore()
+    {
+        $result = $this->logic->restoreAll();
+        return WebResponse::byResult($result, route('admin.pages.index'))->go();
+    }
+
+
+    public function flush()
+    {
+        $result = $this->logic->wipeAll();
+        return WebResponse::byResult($result, route('admin.pages.index'))->go();
     }
 
 

@@ -7,7 +7,9 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
 use Lareon\Modules\Meta\App\Models\MetaElementTemplate;
 use Lareon\Modules\Meta\App\Models\MetaModel;
+use Lareon\Modules\Meta\App\Traits\HasMetaLogic;
 use Lareon\Modules\Page\App\Models\Page;
+use Lareon\Steward\App\Traits\HasTrashLogic;
 use Teksite\Handler\Actions\ServiceWrapper;
 use Teksite\Handler\contracts\ServiceResult;
 use Teksite\Handler\Services\FetchDataService;
@@ -15,6 +17,8 @@ use Teksite\Handler\Services\FetchDataService;
 
 class PageLogic
 {
+    use HasTrashLogic, HasMetaLogic;
+
     /**
      * @throws \Throwable
      */
@@ -38,6 +42,7 @@ class PageLogic
             foreach ($inputs as $key => $value) {
                 $query->where($key, $value);
             }
+            return $query->first();
         })->run();
     }
 
@@ -67,12 +72,12 @@ class PageLogic
                     continue;
                 }
                 MetaModel::query()->create([
-                        'key' => $key,
+                        'key'         => $key,
                         'template_id' => $page->template_id,
                         'element_id'  => (int)$value['element_id'],
                         'model_type'  => Page::class,
                         'model_id'    => $page->id,
-                        'content' => $value['data'],
+                        'content'     => $value['data'],
                     ]
                 );
             }
@@ -90,5 +95,9 @@ class PageLogic
         })->run();
     }
 
+    protected function getModelClass(): string
+    {
+        return Page::class;
+    }
 }
 
