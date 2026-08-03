@@ -30,19 +30,27 @@ return [
     'crud'    => [
         // پیام‌های موفقیت
         'success' => [
-            'created' => ':attribute با موفقیت ایجاد شد',
-            'updated' => ':attribute با موفقیت به‌روزرسانی شد',
-            'deleted' => ':attribute با موفقیت حذف شد',
-            'general' => 'با موفقیت انجام شد',
+            'created'     => ':attribute با موفقیت ایجاد شد',
+            'updated'     => ':attribute با موفقیت به‌روزرسانی شد',
+            'deleted'     => ':attribute با موفقیت حذف شد',
+            'restored'    => ':attribute با موفقیت بازیابی شد',
+            'allRestored' => 'همه موارد با موفقیت بازیابی شدند',
+            'pruned'      => ':attribute با موفقیت بطور دائم حذف شد',
+            'allPruned'   => 'همه موارد با موفقیت حذف شدند',
+            'general'     => 'با موفقیت انجام شد',
 
         ],
 
         // پیام‌های خطا
         'error'   => [
-            'created' => 'خطا: :attribute ایجاد نشد!',
-            'updated' => 'خطا: :attribute به‌روزرسانی نشد!',
-            'deleted' => 'خطا: :attribute حذف نشد!',
-            'general' => 'عملیات انجلم نشد!',
+            'created'     => 'خطا: :attribute ایجاد نشد!',
+            'updated'     => 'خطا: :attribute به‌روزرسانی نشد!',
+            'deleted'     => 'خطا: :attribute حذف نشد!',
+            'restored'    => 'خطا: :attribute بازیابی نشد!',
+            'allRestored' => 'خطا: موارد بازیابی نشدند!',
+            'pruned'      => 'خطا: :attribute حذف نشد!',
+            'allPruned'   => 'خطا: موارد حذف نشدند!',
+            'general'     => 'عملیات انجلم نشد!',
 
         ],
 

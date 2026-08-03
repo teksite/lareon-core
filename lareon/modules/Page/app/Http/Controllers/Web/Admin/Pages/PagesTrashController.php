@@ -8,14 +8,12 @@ use Illuminate\Routing\Controllers\Middleware;
 use Lareon\Modules\Page\App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Lareon\Modules\Page\App\Logics\PageLogic;
+use Teksite\Handler\Facade\Responder;
 
-class PagesTrashController extends Controller  implements HasMiddleware
+class PagesTrashController extends Controller implements HasMiddleware
 {
 
-    public function __construct(public PageLogic $logic)
-    {
-
-    }
+    public function __construct(public PageLogic $logic) {}
 
     public static function middleware(): array
     {
@@ -34,28 +32,48 @@ class PagesTrashController extends Controller  implements HasMiddleware
 
     public function reinstate($id)
     {
-        $result = $this->logic->restoreOne($id);
-        return WebResponse::byResult($result, route('admin.pages.trash.index'))->go();
+        $res = $this->logic->restoreOne($id);
+
+        return Responder::fromResult($res,
+            trans('lareon::global.crud.success.restored', ['attribute' => __('page')]),
+            trans('lareon::global.crud.error.restored', ['attribute' => __('page')]),
+            route('admin.pages.trash.index')
+        )->go();
+
     }
 
 
     public function prune($id)
     {
-        $result = $this->logic->wipeOne($id);
-        return WebResponse::byResult($result, route('admin.pages.trash.index'))->go();
+        $res = $this->logic->wipeOne($id);
+        return Responder::fromResult($res,
+            trans('lareon::global.crud.success.pruned', ['attribute' => __('page')]),
+            trans('lareon::global.crud.error.pruned', ['attribute' => __('page')]),
+            route('admin.pages.trash.index')
+        )->go();
     }
 
     public function restore()
     {
-        $result = $this->logic->restoreAll();
-        return WebResponse::byResult($result, route('admin.pages.index'))->go();
+        $res = $this->logic->restoreAll();
+        return Responder::fromResult($res,
+            trans('lareon::global.crud.success.allRestored'),
+            trans('lareon::global.crud.error.allRestored'),
+            route('admin.pages.index')
+        )->go();
+
     }
 
 
     public function flush()
     {
-        $result = $this->logic->wipeAll();
-        return WebResponse::byResult($result, route('admin.pages.index'))->go();
+        $res = $this->logic->wipeAll();
+
+        return Responder::fromResult($res,
+            trans('lareon::global.crud.success.allPruned'),
+            trans('lareon::global.crud.error.allPruned'),
+            route('admin.pages.index')
+        )->go();
     }
 
 

@@ -33,6 +33,10 @@ return [
             'created' => ':attribute created successfully',
             'updated' => ':attribute updated successfully',
             'deleted' => ':attribute deleted successfully',
+            'restored' => ':attribute restored successfully',
+            'allRestored' => 'all items restored successfully',
+            'pruned' => ':attribute pruned successfully',
+            'allPruned' => 'all items pruned successfully',
             'general' => 'successfully done'
         ],
 
@@ -41,6 +45,10 @@ return [
             'created' => 'Error: The :attribute could not be created!',
             'updated' => 'Error: The :attribute could not be updated!',
             'deleted' => 'Error: The :attribute could not be deleted!',
+            'restored' => 'Error: The :attribute could not be restored!',
+            'allRestored' => 'Error: all items could not be restored!',
+            'pruned' => 'Error: The :attribute could not be pruned!',
+            'allPruned' => 'Error: all items could not be pruned!',
             'general' => 'unfortunately  failed'
 
         ],
