@@ -13,16 +13,16 @@ use Lareon\Modules\Meta\App\Models\MetaTemplate;
 
 class ElementsLoader extends Component
 {
-    private MetaTemplate $template;
+    private null|MetaTemplate $template;
 
     /**
      * Create a new component instance.
      */
-    public function __construct(int|MetaTemplate $template, public $value)
+    public function __construct(null|int|MetaTemplate $template, public $value)
     {
         $this->template = $template instanceof MetaTemplate
             ? $template
-            : MetaTemplate::findOrFail($template);
+            : MetaTemplate::query()->find($template);
     }
 
 
@@ -44,6 +44,7 @@ class ElementsLoader extends Component
     private function loadElements(): array
     {
 
+        if ($this->template === null) return [];
         $elementLogic = app(MetaElementLogic::class);
 
         return $this->template->elements

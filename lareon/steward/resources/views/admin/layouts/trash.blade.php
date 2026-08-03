@@ -1,9 +1,13 @@
 <x-lareon::admin-layout>
     @section('title')
-        {{__('global.crud.titles.trash_list' ,['attribute'=>__($pageTitle)])}}
+        {{__('lareon::global.crud.titles.trash_list' ,['attribute'=>__($pageTitle)])}}
     @endsection
     @section('description')
-        @yield('description')
+        {{__('lareon::global.crud.titles.trash_list' ,['attribute'=>__($pageTitle)])}}
+    @endsection
+
+    @section('header.start')
+            <x-lareon::links.nav :href="route($backTo)" :content="__('lareon::global.buttons.all_attribute' ,['attribute'=>__($pageTitle)])" color="index"/>
     @endsection
     @section('header.end')
         <x-lareon::search/>

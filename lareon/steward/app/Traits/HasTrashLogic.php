@@ -59,7 +59,7 @@ trait HasTrashLogic
         return ServiceWrapper::make(false)
                              ->do(fn() => FetchDataService::get(
                                  $this->trashedQuery(),
-                                 ['title', 'slug', 'soft_delete'],
+                                 ['title',  'deleted_at'],
                                  perPage: $perPage,
                              ))
                              ->run();
