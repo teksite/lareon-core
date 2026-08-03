@@ -4,7 +4,7 @@ namespace Lareon\Modules\Seo\App\Models;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
-use Lareon\Modules\Seo\App\Casts\SeoStateCast;
+use Lareon\Modules\Seo\App\Enums\SeoStateEnum;
 
 #[Fillable(['key','value','state'])]
 class SeoSite extends Model
@@ -14,7 +14,7 @@ class SeoSite extends Model
         return [
             'key' => 'string',
             'value' => 'json',
-            'state' => SeoStateCast::class
+            'state' => SeoStateEnum::class
         ];
     }
 
