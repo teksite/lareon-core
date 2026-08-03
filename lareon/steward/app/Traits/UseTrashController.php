@@ -2,17 +2,15 @@
 
 namespace Lareon\Steward\App\Traits;
 
-use Illuminate\Routing\Controllers\Middleware;
-use Lareon\Modules\Page\App\Logics\PageLogic;
 use Teksite\Handler\Facade\Responder;
 
 trait UseTrashController
 {
 
-    public function index()
+    public function index(): \Illuminate\Contracts\View\View|\Illuminate\View\View
     {
         $items = $this->logic->getTrashes()->result;
-        return view($this->trashIndex, compact('items'));
+        return view($this->view, compact('items'));
     }
 
 

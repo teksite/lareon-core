@@ -35,9 +35,9 @@ class PagesController extends Controller implements HasMiddleware
     public function index()
     {
         $pages = $this->logic->all()->result;
-        $count = $this->logic->trashCount()->result;
+        $trashCount = $this->logic->trashCount()->result;
 
-        return view('page::admin.pages.pages.index', compact('pages', 'count'));
+        return view('page::admin.pages.pages.index', compact('pages', 'trashCount'));
     }
 
     /**
