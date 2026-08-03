@@ -14,7 +14,7 @@ class PagesTrashController extends Controller
      */
     public function index(): \Illuminate\Contracts\View\View
     {
-        //
+
     }
 
     /**
