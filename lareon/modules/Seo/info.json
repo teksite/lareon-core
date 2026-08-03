@@ -1,0 +1,10 @@
+{
+    "version":"1.0.0",
+    "id": "Seo",
+    "title": "Seo",
+    "alias": "seo",
+    "description": "",
+    "keywords": [],
+    "providers": "Lareon\\Modules\\Seo\\App\\Providers\\SeoServiceProvider"
+}
+
