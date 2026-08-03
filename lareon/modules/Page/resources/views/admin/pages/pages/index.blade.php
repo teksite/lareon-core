@@ -3,6 +3,7 @@
     @section('description', __('pages are fixed content on a website that rarely changes and displays the same information to visitors'))
     @section('header.start')
         <x-lareon::links.nav :href="route('admin.pages.create')" :content="__('lareon::global.buttons.new_one')" color="create" can="admin.page.create"/>
+        <x-lareon::links.nav :href="route('admin.pages.trahes.index')" :content="__('lareon::global.buttons.new_one')" color="create" can="admin.page.create"/>
     @endsection
     @section('list')
         <x-lareon::table :rows="$pages" :headers="['id'=>'#',__('image') ,'title'=>__('title') ,'status','created_at'=>__('created at') ,'published_at'=>__('published at') ,'']">
