@@ -159,6 +159,8 @@ return [
         'all_items'      => 'همه موارد',
         'all_attribute'  => 'همه :attribute',
         'list_attribute' => 'لیست :attribute',
+        'delete_all' => 'حذف همه',
+        'restore_all' => 'بازیابی همه',
 
     ],
 

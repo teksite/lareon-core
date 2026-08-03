@@ -7,12 +7,15 @@
     @endsection
 
     @section('header.start')
-            <x-lareon::links.nav :href="route($backTo)" :content="__('lareon::global.buttons.all_attribute' ,['attribute'=>__($pageTitle)])" color="index"/>
+        <x-lareon::links.nav :href="route($backTo)" :content="__('lareon::global.buttons.all_attribute' ,['attribute'=>__($pageTitle)])" color="index"/>
     @endsection
     @section('header.end')
         <x-lareon::search/>
     @endsection
-    @yield('list.before')
+    <div class="p-3 rounded-xl mb-6 flex items-center justify-end bordering gap-3">
+        <x-lareon::links.action varaint="outline" type="restore" method="patch" :href="route($restoreRoute)" :label="__('lareon::global.buttons.restore_all')"/>
+        <x-lareon::links.action varaint="outline" type="prune" method="delete" :href="route($flushRoute)" :label="__('lareon::global.buttons.delete_all')"/>
+    </div>
     <x-lareon::table :rows="$items" :headers="['id'=>'#', 'title'=>__('title') ,'created_at'=>__('created at') ,'deleted_at'=>__('deleted at') ,'']">
         @foreach($items ?? [] as $key=>$item)
             <tr>
@@ -26,7 +29,8 @@
                 </td>
                 <td>
                     <x-lareon::action-box class="action">
-                        <x-lareon::links.action type="delete" method="delete" :href="route($trashIndex , $item)" can="admin.page.delete"/>
+                        <x-lareon::links.action type="restore" method="patch" :href="route($reinstateRoute , $item)"/>
+                        <x-lareon::links.action type="prune" method="delete" :href="route($pruneRoute , $item)"/>
                     </x-lareon::action-box>
                 </td>
             </tr>

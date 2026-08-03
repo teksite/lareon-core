@@ -158,6 +158,8 @@ return [
         'all_items'      => 'all items',
         'all_attribute'  => 'all :attribute',
         'list_attribute' => ':attribute list',
+        'delete_all' => 'delete all',
+        'restore_all' => 'restore all',
     ],
 
     // ============================================

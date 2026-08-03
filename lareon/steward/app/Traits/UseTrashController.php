@@ -13,10 +13,15 @@ trait UseTrashController
         $items = $this->logic->getTrashes()->result;
         return view($this->view ?? 'lareon::admin.layouts.trash',
             [
-                'items'      => $items,
-                'trashIndex' => $this->trashIndex,
-                'backTo'     => $this->backTo,
+                'items'     => $items,
                 'pageTitle' => Str::of($this->attribute)->plural()->toString(),
+                'backTo'    => $this->backTo,
+
+                'indexRoute'     => $this->indexRoute,
+                'pruneRoute'     => $this->pruneRoute,
+                'reinstateRoute' => $this->reinstateRoute,
+                'flushRoute'     => $this->flushRoute,
+                'restoreRoute'   => $this->restoreRoute,
             ]);
     }
 

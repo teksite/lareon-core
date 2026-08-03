@@ -35,6 +35,12 @@
             'title' => trans('restore'),
             'target' => '_self',
         ],
+        'prune' => [
+            'icon' => 'brush-clear',
+            'color' => 'text-red-600 hover:bg-red-50',
+            'title' => trans('restore'),
+            'target' => '_self',
+        ],
         'create' => [
             'icon' => 'database',
             'color' => 'text-emerald-600 hover:bg-emerald-50',
