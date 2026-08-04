@@ -46,6 +46,7 @@ class MenuProvider implements MenuRegisteringContract
                       'order'  => 1,
                       'route'  => 'admin.seo.site.edit',
                       'active' => request()->routeIs('admin.seo.site.edit'),
+                      'permission' => 'admin.seo.site.edit',
 
 
                   ], [
@@ -53,6 +54,7 @@ class MenuProvider implements MenuRegisteringContract
                       'route'  => 'admin.seo.sitemaps.edit',
                       'order'  => 2,
                       'active' => request()->routeIs('admin.seo.sitemaps.edit'),
+                      'permission' => 'admin.seo.sitemap.edit',
 
 
                   ], [
@@ -60,13 +62,14 @@ class MenuProvider implements MenuRegisteringContract
                       'route'  => 'admin.seo.robot.edit',
                       'order'  => 3,
                       'active' => request()->routeIs('admin.seo.robot.edit'),
-
+                      'permission' => 'admin.seo.robot.edit',
 
                   ], [
                       'title'  => 'redirects',
                       'route'  => 'admin.seo.redirects.edit',
                       'order'  => 4,
                       'active' => request()->routeIs('admin.seo.redirects.edit'),
+                      'permission' => 'admin.seo.redirect.edit',
 
                   ],
               ], 'seo');
