@@ -159,8 +159,8 @@ return [
         'all_items'      => 'همه موارد',
         'all_attribute'  => 'همه :attribute',
         'list_attribute' => 'لیست :attribute',
-        'delete_all' => 'حذف همه',
-        'restore_all' => 'بازیابی همه',
+        'delete_all'     => 'حذف همه',
+        'restore_all'    => 'بازیابی همه',
 
     ],
 
@@ -174,6 +174,12 @@ return [
     // جایگزین‌های متنی (Placeholder)
     // ============================================
     'placeholders'  => [
+
+        'empty' => [
+            'none' => 'خالی بگذارید',
+            'read' => 'خالی بگذارید تا از :attribute خوانده‌شود',
+        ],
+
         'write'  => [
             'one'    => ':attribute را وارد کنید',
             'two'    => ':attribute را برای :item وارد کنید',
@@ -194,6 +200,8 @@ return [
                 'video'    => 'ویدئو را برای :attribute انتخاب کنید',
                 'document' => 'مدرک را برای :attribute آپلود کنید',
             ],
+
+
         ],
         'auth'   => [
             'email'            => 'آدرس ایمیل را وارد کنید',

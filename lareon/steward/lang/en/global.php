@@ -158,14 +158,19 @@ return [
         'all_items'      => 'all items',
         'all_attribute'  => 'all :attribute',
         'list_attribute' => ':attribute list',
-        'delete_all' => 'delete all',
-        'restore_all' => 'restore all',
+        'delete_all'     => 'delete all',
+        'restore_all'    => 'restore all',
     ],
 
     // ============================================
     // Placeholders
     // ============================================
     'placeholders'  => [
+        'empty' => [
+            'none' => 'leave it empty',
+            'read' => 'leave it empty to read from :attribute',
+        ],
+
         'write'  => [
             'one'    => 'Enter :attribute',
             'two'    => 'Enter :attribute for the :item',
@@ -185,6 +190,7 @@ return [
                 'video'    => 'Select video for :attribute',
                 'document' => 'Upload document for :attribute',
             ],
+
         ],
         'auth'   => [
             'email'            => 'Enter email address',

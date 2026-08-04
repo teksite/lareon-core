@@ -3,17 +3,18 @@
 
     @section('form')
 
-        <x-lareon::editor.tabs.item :title="__('general')">
+        <x-lareon::editor.tabs.item :title="__('website')">
             <x-lareon::editor.tabs.section>
                 <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('no') ,0 ] ,[__('yes') ,1] ]" :label="__('activating')" name="seo[website][data][state]" inputsClass="flex items-center gap-1" :value="$website?->state?->value ?? 0"/>
-                <x-seo::editor.sections.website :data="$website->value['website'] ?? []"/>
+                <x-seo::editor.sections.website :data="$website->value ?? []"/>
             </x-lareon::editor.tabs.section>
         </x-lareon::editor.tabs.section>
 
 
         <x-lareon::editor.tabs.item :title="__('local business')">
             <x-lareon::editor.tabs.section>
-
+                <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('no') ,0 ] ,[__('yes') ,1] ]" :label="__('activating')" name="seo[localBusiness][data][state]" inputsClass="flex items-center gap-1" :value="$localBusiness?->state?->value ?? 0"/>
+                <x-seo::editor.sections.localBusiness :data="$localBusiness->value ?? []"/>
             </x-lareon::editor.tabs.section>
         </x-lareon::editor.tabs.section>
 

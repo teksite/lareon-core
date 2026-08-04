@@ -1,8 +1,10 @@
 @props(['data'=>[] ,'name'=>'seo[website][data]'])
-
+@php
+$websiteData=$data['website'] ?? [];
+@endphp
 <div class="space-y-6">
-    <x-lareon::editor.input :required="true" :label="__('title')" name="{{$name}}[title]" :value="$data['title'] ?? null"/>
-    <x-lareon::editor.input-textarea :required="true" :label="__('description')" name="{{$name}}[description]">{{$data['description'] ?? null}}</x-lareon::editor.input-textarea>
-    <x-seo::lang :required="true" name="{{$name}}[language]" :value="$data['language'] ?? null"/>
-    <x-seo::currency :required="true" name="{{$name}}[currency]" :value="$data['currency'] ?? null"/>
+    <x-lareon::editor.input :required="true" :label="__('title')" name="{{$name}}[title]" :value="$websiteData['title'] ?? null" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('title'),'item'=>__('website') ])"/>
+    <x-lareon::editor.input-textarea :required="true" :label="__('description')" name="{{$name}}[description]" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('title'),'item'=>__('website') ])">{{$websiteData['description'] ?? null}}</x-lareon::editor.input-textarea>
+    <x-seo::lang :required="true" name="{{$name}}[language]" :value="$websiteData['language'] ?? null"/>
+    <x-seo::currency :required="true" name="{{$name}}[currency]" :value="$websiteData['currency'] ?? null"/>
 </div>
