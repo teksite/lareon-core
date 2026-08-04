@@ -10,7 +10,7 @@ class UpdateSeoSiteRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return userCan('admin.seo.site.edit');
     }
 
     /**
@@ -21,7 +21,11 @@ class UpdateSeoSiteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'website'=>'required|array',
+            'website.title'=>'required|string',
+            'website.description'=>'required|string',
+            'website.currency'=>'required|string',
+            'website.language'=>'required|string',
         ];
     }
 }

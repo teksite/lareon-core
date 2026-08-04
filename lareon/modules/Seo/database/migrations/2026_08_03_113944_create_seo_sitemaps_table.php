@@ -22,7 +22,7 @@ return new class extends Migration
             $table->json('image')->nullable();
             $table->json('video')->nullable();
             $table->timestamp('available_at')->nullable();
-            $table->tinyInteger('state')->default(1);
+            $table->tinyInteger('state')->default(0);
             $table->timestamps();
 
             $table->unique(['model_id', 'model_type']);

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('key')->unique();
             $table->json('value')->nullable();
-            $table->tinyInteger('state')->default(1);;
+            $table->tinyInteger('state')->default(0);
             $table->timestamps();
         });
 

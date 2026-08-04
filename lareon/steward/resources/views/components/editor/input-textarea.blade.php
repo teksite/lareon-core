@@ -17,10 +17,7 @@
 ])
 
 @php
-    $dotName = rtrim(
-        str_replace(['[', ']'], ['.', ''], $name),
-        '.'
-    );
+    $dotName = rtrim(str_replace(['[', ']'], ['.', ''], $name),    '.');
 
     $defaultValue = $value ?? trim((string)$slot);
 

@@ -6,7 +6,9 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Lareon\Modules\Seo\App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Lareon\Modules\Seo\App\Http\Requests\Admin\UpdateSeoSiteRequest;
 use Lareon\Modules\Seo\App\Logics\SeoSiteLogic;
+use Teksite\Handler\Facade\Responder;
 
 class SeoSiteController extends Controller implements HasMiddleware
 {
@@ -26,5 +28,9 @@ class SeoSiteController extends Controller implements HasMiddleware
         return view('seo::admin.pages.site.edit', compact('items'));
     }
 
-    public function update() {}
+    public function update(UpdateSeoSiteRequest $request)
+    {
+        $res = $this->logic->update($request->validated());
+        return Responder::fromResult($res);
+    }
 }
