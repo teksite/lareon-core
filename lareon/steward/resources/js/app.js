@@ -1,5 +1,4 @@
 import './bootstrap.js'
-import './general.js'
 import './tools.js'
 import {logout, SlugMaker} from "./general.js";
 import {Standalone} from "./browser.min.js";

@@ -22,11 +22,9 @@ class SeoSiteController extends Controller implements HasMiddleware
 
     public function edit()
     {
-
+        $items = $this->logic->all()->result;
+        return view('seo::admin.pages.site.edit', compact('items'));
     }
 
-    public function update()
-    {
-
-    }
+    public function update() {}
 }

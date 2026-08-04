@@ -1,14 +1,13 @@
-@props(['selected'=>false, "disabled"=>false ,'required'=>false ,'multiple'=>false, 'options' =>[] ,'placeholder'=>null])
+@props(['selected'=>null, "disabled"=>false ,'required'=>false ,'multiple'=>false, 'options' =>[] ,'placeholder'=>null , 'inline'=>false])
 @php
     $selectedValues = is_array($selected) ? $selected : (array)$selected;
 
     $classes = 'input block w-full';
-    if ($multiple) {
-        $classes .= ' multiple-select';
-    }
+    if ($multiple) $classes .= ' multiple-select';
+
 @endphp
 
-<select @required($required) {{$disabled ? 'disabled':''}} {{$multiple ? 'multiple' : ''}} {{$attributes->merge(['class'=>$classes])}} >
+<select @required($required) {{$disabled ? 'disabled':''}} {{$multiple ? 'multiple' : ''}} {{$attributes->merge(['class'=>$classes])}}>
     @if($placeholder && !$multiple)
         <option value="">{{ $placeholder }}</option>
     @endif
