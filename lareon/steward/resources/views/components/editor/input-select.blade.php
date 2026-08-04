@@ -7,7 +7,7 @@
     'disabled' => false,
     'placeholder' => null,
     'multiple' => false,
-    'old' => true,
+    'old' => false,
     'wrapperClass' => null,
     'inline' => false,
 ])

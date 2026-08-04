@@ -3,7 +3,7 @@
     'name' => '',
     'value' => null,
     'dir' => null,
-    'old' => true,
+    'old' => false,
     'inputClasses' => '',
     'required' => false,
     'disabled' => false,

@@ -2,7 +2,7 @@
     'id' => null,
     'name' => 'slug',
     'value' => null,
-    'old'=>true,
+    'old'=>false,
     'inputClasses'=>'',
     'required' => false,
     'disabled' => false,

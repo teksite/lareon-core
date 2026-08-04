@@ -14,15 +14,15 @@
         <x-lareon::editor.tabs.item :title="__('basic data')">
             <x-lareon::editor.tabs.section>
                 <div class="grid gap-6 lg:grid-cols-2">
-                    <x-lareon::editor.input :required="true" labelPosition="start" :label="__('first name')" name="name" :value="$user->name" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('name') , 'item'=>__('user')])"/>
-                    <x-lareon::editor.input :required="true" labelPosition="start" :label="__('last name')" name="lastname" :value="$user->lastname" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('last name') , 'item'=>__('user')])"/>
+                    <x-lareon::editor.input :required="true" labelPosition="start" :label="__('first name')" name="name" :value="old('name', $user->name)" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('name') , 'item'=>__('user')])"/>
+                    <x-lareon::editor.input :required="true" labelPosition="start" :label="__('last name')" name="lastname" :value="old('lastname', $user->lastname)" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('last name') , 'item'=>__('user')])"/>
                 </div>
                 <div class="space-y-6">
-                    <x-lareon::editor.input :required="true" type="tel" dir="ltr" :value="$user->phone" :label="__('phone')" name="phone" :placeholder="__('lareon::global.placeholders.write.unique.two',['attribute'=>__('phone') , 'item'=>__('user')])"/>
-                    <x-lareon::editor.input :required="true" type="email" dir="ltr" :value="$user->email" :label="__('email')" name="email" :placeholder="__('lareon::global.placeholders.write.unique.two',['attribute'=>__('email') , 'item'=>__('user') ])"/>
+                    <x-lareon::editor.input :required="true" type="tel" dir="ltr" :value="old('phone', $user->phone)" :label="__('phone')" name="phone" :placeholder="__('lareon::global.placeholders.write.unique.two',['attribute'=>__('phone') , 'item'=>__('user')])"/>
+                    <x-lareon::editor.input :required="true" type="email" dir="ltr" :value="old('email', $user->email)" :label="__('email')" name="email" :placeholder="__('lareon::global.placeholders.write.unique.two',['attribute'=>__('email') , 'item'=>__('user') ])"/>
                 </div>
                 <div>
-                    <x-lareon::editor.input-slug :disabled="true" :readonly="true" :value="$user->slug" :label="__('slug')" name="slug" :placeholder="__('lareon::global.placeholders.write.unique.two',['attribute'=>__('slug') , 'item'=>__('user') ])" :showUrl="!!($user->path())"/>
+                    <x-lareon::editor.input-slug :disabled="true" :readonly="true" :value="old('slug', $user->slug)" :label="__('slug')" name="slug" :placeholder="__('lareon::global.placeholders.write.unique.two',['attribute'=>__('slug') , 'item'=>__('user') ])" :showUrl="!!($user->path())"/>
                 </div>
             </x-lareon::editor.tabs.section>
         </x-lareon::editor.tabs.section>

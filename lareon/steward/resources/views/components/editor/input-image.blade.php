@@ -3,7 +3,7 @@
     'id' => null,
     'name' => 'image',
     'value' => null,
-    'old'=>true,
+    'old'=>false,
     'required' => false,
     'disabled' => false,
     'readonly' => false,
