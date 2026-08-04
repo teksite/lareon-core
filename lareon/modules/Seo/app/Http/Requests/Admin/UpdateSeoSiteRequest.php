@@ -4,20 +4,17 @@ namespace Lareon\Modules\Seo\App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Validator;
+use Teksite\Extralaravel\Enums\Langs;
+use Teksite\Extralaravel\Enums\Currencies;
 
 class UpdateSeoSiteRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
         return userCan('admin.seo.site.edit');
     }
 
     /**
-     * Get the validation rules that apply to the request.
-     *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
@@ -27,7 +24,7 @@ class UpdateSeoSiteRequest extends FormRequest
         ];
     }
 
-    public function after()
+    public function after(): array
     {
         return [
             fn(Validator $validator) => $this->validateWebsiteSeo($validator),
@@ -37,43 +34,40 @@ class UpdateSeoSiteRequest extends FormRequest
     private function validateWebsiteSeo(Validator $validator): void
     {
         if ($validator->errors()->isNotEmpty()) return;
+
         $website = $this->input('seo.website', []);
 
-        if (empty($website)) return;
-
-        $state = $website['state'] ?? false;
-
-        if (!$state) return;
+        if (empty($website) || !($website['state'] ?? false)) return;
 
         $data = $website['data'] ?? [];
 
-        $title= $data['title'] ?? null;
-        $description= $data['description'] ?? null;
-        $language= $data['language'] ?? null;
-        $currency= $data['currency'] ?? null;
+        $this->validateRequired($validator, 'seo.website.title', $data['title'] ?? null, 'title');
+        $this->validateRequired($validator, 'seo.website.description', $data['description'] ?? null, 'description');
+        $this->validateEnum($validator, 'seo.website.language', $data['language'] ?? null, 'language', Langs::class);
+        $this->validateEnum($validator, 'seo.website.currency', $data['currency'] ?? null, 'currency', Currencies::class);
+    }
 
-        if (is_null($title)){
-            $this->validator->errors()->add('seo.website.title', trans('validation.required', ['attribute' => 'title']));
-            return;
-        }
-
-        if (is_null($description)){
-            $this->validator->errors()->add('seo.website.description', trans('validation.required', ['attribute' => 'description']));
-            return;
-        }
-
-
-        if (is_null($language) || !in_array($language , array_keys(\Teksite\Extralaravel\Enums\Langs::cases()))){
-            $this->validator->errors()->add('seo.website.description', trans('validation.not_in', ['attribute' => 'language']));
-            return;
-        }
-
-
-        if (is_null($currency) || !in_array($currency , array_keys(\Teksite\Extralaravel\Enums\Currencies::cases()))){
-            $this->validator->errors()->add('seo.website.description', trans('validation.required', ['attribute' => 'currency']));
-            return;
+    private function validateRequired(Validator $validator, string $field, mixed $value, string $attribute): void
+    {
+        if (is_null($value) || $value === '') {
+            $validator->errors()->add($field, trans('validation.required', ['attribute' => $attribute]));
         }
     }
 
+    /**
+     * @param class-string<\UnitEnum> $enumClass
+     */
+    private function validateEnum(Validator $validator, string $field, mixed $value, string $attribute, string $enumClass): void
+    {
+        if (is_null($value) || $value === '') {
+            $validator->errors()->add($field, trans('validation.required', ['attribute' => $attribute]));
+            return;
+        }
 
+        $validNames = collect($enumClass::cases())->pluck('name')->toArray();
+
+        if (!in_array($value, $validNames, true)) {
+            $validator->errors()->add($field, trans('validation.not_in', ['attribute' => $attribute]));
+        }
+    }
 }

@@ -1,6 +1,6 @@
 @props(['data'=>[]])
 <div class="space-y-6">
-    <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('no') ,0 ] ,[__('yes') ,1] ]" :label="__('activating')" name="seo[website]state" inputsClass="flex items-center gap-1" :value="$data->state->value"/>
+    <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('no') ,0 ] ,[__('yes') ,1] ]" :label="__('activating')" name="seo[website][state]" inputsClass="flex items-center gap-1" :value="$data->state->value"/>
     <x-lareon::editor.input :required="true" :label="__('title')" name="seo[website][data][title]" :value="$data->value['title'] ?? null"/>
     <x-lareon::editor.input-textarea :required="true" :label="__('description')" name="seo[website][data][description]">{{$data->value['description'] ?? null}}</x-lareon::editor.input-textarea>
     <x-seo::lang :required="true" name="seo[website][data][language]" :value="$data->value['language']"/>

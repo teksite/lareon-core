@@ -22,7 +22,8 @@
         "teksite/laravel-filemanager": "^0.2.2",
         "teksite/module": "^3.0",
         "teksite/systeminfo-laravel": "^0.0.1",
-        "ext-dom": "*"
+        "ext-dom": "*",
+        "ext-libxml": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

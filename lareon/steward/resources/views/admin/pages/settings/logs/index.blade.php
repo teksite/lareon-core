@@ -5,8 +5,7 @@
         <form action="" method="get" id="changeLog">
             <x-lareon::editor.input-select wrapperClass="flex gap-3 items-center" :label="__('files')" name="name" onchange="this.form.submit()" aria-label="{{__('logs')}}">
                 @foreach($logs ?? [] as $file)
-                    <option
-                        value="{{$file}}" {{request()->input('name' ,'laravel') == $file ? 'selected' : ''}}>{{$file}}</option>
+                    <option value="{{$file}}" {{request()->input('name' ,'laravel') == $file ? 'selected' : ''}}>{{$file}}</option>
                 @endforeach
             </x-lareon::editor.input-select>
         </form>
