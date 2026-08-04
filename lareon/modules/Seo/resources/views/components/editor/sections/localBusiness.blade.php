@@ -3,11 +3,17 @@
     $localBusiness=$data['localBusiness'] ?? [];
 @endphp
 <div class="space-y-6">
-    <x-lareon::editor.input :label="__('title')" name="{{$name}}[title]" :value="$localBusiness['title'] ?? null" :placeholder="__('lareon::global.placeholders.empty.read',['attribute'=>__('website')])"/>
-    <x-lareon::editor.input-textarea :label="__('description')" name="{{$name}}[description]" :placeholder="__('lareon::global.placeholders.empty.read',['attribute'=>__('website')])">{{$localBusiness['description'] ?? null}}</x-lareon::editor.input-textarea>
+    <x-seo::currency :required="true" name="{{$name}}[currency]" :value="$websiteData['currency'] ?? null"/>
+
+    <x-lareon::editor.input labelPosition="start" :label="__('title')" name="{{$name}}[title]" :value="$localBusiness['title'] ?? null" :placeholder="__('lareon::global.placeholders.empty.read',['attribute'=>__('website')])"/>
+    <x-lareon::editor.input-textarea labelPosition="start" :label="__('description')" name="{{$name}}[description]" :placeholder="__('lareon::global.placeholders.empty.read',['attribute'=>__('website')])">{{$localBusiness['description'] ?? null}}</x-lareon::editor.input-textarea>
 </div>
 
-
+{{--<div class="mb-3 flex items-center gap-1">--}}
+{{--    <x-lareon::input.checkbox id="state" name="local_business[state]" value="1"--}}
+{{--                              :checked="old('local_business.state' , $data->state ?? false)"/>--}}
+{{--    <x-lareon::input.label for="state" :title="__('activate')"/>--}}
+{{--</div>--}}
 {{--<div class="mb-3 grid gap-3 md:grid-cols-2">--}}
 {{--    <div>--}}
 {{--        <x-lareon::input.label for="{{$rand}}_country" :title="__('country')"/>--}}
