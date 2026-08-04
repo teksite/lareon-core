@@ -8,16 +8,19 @@
                 <button type="button" @click="dark = !dark" class="px-3 py-1 rounded border text-sm">
                     <span x-text="dark ? '☀️ Light' : '🌙 Dark'"></span>
                 </button>
-                <button type="button" @click="wrap = !wrap" class="px-3 py-1 rounded border text-sm">
-                    <span x-text="wrap ? '➡️ unwrap' : '↩️  wrap'"></span>
-                </button>
             </div>
         </div>
-        <textarea name="content" dir="ltr" class="font-semibold p-6 rounded-lg w-full max-h-screen overflow-auto transition-colors duration-300"
-             :class="dark ? 'bg-zinc-900 text-gray-300'    : 'bg-slate-50 text-gray-900 border'">
-            <pre :class="wrap ? 'whitespace-pre-wrap'    : ''">{!! $content !!}</pre>
-        </textarea>
+        <form action="{{route('admin.seo.robot.update')}}" method="POST">
+            @csrf
+            @method('PATCH')
+            <textarea name="content" dir="ltr" class="input font-semibold w-full max-h-screen overflow-auto transition-colors duration-300" :class="dark ? 'bg-zinc-900 text-gray-300': 'bg-slate-50 text-gray-900'" rows="12">{!! $content !!}</textarea>
 
+            <div class="mt-6">
+                <x-lareon::buttons.nav class="w-24" :fullWidth="false" type="submit" role="submit" color="create">
+                    {{ __('update')}}
+                </x-lareon::buttons.nav>
+            </div>
+        </form>
     </section>
 
 </x-lareon::admin-layout>

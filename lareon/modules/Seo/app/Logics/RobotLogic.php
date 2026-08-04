@@ -93,7 +93,6 @@ class RobotLogic
     private function extractPath(string $url): string
     {
         $path = parse_url($url, PHP_URL_PATH) ?: '/tkadmin';
-
         return '/' . ltrim($path, '/');
     }
 

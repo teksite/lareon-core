@@ -18,7 +18,7 @@ class RobotFileController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            new Middleware('admin.seo.robot.edit', only: ['edit', 'update']),
+            new Middleware('can:admin.seo.robot.edit', only: ['edit', 'update']),
         ];
     }
 

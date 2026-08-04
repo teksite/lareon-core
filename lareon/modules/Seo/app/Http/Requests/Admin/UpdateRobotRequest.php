@@ -1,4 +1,5 @@
 <?php
+
 namespace Lareon\Modules\Seo\App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -10,7 +11,7 @@ class UpdateRobotRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return userCan('admin.seo.robot.edit');
     }
 
     /**
@@ -21,7 +22,7 @@ class UpdateRobotRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'content' => 'required|string',
         ];
     }
 }

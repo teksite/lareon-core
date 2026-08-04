@@ -1,2 +1,19 @@
 User-agent: *
-Disallow:
+Disallow: /tkadmin/*
+Disallow: /login/
+Allow: /
+
+Sitemap: http://cms.test/sitemap.xml
+
+# Prevent crawling of search results pages
+Disallow: /search/
+
+# Block crawling of common temporary or cache files
+Disallow: /*.php$
+Disallow: /*.tmp$
+
+# Crawl delay for politeness (optional)
+Crawl-delay: 10
+
+# Host directive (optional, for some search engines)
+Host: http://cms.test
