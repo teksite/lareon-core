@@ -29,7 +29,7 @@ class SeoSiteLogic
                         [
                             'key' => $key,
                         ], [
-                        'value' => $input['data'] ?? [],
+                        'value' => [$key=>$input['data'] ?? []],
                         'state' => $input['state'] ?? false,
                     ]);
                 }

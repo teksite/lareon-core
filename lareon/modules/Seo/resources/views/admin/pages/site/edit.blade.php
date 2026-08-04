@@ -5,7 +5,8 @@
 
         <x-lareon::editor.tabs.item :title="__('general')">
             <x-lareon::editor.tabs.section>
-                <x-seo::editor.sections.website :data="$website"/>
+                <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('no') ,0 ] ,[__('yes') ,1] ]" :label="__('activating')" name="seo[website][data][state]" inputsClass="flex items-center gap-1" :value="$website?->state?->value ?? 0"/>
+                <x-seo::editor.sections.website :data="$website->value['website'] ?? []"/>
             </x-lareon::editor.tabs.section>
         </x-lareon::editor.tabs.section>
 
