@@ -25,9 +25,11 @@ class SeoSiteController extends Controller implements HasMiddleware
     public function edit()
     {
         $items = $this->logic->all()->result;
-        $site  = $items->first('website');
+        $website  = $items['website'];
+        $localBusiness  = $items['localBusiness'] ?? [];
+        $organization  = $items['organization'] ?? [];
 
-        return view('seo::admin.pages.site.edit', compact('site'));
+        return view('seo::admin.pages.site.edit', compact('website' ,'localBusiness', 'organization'));
     }
 
     public function update(UpdateSeoSiteRequest $request)
