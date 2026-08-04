@@ -2,7 +2,7 @@
     'id' => null,
     'name' => 'slug',
     'value' => null,
-    'old'=>false,
+    'old'=>true,
     'inputClasses'=>'',
     'required' => false,
     'disabled' => false,
@@ -39,7 +39,7 @@
             <x-lareon::inputs.label :title="$label" for="{{$finalId}}" class="w-fit min-w-fit" :markAsRequire="$required"/>
         @endif
 
-        <div class="flex items-center gap-2 w-full"  dir="ltr">
+        <div class="flex items-center gap-2 w-full" dir="ltr">
             @if($showSiteUrl)
                 <span class="text-xs font-bold text-gray-600">{{url('/')}}/</span>
             @endif

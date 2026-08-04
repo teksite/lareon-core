@@ -3,7 +3,7 @@
     'name' => '',
     'value' => null,
     'dir' => null,
-    'old' => false,
+    'old' => true,
     'inputClasses' => '',
     'required' => false,
     'disabled' => false,
@@ -22,11 +22,9 @@
         '.'
     );
 
-    $defaultValue = $value ?? trim((string) $slot);
+    $defaultValue = $value ?? trim((string)$slot);
 
-    $consideredValue = $old
-        ? old($dotName, $defaultValue)
-        : $defaultValue;
+    $consideredValue = $old? old($dotName, $defaultValue): $defaultValue;
 
     $finalId = $id ?? str_replace('.', '-', $dotName);
 
@@ -48,9 +46,7 @@
         @endif
 
         <x-lareon::inputs.textarea :name="$name" :id="$finalId" :disabled="$disabled" :required="$required" :readonly="$readonly" :dir="$dir" :placeholder="$placeholder" :autocomplete="$autocomplete"
-                @class([$inputClasses,'input-error' => $hasError,]) {{ $attributes }}
-        >{{ $consideredValue }}</x-lareon::inputs.textarea>
-
+                @class([$inputClasses,'input-error' => $hasError,]) {{ $attributes }}>{{ $consideredValue }}</x-lareon::inputs.textarea>
         @if($label && $labelPosition === 'end')
             <x-lareon::inputs.label :title="$label" :for="$finalId" class="w-fit min-w-fit" :markAsRequire="$required"/>
         @endif

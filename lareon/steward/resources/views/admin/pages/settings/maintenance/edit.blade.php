@@ -32,7 +32,7 @@
                     </p>
 
                         <div class="flex items-end">
-                            <x-lareon::editor.input :value="old('secret')" :label="__('secret code')" name="secret" :placeholder="__('leave it empty to be disabled or enter a secret code')" :required="false"/>
+                            <x-lareon::editor.input :label="__('secret code')" name="secret" :placeholder="__('leave it empty to be disabled or enter a secret code')" :required="false"/>
                             <x-lareon::buttons.nav rounded="md" size="xs" class="min-w-fit w-fit" color="update" type="submit" :fullWidth="false">
                                 {{__('update')}}
                             </x-lareon::buttons.nav>

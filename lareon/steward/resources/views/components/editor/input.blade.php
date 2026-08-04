@@ -4,7 +4,7 @@
     'type' => 'text',
     'value' => null,
     'dir' => null,
-    'old'=>false,
+    'old'=>true,
     'inputClasses'=>'',
     'required' => false,
     'disabled' => false,
