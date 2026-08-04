@@ -16,7 +16,7 @@ class SitemapController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            new Middleware('admin.seo.sitemap.edit', only: ['edit', 'update']),
+            new Middleware('can:admin.seo.sitemap.edit', only: ['edit', 'update']),
         ];
     }
 

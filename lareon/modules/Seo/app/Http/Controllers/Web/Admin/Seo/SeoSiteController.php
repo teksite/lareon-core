@@ -16,7 +16,7 @@ class SeoSiteController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            new Middleware('admin.seo.site.edit', only: ['edit', 'update']),
+            new Middleware('can:admin.seo.site.edit', only: ['edit', 'update']),
         ];
     }
 
