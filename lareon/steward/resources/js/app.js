@@ -1,6 +1,6 @@
 import './bootstrap.js'
 import './tools.js'
-import {logout, SlugMaker} from "./general.js";
+import {initInlineSelectBox, logout, SlugMaker} from "./general.js";
 import {Standalone} from "./browser.min.js";
 
 
@@ -62,4 +62,6 @@ document.addEventListener('DOMContentLoaded', function () {
     initSingleImageSelector('.imageBtn');
 
     new SlugMaker('-').attachToInput();
+
+    initInlineSelectBox();
 });

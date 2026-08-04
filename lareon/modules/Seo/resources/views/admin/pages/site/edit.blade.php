@@ -5,7 +5,7 @@
 
         <x-lareon::editor.tabs.item :title="__('general')">
             <x-lareon::editor.tabs.section>
-                <x-sep::editor.section.website  :data="$items"/>
+                <x-seo::editor.sections.website  :data="$items"/>
             </x-lareon::editor.tabs.section>
         </x-lareon::editor.tabs.section>
 

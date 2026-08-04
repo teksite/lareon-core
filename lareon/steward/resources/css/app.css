@@ -86,7 +86,6 @@
     }
 
 
-
     table.tableData td {
         @apply p-2
     }
@@ -148,4 +147,23 @@
 ::-webkit-scrollbar-thumb {
     border-radius: 16px;
     background: #b5b5b5 -webkit-linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%, transparent 75%, transparent);
+}
+
+
+.ts-control {
+    border: none !important;
+    background-color: unset !important;
+    font-size: unset !important;
+    line-height: unset !important;
+    padding: unset !important;
+}
+
+.ts-wrapper .item{
+    background-color: #efefef;
+    padding: 2px 4px;
+    border-radius: 14px;
+    overflow: hidden;
+}
+.ts-control:not(.rtl){
+    padding: 0!important;
 }

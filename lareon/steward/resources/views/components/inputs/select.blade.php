@@ -7,7 +7,7 @@
 
 @endphp
 
-<select @required($required) {{$disabled ? 'disabled':''}} {{$multiple ? 'multiple' : ''}} {{$attributes->merge(['class'=>$classes])}}>
+<select @required($required) {{$disabled ? 'disabled':''}} {{$multiple ? 'multiple' : ''}} {{$attributes->merge(['class'=>$classes])}} {{$inline ? 'data-inline' : ''}}>
     @if($placeholder && !$multiple)
         <option value="">{{ $placeholder }}</option>
     @endif

@@ -9,6 +9,7 @@
     'multiple' => false,
     'old' => true,
     'wrapperClass' => null,
+    'inline' => false,
 ])
 
 @php
@@ -25,7 +26,7 @@
     @if($label)
         <x-lareon::inputs.label :title="$label" :markAsRequire="$required" class="mb-1"/>
     @endif
-    <x-lareon::inputs.select {{$attributes}} :name="$name" :required="$required" :disabled="$disabled" :multiple="$multiple" :placeholder="$placeholder" :options="$options" :selected="$selectedValues" class="{{ $errorClass }}">
+    <x-lareon::inputs.select {{$attributes}} :name="$name" :required="$required" :disabled="$disabled" :multiple="$multiple" :placeholder="$placeholder" :options="$options" :selected="$selectedValues" class="{{ $errorClass }}" :inline="$inline">
         {{$slot}}
     </x-lareon::inputs.select>
   <div>
