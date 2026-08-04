@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Validation\Rule;
 use Lareon\Modules\FileManager\App\Traits\HasImages;
 use Lareon\Modules\Meta\App\Traits\HasTemplate;
+use Lareon\Modules\Seo\App\Traits\HaseSo;
 use Lareon\Steward\App\Casts\PublishAt;
 use Lareon\Steward\App\Enums\PublishStatusEnum;
 use Lareon\Steward\App\Models\Scopes\PublishScope;
@@ -20,7 +21,7 @@ use Teksite\FileManager\Models\UploadFile;
 #[Fillable(['parent_id', 'label', 'slug', 'title', 'excerpt', 'body', 'template_id', 'publish_status', 'published_at', 'primary_media_id'])]
 class Page extends Model
 {
-    use SoftDeletes, HasImages, HasAttachedFile, HasTemplate;
+    use SoftDeletes, HasImages, HasAttachedFile, HasTemplate , HaseSo;
 
     protected function casts(): array
     {
