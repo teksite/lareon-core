@@ -25,7 +25,7 @@ class RobotFileController extends Controller implements HasMiddleware
     public function edit()
     {
         $content=$this->logic->getContent()->result;
-        return view('seo::admin.pages.robot', compact('content'));
+        return view('seo::admin.pages.robot_txt.edit', compact('content'));
     }
 
     public function update(UpdateRobotRequest $request)
