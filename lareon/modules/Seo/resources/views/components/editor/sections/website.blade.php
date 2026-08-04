@@ -1,12 +1,12 @@
 @props(['data'=>[]])
-
+@dd($data)
 <div class="space-y-6">
 
-    <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('no') ,0 ] ,[__('yes') ,1] ]" :label="__('activating')" name="website[state]" inputsClass="flex items-center gap-1"/>
-    <x-lareon::editor.input :required="true" :label="__('title')" name="website[data][title]"/>
-    <x-lareon::editor.input-textarea :required="true" :label="__('description')" name="website[data][description]"></x-lareon::editor.input-textarea>
-    <x-seo::lang :required="true" name="website[data][language]" :value="old('website.data.language' ,[] )"/>
-    <x-seo::currency :required="true" name="website[data][currency]" :value="old('website.data.currency' ,[] )"/>
+    <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('no') ,0 ] ,[__('yes') ,1] ]" :label="__('activating')" name="seo[website]state" inputsClass="flex items-center gap-1"/>
+    <x-lareon::editor.input :required="true" :label="__('title')" name="seo[website][data][title]"/>
+    <x-lareon::editor.input-textarea :required="true" :label="__('description')" name="seo[website][data][description]"></x-lareon::editor.input-textarea>
+    <x-seo::lang :required="true" name="seo[website][data][language]" />
+    <x-seo::currency :required="true" name="seo[website][data][currency]"/>
 
 
     {{--Lang--}}

@@ -1,7 +1,6 @@
 @props([
     'id' => null,
     'name' => '',
-    'value' => null,
     'dir' => null,
     'old' => true,
     'inputClasses' => '',
@@ -19,9 +18,9 @@
 @php
     $dotName = rtrim(str_replace(['[', ']'], ['.', ''], $name),    '.');
 
-    $defaultValue = $value ?? trim((string)$slot);
+    $defaultValue =trim((string)$slot);
 
-    $consideredValue = $old? old($dotName, $defaultValue): $defaultValue;
+    $consideredValue = $old ? old($dotName, $defaultValue): $defaultValue;
 
     $finalId = $id ?? str_replace('.', '-', $dotName);
 
