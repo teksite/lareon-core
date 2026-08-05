@@ -26,7 +26,8 @@
     <x-seo::editor.partials.address :value="$value['address'] ?? []" :required="true" :name="$name"/>
     <x-seo::editor.partials.geo :value="$value['geo'] ?? []" :required="false" :name="$name"/>
     <x-seo::editor.partials.potential-action :value="$value['potentialAction'] ?? []" :required="false" :name="$name"/>
-    <x-seo::editor.partials.same-as :value="$value['sameas'] ?? []" :required="false" :name="$name"/>
+    <x-seo::editor.partials.same-as :value="$value['sameAs'] ?? []" :required="false" :name="$name"/>
+    <x-seo::editor.partials.opening-hours-specification :value="$value['openingHoursSpecification'] ?? []" :required="false" :name="$name"/>
 </div>
 
 {{--<div class="mb-3 flex items-center gap-1">--}}

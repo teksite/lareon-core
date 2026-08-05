@@ -1,7 +1,7 @@
 @props(['name','value' => [],'required' => true,])
 
 @php
-    $finalName = $name . '[sameas]';
+    $finalName = $name . '[sameAs]';
     $dottedName = str_replace(['[', ']'], ['.', ''], $finalName);
     $rawItems = old($dottedName, null) ?? $value ?? [];
 
@@ -14,7 +14,7 @@
           x-data="{
         items: {{ $initialItems->toJson() }},
         errors: @js($errors->getMessages()),
-        addItem() { this.items.push({ type: '', url: '',}); },
+        addItem() { this.items.push({ url: '',}); },
         removeItem(index) { this.items.splice(index, 1); },
         hasError(key) { return this.errors[key] !== undefined; },
         getError(key) { return this.errors[key]?.[0] ?? ''; }
@@ -29,7 +29,7 @@
     <div class="space-y-6">
 
         <template x-for="(item, index) in items" :key="index">
-            <div class="mb-3 flex items-center justify-between gap-6">
+            <div class="mb-6 flex items-center justify-between gap-6">
                 <div class="w-full flex flex-col gap-1">
                     <label class="input_label" :for="`sameass_url-${index}`" x-text="`{{ __('url') }} #${index + 1}`"></label>
                     <input type="text" dir="ltr" @required($required) class="input block w-full" placeholder="https://example.com"
