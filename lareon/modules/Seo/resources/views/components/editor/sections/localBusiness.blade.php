@@ -1,9 +1,6 @@
 @props(['value'=>[] ,'name'=>'seo'])
 @php
     $localBusiness=$value['localBusiness'] ?? [];
-    $address=$value['address'] ?? [];
-    $geo=$value['geo'] ?? [];
-    $potential=$value['potentialAction'] ?? [];
 @endphp
 
 <div class="space-y-6">
@@ -26,9 +23,10 @@
     <x-seo::price-range labelPosition="start" name="{{$name}}[localBusiness][priceRange]" :value="$localBusiness['priceRange'] ?? null" :required="true"/>
     <x-lareon::editor.input labelPosition="start" :label="__('map')" name="{{$name}}[localBusiness][hasMap]" :value="$localBusiness['hasMap'] ?? null" placeholder="example@example.com" :required="false"/>
 
-    <x-seo::editor.partials.address :value="$address" :required="true" :name="$name"/>
-    <x-seo::editor.partials.geo :value="$geo" :required="false" :name="$name"/>
-    <x-seo::editor.partials.potential-action :value="$potential" :required="false" :name="$name"/>
+    <x-seo::editor.partials.address :value="$value['address'] ?? []" :required="true" :name="$name"/>
+    <x-seo::editor.partials.geo :value="$value['geo'] ?? []" :required="false" :name="$name"/>
+    <x-seo::editor.partials.potential-action :value="$value['potentialAction'] ?? []" :required="false" :name="$name"/>
+    <x-seo::editor.partials.same-as :value="$value['sameas'] ?? []" :required="false" :name="$name"/>
 </div>
 
 {{--<div class="mb-3 flex items-center gap-1">--}}
