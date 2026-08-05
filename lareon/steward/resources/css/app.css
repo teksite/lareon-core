@@ -154,19 +154,22 @@
 }
 
 
-.ts-control {
+.ts-control , .ts-control:not(.rtl) {
     border: none !important;
     background-color: unset !important;
     font-size: unset !important;
     line-height: unset !important;
-    padding: unset !important;
+    padding: 0 !important;
 }
 
 .ts-wrapper .item{
-    background-color: #efefef;
+    background-color: #1bbcd173!important;
     padding: 2px 4px;
     border-radius: 14px;
     overflow: hidden;
+    font-size: 12px;
+    font-weight: bold;
+    border: 2px solid #4f46e5;
 }
 .ts-control:not(.rtl){
     padding: 0!important;
