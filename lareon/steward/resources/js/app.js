@@ -1,6 +1,6 @@
 import './bootstrap.js'
 import './tools.js'
-import {initInlineSelectBox, logout, SlugMaker} from "./general.js";
+import {initInlineSelectBox, logout, runObserver, SlugMaker} from "./general.js";
 import {Standalone} from "./browser.min.js";
 
 
@@ -64,4 +64,7 @@ document.addEventListener('DOMContentLoaded', function () {
     new SlugMaker('-').attachToInput();
 
     initInlineSelectBox();
+
+
+    runObserver();
 });
