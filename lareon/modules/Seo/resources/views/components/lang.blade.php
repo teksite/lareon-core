@@ -1,8 +1,6 @@
-@props(['name' , 'value'=>[]])
-@php
-$value=(array)$value;
-@endphp
-<x-lareon::editor.input-select :value="$value" :inline="true" :required="true" :label="__('language')" name="{{$name}}">
+@props(['name' , 'value'=>[], "inline"=>false, "required"=>true ,'labelPosition' => 'start'])
+
+<x-lareon::editor.input-select :inline="$inline" :required="$required" :label="__('language')" name="{{$name}}" :value="$value" :labelPosition="$labelPosition">
     @foreach(\Lareon\Modules\Seo\App\Enums\Langs::cases() as $lang)
         <option value="{{$lang->name}}" >
             {{__($lang->value)}}

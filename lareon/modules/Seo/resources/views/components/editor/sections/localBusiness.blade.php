@@ -1,9 +1,7 @@
-@props(['data'=>[] ,'name'=>'seo[localBusiness][data]'])
-@php
-    $localBusiness=$data['localBusiness'] ?? [];
-@endphp
+@props(['value'=>[] ,'name'=>'seo'])
+
 <div class="space-y-6">
-    <x-lareon::editor.input-select {{--labelPosition="start"--}} :label="__('type')" name="{{$name}}[title]" :value="$localBusiness['type'] ?? null">
+    <x-lareon::editor.input-select labelPosition="start" :label="__('type')" name="{{$name}}[localBusiness][type]" :value="$value['type'] ?? null" :required="true">
         @foreach(\Lareon\Modules\Seo\App\Schema\SchemaOption::get('localBusiness_type') as $group=>$items)
             <optgroup label="{{$group}}">
                 @foreach($items as $key=>$desc)
@@ -12,10 +10,11 @@
             </optgroup>
         @endforeach
     </x-lareon::editor.input-select>
-    <x-lareon::editor.input labelPosition="start" :label="__('title')" name="{{$name}}[title]" :value="$localBusiness['title'] ?? null" :placeholder="__('lareon::global.placeholders.empty.read',['attribute'=>__('website')])"/>
-    <x-lareon::editor.input-textarea labelPosition="start" :label="__('description')" name="{{$name}}[description]" :placeholder="__('lareon::global.placeholders.empty.read',['attribute'=>__('website')])">{{$localBusiness['description'] ?? null}}</x-lareon::editor.input-textarea>
-    <x-lareon::editor.input labelPosition="start" :label="__('logo')" name="{{$name}}[logo]" :value="$localBusiness['logo'] ?? null" placeholder="https://exmaple.com//images/logo.png | /images/logo.png" dir="ltr"/>
-    <x-lareon::editor.input-phone labelPosition="start" :label="__('phone')" name="{{$name}}[phone]" :value="$localBusiness['phone'] ?? null" placeholder="xx xxxx xx xx"/>
+    <x-lareon::editor.input labelPosition="start" :label="__('title')" name="{{$name}}[localBusiness][title]" :value="$value['title'] ?? null" :placeholder="__('lareon::global.placeholders.empty.read',['attribute'=>__('website')])"/>
+    <x-lareon::editor.input-textarea labelPosition="start" :label="__('description')" name="{{$name}}[localBusiness][description]" :placeholder="__('lareon::global.placeholders.empty.read',['attribute'=>__('website')])">{{$value['description'] ?? null}}</x-lareon::editor.input-textarea>
+    <x-lareon::editor.input labelPosition="start" :label="__('logo')" name="{{$name}}[localBusiness][logo]" :value="$value['logo'] ?? null" placeholder="https://exmaple.com//images/logo.png | /images/logo.png" dir="ltr" :required="true"/>
+    <x-lareon::editor.input-phone labelPosition="start" :label="__('phone')" name="{{$name}}[localBusiness][phone]" :value="$value['phone'] ?? null" placeholder="xx xxxx xx xx" :required="true"/>
+    <x-seo::price-range labelPosition="start" name="{{$name}}[localBusiness][price_range]" :value="$value['price_range'] ?? null" :required="true"/>
 </div>
 
 {{--<div class="mb-3 flex items-center gap-1">--}}
