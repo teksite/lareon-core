@@ -11,7 +11,7 @@
         'sunday'=>'sunday',
     ];
 
-    $finalName = $name . '[potentialAction]';
+    $finalName = $name . '[openingHoursSpecification]';
     $dottedName = str_replace(['[', ']'], ['.', ''], $finalName);
     $rawItems = old($dottedName, null) ?? $value ?? [];
 
@@ -30,14 +30,13 @@
         getError(key) { return this.errors[key]?.[0] ?? ''; }
     }"
 >
-    <legend class="legend">{{ __('potential actions') }}</legend>
+    <legend class="legend">{{ __('opening hours specification') }}</legend>
 
     @error($dottedName)
-    <p class="mb-4 message-error">{{ $message }}</p>
+        <p class="mb-4 message-error">{{ $message }}</p>
     @enderror
 
     <div class="space-y-6">
-
         <template x-for="(item, index) in items" :key="index">
             <div class="mb-6 flex items-center justify-between gap-6">
                 <div class="w-full grid gap-6 md:grid-cols-2">

@@ -26,12 +26,9 @@ class SeoSiteLogic
             ->do(function () use ($inputs) {
                 foreach ($inputs as $key => $input) {
                     SeoSite::query()->updateOrCreate(
-                        [
-                            'key' => $key,
-                        ], [
-                        'value' => [$key=>$input['data'] ?? []],
-                        'state' => $input['state'] ?? false,
-                    ]);
+                        ['key' => $key,],
+                        ['value' => $input, 'state' => $input['state'] ?? false,]
+                    );
                 }
             })->run();
     }
