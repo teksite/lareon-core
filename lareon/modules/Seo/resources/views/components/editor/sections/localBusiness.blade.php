@@ -2,6 +2,8 @@
 @php
     $localBusiness=$value['localBusiness'] ?? [];
     $address=$value['address'] ?? [];
+    $geo=$value['geo'] ?? [];
+    $potential=$value['potentialAction'] ?? [];
 @endphp
 
 <div class="space-y-6">
@@ -16,13 +18,17 @@
     </x-lareon::editor.input-select>
     <x-lareon::editor.input labelPosition="start" :label="__('title')" name="{{$name}}[localBusiness][title]" :value="$localBusiness['title'] ?? null" :placeholder="__('lareon::global.placeholders.empty.read',['attribute'=>__('website')])"/>
     <x-lareon::editor.input-textarea labelPosition="start" :label="__('description')" name="{{$name}}[localBusiness][description]" :placeholder="__('lareon::global.placeholders.empty.read',['attribute'=>__('website')])">{{$localBusiness['description'] ?? null}}</x-lareon::editor.input-textarea>
-    <x-lareon::editor.input labelPosition="start" :label="__('logo')" name="{{$name}}[localBusiness][logo]" :value="$localBusiness['logo'] ?? null" placeholder="https://exmaple.com//images/logo.png | /images/logo.png" dir="ltr" :required="true"/>
+    <x-lareon::editor.input labelPosition="start" :label="__('image')" name="{{$name}}[localBusiness][image]" :value="$localBusiness['image'] ?? null" placeholder="https://exmaple.com//images/image.jpg | /images/image.jpg" dir="ltr" :required="true"/>
+    <x-lareon::editor.input labelPosition="start" :label="__('logo')" name="{{$name}}[localBusiness][logo]" :value="$localBusiness['logo'] ?? null" placeholder="https://exmaple.com//images/logo.jpg | /images/logo.jpg" dir="ltr" :required="true"/>
     <x-lareon::editor.input labelPosition="start" :label="__('email')" name="{{$name}}[localBusiness][email]" :value="$localBusiness['email'] ?? null" placeholder="example@example.com" :required="false" type="email"/>
-    <x-lareon::editor.input-phone labelPosition="start" :label="__('phone')" name="{{$name}}[localBusiness][phone]" :value="$localBusiness['phone'] ?? null" placeholder="xx xxxx xx xx" :required="true"/>
-    <x-lareon::editor.input-phone labelPosition="start" :label="__('fax')" name="{{$name}}[localBusiness][fax]" :value="$localBusiness['fax'] ?? null" placeholder="xx xxxx xx xx" :required="false"/>
-    <x-seo::price-range labelPosition="start" name="{{$name}}[localBusiness][price_range]" :value="$localBusiness['price_range'] ?? null" :required="true"/>
+    <x-lareon::editor.input-phone labelPosition="start" :label="__('phone')" name="{{$name}}[localBusiness][telephone]" :value="$localBusiness['telephone'] ?? null" placeholder="xx xxxx xx xx" :required="true"/>
+    <x-lareon::editor.input-phone labelPosition="start" :label="__('fax')" name="{{$name}}[localBusiness][faxNumber]" :value="$localBusiness['faxNumber'] ?? null" placeholder="xx xxxx xx xx" :required="false"/>
+    <x-seo::price-range labelPosition="start" name="{{$name}}[localBusiness][priceRange]" :value="$localBusiness['priceRange'] ?? null" :required="true"/>
+    <x-lareon::editor.input labelPosition="start" :label="__('map')" name="{{$name}}[localBusiness][hasMap]" :value="$localBusiness['hasMap'] ?? null" placeholder="example@example.com" :required="false"/>
 
     <x-seo::editor.partials.address :value="$address" :required="true" :name="$name"/>
+    <x-seo::editor.partials.geo :value="$geo" :required="false" :name="$name"/>
+    <x-seo::editor.partials.potential-action :value="$potential" :required="false" :name="$name"/>
 </div>
 
 {{--<div class="mb-3 flex items-center gap-1">--}}

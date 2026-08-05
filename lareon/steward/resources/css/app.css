@@ -61,6 +61,10 @@
         @apply border-red-500 focus:ring-red-500/20 focus:border-red-500;
     }
 
+    .message-error {
+        @apply text-sm text-red-600;
+    }
+
     .input-helper {
         @apply mt-1 text-xs text-zinc-500;
     }
