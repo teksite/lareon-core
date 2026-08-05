@@ -48,7 +48,7 @@
     <div class="space-y-6">
 
         <template x-for="(item, index) in items" :key="index">
-            <div class="mb-3 flex items-start justify-between gap-6">
+            <div class="mb-3 flex items-center justify-between gap-6">
                 <div class="w-full grid gap-6 md:grid-cols-2">
                     <div class="flex flex-col gap-1">
                         <label class="input_label" :for="`potential_action_type-${index}`" x-text="`{{ __('type') }} #${index + 1}`"></label>
