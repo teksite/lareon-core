@@ -9,6 +9,30 @@ class SchemaOption
     /** @var array<string, array> */
     protected static array $cache = [];
 
+    public static function langList(): array
+    {
+        return static::load('lang-list');
+
+    }
+
+    public static function areaList(): array
+    {
+        return static::load('area-list');
+
+    }
+
+    public static function contactTypeList(): array
+    {
+        return static::load('contact-type-list');
+
+    }
+
+    public static function contactOptionList(): array
+    {
+        return static::load('contact-option-list');
+
+    }
+
     public static function pageType(): array
     {
         return static::load('page-type');
@@ -53,7 +77,15 @@ class SchemaOption
     public static function get(string $key, mixed $default = []): mixed
     {
         return Arr::get([
+
+            'area_list'           => static::areaList(),
+            'lang_list'           => static::langList(),
+            'contact_type_list'   => static::contactTypeList(),
+            'contact_option_list' => static::contactOptionList(),
+
+
 //            'pageType'           => static::pageType(),
+
             'organization_type'  => static::organizationType(),
             'localBusiness_type' => static::localBusinessType(),
 //            'contact_type'       => static::contactType(),

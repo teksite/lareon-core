@@ -1,7 +1,7 @@
 import Sortable from "sortablejs";
 import TomSelect from "tom-select";
 
-let caches= new Set();
+let caches = new Set();
 
 export const loader = `<svg class="mr-3 -ml-1 size-5 animate-spin text-white stroke-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10"  stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>`;
 
@@ -119,7 +119,6 @@ export function slugify() {
 
 export function initInlineSelectBox(selector = 'select[data-inline]') {
 
-    console.log(caches)
     const selectEls = document.querySelectorAll(selector);
 
     if (!selectEls.length) return;
@@ -137,7 +136,7 @@ function singleTomSelect(el) {
     const create = el.getAttribute('data-creation') ?? false;
     const maxItem = el.getAttribute('data-maxItem') ?? null;
     const createFilter = el.getAttribute('data-createFilter') ?? null;
-    const hideSelected = el.getAttribute('data-hideSelected') ?? false;
+    const hideSelected = el.getAttribute('data-hideSelected') ?? true;
     const duplicates = el.getAttribute('data-duplicates') ?? false;
 
 
@@ -159,9 +158,11 @@ function singleTomSelect(el) {
 
 export function runObserver() {
     const observer = new MutationObserver((mutations) => {
-        mutations.forEach(node => {
-            if (!(node.target instanceof HTMLInputElement)) return;
-            tomSelectMutation(node)
+        mutations.forEach(mutation => {
+            mutation.addedNodes?.forEach(node => {
+                tomSelectMutation(node);
+            })
+
         });
     });
 
@@ -173,8 +174,9 @@ export function runObserver() {
 }
 
 function tomSelectMutation(node) {
-    if (node.matches('select[data-inline]')) {
-        singleTomSelect(node)
-    }
+    const selectEls = node.querySelectorAll('select[data-inline]')
+    selectEls.forEach(el => {
+        singleTomSelect(el);
+    })
 }
 

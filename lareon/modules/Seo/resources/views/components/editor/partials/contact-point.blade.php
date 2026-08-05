@@ -1,24 +1,6 @@
 @props(['name','value' => [],'required' => true,])
 
 @php
-    $contactTypeList       = [
-        'customer service'     => 'Customer Service',
-        'technical support'    => 'Technical Support',
-        'billing support'      => 'Billing Support',
-        'bill payment'         => 'Bill Payment',
-        'sales'                => 'Sales',
-        'reservations'         => 'Reservations',
-        'credit card support'  => 'Credit Card Support',
-        'emergency'            => 'Emergency',
-        'baggage tracking'     => 'Baggage Tracking',
-        'roadside assistance'  => 'Roadside Assistance',
-        'package tracking'     => 'Package Tracking',
-    ];
-
-   $contactOptionList       = [
-        'toll free',
-        'Hearing Impaired Supported',
-    ];
 
     $finalName = $name . '[ContactPoint]';
     $dottedName = str_replace(['[', ']'], ['.', ''], $finalName);
@@ -52,7 +34,7 @@
         <template x-for="(item, index) in items" :key="index">
             <div class="mb-6 flex items-center justify-between gap-6">
                 <div class="w-full grid gap-6 md:grid-cols-3">
-
+                    {{--Telephone--}}
                     <div class="flex flex-col gap-1">
                         <label class="input_label" :for="`contact_point_telephone-${index}`" x-text="`{{ __('telephone') }} #${index + 1}`"></label>
 
@@ -63,6 +45,7 @@
                                x-model="item.telephone">
                         <p class="message-error" x-show="hasError('{{ $dottedName }}.' + index + '.telephone')" x-text="getError('{{ $dottedName }}.' + index + '.telephone')"></p>
                     </div>
+                    {{--Email--}}
                     <div class="flex flex-col gap-1">
                         <label class="input_label" :for="`contact_point_email-${index}`" x-text="`{{ __('email') }} #${index + 1}`"></label>
 
@@ -73,7 +56,7 @@
                                x-model="item.email">
                         <p class="message-error" x-show="hasError('{{ $dottedName }}.' + index + '.email')" x-text="getError('{{ $dottedName }}.' + index + '.email')"></p>
                     </div>
-
+                    {{--contactType--}}
                     <div class="flex flex-col gap-1">
                         <label class="input_label" :for="`contact_point_contactType-${index}`" x-text="`{{ __('contactType') }} #${index + 1}`"></label>
 
@@ -82,27 +65,58 @@
                                 :name="`{{ $finalName }}[${index}][contactType]`"
                                 :id="`contact_point_contactType-${index}`"
                                 x-model="item.contactType">
-                            @foreach($contactTypeList as $key => $title)
+                            @foreach(\Lareon\Modules\Seo\App\Schema\SchemaOption::get('contact_type_list') as $key => $title)
                                 <option value="{{ $key }}">{{ $title }}</option>
                             @endforeach
                         </select>
                         <p class="message-error" x-show="hasError('{{ $dottedName }}.' + index + '.contactType')" x-text="getError('{{ $dottedName }}.' + index + '.contactType')"></p>
                     </div>
-
+                    {{--contactOption--}}
                     <div class="flex flex-col gap-1">
                         <label class="input_label" :for="`contact_point_contactOption-${index}`" x-text="`{{ __('contactOption') }} #${index + 1}`"></label>
 
-                        <select class="input block w-full" @required($required) data-inline
+                        <select class="input block w-full" @required($required) data-inline multiple
                                 :class="{'input-error': hasError('{{ $dottedName }}.' + index + '.contactOption')}"
-                                :name="`{{ $finalName }}[${index}][contactOption]`"
+                                :name="`{{ $finalName }}[${index}][contactOption][]`"
                                 :id="`contact_point_contactOption-${index}`"
                                 x-model="item.contactOption">
-                            @foreach($contactOptionList as $key => $title)
+                            @foreach(\Lareon\Modules\Seo\App\Schema\SchemaOption::get('contact_option_list') as $key => $title)
                                 <option value="{{ $key }}">{{ $title }}</option>
                             @endforeach
                         </select>
                         <p class="message-error" x-show="hasError('{{ $dottedName }}.' + index + '.contactOption')" x-text="getError('{{ $dottedName }}.' + index + '.contactOption')"></p>
                     </div>
+                    {{--areaServed--}}
+                    <div class="flex flex-col gap-1">
+                        <label class="input_label" :for="`contact_point_areaServed-${index}`" x-text="`{{ __('areaServed') }} #${index + 1}`"></label>
+
+                        <select class="input block w-full" @required($required) data-inline multiple
+                                :class="{'input-error': hasError('{{ $dottedName }}.' + index + '.areaServed')}"
+                                :name="`{{ $finalName }}[${index}][areaServed][]`"
+                                :id="`contact_point_areaServed-${index}`"
+                                x-model="item.areaServed">
+                            @foreach(\Lareon\Modules\Seo\App\Schema\SchemaOption::get('area_list') as $key => $title)
+                                <option value="{{ $key }}">{{ $title }}</option>
+                            @endforeach
+                        </select>
+                        <p class="message-error" x-show="hasError('{{ $dottedName }}.' + index + '.areaServed')" x-text="getError('{{ $dottedName }}.' + index + '.areaServed')"></p>
+                    </div>
+                    {{--areaServed--}}
+                    <div class="flex flex-col gap-1">
+                        <label class="input_label" :for="`contact_point_availableLanguage-${index}`" x-text="`{{ __('availableLanguage') }} #${index + 1}`"></label>
+
+                        <select class="input block w-full" @required($required) data-inline multiple
+                                :class="{'input-error': hasError('{{ $dottedName }}.' + index + '.availableLanguage')}"
+                                :name="`{{ $finalName }}[${index}][availableLanguage][]`"
+                                :id="`contact_point_availableLanguage-${index}`"
+                                x-model="item.availableLanguage">
+                            @foreach(\Lareon\Modules\Seo\App\Schema\SchemaOption::get('lang_list') as $key => $title)
+                                <option value="{{ $key }}">{{ $title }}</option>
+                            @endforeach
+                        </select>
+                        <p class="message-error" x-show="hasError('{{ $dottedName }}.' + index + '.availableLanguage')" x-text="getError('{{ $dottedName }}.' + index + '.availableLanguage')"></p>
+                    </div>
+
                 </div>
 
 
