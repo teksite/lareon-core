@@ -1,25 +1,6 @@
 @props(['name','value' => [],'required' => true,])
 
 @php
-    $types = [
-        'ReserveAction'     => 'reserve action',
-        'OrderAction'       => 'order action',
-        'BuyAction'         => 'buy action',
-        'ViewAction'        => 'view action',
-        'ReadAction'        => 'read action',
-        'WatchAction'       => 'watch action',
-        'ListenAction'      => 'listen action',
-        'DownloadAction'    => 'download action',
-        'CommunicateAction' => 'communicate action',
-        'ContactAction'     => 'contact action',
-        'SubscribeAction'   => 'subscribe action',
-        'RegisterAction'    => 'register action',
-        'DonateAction'      => 'donate action',
-        'ApplyAction'       => 'apply action',
-        'QuoteAction'       => 'quote action',
-        'ScheduleAction'    => 'schedule action',
-    ];
-
     $finalName = $name . '[potentialAction]';
     $dottedName = str_replace(['[', ']'], ['.', ''], $finalName);
     $rawItems = old($dottedName, null) ?? $value ?? [];
@@ -59,7 +40,7 @@
                                 :name="`{{ $finalName }}[${index}][type]`"
                                 :id="`potential_action_type-${index}`"
                                 x-model="item.type">
-                            @foreach($types as $key => $title)
+                            @foreach(\Lareon\Modules\Seo\App\Schema\SchemaOption::get('potential_action_list') as $key => $title)
                                 <option value="{{ $key }}">{{ $title }}</option>
                             @endforeach
                         </select>

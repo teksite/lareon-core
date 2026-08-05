@@ -62,10 +62,7 @@ return [
 
     ],
 
-    'contactOption'      => [
-        'toll free',
-        'Hearing Impaired Supported',
-    ],
+
     'eventStatus'        => [
         "none"         => '',
         "scheduled"    => "https://schema.org/EventScheduled",

@@ -1,15 +1,6 @@
 @props(['name','value' => [],'required' => true,])
 
 @php
-    $daysList = [
-        'monday'=>'monday',
-        'tuesday'=>'tuesday',
-        'wednesday'=>'wednesday',
-        'thursday'=>'thursday',
-        'friday'=>'friday',
-        'saturday'=>'saturday',
-        'sunday'=>'sunday',
-    ];
 
     $finalName = $name . '[openingHoursSpecification]';
     $dottedName = str_replace(['[', ']'], ['.', ''], $finalName);
@@ -48,7 +39,7 @@
                                 :name="`{{ $finalName }}[${index}][dayOfWeek]`"
                                 :id="`opening_horse_day_of_week-${index}`"
                                 x-model="item.dayOfWeek">
-                            @foreach($daysList as $key => $title)
+                            @foreach(\Lareon\Modules\Seo\App\Schema\SchemaOption::get('day_list') as $key => $title)
                                 <option value="{{ $key }}">{{ $title }}</option>
                             @endforeach
                         </select>

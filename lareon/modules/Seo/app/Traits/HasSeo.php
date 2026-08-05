@@ -2,7 +2,7 @@
 
 namespace Lareon\Modules\Seo\App\Traits;
 
-trait HaseSo
+trait HasSeo
 {
     use HasMeta, HasSchema, HasSitemap;
 }

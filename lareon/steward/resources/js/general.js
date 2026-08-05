@@ -3,6 +3,7 @@ import TomSelect from "tom-select";
 
 let caches = new Set();
 
+
 export const loader = `<svg class="mr-3 -ml-1 size-5 animate-spin text-white stroke-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10"  stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>`;
 
 export function logout() {
@@ -104,18 +105,6 @@ export class SlugMaker {
     }
 }
 
-export function slugify() {
-    const inputEls = document.querySelectorAll('.slug-input');
-
-    if (inputEls.length) {
-        inputEls.forEach(el => {
-            el.addEventListener('change', e => {
-
-            })
-        })
-    }
-}
-
 
 export function initInlineSelectBox(selector = 'select[data-inline]') {
 
@@ -123,60 +112,74 @@ export function initInlineSelectBox(selector = 'select[data-inline]') {
 
     if (!selectEls.length) return;
 
-    if (!caches.has('toHasInitBefore')) import('tom-select/dist/css/tom-select.css')
-
-    if (!(caches.has('isSelectExist') && !caches.caches)) caches.add('toHasInitBefore');
+    if (!caches.has('tomInitBefore')) {
+        caches.add('tomInitBefore');
+        import('tom-select/dist/css/tom-select.css');
+    }
 
     selectEls.forEach(el => {
-        singleTomSelect(el);
+        initTomSelect(el);
     })
 }
 
-function singleTomSelect(el) {
-    const create = el.getAttribute('data-creation') ?? false;
-    const maxItem = el.getAttribute('data-maxItem') ?? null;
-    const createFilter = el.getAttribute('data-createFilter') ?? null;
-    const hideSelected = el.getAttribute('data-hideSelected') ?? true;
-    const duplicates = el.getAttribute('data-duplicates') ?? false;
+function initTomSelect(el) {
 
+    if (el.tomselect) return;
 
-    const settings = {
-        plugins: ['no_backspace_delete', 'remove_button',],
-        create: create,
-        maxItem: maxItem,
-        createFilter: createFilter,
-        hideSelected: hideSelected,
-        duplicates: duplicates,
+    const {creation, maxItem, createFilter, hideSelected, duplicates} = el.dataset;
+
+    new TomSelect(el, {
+        plugins: [
+            'remove_button',
+            'no_backspace_delete'
+        ],
+        create: creation === 'true',
+        maxItems: maxItem ? Number(maxItem) : null,
+        createFilter,
+        hideSelected: hideSelected !== 'false',
+        duplicates: duplicates === 'true',
         sortField: {
-            field: "text",
-            direction: "asc"
+            field: 'text',
+            direction: 'asc'
         }
-    };
-    new TomSelect(el, settings);
+    });
 }
 
 
+function tomSelectMutation(node) {
+    if (node.matches?.('select[data-inline]')) {
+        initTomSelect(node);
+        return;
+    }
+    const selectEls = node.querySelectorAll('select[data-inline]');
+    selectEls.forEach(el => {
+        if (el.tomselect) return;
+        initTomSelect(el);
+    })
+}
+
+
+
+let observer;
+
 export function runObserver() {
-    const observer = new MutationObserver((mutations) => {
-        mutations.forEach(mutation => {
-            mutation.addedNodes?.forEach(node => {
+
+    if (observer) return;
+
+    observer = new MutationObserver(mutations => {
+
+        for (const mutation of mutations) {
+
+            for (const node of mutation.addedNodes) {
+                if (node.nodeType !== Node.ELEMENT_NODE) continue;
                 tomSelectMutation(node);
-            })
+            }
+        }
 
-        });
     });
-
 
     observer.observe(document.body, {
         childList: true,
-        subtree: true,
-    })
+        subtree: true
+    });
 }
-
-function tomSelectMutation(node) {
-    const selectEls = node.querySelectorAll('select[data-inline]')
-    selectEls.forEach(el => {
-        singleTomSelect(el);
-    })
-}
-

@@ -2,6 +2,6 @@
 
 
 return [
-    'toll free',
-    'Hearing Impaired Supported',
+    'toll free'                  => 'toll free',
+    'Hearing Impaired Supported' => 'Hearing Impaired Supported',
 ];

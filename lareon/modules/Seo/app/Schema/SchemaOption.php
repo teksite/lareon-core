@@ -9,6 +9,11 @@ class SchemaOption
     /** @var array<string, array> */
     protected static array $cache = [];
 
+    public static function dayList(): array
+    {
+        return static::load('day-list');
+
+    }
     public static function langList(): array
     {
         return static::load('lang-list');
@@ -30,6 +35,11 @@ class SchemaOption
     public static function contactOptionList(): array
     {
         return static::load('contact-option-list');
+
+    }
+    public static function potentialActionList(): array
+    {
+        return static::load('potential-action-list');
 
     }
 
@@ -78,10 +88,12 @@ class SchemaOption
     {
         return Arr::get([
 
+            'day_list'           => static::dayList(),
             'area_list'           => static::areaList(),
             'lang_list'           => static::langList(),
             'contact_type_list'   => static::contactTypeList(),
             'contact_option_list' => static::contactOptionList(),
+            'potential_action_list' => static::potentialActionList(),
 
 
 //            'pageType'           => static::pageType(),
