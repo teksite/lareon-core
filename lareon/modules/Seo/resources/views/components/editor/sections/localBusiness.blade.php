@@ -14,10 +14,14 @@
                 </optgroup>
             @endforeach
         </x-lareon::editor.input-select>
+
         <x-lareon::editor.input labelPosition="start" :label="__('title')" name="{{$finalName}}[localBusiness][title]" :value="$value['localBusiness']['title'] ?? null" :placeholder="__('lareon::global.placeholders.empty.read',['attribute'=>__('website')])"/>
+        <x-lareon::editor.input labelPosition="start" :label="__('alternate name')" name="{{$finalName}}[localBusiness][alternateName]" :value="$value['localBusiness']['alternateName'] ?? null" :placeholder="__('lareon::global.placeholders.empty.read',['attribute'=>__('website')])"/>
         <x-lareon::editor.input-textarea labelPosition="start" :label="__('description')" name="{{$finalName}}[localBusiness][description]" :placeholder="__('lareon::global.placeholders.empty.read',['attribute'=>__('website')])">{{$value['description'] ?? null}}</x-lareon::editor.input-textarea>
+
         <x-lareon::editor.input labelPosition="start" :label="__('image')" name="{{$finalName}}[localBusiness][image]" :value="$value['localBusiness']['image'] ?? null" placeholder="https://exmaple.com//images/image.jpg | /images/image.jpg" dir="ltr" :required="true"/>
         <x-lareon::editor.input labelPosition="start" :label="__('logo')" name="{{$finalName}}[localBusiness][logo]" :value="$value['localBusiness']['logo'] ?? null" placeholder="https://exmaple.com//images/logo.jpg | /images/logo.jpg" dir="ltr" :required="true"/>
+
         <x-lareon::editor.input labelPosition="start" :label="__('email')" name="{{$finalName}}[localBusiness][email]" :value="$value['localBusiness']['email'] ?? null" placeholder="example@example.com" :required="false" type="email" dir="ltr"/>
         <x-lareon::editor.input-phone labelPosition="start" :label="__('phone')" name="{{$finalName}}[localBusiness][telephone]" :value="$value['localBusiness']['telephone'] ?? null" placeholder="xx xxxx xx xx" :required="true"/>
         <x-lareon::editor.input-phone labelPosition="start" :label="__('fax')" name="{{$finalName}}[localBusiness][faxNumber]" :value="$value['localBusiness']['faxNumber'] ?? null" placeholder="xx xxxx xx xx" :required="false"/>

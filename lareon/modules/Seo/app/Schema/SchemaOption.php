@@ -54,7 +54,7 @@ class SchemaOption
     {
         return Arr::get([
 //            'pageType'           => static::pageType(),
-//            'organization_type'  => static::organizationType(),
+            'organization_type'  => static::organizationType(),
             'localBusiness_type' => static::localBusinessType(),
 //            'contact_type'       => static::contactType(),
 //            'contactOption'      => static::contactOption(),
