@@ -14,7 +14,7 @@
         <x-lareon::editor.tabs.item :title="__('local business')">
             <x-lareon::editor.tabs.section>
                 <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('no') ,0 ] ,[__('yes') ,1] ]" :label="__('activating')" name="seo[localBusiness][data][state]" inputsClass="flex items-center gap-1" :value="$localBusiness?->state?->value ?? 0"/>
-                <x-seo::editor.sections.localBusiness :value="$localBusiness->value['localBusiness'] ?? []" />
+                <x-seo::editor.sections.localBusiness :value="$localBusiness->value ?? []" />
             </x-lareon::editor.tabs.section>
         </x-lareon::editor.tabs.section>
 
