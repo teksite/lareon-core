@@ -50,17 +50,17 @@ class SchemaOption
     }
 
 
-    public static function get(string $key, mixed $default = null): mixed
+    public static function get(string $key, mixed $default = []): mixed
     {
         return Arr::get([
-            'pageType'           => static::pageType(),
-            'organization_type'  => static::organizationType(),
+//            'pageType'           => static::pageType(),
+//            'organization_type'  => static::organizationType(),
             'localBusiness_type' => static::localBusinessType(),
-            'contact_type'       => static::contactType(),
-            'contactOption'      => static::contactOption(),
-            'eventStatus'        => static::eventStatus(),
-            'eventPerformance'   => static::eventPerformance(),
-            'attendanceMode'     => static::attendanceMode(),
+//            'contact_type'       => static::contactType(),
+//            'contactOption'      => static::contactOption(),
+//            'eventStatus'        => static::eventStatus(),
+//            'eventPerformance'   => static::eventPerformance(),
+//            'attendanceMode'     => static::attendanceMode(),
         ], $key, $default);
     }
 

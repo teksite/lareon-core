@@ -3,6 +3,15 @@
     $localBusiness=$data['localBusiness'] ?? [];
 @endphp
 <div class="space-y-6">
+    <x-lareon::editor.input-select {{--labelPosition="start"--}} :label="__('type')" name="{{$name}}[title]" :value="$localBusiness['type'] ?? null">
+        @foreach(\Lareon\Modules\Seo\App\Schema\SchemaOption::get('localBusiness_type') as $group=>$items)
+            <optgroup label="{{$group}}">
+                @foreach($items as $key=>$desc)
+                    <option value="{{$key}}">{{$desc}}</option>
+                @endforeach
+            </optgroup>
+        @endforeach
+    </x-lareon::editor.input-select>
     <x-lareon::editor.input labelPosition="start" :label="__('title')" name="{{$name}}[title]" :value="$localBusiness['title'] ?? null" :placeholder="__('lareon::global.placeholders.empty.read',['attribute'=>__('website')])"/>
     <x-lareon::editor.input-textarea labelPosition="start" :label="__('description')" name="{{$name}}[description]" :placeholder="__('lareon::global.placeholders.empty.read',['attribute'=>__('website')])">{{$localBusiness['description'] ?? null}}</x-lareon::editor.input-textarea>
     <x-lareon::editor.input labelPosition="start" :label="__('logo')" name="{{$name}}[logo]" :value="$localBusiness['logo'] ?? null" placeholder="https://exmaple.com//images/logo.png | /images/logo.png" dir="ltr"/>
