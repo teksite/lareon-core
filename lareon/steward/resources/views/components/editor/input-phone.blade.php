@@ -1,9 +1,7 @@
 @props([
     'id' => null,
     'name' => '',
-    'type' => 'text',
     'value' => null,
-    'dir' => null,
     'old'=>true,
     'inputClasses'=>'',
     'required' => false,
@@ -15,7 +13,6 @@
     'wrapperClass' => null,
     'autocomplete'=>'false',
     'placeholder'=>null,
-    'follow'=>null
 ])
 
 @php
@@ -38,14 +35,14 @@
             <x-lareon::inputs.label :title="$label" for="{{$finalId}}" class="w-fit min-w-fit" :markAsRequire="$required"/>
         @endif
 
-        <x-lareon::inputs.text name="{{$name}}" id="{{$finalId}}" :type="$type" :value="$consideredValue" :disabled="$disabled" :required="$required" :readonly="$readonly" class="{{$inputClasses .' ' . $errorStyle}}" dir="{{$dir}}" autocomplete="{{$autocomplete}}" placeholder="{{$placeholder}}" {{$attributes}}/>
+        <x-lareon::inputs.text name="{{$name}}" id="{{$finalId}}" type="tel" :value="$consideredValue" :disabled="$disabled" :required="$required" :readonly="$readonly" class="{{$inputClasses .' ' . $errorStyle}}" dir="ltr" autocomplete="{{$autocomplete}}" placeholder="{{$placeholder}}" {{$attributes}}/>
 
         @if($label && $labelPosition === 'end')
             <x-lareon::inputs.label :title="$label" for="{{$finalId}}" class="w-fit min-w-fit" :markAsRequire="$required"/>
         @endif
 
         @if(strlen(trim($follow ?? '')))
-                <span class='w-fit min-w-fit'>{{$follow}}</span>
+            <span class='w-fit min-w-fit'>{{$follow}}</span>
         @endif
 
     </div>

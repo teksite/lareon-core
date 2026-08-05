@@ -170,7 +170,10 @@ return [
             'none' => 'leave it empty',
             'read' => 'leave it empty to read from :attribute',
         ],
-
+        'url' => [
+            'one'    => 'enter the address of :attribute',
+            'two' =>  'enter the address of :attribute for :item',
+        ],
         'write'  => [
             'one'    => 'Enter :attribute',
             'two'    => 'Enter :attribute for the :item',

@@ -3,10 +3,10 @@
     $localBusiness=$data['localBusiness'] ?? [];
 @endphp
 <div class="space-y-6">
-    <x-seo::currency :required="true" name="{{$name}}[currency]" :value="$websiteData['currency'] ?? null"/>
-
     <x-lareon::editor.input labelPosition="start" :label="__('title')" name="{{$name}}[title]" :value="$localBusiness['title'] ?? null" :placeholder="__('lareon::global.placeholders.empty.read',['attribute'=>__('website')])"/>
     <x-lareon::editor.input-textarea labelPosition="start" :label="__('description')" name="{{$name}}[description]" :placeholder="__('lareon::global.placeholders.empty.read',['attribute'=>__('website')])">{{$localBusiness['description'] ?? null}}</x-lareon::editor.input-textarea>
+    <x-lareon::editor.input labelPosition="start" :label="__('logo')" name="{{$name}}[logo]" :value="$localBusiness['logo'] ?? null" placeholder="https://exmaple.com//images/logo.png | /images/logo.png" dir="ltr"/>
+    <x-lareon::editor.input-phone labelPosition="start" :label="__('phone')" name="{{$name}}[phone]" :value="$localBusiness['phone'] ?? null" placeholder="xx xxxx xx xx"/>
 </div>
 
 {{--<div class="mb-3 flex items-center gap-1">--}}
