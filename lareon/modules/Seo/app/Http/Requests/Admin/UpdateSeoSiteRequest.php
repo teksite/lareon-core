@@ -3,71 +3,77 @@
 namespace Lareon\Modules\Seo\App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Validator;
-use Teksite\Extralaravel\Enums\Langs;
-use Teksite\Extralaravel\Enums\Currencies;
+use Lareon\Modules\Seo\App\Http\Requests\Admin\Helper\UseValidating;
+use Lareon\Modules\Seo\App\Schema\SchemaOption;
 
 class UpdateSeoSiteRequest extends FormRequest
 {
+    use UseValidating;
     public function authorize(): bool
     {
         return userCan('admin.seo.site.edit');
     }
 
-    /**
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
         return [
-            'seo' => 'required|array',
+            'seo' => ['required', 'array'],
+
+            'state'   => ['required', 'array'],
+            'state.*' => ['required', Rule::in(['0', '1'])],
+
+            'seo.website.title' => [Rule::requiredIf(fn() => $this->boolean('state.website')), 'nullable', 'string', 'max:255',],
+
+            'seo.website.description' => [Rule::requiredIf(fn() => $this->boolean('state.website')), 'nullable', 'string',],
+
+            'seo.website.language' => ['nullable', 'string',],
+
+            'seo.website.currency' => ['nullable', 'string',],
+
         ];
     }
 
     public function after(): array
     {
         return [
-            fn(Validator $validator) => $this->validateWebsiteSeo($validator),
+            fn(Validator $validator) => $this->validateWebsiteOptions($validator),
         ];
     }
 
-    private function validateWebsiteSeo(Validator $validator): void
+    /**
+     * Validate dynamic options.
+     */
+    private function validateWebsiteOptions(Validator $validator): void
     {
-        if ($validator->errors()->isNotEmpty()) return;
+        if (!$this->boolean('state.website')) return;
 
-        $website = $this->input('seo.website', []);
 
-        if (empty($website) || !($website['state'] ?? false)) return;
+        $this->validateInOptions(
+            $validator,
+            'seo.website.currency',
+            SchemaOption::get('currency_list', [])
+        );
 
-        $data = $website['data'] ?? [];
-
-        $this->validateRequired($validator, 'seo.website.title', $data['title'] ?? null, 'title');
-        $this->validateRequired($validator, 'seo.website.description', $data['description'] ?? null, 'description');
-        $this->validateEnum($validator, 'seo.website.language', $data['language'] ?? null, 'language', Langs::class);
-        $this->validateEnum($validator, 'seo.website.currency', $data['currency'] ?? null, 'currency', Currencies::class);
-    }
-
-    private function validateRequired(Validator $validator, string $field, mixed $value, string $attribute): void
-    {
-        if (is_null($value) || $value === '') {
-            $validator->errors()->add($field, trans('validation.required', ['attribute' => $attribute]));
-        }
+        $this->validateInOptions(
+            $validator,
+            'seo.website.currency',
+            SchemaOption::get('currency_list', [])
+        );
     }
 
     /**
-     * @param class-string<\UnitEnum> $enumClass
+     * Validate select option.
      */
-    private function validateEnum(Validator $validator, string $field, mixed $value, string $attribute, string $enumClass): void
+    private function validateInOptions(Validator $validator, string $field, array $options): void
     {
-        if (is_null($value) || $value === '') {
-            $validator->errors()->add($field, trans('validation.required', ['attribute' => $attribute]));
-            return;
-        }
+        $value = $this->input($field);
 
-        $validNames = collect($enumClass::cases())->pluck('name')->toArray();
+        if (blank($value)) return;
 
-        if (!in_array($value, $validNames, true)) {
-            $validator->errors()->add($field, trans('validation.not_in', ['attribute' => $attribute]));
+        if (!array_key_exists($value, $options)) {
+            $validator->errors()->add($field, trans('validation.in', ['attribute' => str_replace('_', ' ', last(explode('.', $field))),]));
         }
     }
 }

@@ -56,15 +56,9 @@ function initSingleImageSelector() {
 
 
 document.addEventListener('DOMContentLoaded', function () {
-
     logout();
-
     initSingleImageSelector('.imageBtn');
-
     new SlugMaker('-').attachToInput();
-
     initInlineSelectBox();
-
-
     runObserver();
 });

@@ -12,36 +12,45 @@ class SchemaOption
     public static function dayList(): array
     {
         return static::load('day-list');
-
     }
+
     public static function langList(): array
     {
         return static::load('lang-list');
-
     }
 
     public static function areaList(): array
     {
         return static::load('area-list');
-
     }
 
     public static function contactTypeList(): array
     {
         return static::load('contact-type-list');
+    }
 
+    public static function currencyList(): array
+    {
+        return static::load('currency-list');
+    }
+
+    public static function languageList(): array
+    {
+        return static::load('language-list');
     }
 
     public static function contactOptionList(): array
     {
         return static::load('contact-option-list');
-
     }
+
     public static function potentialActionList(): array
     {
         return static::load('potential-action-list');
-
     }
+
+
+
 
     public static function pageType(): array
     {
@@ -63,10 +72,6 @@ class SchemaOption
         return static::load('contact-type');
     }
 
-    public static function contactOption(): array
-    {
-        return static::load('contact-option');
-    }
 
     public static function eventStatus(): array
     {
@@ -88,20 +93,20 @@ class SchemaOption
     {
         return Arr::get([
 
-            'day_list'           => static::dayList(),
-            'area_list'           => static::areaList(),
-            'lang_list'           => static::langList(),
-            'contact_type_list'   => static::contactTypeList(),
-            'contact_option_list' => static::contactOptionList(),
+            'day_list'              => static::dayList(),
+            'area_list'             => static::areaList(),
+            'lang_list'             => static::langList(),
+            'contact_type_list'     => static::contactTypeList(),
+            'contact_option_list'   => static::contactOptionList(),
             'potential_action_list' => static::potentialActionList(),
+            'currency_list'         => static::currencyList(),
+            'language_list'         => static::languageList(),
 
 
 //            'pageType'           => static::pageType(),
 
             'organization_type'  => static::organizationType(),
             'localBusiness_type' => static::localBusinessType(),
-//            'contact_type'       => static::contactType(),
-//            'contactOption'      => static::contactOption(),
 //            'eventStatus'        => static::eventStatus(),
 //            'eventPerformance'   => static::eventPerformance(),
 //            'attendanceMode'     => static::attendanceMode(),

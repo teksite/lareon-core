@@ -19,8 +19,10 @@ class SeoSiteLogic
     }
 
 
-    public function updateAll(array $inputs = [])
+    public function updateAll(array $inputs = [] , array $states =[])
     {
+
+        dd($inputs , $states);
         return ServiceWrapper
             ::make(false)
             ->do(function () use ($inputs) {

@@ -34,7 +34,8 @@ class SeoSiteController extends Controller implements HasMiddleware
 
     public function update(UpdateSeoSiteRequest $request)
     {
-        $res = $this->logic->updateAll($request->validated('seo'));
+        $validated= $request->validated();
+        $res = $this->logic->updateAll($validated['seo'] ?? [] , $validated['state'] ?? []);
         return Responder::fromResult($res)->go();
     }
 }
