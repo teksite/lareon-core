@@ -16,9 +16,13 @@ class SaveSitemapService
 
         if (!method_exists($model, 'path')) return;;
 
-        $url = $model->path() ?? '/dsfsdf/sdfsdfs';
+        $url = $model->path();
 
-        if (!$url) return;
+        if (!$url) {
+            SeoSitemap::query()->delete();
+            
+            return;
+        };
 
         SeoSitemap::query()->updateOrCreate(
             [
