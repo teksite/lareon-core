@@ -6,8 +6,6 @@ enum PublishStatusEnum: int
 {
     case PUBLISHED = 1;
     case DRAFTED = 2;
-//    case POSTPONE = 3;
-//    case REDIRECT = 4;
 
 
     public function label(): string
@@ -15,8 +13,6 @@ enum PublishStatusEnum: int
         return match ($this) {
             self::PUBLISHED => 'published',
             self::DRAFTED   => 'drafted',
-//            self::POSTPONE  => 'postponed',
-//            self::REDIRECT  => 'redirected',
         };
     }
 
@@ -25,8 +21,6 @@ enum PublishStatusEnum: int
         return match ($this) {
             self::PUBLISHED => 'published',
             self::DRAFTED   => 'drafted',
-//            self::POSTPONE  => 'postponed',
-//            self::REDIRECT  => 'redirected',
         };
     }
 
@@ -35,8 +29,6 @@ enum PublishStatusEnum: int
         return match ($this) {
             self::PUBLISHED => 'text-green-600 bg-green-100',
             self::DRAFTED   => 'text-gray-600 bg-gray-100',
-//            self::POSTPONE  => 'text-amber-600 bg-amber-100',
-//            self::REDIRECT  => 'text-cyan-600 bg-cyan-100',
         };
     }
 
