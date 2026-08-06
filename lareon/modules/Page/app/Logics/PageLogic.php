@@ -69,9 +69,8 @@ class PageLogic
     public function delete(Page $page): ServiceResult
     {
         return ServiceWrapper::make(false)->do(function () use ($page) {
-            $page->delete();
-            $page->deleteSeo();
-            $page->deteMetaData();
+            return ContentSaverService::delete($page);
+
         })->run();
     }
 

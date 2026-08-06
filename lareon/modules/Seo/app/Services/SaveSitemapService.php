@@ -1,4 +1,5 @@
 <?php
+namespace Lareon\Modules\Seo\App\Services;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -11,19 +12,18 @@ class SaveSitemapService
 
     public function syncSitemap(Model $model, array $inputs = []): void
     {
-
         if (!$this->checkMethod($model)) return;
 
         if (!method_exists($model, 'path')) return;;
 
-        $url = $model->path();
+        $url = $model->path() ?? '/dsfsdf/sdfsdfs';
 
         if (!$url) return;
 
         SeoSitemap::query()->updateOrCreate(
             [
-                'model_type' => $model::class,
-                'model_id'   => $model->getKey(),
+                'model_type' => get_class($model),
+                'model_id' => $model->getKey(),
             ],
             [
                 'group'            => $this->group($model),
@@ -52,10 +52,10 @@ class SaveSitemapService
 
     private function group(Model $model): string
     {
-        $attribute = $model->siteMapGroup;
-        if ($attribute) return $attribute;
-
         if (method_exists($model, 'siteMapGroup')) return $model->siteMapGroup();
+
+        if ($attribute = $model->siteMapGroup) return $attribute;
+
 
         return Str::snake(class_basename($model));
     }
