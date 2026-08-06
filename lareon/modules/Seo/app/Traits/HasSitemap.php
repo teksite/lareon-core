@@ -3,28 +3,76 @@
 namespace Lareon\Modules\Seo\App\Traits;
 
 
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Lareon\Modules\Seo\App\Models\SeoSitemap;
-use Lareon\Modules\Seo\App\Service\SeoSitemapService;
+use Lareon\Steward\App\Enums\PublishStatusEnum;
 
 trait HasSitemap
 {
-    protected static function bootHasSitemap(): void
+    public function syncSitemap(array $inputs = [], null|Model $model = null): void
     {
-        static::saved(function ($model) {
-            app(SeoSitemapService::class)->syncSitemap($model);
-        });
+        $model ??= $this;
+        $model->refresh();
+        if (!method_exists($model, 'path')) return;
+        $url = $model->path();
+        if (!$url) return;
 
-        static::deleted(function ($model) {
-            app(SeoSitemapService::class)->desyncSitemap($model);
-        });
+        SeoSitemap::query()->updateOrCreate(
+            [
+                'model_type' => $model::class,
+                'model_id'   => $model->getKey(),
+            ],
+            [
+                'group'            => $this->group($model),
+                'url'              => $url,
+                'last_modified'    => $this->lastModified($model),
+                'available_at'     => $this->availableAt($model),
+                'priority'         => $inputs['priority'] ?? config('seo.sitemap.default_priority', 0.5),
+                'change_frequency' => $inputs['change_frequency'] ?? config('seo.sitemap.default_change_frequency', 'yearly'),
+                'image'            => $inputs['images'] ?? null,
+                'video'            => $inputs['videos'] ?? null,
 
-        static::restored(function ($model) {
-            app(SeoSitemapService::class)->syncSitemap($model);
-        });
+            ]
+        );
     }
 
-    public function siteMap()
+    public function deleteSitemap(null|Model $model = null): void
     {
-        return $this->morphOne(SeoSitemap::class, 'model');
+        $model ??= $this;
+        SeoSitemap::query()->where('model_type', $model::class)->where('model_id', $model->getKey())->delete();
+    }
+
+
+    private function group(Model $model): string
+    {
+        return $model->siteMapGroup ?? Str::snake(class_basename($model));
+    }
+
+    private function lastModified(Model $model): Carbon
+    {
+        $createdAt = $model->created_at ? Carbon::parse($model->created_at) : Carbon::now();
+
+        $updatedAt = $model->updated_at ? Carbon::parse($model->updated_at) : $createdAt;
+
+        if ($model->hasCast('publish_status') && $model->publish_status === PublishStatusEnum::DRAFTED) return $updatedAt;
+
+        if (!$model->hasCast('published_at')) return $updatedAt;
+
+        if (!$model->published_at) return $updatedAt;
+
+        $publishedAt = Carbon::parse($model->published_at);
+
+        return $publishedAt->greaterThan($updatedAt) ? $publishedAt : $updatedAt;
+    }
+
+    private function availableAt(Model $model): ?Carbon
+    {
+        if ($model->hasCast('publish_status') && $model->publish_status === PublishStatusEnum::DRAFTED) return null;
+
+        if (!$model->hasCast('published_at')) return $model->created_at ? Carbon::parse($model->created_at) : Carbon::now();
+
+        return $model->published_at ? Carbon::parse($model->published_at) : null;
     }
 }
