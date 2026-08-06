@@ -39,6 +39,4 @@ class ContentSaverService
         app(\SaveSitemapService::class)->deleteSitemap($model);
         return $model->refresh();
     }
-
-
 }
