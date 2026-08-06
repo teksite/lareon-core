@@ -22,11 +22,11 @@ return new class extends Migration
             $table->json('image')->nullable();
             $table->json('video')->nullable();
             $table->timestamp('available_at')->nullable();
-            $table->tinyInteger('state')->default(0);
             $table->timestamps();
+            $table->softDeletes();
 
             $table->unique(['model_id', 'model_type']);
-            $table->index(['group', 'state', 'available_at']);
+            $table->index(['group', 'available_at','deleted_at']);
 
         });
     }
