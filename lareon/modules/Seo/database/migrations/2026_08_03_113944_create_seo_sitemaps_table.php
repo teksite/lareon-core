@@ -26,7 +26,7 @@ return new class extends Migration
             $table->softDeletes();
 
             $table->unique(['model_id', 'model_type']);
-            $table->index(['group', 'available_at','deleted_at']);
+            $table->index(['group', 'available_at']);
 
         });
     }

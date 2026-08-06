@@ -11,7 +11,6 @@ use Lareon\Modules\Seo\App\Enums\SeoStateEnum;
 #[Fillable(['model', 'group', 'url', 'priority', 'change_frequency', 'last_modified', 'image', 'video', 'available_at'])]
 class SeoSitemap extends Model
 {
-    use SoftDeletes;
     protected function casts(): array
     {
         return [

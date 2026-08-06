@@ -4,10 +4,6 @@ namespace Lareon\Modules\Page\App\Logics;
 
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Log;
-use Lareon\Modules\Meta\App\Models\MetaElementTemplate;
-use Lareon\Modules\Meta\App\Models\MetaModel;
-use Lareon\Modules\Meta\App\Traits\HasMetaLogic;
 use Lareon\Modules\Page\App\Models\Page;
 use Lareon\Steward\App\Traits\HasTrashLogic;
 use Teksite\Handler\Actions\ServiceWrapper;
@@ -17,7 +13,7 @@ use Teksite\Handler\Services\FetchDataService;
 
 class PageLogic
 {
-    use HasTrashLogic, HasMetaLogic;
+    use HasTrashLogic;
 
     /**
      * @throws \Throwable
@@ -53,6 +49,7 @@ class PageLogic
     {
         return ServiceWrapper::make(true)->do(function () use ($inputs) {
             $page = Page::query()->create(Arr::except($inputs, ['seo', 'meta']));
+            $page->saveSeo($inputs['seo'] ?? []);
             return $page;
         })->run();
     }
@@ -65,22 +62,9 @@ class PageLogic
         return ServiceWrapper::make(false)->do(function () use ($page, $inputs) {
 
             $page->update(Arr::except($inputs, ['seo', 'meta']));
-            $page->metaData()->delete();
-            foreach ($inputs['meta_data'] as $key => $value) {
-                if (isset($value['id'])) {
-                    Log::error('element_id field is not set in the element', ['instance' => $page, 'inputs' => $inputs]);
-                    continue;
-                }
-                MetaModel::query()->create([
-                        'key'         => $key,
-                        'template_id' => $page->template_id,
-                        'element_id'  => (int)$value['element_id'],
-                        'model_type'  => Page::class,
-                        'model_id'    => $page->id,
-                        'content'     => $value['data'],
-                    ]
-                );
-            }
+            $page->saveMetaData($inputs['meta_data']);
+            $page->saveSeo($inputs['seo'] ?? []);
+
             return $page->refresh();
         })->run();
     }
@@ -92,6 +76,8 @@ class PageLogic
     {
         return ServiceWrapper::make(false)->do(function () use ($page) {
             $page->delete();
+            $page->deleteSeo();
+            $page->deteMetaData();
         })->run();
     }
 

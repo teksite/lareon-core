@@ -63,6 +63,8 @@ class Page extends Model
     }
 
 
+
+
     public function breadCrumb(): array
     {
         return [
@@ -71,18 +73,17 @@ class Page extends Model
                 'url'   => $this->path(),
             ],
         ];
+    }
 
+    public function path(): ?string
+    {
+        return Route::has('pages.show') ? route('pages.show', $this) : null;
     }
 
 
     public function sitemapGroup(): string
     {
         return 'pages';
-    }
-
-    public function path(): ?string
-    {
-        return Route::has('pages.show') ? route('pages.show', $this) : null;
     }
 
     public function scopeWithCollection($query, string $collection)
