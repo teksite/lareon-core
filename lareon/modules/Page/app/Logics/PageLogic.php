@@ -5,6 +5,7 @@ namespace Lareon\Modules\Page\App\Logics;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Arr;
 use Lareon\Modules\Page\App\Models\Page;
+use Lareon\Steward\App\Service\ContentSaverService;
 use Lareon\Steward\App\Traits\HasTrashLogic;
 use Teksite\Handler\Actions\ServiceWrapper;
 use Teksite\Handler\contracts\ServiceResult;
@@ -48,9 +49,7 @@ class PageLogic
     public function create(array $inputs = []): ServiceResult
     {
         return ServiceWrapper::make(true)->do(function () use ($inputs) {
-            $page = Page::query()->create(Arr::except($inputs, ['seo', 'meta']));
-            $page->saveSeo($inputs['seo'] ?? []);
-            return $page;
+            return ContentSaverService::create(new Page, $inputs);
         })->run();
     }
 
@@ -60,12 +59,7 @@ class PageLogic
     public function update(Page $page, array $inputs = []): ServiceResult
     {
         return ServiceWrapper::make(false)->do(function () use ($page, $inputs) {
-
-            $page->update(Arr::except($inputs, ['seo', 'meta']));
-            $page->saveMetaData($inputs['meta_data']);
-            $page->saveSeo($inputs['seo'] ?? []);
-
-            return $page->refresh();
+            return ContentSaverService::update($page, $inputs);
         })->run();
     }
 

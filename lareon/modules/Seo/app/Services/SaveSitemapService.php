@@ -16,8 +16,6 @@ class SaveSitemapService
 
         if (!method_exists($model, 'path')) return;;
 
-        $model->refresh();
-
         $url = $model->path();
 
         if (!$url) return;
@@ -42,9 +40,7 @@ class SaveSitemapService
 
     public function deleteSitemap(Model $model): void
     {
-
         if (!$this->checkMethod($model)) return;
-
         SeoSitemap::query()->where('model_type', $model::class)->where('model_id', $model->getKey())->delete();
     }
 
