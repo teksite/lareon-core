@@ -8,7 +8,7 @@
     };
 
     $status = old('publish_status', $instance->publish_status ?? null);
-    $publishedAt = old('publish_status', $instance->published_at ?? null);
+    $publishedAt = old('published_status', $instance->published_at ?? null);
 @endphp
 
 <section class="{{ $wrapperClass . ' space-y-6'}}" x-data="{publishStatus: '{{ $status }}',published: '{{ \Lareon\Steward\App\Enums\PublishStatusEnum::PUBLISHED->value }}'}">

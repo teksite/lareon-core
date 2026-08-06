@@ -1,4 +1,4 @@
-@props(['type'=>'date' ,'value'=>null , "disabled"=>false ,'required'=>false,'min' => null,'max' => null,'step' => null,])
+@props(['type'=>'date' ,'value'=>null , "disabled"=>false ,'required'=>false,'min' => null,'max' => null,'step'=>null])
 @php
     $formats = [
         'date' => 'Y-m-d',
@@ -12,4 +12,4 @@
         $value = $value->format($formats[$type]);
     }
 @endphp
-<input type="{{$type}}" @required($required) {{$disabled ? 'disabled':''}} {{$attributes->merge(['class'=>"input block w-full"])}} value="{{$value}}" @if($min) min="{{ $min }}" @endif @if($max) max="{{ $max }}" @endif @if($step) step="{{ $step }}" @endif>
+<input type="{{$type}}" @required($required) {{$disabled ? 'disabled':''}} {{$attributes->merge(['class'=>"input block w-full"])}} value="{{$value}}" @if($min!==null) min="{{ $min }}" @endif @if($max!==null) max="{{ $max }}" @endif @if($step !==null) step="{{ $step }}" @endif>

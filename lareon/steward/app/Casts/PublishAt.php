@@ -2,16 +2,19 @@
 
 namespace Lareon\Steward\App\Casts;
 
+use Carbon\CarbonImmutable;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 use Lareon\Steward\App\Enums\PublishStatusEnum;
 
 
 class PublishAt implements CastsAttributes
 {
-    public function get($model, string $key, $value, array $attributes)
+    public function get($model, string $key, $value, array $attributes): null|Carbon
     {
-        return $value;
+        return empty($value) ? null
+            : Carbon::parse($value);
     }
 
     public function set($model, string $key, $value, array $attributes)
