@@ -11,8 +11,10 @@ class SaveSitemapService
 
     public function syncSitemap(Model $model, array $inputs = []): void
     {
-        if (!method_exists($model , 'sitemap')) return;
-        if (!method_exists($model, 'path')) return;
+
+        if (!$this->checkMethod($model)) return;
+
+        if (!method_exists($model, 'path')) return;;
 
         $model->refresh();
 
@@ -37,11 +39,20 @@ class SaveSitemapService
             ]
         );
     }
+
     public function deleteSitemap(Model $model): void
     {
+
+        if (!$this->checkMethod($model)) return;
+
         SeoSitemap::query()->where('model_type', $model::class)->where('model_id', $model->getKey())->delete();
     }
 
+
+    private function checkMethod(Model $model): bool
+    {
+        return method_exists($model, 'sitemap');
+    }
 
     private function group(Model $model): string
     {
