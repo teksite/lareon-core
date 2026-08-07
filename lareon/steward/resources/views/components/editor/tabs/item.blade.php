@@ -2,9 +2,9 @@
     <legend class="font-bold px-3">{{ $title }}</legend>
     @if(isset($aside))
         <div class="flex flex-col @[900px]:flex-row gap-6">
-            <main class="space-y-6 w-full">
+            <div class="space-y-6 w-full">
                 {{ $slot }}
-            </main>
+            </div>
 
             <aside class="space-y-6 w-full @[900px]:max-w-[350px]">
                 {{ $aside }}

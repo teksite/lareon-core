@@ -25,7 +25,7 @@
                     <x-lareon::editor.input-slug :disabled="true" :readonly="true" :value="$user->slug" :label="__('slug')" name="slug" :placeholder="__('lareon::global.placeholders.write.unique.two',['attribute'=>__('slug') , 'item'=>__('user') ])" :showUrl="!!($user->path())"/>
                 </div>
             </x-lareon::editor.tabs.section>
-        </x-lareon::editor.tabs.section>
+        </x-lareon::editor.tabs.item>
 
         <x-lareon::editor.tabs.item :title="__('verifications')">
 

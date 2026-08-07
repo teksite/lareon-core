@@ -1,4 +1,4 @@
-@props(['instance', 'wrapperMode'=>'y-box' ] )
+@props(['instance'=>null, 'wrapperMode'=>'y-box' ] )
 @php
 
     $wrapperClass=match ($wrapperMode){

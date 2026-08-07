@@ -36,7 +36,7 @@ class ContentSaverService
     public static function delete(Model $model): bool
     {
         $model::query()->delete();
-        app(\SaveSitemapService::class)->deleteSitemap($model);
+        app(SaveSitemapService::class)->deleteSitemap($model);
         app(SaveMetaDataService::class)->deleteMetaData($model);
 
         return true;

@@ -1,12 +1,11 @@
-<x-lareon::admin-editor :action="route('admin.users.store')" :hasTab="false">
+<x-lareon::admin-editor :action="route('admin.users.store')" :hasTab="false" :publishInfo="false" :publishStatus="false">
     @section('title', __('lareon::global.crud.titles.create',['attribute'=>__('user')]))
     @section('header.start')
         <x-lareon::links.nav :href="route('admin.users.index')" :content="__('lareon::global.buttons.all_attribute' ,['attribute'=>__('users')])" color="index"/>
     @endsection
     @section('form')
-        <x-lareon::editor.tabs.section>
-            <fieldset class="fieldset space-y-6">
-                <legend class="legend">{{__('basic data')}}</legend>
+        <x-lareon::editor.tabs.item :title="__('basic data')">
+            <x-lareon::editor.tabs.section>
                 <div class="grid gap-6 lg:grid-cols-2">
                     <x-lareon::editor.input :required="true" labelPosition="start" :label="__('first name')" name="name" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('name') , 'item'=>__('user')])"/>
                     <x-lareon::editor.input :required="true" labelPosition="start" :label="__('last name')" name="lastname" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('last name') , 'item'=>__('user')])"/>
@@ -19,15 +18,12 @@
                 <div class="">
                     <x-lareon::editor.input-password :label="__('password')" :confirm_label="__('confirm password')" name="password" :placeholder="__('lareon::global.placeholders.auth.password',['attribute'=>__('password')])" :required="true" wrapperClass="grid gap-6 lg:grid-cols-2"/>
                 </div>
-            </fieldset>
-        </x-lareon::editor.tabs.section>
-        <x-lareon::editor.tabs.section>
-            <fieldset class="fieldset space-y-6">
-                <legend class="legend">{{__('verification')}}</legend>
-                <x-lareon::editor.input-radio type="inline" :required="true" value="0" :options="[[__('no') , 0] , [__('yes') ,1]]" :label="__('mark email as verified')" name="email_verified_at" inputsClass="flex items-center gap-1"/>
-                <x-lareon::editor.input-radio type="inline" :required="true" value="0" :options="[[__('no') , 0] , [__('yes') ,1]]" :label="__('mark phone as verified')" name="phone_verified_at" inputsClass="flex items-center gap-1"/>
-            </fieldset>
-        </x-lareon::editor.tabs.section>
+            </x-lareon::editor.tabs.section>
+        </x-lareon::editor.tabs.item>
+        <x-lareon::editor.tabs.item :title="__('verification')">
+            <x-lareon::editor.input-radio type="inline" :required="true" value="0" :options="[[__('no') , 0] , [__('yes') ,1]]" :label="__('mark email as verified')" name="email_verified_at" inputsClass="flex items-center gap-1"/>
+            <x-lareon::editor.input-radio type="inline" :required="true" value="0" :options="[[__('no') , 0] , [__('yes') ,1]]" :label="__('mark phone as verified')" name="phone_verified_at" inputsClass="flex items-center gap-1"/>
+        </x-lareon::editor.tabs.item>
         <x-lareon::editor.tabs.section>
             <fieldset class="fieldset space-y-6">
                 <legend class="legend">{{__('send notification')}}</legend>

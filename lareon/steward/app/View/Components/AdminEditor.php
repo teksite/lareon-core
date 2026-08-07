@@ -3,17 +3,44 @@
 namespace Lareon\Steward\App\View\Components;
 
 use Closure;
+use Illuminate\Support\Arr;
 use Illuminate\View\Component;
 use Illuminate\Contracts\View\View;
 
 class AdminEditor extends Component
 {
+    const array HttpMethods = [
+        'create'  => 'POST',
+        'store'   => 'POST',
+        'restore' => 'POST',
+        'post'    => 'POST',
+
+        'edit'   => 'PATCH',
+        'patch'  => 'PATCH',
+        'update' => 'PATCH',
+
+        'put' => 'PUT',
+
+        'delete'  => 'DELETE',
+        'destroy' => 'DELETE',
+
+        'get' => 'GET',
+    ];
+
+
+    public readonly string $methodType;
+
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct(
+        public ?string $method = null,
+        public ?string $action = null,
+        public bool    $hasFile = false,
+        public mixed   $instance = null,
+    )
     {
-        //
+        $this->methodType = strtolower($this->method);
     }
 
     /**
@@ -21,6 +48,67 @@ class AdminEditor extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('lareon::admin.layouts.editor');
+        return view('lareon::admin.layouts.editor', [
+            'instance'=> $this->instance,
+            'formAttributes' => $this->buildFormAttributes(),
+            'realMethod'     => $this->buildRealMethod(),
+            'showTemplateSection'=> $this->showTemplateSection(),
+
+            ...$this->resolveButtonPresentation(),
+        ]);
+    }
+
+
+    private function buildFormAttributes(): string
+    {
+
+        $html_method = in_array($this->methodType, array_keys(Arr::except(self::HttpMethods, ['get']))) ? 'POST' : 'GET';
+
+        $finalAttribute = removeNullValues([
+            'html_method' => $html_method,
+            'action'      => $this->action,
+            'enctype'     => $this->hasFile ? 'multipart/form-data' : null,
+        ]);
+
+        $attributes = '';
+
+        foreach ($finalAttribute as $key => $value) {
+            $attributes .= "$key='$value'";
+        }
+        return $attributes;
+    }
+
+    private function buildRealMethod(): ?string
+    {
+        $real_method = self::HttpMethods[$this->methodType] ?? "POST";
+        return !in_array($real_method, ['GET', 'POST']) ? $real_method : null;
+    }
+
+    private function resolveButtonPresentation(): array
+    {
+        return match (true) {
+            in_array($this->methodType, ['delete', 'destroy'], true)              => [
+                'buttonColor'   => 'delete',
+                'buttonTextKey' => trans('lareon::global.buttons.delete'),
+                'buttonIcon'    => 'trash',
+            ],
+
+            in_array($this->methodType, ['edit', 'update', 'patch', 'put'], true) => [
+                'buttonColor'   => 'update',
+                'buttonTextKey' => trans('lareon::global.buttons.update'),
+                'buttonIcon'    => 'pen',
+            ],
+            default                                                               => [
+                'buttonColor'   => 'create',
+                'buttonTextKey' => trans('lareon::global.buttons.create'),
+                'buttonIcon'    => 'plus',
+            ],
+        };
+    }
+
+
+    private function showTemplateSection(): bool
+    {
+        return $this->instance && method_exists($this->instance, 'template');
     }
 }

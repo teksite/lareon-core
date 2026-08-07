@@ -105,7 +105,7 @@ if (!function_exists('userCan')) {
 }
 
 
-if (!function_exists('userCan')) {
+if (!function_exists('removeNullValues')) {
 
     /**
      * filter null data from the input
