@@ -45,7 +45,8 @@ class PagesController extends Controller implements HasMiddleware
      */
     public function create()
     {
-        return view('page::admin.pages.pages.create');
+        $page= new Page();
+        return view('page::admin.pages.pages.create' , compact('page'));
     }
 
     /**

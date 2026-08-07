@@ -1,4 +1,4 @@
-<x-lareon::admin-editor type="update" method="patch" :instance="$element" :action="route('admin.settings.meta.elements.update', $element)" :publishInfo="false" :publishStatus="false">
+<x-lareon::admin-editor method="update" :instance="$element" :action="route('admin.settings.meta.elements.update', $element)" :hasTab="false">
     @section('title', __('lareon::global.crud.titles.edit_current',['attribute'=>__('element') , 'item'=>($element->title)]))
     @section('header.start')
         <x-lareon::links.nav :href="route('admin.settings.meta.elements.index')" :content="__('lareon::global.buttons.all_attribute' ,['attribute'=>__('elements')])" color="index" can="admin.meta.element.read"/>
@@ -16,9 +16,11 @@
                 </div>
             </x-lareon::editor.tabs.section>
 
-            <x-lareon::editor.tabs.section>
-                <x-meta::admin.element-args :value="old('args.settings' , $element->settings)"/>
-            </x-lareon::editor.tabs.section>
+            <x-lareon::editor.tabs.item :title="__('arguments')">
+                <x-lareon::editor.tabs.section>
+                    <x-meta::admin.element-args :value="old('args.settings' , $element->settings)"/>
+                </x-lareon::editor.tabs.section>
+            </x-lareon::editor.tabs.item>
 
         </x-lareon::editor.tabs.item>
     @endsection

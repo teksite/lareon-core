@@ -47,7 +47,8 @@ class UsersController extends Controller implements HasMiddleware
      */
     public function create()
     {
-        return view('user::admin.pages.users.create');
+        $user=new User();
+        return view('user::admin.pages.users.create' , compact('user'));
     }
 
     /**

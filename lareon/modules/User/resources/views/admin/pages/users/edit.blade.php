@@ -1,4 +1,4 @@
-<x-lareon::admin-editor type="update" method="patch" :instance="$user" :action="route('admin.users.update', $user)" :publishInfo="true" :publishStatus="false">
+<x-lareon::admin-editor method="update" :instance="$user" :action="route('admin.users.update', $user)" :publishInfo="true" :publishStatus="false">
     @section('title', __('lareon::global.crud.titles.edit',['attribute'=>__('user')]) . "($user->fullname)")
     @section('header.start')
         <x-lareon::links.nav :href="route('admin.users.index')" :content="__('lareon::global.buttons.all_attribute' ,['attribute'=>__('users')])" color="index" can="admin.user.read"/>
@@ -28,7 +28,6 @@
         </x-lareon::editor.tabs.item>
 
         <x-lareon::editor.tabs.item :title="__('verifications')">
-
             <x-lareon::editor.tabs.section>
                 <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('ignore') ,-1 ] ,[__('no') ,0] , [__('yes') ,1]]" :label="__('mark phone as verified')" name="phone_verified_at" inputsClass="flex items-center gap-1" :value="-1"/>
                 <x-lareon::editor.input-radio type="inline" :required="true" :options="[[__('ignore') ,-1 ] ,[__('no') ,0] , [__('yes') ,1]]" :label="__('mark email as verified')" name="email_verified_at" inputsClass="flex items-center gap-1" :value="-1"/>

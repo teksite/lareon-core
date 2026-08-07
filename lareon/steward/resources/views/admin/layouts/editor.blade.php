@@ -33,9 +33,7 @@
 
                         @if($showTemplateSection)
                             <x-lareon::editor.tabs.item :title="__('meta data')">
-                                <x-lareon::editor.tabs.section>
-                                    <x-meta::elements-loader :template="$instance->template" :value="$instance->metaData"/>
-                                </x-lareon::editor.tabs.section>
+                                <x-meta::elements-loader :template="$instance->template" :value="$instance->metaData"/>
                             </x-lareon::editor.tabs.item>
                         @endif
 

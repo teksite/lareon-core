@@ -1,4 +1,4 @@
-<x-lareon::admin-editor :action="route('admin.pages.update' , $page)"  type="update" :instance="$page" :publishStatus="true" :publishStatus="true">
+<x-lareon::admin-editor :action="route('admin.pages.update' , $page)" method="update" :instance="$page" >
     @section('title', __('lareon::global.crud.titles.edit',['attribute'=>__('page') . " ($page->title)"]))
     @section('header.start')
         <x-lareon::links.nav :href="route('admin.pages.index')" :content="__('lareon::global.buttons.all_attribute' ,['attribute'=>__('pages')])" color="index"/>

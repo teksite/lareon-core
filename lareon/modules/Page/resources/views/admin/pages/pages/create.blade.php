@@ -1,4 +1,4 @@
-<x-lareon::admin-editor :action="route('admin.pages.store')">
+<x-lareon::admin-editor method="create" :action="route('admin.pages.store')" :instance="$page">
     @section('title', __('lareon::global.crud.titles.create',['attribute'=>__('page')]))
     @section('header.start')
         <x-lareon::links.nav :href="route('admin.pages.index')" :content="__('lareon::global.buttons.all_attribute' ,['attribute'=>__('pages')])" color="index"/>

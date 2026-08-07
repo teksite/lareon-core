@@ -10,5 +10,6 @@ return [
 
     'models' => [
         'page' => \Lareon\Modules\Page\App\Models\Page::class,
+        'user' => \Lareon\Modules\User\App\Models\User::class,
     ],
 ];

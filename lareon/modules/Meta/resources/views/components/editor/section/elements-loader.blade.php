@@ -3,7 +3,9 @@
 <section class="{{ $wrapperClass . ' space-y-6'}}">
     @if(count($elements))
         @foreach($elements as $element)
-            @includeIf($element['view'],$element['props'] )
+            <x-lareon::editor.tabs.section>
+                @includeIf($element['view'],$element['props'] )
+            </x-lareon::editor.tabs.section>
         @endforeach
     @else
         <div class="flex items-center justify-center">
