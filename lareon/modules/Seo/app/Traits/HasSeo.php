@@ -7,4 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 trait HasSeo
 {
     use HasMeta, HasSchema, HasSitemap;
+
 }

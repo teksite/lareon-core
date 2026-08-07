@@ -1,26 +1,25 @@
-<x-lareon::admin-editor :action="route('admin.authorize.roles.store')" :hasTab="false">
+<x-lareon::admin-editor method="create" :action="route('admin.authorize.roles.store')" :hasTab="false">
     @section('title', __('lareon::global.crud.titles.create',['attribute'=>__('role')]))
     @section('header.start')
         <x-lareon::links.nav :href="route('admin.authorize.roles.index')" :content="__('lareon::global.buttons.all_attribute' ,['attribute'=>__('users')])" color="index"/>
     @endsection
     @section('form')
-        <x-lareon::editor.tabs.section>
-            <fieldset class="fieldset space-y-6">
-                <legend class="legend">{{__('basic data')}}</legend>
+        <x-lareon::editor.tabs.item :title="__('basic data')">
+            <x-lareon::editor.tabs.section>
                 <div class="grid gap-6 lg:grid-cols-2">
                     <x-lareon::editor.input :required="true" :label="__('title')" name="title" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('title') , 'item'=>__('role')])"/>
                     <x-lareon::editor.input :required="false" :label="__('description')" name="description" :placeholder="__('lareon::global.placeholders.write.one',['attribute'=>__('description')])"/>
                     <x-lareon::editor.input :required="true" min="6" max="100" step="1" type="number" :label="__('hierarchy')" name="hierarchy" :placeholder="__('lareon::global.placeholders.write.one',['attribute'=>__('hierarchy')])"/>
                 </div>
-            </fieldset>
-        </x-lareon::editor.tabs.section>
+            </x-lareon::editor.tabs.section>
+        </x-lareon::editor.tabs.item>
 
-        <x-lareon::editor.tabs.section>
-            <fieldset class="fieldset space-y-6">
-                <legend class="legend">{{__('permissions')}}</legend>
+        <x-lareon::editor.tabs.item :title="__('permissions')">
+            <x-lareon::editor.tabs.section>
                 <x-auth::editor.permissions-tree :permissions="$permissions"/>
-            </fieldset>
-        </x-lareon::editor.tabs.section>
+            </x-lareon::editor.tabs.section>
+        </x-lareon::editor.tabs.item>
+
     @endsection
 
 </x-lareon::admin-editor>

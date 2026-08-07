@@ -7,7 +7,7 @@
     'hasSeo' => true,
 ])
 @php
-    $hasAside = \Illuminate\Support\Facades\View::hasSection('aside') || ($publishInfo && ! $hasTab && $instance);
+    $hasAside = \Illuminate\Support\Facades\View::hasSection('aside') || (!$hasTab && ($showPublishSection['publishInfo'] || $showPublishSection['publishStatus']));
     $styleClass = $hasAside ? 'flex flex-col lg:flex-row gap-6' : '';
 @endphp
 
@@ -30,6 +30,7 @@
                 @hasSection('form')
                     <x-lareon::editor.tabs.layout :hasTab="$hasTab">
                         @yield('form')
+
                         @if($showTemplateSection)
                             <x-lareon::editor.tabs.item :title="__('meta data')">
                                 <x-lareon::editor.tabs.section>
@@ -38,7 +39,7 @@
                             </x-lareon::editor.tabs.item>
                         @endif
 
-                        @if($hasSeo)
+                        @if($hasSeo && $showSeoSection)
                             <x-lareon::editor.tabs.item :title="__('seo')">
                                 <x-lareon::editor.tabs.section>
                                     {{--                                    <x-meta::elements-loader :value="$instance->metaData"/>--}}
@@ -46,16 +47,15 @@
                             </x-lareon::editor.tabs.item>
                         @endif
 
-
-                        @if($publishInfo || $publishStatus)
+                        @if(($showPublishSection['publishInfo']) || ($showPublishSection['publishStatus']))
                             <x-lareon::editor.tabs.item :title="__('publish data')">
-                                <div @class(['grid gap-6 lg:grid-cols-2' => $publishInfo && $publishStatus])>
-                                    @if($publishStatus)
+                                <div @class(['grid gap-6 lg:grid-cols-2' => $showPublishSection['publishInfo'] && $showPublishSection['publishStatus']])>
+                                    @if($showPublishSection['publishInfo'] ?? false)
                                         <x-lareon::editor.tabs.section>
                                             <x-lareon::editor.section.publish-status :instance="$instance"/>
                                         </x-lareon::editor.tabs.section>
                                     @endif
-                                    @if($publishInfo)
+                                    @if($showPublishSection['publishStatus'] ?? false)
                                         <x-lareon::editor.tabs.section>
                                             <x-lareon::editor.section.publish-info :instance="$instance"/>
                                         </x-lareon::editor.tabs.section>
@@ -73,11 +73,17 @@
                         @hasSection('aside')
                             @yield('aside')
                         @endif
-                        @if($publishStatus)
-                            <x-lareon::editor.section.publish-status :instance="$instance"/>
-                        @endif
-                        @if($publishInfo && ! $hasTab && $instance)
-                            <x-lareon::editor.section.publish-info :instance="$instance"/>
+                        @if(($showPublishSection['publishInfo']) || ($showPublishSection['publishStatus']))
+                            @if($showPublishSection['publishInfo'] ?? false)
+                                <x-lareon::editor.tabs.section>
+                                    <x-lareon::editor.section.publish-status :instance="$instance"/>
+                                </x-lareon::editor.tabs.section>
+                            @endif
+                            @if($showPublishSection['publishStatus'] ?? false)
+                                <x-lareon::editor.tabs.section>
+                                    <x-lareon::editor.section.publish-info :instance="$instance"/>
+                                </x-lareon::editor.tabs.section>
+                            @endif
                         @endif
                     </div>
                 </aside>
@@ -86,7 +92,7 @@
 
         @yield('form.end')
         <div class="mt-6">
-            <x-lareon::buttons.nav class="min-w-24" :fullWidth="false" type="submit" :color="$buttonColor" :icon="$buttonIcon">
+            <x-lareon::buttons.nav class="min-w-36" :fullWidth="false" type="submit" :color="$buttonColor" :icon="$buttonIcon">
                 {{ $buttonTextKey }}
             </x-lareon::buttons.nav>
         </div>

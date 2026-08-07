@@ -61,6 +61,7 @@ class RolesController extends Controller implements HasMiddleware
         $res = $this->logic->create($request->validated());
 
         if ($res->success) {
+            //TODO RoleCrudEvent
             event(new RoleCrudEvent($res->result, CrudTypeEnum::CREATE, $request->validated()));
             return Responder::success(trans('lareon::global.created_successfully', ['attribute' => __('role')]))->route('admin.authorize.roles.edit' , $res->result)->go();
         }

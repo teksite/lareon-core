@@ -30,7 +30,5 @@
                 </tr>
             </x-slot:foot>
         </x-lareon::table>
-
     @endsection
-
 </x-lareon::admin-list>

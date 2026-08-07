@@ -15,7 +15,6 @@ use Lareon\Steward\App\Enums\PublishStatusEnum;
 use Lareon\Steward\App\Models\Scopes\PublishScope;
 use Teksite\Extralaravel\Casts\SlugCast;
 use Teksite\FileManager\Concerts\HasAttachedFile;
-use Teksite\FileManager\Models\UploadFile;
 
 
 #[Fillable(['parent_id', 'label', 'slug', 'title', 'excerpt', 'body', 'template_id', 'publish_status', 'published_at', 'primary_media_id'])]

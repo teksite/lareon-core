@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Support\Arr;
 use Illuminate\View\Component;
 use Illuminate\Contracts\View\View;
+use Lareon\Modules\Page\App\Models\Page;
 
 class AdminEditor extends Component
 {
@@ -49,10 +50,12 @@ class AdminEditor extends Component
     public function render(): View|Closure|string
     {
         return view('lareon::admin.layouts.editor', [
-            'instance'=> $this->instance,
-            'formAttributes' => $this->buildFormAttributes(),
-            'realMethod'     => $this->buildRealMethod(),
-            'showTemplateSection'=> $this->showTemplateSection(),
+            'instance'            => $this->instance,
+            'formAttributes'      => $this->buildFormAttributes(),
+            'realMethod'          => $this->buildRealMethod(),
+            'showTemplateSection' => $this->showTemplateSection(),
+            'showSeoSection'      => $this->showSeoSection(),
+            'showPublishSection'      => $this->showPublishSection(),
 
             ...$this->resolveButtonPresentation(),
         ]);
@@ -114,5 +117,21 @@ class AdminEditor extends Component
 
     private function showSeoSection(): bool
     {
+        return !!$this->instance && in_array($this->instance, config('seo.models', []));
+
+    }
+
+    private function showPublishSection(): array
+    {
+        if ($this->instance === null) return [
+            'publishInfo'   => false,
+            'publishStatus' => false,
+        ];
+
+        return [
+            'publishInfo'   => $this->instance->hasAttribute('publish_status'),
+            'publishStatus' => $this->instance->hasAttribute('published_at'),
+        ];
+
     }
 }

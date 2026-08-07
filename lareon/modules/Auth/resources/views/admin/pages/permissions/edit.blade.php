@@ -1,4 +1,4 @@
-<x-lareon::admin-editor type="update" method="patch" :instance="$permission" :action="route('admin.authorize.permissions.update', $permission)" :publishInfo="false" :publishStatus="false">
+<x-lareon::admin-editor method="update" :instance="$permission" :action="route('admin.authorize.permissions.update', $permission)" :hasTab="false">
     @section('title', __('lareon::global.crud.titles.edit_current',['attribute'=>__('permission') , 'item'=>($permission->title)]))
     @section('header.start')
         <x-lareon::links.nav :href="route('admin.authorize.permissions.index')" :content="__('lareon::global.buttons.all_attribute' ,['attribute'=>__('permissions')])" color="index" can="admin.permission.read"/>
