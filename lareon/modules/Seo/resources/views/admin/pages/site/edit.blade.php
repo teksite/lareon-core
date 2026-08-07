@@ -1,4 +1,4 @@
-<x-lareon::admin-editor type="update" method="patch" :hasTab="true" :action="route('admin.seo.site.update')" :publishInfo="false" :publishStatus="false">
+<x-lareon::admin-editor method="update" :hasTab="true" :action="route('admin.seo.site.update')">
     @section('title', __('lareon::global.crud.titles.edit',['attribute'=>__('seo of site')]))
 
     @section('form')
