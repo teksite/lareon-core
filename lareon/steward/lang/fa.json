@@ -70,5 +70,19 @@
     "cancel": "انصراف",
     "add": "افزودن",
     "arguments": "آرگومان‌ها",
-    "argument": "آرگومان"
+    "argument": "آرگومان",
+    "site": "سایت",
+    "website": "وب‌سایت",
+    "database": "پایگاه داده",
+    "languages": "زبان‌ها",
+    "language": "زبان",
+    "currencies": "واحد‌های پول",
+    "currency": "واحد پول",
+    "countries": "کشور‌ها",
+    "country": "کشور",
+    "images": "عکس‌ها",
+    "image": "عکس",
+    "videos": "ویدیو‌ها",
+    "video": "ویدیو",
+    "logo": "لوگو"
 }
