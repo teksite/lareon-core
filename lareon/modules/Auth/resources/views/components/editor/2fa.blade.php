@@ -56,12 +56,14 @@
     </div>
 @else
     <div class="">
-        <p class="mb-6">
-            {{__("two-factor authentication has not been enabled yet")}}.
+        <p class="text-center text-sm text-gray-500">
+            {{ __('no passkeys registered yet') }}.
         </p>
 
         @if($enabling)
-            <x-lareon::editor.input-check :options="[[__('enable 2FA') , 1 ]]" name="enable_2fa" value="1"/>
+            <div class="mt-6"><
+                <x-lareon::editor.input-check :options="[[__('enable 2FA') , 1 ]]" name="enable_2fa" value="1"/>
+            </div>
         @endif
     </div>
 @endif
