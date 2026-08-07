@@ -1,11 +1,6 @@
-@props(['instance'=>null, 'wrapperMode'=>'y-box' ] )
+@props(['instance'=>null ,'wrapperClass'=>null ] )
 @php
 
-    $wrapperClass=match ($wrapperMode){
-         'x-box'=>'x-box',
-         'y-box'=>'y-box',
-         default => null
-     };
 
      $types=[
          'created_at'=>'created at',

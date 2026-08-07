@@ -1,4 +1,4 @@
-<fieldset class="@container tab-item bordering p-2 md:p-3 sm:p-6 rounded-xl" data-title="{{ $title }}" x-show="$parent.active===Array.from($el.parentElement.children).indexOf($el)" x-cloak>
+<fieldset class="@container tab-item bordering p-2 md:p-3 sm:p-6 rounded-xl" data-title="{{ $title }}">
     <legend class="font-bold px-3">{{ $title }}</legend>
     @if(isset($aside))
         <div class="flex flex-col @[900px]:flex-row gap-6">

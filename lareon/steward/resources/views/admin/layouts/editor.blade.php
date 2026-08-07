@@ -28,22 +28,37 @@
         <div class="{{ $styleClass }}">
             <div class="w-full space-y-6">
                 @hasSection('form')
-                    <x-lareon::editor.tabs.layout :hastab="$hasTab">
+                    <x-lareon::editor.tabs.layout :hasTab="$hasTab">
                         @yield('form')
                         @if($showTemplateSection)
                             <x-lareon::editor.tabs.item :title="__('meta data')">
-                                <x-meta::elements-loader :template="$instance->template" :value="$instance->metaData"/>
+                                <x-lareon::editor.tabs.section>
+                                    <x-meta::elements-loader :template="$instance->template" :value="$instance->metaData"/>
+                                </x-lareon::editor.tabs.section>
                             </x-lareon::editor.tabs.item>
                         @endif
+
+                        @if($hasSeo)
+                            <x-lareon::editor.tabs.item :title="__('seo')">
+                                <x-lareon::editor.tabs.section>
+                                    {{--                                    <x-meta::elements-loader :value="$instance->metaData"/>--}}
+                                </x-lareon::editor.tabs.section>
+                            </x-lareon::editor.tabs.item>
+                        @endif
+
 
                         @if($publishInfo || $publishStatus)
                             <x-lareon::editor.tabs.item :title="__('publish data')">
                                 <div @class(['grid gap-6 lg:grid-cols-2' => $publishInfo && $publishStatus])>
                                     @if($publishStatus)
-                                        <x-lareon::editor.section.publish-status :instance="$instance"/>
+                                        <x-lareon::editor.tabs.section>
+                                            <x-lareon::editor.section.publish-status :instance="$instance"/>
+                                        </x-lareon::editor.tabs.section>
                                     @endif
                                     @if($publishInfo)
-                                        <x-lareon::editor.section.publish-info :instance="$instance"/>
+                                        <x-lareon::editor.tabs.section>
+                                            <x-lareon::editor.section.publish-info :instance="$instance"/>
+                                        </x-lareon::editor.tabs.section>
                                     @endif
                                 </div>
                             </x-lareon::editor.tabs.item>
@@ -61,7 +76,6 @@
                         @if($publishStatus)
                             <x-lareon::editor.section.publish-status :instance="$instance"/>
                         @endif
-
                         @if($publishInfo && ! $hasTab && $instance)
                             <x-lareon::editor.section.publish-info :instance="$instance"/>
                         @endif

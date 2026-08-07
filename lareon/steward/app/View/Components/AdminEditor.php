@@ -109,6 +109,10 @@ class AdminEditor extends Component
 
     private function showTemplateSection(): bool
     {
-        return $this->instance && method_exists($this->instance, 'template');
+        return !!$this->instance && method_exists($this->instance, 'template');
+    }
+
+    private function showSeoSection(): bool
+    {
     }
 }

@@ -20,18 +20,22 @@
                 </div>
             </x-lareon::editor.tabs.section>
         </x-lareon::editor.tabs.item>
+
         <x-lareon::editor.tabs.item :title="__('verification')">
-            <x-lareon::editor.input-radio type="inline" :required="true" value="0" :options="[[__('no') , 0] , [__('yes') ,1]]" :label="__('mark email as verified')" name="email_verified_at" inputsClass="flex items-center gap-1"/>
-            <x-lareon::editor.input-radio type="inline" :required="true" value="0" :options="[[__('no') , 0] , [__('yes') ,1]]" :label="__('mark phone as verified')" name="phone_verified_at" inputsClass="flex items-center gap-1"/>
+            <x-lareon::editor.tabs.section>
+                <x-lareon::editor.input-radio type="inline" :required="true" value="0" :options="[[__('no') , 0] , [__('yes') ,1]]" :label="__('mark email as verified')" name="email_verified_at" inputsClass="flex items-center gap-1"/>
+                <x-lareon::editor.input-radio type="inline" :required="true" value="0" :options="[[__('no') , 0] , [__('yes') ,1]]" :label="__('mark phone as verified')" name="phone_verified_at" inputsClass="flex items-center gap-1"/>
+            </x-lareon::editor.tabs.section>
         </x-lareon::editor.tabs.item>
-        <x-lareon::editor.tabs.section>
-            <fieldset class="fieldset space-y-6">
-                <legend class="legend">{{__('send notification')}}</legend>
+
+        <x-lareon::editor.tabs.item :title="__('send notification')">
+            <x-lareon::editor.tabs.section>
                 <div class="grid gap-6 lg:grid-cols-2">
                     <x-lareon::editor.input-check type="inline" :required="true" :options="[[__('yes') ,1]]" :label="__('send notification via email')" name="send_email_notification" inputsClass="flex items-center gap-1"/>
                     <x-lareon::editor.input-check type="inline" :required="true" :options="[[__('yes') ,1]]" :label="__('send notification via phone')" name="send_phone_notification" inputsClass="flex items-center gap-1"/>
                 </div>
-            </fieldset>
-        </x-lareon::editor.tabs.section>
+            </x-lareon::editor.tabs.section>
+        </x-lareon::editor.tabs.item>
+
     @endsection
 </x-lareon::admin-editor>

@@ -1,6 +1,5 @@
-@props(['tab'=>true])
-
-@if($tab)
+@props(['hasTab'=>true])
+@if($hasTab)
     <div x-data="{ activeTab: 0, tabs: [] }" x-init=" $nextTick(() => { tabs = Array.from($refs.tabContainer.children).filter(child => child.classList?.contains('tab-item') ).map(tab => tab.dataset.title || 'tab ' + (tabs.length + 1)) }) ">
         <div class="flex items-end justify-center flex-wrap mb-4">
             <template x-for="(tab, index) in tabs" :key="index">
@@ -20,4 +19,6 @@
             })
         </script>
     @endpushonce
+@else
+    {!! $slot !!}
 @endif

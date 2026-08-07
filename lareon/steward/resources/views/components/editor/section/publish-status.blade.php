@@ -1,17 +1,11 @@
-@props(['instance'=>null ,'wrapperMode'=>'y-box' ] )
+@props(['instance'=>null ,'wrapperClass'=>null ] )
 
 @php
-    $wrapperClass=match ($wrapperMode){
-        'x-box'=>'x-box',
-        'y-box'=>'y-box',
-        default => null
-    };
-
     $status = old('publish_status', $instance->publish_status ?? null);
     $publishedAt = old('published_status', $instance->published_at ?? null);
 @endphp
 
-<section class="{{ $wrapperClass . ' space-y-6'}}" x-data="{publishStatus: '{{ $status }}',published: '{{ \Lareon\Steward\App\Enums\PublishStatusEnum::PUBLISHED->value }}'}">
+<section {{$attributes->merge(['class' =>"$wrapperClass space-y-6"])}} x-data="{publishStatus: '{{ $status }}',published: '{{ \Lareon\Steward\App\Enums\PublishStatusEnum::PUBLISHED->value }}'}">
     <div>
         <x-lareon::inputs.label for="publishStatus_data" :title="__('publish status')" class="mb-3"/>
         <x-lareon::inputs.select id="publishStatus_data" name="publish_status" class="block mt-1 w-full" x-model="publishStatus">
