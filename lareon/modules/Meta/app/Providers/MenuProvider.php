@@ -26,6 +26,7 @@ class MenuProvider implements MenuRegisteringContract
     {
         match ($event->area) {
             MenuAreaType::ADMIN => $this->admin($event),
+            MenuAreaType::PANEL => $this->panel($event),
         };
     }
 
@@ -41,6 +42,11 @@ class MenuProvider implements MenuRegisteringContract
                 'permission' => 'admin.meta.template.read',
             ],
         ], 'settings');
+
+    }
+
+    protected function panel(MenuRegisteringEvent $event): void
+    {
 
     }
 }

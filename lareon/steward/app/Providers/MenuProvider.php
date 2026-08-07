@@ -87,7 +87,7 @@ class MenuProvider implements MenuRegisteringContract
                 'icon'   => 'home',
                 'route'  => 'panel.dashboard',
                 'active' => request()->routeIs('panel.dashboard'),
-            ]);
+            ],'dashboard');
         $event->add(
             [
                 'title'  => trans('admin panel'),
@@ -95,7 +95,7 @@ class MenuProvider implements MenuRegisteringContract
                 'icon'   => 'gear',
                 'route'  => 'admin.dashboard',
                 'active' => request()->routeIs('admin.dashboard'),
-            ]);
+            ],'adminpanel');
     }
 
 

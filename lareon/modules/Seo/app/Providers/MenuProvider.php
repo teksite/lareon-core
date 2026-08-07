@@ -78,15 +78,7 @@ class MenuProvider implements MenuRegisteringContract
 
     protected function panel(MenuRegisteringEvent $event): void
     {
-        /*
-        $event->add([
-            'title' => 'panel',
-            'url'   => '/tkadmin',
-            'route' => 'panel.dashboard',
-            'icon'  => 'fas fa-blog',
-            'order' => 1,
-        ], 'steward');
-        */
+
     }
 
 
