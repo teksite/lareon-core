@@ -6,7 +6,9 @@ use Closure;
 use Illuminate\Support\Arr;
 use Illuminate\View\Component;
 use Illuminate\Contracts\View\View;
+use Lareon\Modules\Meta\App\Traits\HasTemplate;
 use Lareon\Modules\Page\App\Models\Page;
+use Lareon\Modules\Seo\App\Traits\HasSeo;
 
 class AdminEditor extends Component
 {
@@ -55,7 +57,7 @@ class AdminEditor extends Component
             'realMethod'          => $this->buildRealMethod(),
             'showTemplateSection' => $this->showTemplateSection(),
             'showSeoSection'      => $this->showSeoSection(),
-            'showPublishSection'      => $this->showPublishSection(),
+            'showPublishSection'  => $this->showPublishSection(),
 
             ...$this->resolveButtonPresentation(),
         ]);
@@ -112,13 +114,12 @@ class AdminEditor extends Component
 
     private function showTemplateSection(): bool
     {
-        return !!$this->instance && method_exists($this->instance, 'template');
+        return !!$this->instance && in_array(HasTemplate::class, array_keys(class_uses_recursive($this->instance)));
     }
 
     private function showSeoSection(): bool
     {
-        return !!$this->instance && in_array($this->instance, config('seo.models', []));
-
+        return !!$this->instance && in_array(HasSeo::class, array_keys(class_uses_recursive($this->instance)));
     }
 
     private function showPublishSection(): array

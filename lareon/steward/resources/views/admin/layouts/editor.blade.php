@@ -1,7 +1,5 @@
 @props([
     'id' => 'editor-form',
-    'publishInfo' => true,
-    'publishStatus' => true,
     'hasTab' => true,
     'hasMeta' => true,
     'hasSeo' => true,
@@ -31,7 +29,7 @@
                     <x-lareon::editor.tabs.layout :hasTab="$hasTab">
                         @yield('form')
 
-                        @if($showTemplateSection)
+                        @if($hasMeta && $showTemplateSection)
                             <x-lareon::editor.tabs.item :title="__('meta data')">
                                 <x-meta::elements-loader :template="$instance->template" :value="$instance->metaData"/>
                             </x-lareon::editor.tabs.item>
