@@ -55,7 +55,7 @@ if (!function_exists('dateToGregorian')) {
 
 if (!function_exists('smart_date')) {
 
-    function smart_date( ?string $dateTime = null,  ?string $targetTimeZone = null, string $format = 'Y-m-d H:i:s'): ?string
+    function smart_date(?string $dateTime = null, ?string $targetTimeZone = null, string $format = 'Y-m-d H:i:s'): ?string
     {
         $date = $dateTime ? Carbon::parse($dateTime) : Carbon::now();
 
@@ -91,7 +91,7 @@ if (!function_exists('userCan')) {
      * @param string|array|null $permission
      * @return bool
      */
-    function userCan(string|array|null $permission=null):bool
+    function userCan(string|array|null $permission = null): bool
     {
         $user = Auth::user();
         if (is_null($user)) return false;
@@ -102,4 +102,32 @@ if (!function_exists('userCan')) {
         return $user->canAny($permissions);
     }
 
+}
+
+
+if (!function_exists('userCan')) {
+
+    /**
+     * filter null data from the input
+     *
+     * @param mixed|null $data
+     * @return mixed
+     */
+    function removeNullValues(mixed $data = null): mixed
+    {
+        if (!is_array($data)) return $data;
+
+        foreach ($data as $key => $value) {
+
+            $value = removeNullValues($value);
+
+            if ($value === null) {
+                unset($data[$key]);
+                continue;
+            }
+            $data[$key] = $value;
+        }
+
+        return empty($data) ? null : $data;
+    }
 }

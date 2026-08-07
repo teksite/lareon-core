@@ -30,13 +30,15 @@ class SaveMetaDataService
                     continue;
                 }
 
+
+
                 $rows[] = [
                     'key'         => $key,
                     'template_id' => $model->template_id,
                     'element_id'  => (int)$value['element_id'],
                     'model_type'  => $model::class,
                     'model_id'    => $model->id,
-                    'content'     => $value['data'] ?? null,
+                    'content'     => removeNullValues($value['data'] ?? null),
                     'created_at'  => now(),
                     'updated_at'  => now(),
                 ];
@@ -54,7 +56,6 @@ class SaveMetaDataService
         if (!$this->checkMethod($model)) return;
         $model->metaData()->delete();
     }
-
 
     private function checkMethod(Model $model): bool
     {
