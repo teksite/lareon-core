@@ -16,7 +16,7 @@ class SchemaOption
 
     public static function langList(): array
     {
-        return static::load('lang-list');
+        return static::load('language-list');
     }
 
     public static function areaList(): array

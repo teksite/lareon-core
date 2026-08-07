@@ -41,7 +41,7 @@
                                 :id="`potential_action_type-${index}`"
                                 x-model="item.type">
                             @foreach(\Lareon\Modules\Seo\App\Schema\SchemaOption::get('potential_action_list') as $key => $title)
-                                <option value="{{ $key }}">{{ $title }}</option>
+                                <option value="{{ $key }}">{{ __($title) }}</option>
                             @endforeach
                         </select>
                         <p class="message-error" x-show="hasError('{{ $dottedName }}.' + index + '.type')" x-text="getError('{{ $dottedName }}.' + index + '.type')"></p>

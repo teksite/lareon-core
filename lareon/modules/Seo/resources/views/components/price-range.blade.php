@@ -7,7 +7,7 @@
     "$$$$"=>"very expensive",
 ];
 @endphp
-<x-lareon::editor.input-select  :inline="$inline" :required="$required" :label="__('price range')" name="{{$name}}" :value="$value" :labelPosition="$labelPosition">
+<x-lareon::editor.input-select :inline="$inline" :required="$required" :label="__('price range')" name="{{$name}}" :value="$value" :labelPosition="$labelPosition">
     @foreach($range as $key=>$desc)
         <option value="{{$key}}">
             {{__($desc)}}

@@ -40,7 +40,7 @@
                                 :id="`opening_horse_day_of_week-${index}`"
                                 x-model="item.dayOfWeek">
                             @foreach(\Lareon\Modules\Seo\App\Schema\SchemaOption::get('day_list') as $key => $title)
-                                <option value="{{ $key }}">{{ $title }}</option>
+                                <option value="{{ $key }}">{{ __($title) }}</option>
                             @endforeach
                         </select>
                         <p class="message-error" x-show="hasError('{{ $dottedName }}.' + index + '.type')" x-text="getError('{{ $dottedName }}.' + index + '.dayOfWeek')"></p>
