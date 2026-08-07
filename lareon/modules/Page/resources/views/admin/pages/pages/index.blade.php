@@ -6,7 +6,7 @@
         <x-lareon::links.nav :href="route('admin.pages.trash.index')" :content="$trashCount" color="trash" can="admin.page.delete"/>
     @endsection
     @section('list')
-        <x-lareon::table :rows="$pages" :headers="['id'=>'#',__('image') ,'title'=>__('title') ,'status','created_at'=>__('created at') ,'published_at'=>__('published at') ,'']">
+        <x-lareon::table :rows="$pages" :headers="['id'=>'#',__('image') ,'title'=>__('title') ,__('publish status'),'created_at'=>__('created at') ,'published_at'=>__('published at') ,'']">
             @foreach($pages as $key=>$page)
                 <tr>
                     <td class="p-3">{{$pages->firstItem() + $key}}</td>

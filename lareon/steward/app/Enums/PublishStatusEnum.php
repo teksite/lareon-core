@@ -11,8 +11,8 @@ enum PublishStatusEnum: int
     public function label(): string
     {
         return match ($this) {
-            self::PUBLISHED => 'published',
-            self::DRAFTED   => 'drafted',
+            self::PUBLISHED => trans('published'),
+            self::DRAFTED   => trans('drafted'),
         };
     }
 

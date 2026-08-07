@@ -5,6 +5,8 @@
     "template": "تمپلیت",
     "templates": "تمپلیت‌ها",
     "meta data": "متا دیتا",
+    "link title": "عنوان لینک",
+    "link url": "آدرس لینک",
     "elements are collections of content fields that can be assigned to different templates, allowing you to add template-specific content to each one": "المان ها مجموعه ای از فیلدهای محتوایی هستند که با انتساب آن ها به قالب های مختلف، امکان افزودن محتوای اختصاصی به هر قالب را فراهم می کنند",
     "templates are custom views that can contain additional fields and a different layout. They can be assigned to pages, allowing them to store extra data and display content with a layout different from the default page template": "قالب‌ها، نماهای سفارشی هستند که می‌توانند شامل فیلدهای اضافی و طرح‌بندی متفاوتی باشند. آن‌ها را می‌توان به صفحات اختصاص داد و به آن‌ها اجازه داد داده‌های اضافی را ذخیره کنند و محتوا را با طرح‌بندی متفاوتی از قالب صفحه پیش‌فرض نمایش دهند"
 }
