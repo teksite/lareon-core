@@ -5,7 +5,7 @@ namespace Lareon\Steward\App\Service;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Lareon\Modules\Meta\App\Services\SaveMetaDataService;
-use Lareon\Modules\Seo\App\Services\SaveSitemapService;
+use Lareon\Modules\Seo\App\Services\SaveSeoService;
 
 class ContentSaverService
 {
@@ -13,7 +13,7 @@ class ContentSaverService
     public static function create(Model $model, array $inputs = []): Model
     {
         $instance = $model::query()->create(Arr::except($inputs, ['seo', 'meta_data']));
-        app(SaveSitemapService::class)->syncSitemap($instance, $inputs['seo']['sitemap'] ?? []);
+        app(SaveSeoService::class)->syncSeo($instance, $inputs['seo'] ?? []);
         return $instance;
     }
 
@@ -26,7 +26,8 @@ class ContentSaverService
         $model::query()->update(Arr::except($inputs, ['seo', 'meta_data']));
         $model = $model->refresh();
 
-        app(SaveSitemapService::class)->syncSitemap($model, $inputs['seo']['sitemap'] ?? []);
+        app(SaveSeoService::class)->syncSeo($model, $inputs['seo'] ?? []);
+
         app(SaveMetaDataService::class)->syncMetaData($model, $inputs['meta_data'] ?? []);
 
         return $model;
@@ -36,7 +37,7 @@ class ContentSaverService
     public static function delete(Model $model): bool
     {
         $model::query()->delete();
-        app(SaveSitemapService::class)->deleteSitemap($model);
+        app(SaveSeoService::class)->deleteSitemap($model);
         app(SaveMetaDataService::class)->deleteMetaData($model);
 
         return true;

@@ -4,6 +4,9 @@ namespace Lareon\Modules\Page\App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Lareon\Modules\Page\App\Models\Page;
+use Lareon\Modules\Seo\App\Models\SeoMetaModel;
+use Lareon\Modules\Seo\App\Models\SeoSchemaModel;
+use Lareon\Modules\Seo\App\Models\SeoSitemap;
 
 class UpdatePageRequest extends FormRequest
 {
@@ -22,6 +25,11 @@ class UpdatePageRequest extends FormRequest
      */
     public function rules(): array
     {
-        return Page::rules('update' , $this->page->id);
+        return array_merge(
+            Page::rules('update', $this->page->id),
+            SeoMetaModel::rules(),
+            SeoSitemap::rules(),
+            SeoSchemaModel::rules(),
+        );
     }
 }

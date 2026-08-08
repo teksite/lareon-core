@@ -70,7 +70,7 @@ class AdminEditor extends Component
         $html_method = in_array($this->methodType, array_keys(Arr::except(self::HttpMethods, ['get']))) ? 'POST' : 'GET';
 
         $finalAttribute = removeNullValues([
-            'html_method' => $html_method,
+            'method' => $html_method,
             'action'      => $this->action,
             'enctype'     => $this->hasFile ? 'multipart/form-data' : null,
         ]);
@@ -78,7 +78,7 @@ class AdminEditor extends Component
         $attributes = '';
 
         foreach ($finalAttribute as $key => $value) {
-            $attributes .= "$key='$value'";
+            $attributes .= " $key=$value ";
         }
         return $attributes;
     }

@@ -48,6 +48,8 @@ class PageLogic
      */
     public function create(array $inputs = []): ServiceResult
     {
+        dd($inputs);
+
         return ServiceWrapper::make(true)->do(function () use ($inputs) {
             return ContentSaverService::create(new Page, $inputs);
         })->run();

@@ -1,4 +1,5 @@
 <?php
+
 namespace Lareon\Modules\Seo\App\Services;
 
 use Carbon\Carbon;
@@ -9,7 +10,6 @@ use Lareon\Steward\App\Enums\PublishStatusEnum;
 
 class SaveSitemapService
 {
-
     public function syncSitemap(Model $model, array $inputs = []): void
     {
         if (!$this->checkMethod($model)) return;
@@ -19,15 +19,14 @@ class SaveSitemapService
         $url = $model->path();
 
         if (!$url) {
-            SeoSitemap::query()->delete();
-            
+            $this->deleteSitemap($model);
             return;
         };
 
         SeoSitemap::query()->updateOrCreate(
             [
                 'model_type' => get_class($model),
-                'model_id' => $model->getKey(),
+                'model_id'   => $model->getKey(),
             ],
             [
                 'group'            => $this->group($model),

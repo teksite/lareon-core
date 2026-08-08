@@ -1,8 +1,12 @@
 <?php
+
 namespace Lareon\Modules\Page\App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Lareon\Modules\Page\App\Models\Page;
+use Lareon\Modules\Seo\App\Models\SeoMetaModel;
+use Lareon\Modules\Seo\App\Models\SeoSchemaModel;
+use Lareon\Modules\Seo\App\Models\SeoSitemap;
 
 class NewPageRequest extends FormRequest
 {
@@ -21,6 +25,11 @@ class NewPageRequest extends FormRequest
      */
     public function rules(): array
     {
-        return Page::rules('create');
+        return array_merge(
+            Page::rules('create'),
+            SeoMetaModel::rules(),
+            SeoSitemap::rules(),
+            SeoSchemaModel::rules(),
+        );
     }
 }
