@@ -8,6 +8,6 @@ trait HasSitemap
 {
     public function sitemap()
     {
-        return $this->morphTo(SeoSitemap::class, 'model');
+        return $this->morphOne(SeoSitemap::class, 'model');
     }
 }

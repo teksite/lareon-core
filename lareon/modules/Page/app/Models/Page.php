@@ -61,9 +61,6 @@ class Page extends Model
         static::addGlobalScope(new PublishScope('admin.page.read'));
     }
 
-
-
-
     public function breadCrumb(): array
     {
         return [
@@ -78,7 +75,6 @@ class Page extends Model
     {
         return Route::has('pages.show') ? route('pages.show', $this) : null;
     }
-
 
     public function sitemapGroup(): string
     {

@@ -15,13 +15,12 @@ class SaveSitemapService
         if (!$this->checkMethod($model)) return;
 
         if (!method_exists($model, 'path')) return;;
-
         $url = $model->path();
 
         if (!$url) {
             $this->deleteSitemap($model);
             return;
-        };
+        }
 
         SeoSitemap::query()->updateOrCreate(
             [
@@ -35,8 +34,8 @@ class SaveSitemapService
                 'available_at'     => $this->availableAt($model),
                 'priority'         => $inputs['priority'] ?? config('seo.sitemap.default_priority', 0.5),
                 'change_frequency' => $inputs['change_frequency'] ?? config('seo.sitemap.default_change_frequency', 'yearly'),
-                'image'            => $inputs['images'] ?? null,
-                'video'            => $inputs['videos'] ?? null,
+                'image'            => $inputs['image'] ?? null,
+                'video'            => $inputs['video'] ?? null,
             ]
         );
     }

@@ -17,8 +17,7 @@ class SeoSitemap extends Model
         return [
             'last_modified'    => 'datetime',
             'available_at'     => 'datetime',
-            'priority'         => 'decimal',
-            'change_frequency' => ChangeFrequencyEnum::class,
+            'priority'         => 'decimal:1',
             'image'            => 'array',
             'video'            => 'array',
         ];
@@ -33,8 +32,8 @@ class SeoSitemap extends Model
 
             'seo.sitemap.priority'         => 'nullable|decimal:1|min:0.1|max:0.9',
             'seo.sitemap.change_frequency' => ['required', 'string'],
-            'images'                        =>'nullable|sometimes|array',
-            'videos'                        =>'nullable|sometimes|array',
+            'seo.sitemap.image'                        =>'nullable|sometimes|array',
+            'seo.sitemap.video'                        =>'nullable|sometimes|array',
         ];
     }
 
