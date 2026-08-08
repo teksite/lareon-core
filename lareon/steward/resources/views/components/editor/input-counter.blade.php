@@ -38,11 +38,9 @@
    }"
 >
     {{-- Counter --}}
-    <div class="flex items-center justify-start text-xs w-16 min-w-16">
+    <div class="flex items-center justify-start text-xs w-24 min-w-24">
         <span class="font-medium" :class="{'text-yellow-600': state === 'under','text-green-600': state === 'valid','text-red-600': state === 'over',}" x-text="count"></span>
-        @if($max !== null)
-            <span class="text-gray-600">/ {{ $max }}</span>
-        @endif
+            <span class="text-gray-600">/ {{$min ?? ''}} - {{ $max ?? '' }}</span>
     </div>
     {{-- Progress --}}
     <div class="h-2 w-full overflow-hidden rounded-full bg-gray-300">

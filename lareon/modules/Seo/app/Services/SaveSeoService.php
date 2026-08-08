@@ -7,8 +7,8 @@ class SaveSeoService
 {
     public function syncSeo(Model $model, array $inputs = []): void
     {
-        (new SaveMetaTagService())->syncMetaTag($model, $inputs['meta'] ,[]);
-        (new SaveSitemapService())->syncSitemap($model, $inputs['sitemap'] ,[]);
+        (new SaveMetaTagService())->syncMetaTag($model, $inputs['meta'] ?? []);
+        (new SaveSitemapService())->syncSitemap($model, $inputs['sitemap'] ?? []);
     }
 
 

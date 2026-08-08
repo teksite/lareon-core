@@ -7,7 +7,7 @@
             <x-lareon::editor.input-counter min="50" max="60" name="seo[meta][title]"/>
         </div>
         <div>
-            <x-lareon::editor.input-textarea :required="false" labelPosition="start" :label="__('description')" name="seo[meta][description]" :value="$data['description'] ?? null" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('description') , 'item'=>__('meta')])"/>
+            <x-lareon::editor.input-textarea :required="false" labelPosition="start" :label="__('description')" name="seo[meta][description]" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('description') , 'item'=>__('meta')])">{{$data['description'] ?? null}}</x-lareon::editor.input-textarea>
             <x-lareon::editor.input-counter min="150" max="165" name="seo[meta][description]"/>
         </div>
         <x-lareon::editor.input :required="false" labelPosition="start" :label="__('keywords')" name="seo[meta][keywords]" :value="implode('|',$data['keywords'] ?? [])" :placeholder="__('lareon::global.placeholders.separate.two',['attribute'=>__('keywords') , 'item'=>'|'])"/>
