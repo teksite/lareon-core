@@ -13,17 +13,16 @@
     </section>
     <section x-show="tabs.find(tab => tab.id === 2).active">
         @if($schema)
-            <x-seo::sections.instance.schema :data="$value['schema'] ?? []"/>
+            <x-seo::editor.sections.schema :data="$value['schema'] ?? []"/>
         @else
-            <x-seo::sections.instance.not-active/>
+            <x-seo::editor.sections.not-active/>
         @endif
     </section>
     <section x-show="tabs.find(tab => tab.id === 3).active">
         @if($sitemap)
-
-            <x-seo::sections.instance.sitemap :data="$value['sitemap'] ?? []"/>
+           <x-seo::editor.sections.sitemap :data="$value['sitemap'] ?? []"/>
         @else
-            <x-seo::sections.instance.not-active/>
+           <x-seo::editor.sections.not-active/>
         @endif
     </section>
     </div>
