@@ -15,9 +15,9 @@ class SeoSitemap extends Model
     protected function casts(): array
     {
         return [
-            'priority'         => 'decimal:1',
             'last_modified'    => 'datetime',
             'available_at'     => 'datetime',
+            'priority'         => 'decimal',
             'change_frequency' => ChangeFrequencyEnum::class,
             'image'            => 'array',
             'video'            => 'array',
@@ -29,9 +29,10 @@ class SeoSitemap extends Model
     {
         return [
             'seo.sitemap' => 'sometimes|array',
+            'seo.sitemap.activating' => 'sometimes|bool:0,1',
 
-            'seo.sitemap.priority'         => 'nullable|decimal:0.1|min:0.1|max:0.9',
-            'seo.sitemap.change_frequency' => ['required', 'string', Rule::enum(ChangeFrequencyEnum::class)],
+            'seo.sitemap.priority'         => 'nullable|decimal:1|min:0.1|max:0.9',
+            'seo.sitemap.change_frequency' => ['required', 'string'],
             'images'                        =>'nullable|sometimes|array',
             'videos'                        =>'nullable|sometimes|array',
         ];

@@ -4,12 +4,13 @@ namespace Lareon\Modules\Seo\App\Enums;
 
 enum ChangeFrequencyEnum: string
 {
-    case Always = 'always';
-    case Hourly = 'hourly';
-    case Daily = 'daily';
-    case Weekly = 'weekly';
-    case Monthly = 'monthly';
     case Yearly = 'yearly';
+    case Monthly = 'monthly';
+    case Weekly = 'weekly';
+    case Daily = 'daily';
+    case Hourly = 'hourly';
+
+    case Always = 'always';
     case Never = 'never';
 
     public function label(): string
