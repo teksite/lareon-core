@@ -37,8 +37,8 @@
 
                         @if($hasSeo && $showSeoSection)
                             <x-lareon::editor.tabs.item :title="__('seo')">
-                                <x-lareon::editor.tabs.section>
-                                    {{--                                    <x-meta::elements-loader :value="$instance->metaData"/>--}}
+                                <x-lareon::editor.tabs.section class="">
+                                    <x-seo::editor.seo-section :value="$instance->seo()"/>
                                 </x-lareon::editor.tabs.section>
                             </x-lareon::editor.tabs.item>
                         @endif

@@ -9,6 +9,9 @@
     "day of week": "روز هفته",
     "opens": "باز می‌شود",
     "closes": "بسته می‌شود",
+    "keyword": "کلمه کلیدی",
+    "keywords": "کلمه‌های کلیدی",
+    "canonical url": "نشانی اینترنتی اصلی",
     "opening hours specification": "مشخصات ساعات کاری",
     "potential actions": "اقدامات قابل انجام",
     "same as": "مشابه با",
@@ -63,7 +66,9 @@
     "very expensive": "بسیار گران",
     "seo": "سئو",
     "SEO": "سئو",
-    "seo of site": "سئو سایت"
+    "seo of site": "سئو سایت",
+    "indexable": "قابل ایندکس",
+    "followable":"قابل دنبال‌کردن"
 
 
 }

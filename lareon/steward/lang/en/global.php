@@ -170,19 +170,23 @@ return [
             'none' => 'leave it empty',
             'read' => 'leave it empty to read from :attribute',
         ],
+        'separate' => [
+            'one' => 'separate by :attribute',
+            'two' => 'Enter :attribute , separate by :item',
+        ],
         'url' => [
             'one'    => 'enter the address of :attribute',
             'two' =>  'enter the address of :attribute for :item',
         ],
         'write'  => [
-            'one'    => 'Enter :attribute',
-            'two'    => 'Enter :attribute for the :item',
-            'select' => 'Select :attribute',
-            'search' => 'Search...',
+            'one'    => 'enter :attribute',
+            'two'    => 'enter :attribute for the :item',
+            'select' => 'select :attribute',
+            'search' => 'search...',
 
             'unique' => [
-                'one' => 'Enter a unique :attribute',
-                'two' => 'Enter a unique :attribute for :item',
+                'one' => 'enter a unique :attribute',
+                'two' => 'enter a unique :attribute for :item',
             ],
         ],
         'insert' => [

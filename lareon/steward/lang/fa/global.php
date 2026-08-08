@@ -179,6 +179,11 @@ return [
             'none' => 'خالی بگذارید',
             'read' => 'خالی بگذارید تا از :attribute خوانده‌شود',
         ],
+
+        'separate' => [
+            'one' => 'با :attribute جدا کنید',
+            'two' => ':attribute را وارد کنید، با :item جدا کنید',
+        ],
         'url' => [
             'one'    => 'آدرس :attribute را وارد کنید',
             'two' => 'آدرس :attribute برای :item را وارد کنید',
