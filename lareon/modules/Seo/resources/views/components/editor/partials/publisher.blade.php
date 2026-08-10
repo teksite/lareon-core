@@ -1,7 +1,11 @@
-@props(['name','value'=>[], 'required'=>true  ])
-
+@props(['name','value'=>[], 'required'=>false  ])
+@php
+    $finalName = $name . '[publisher]';
+@endphp
 <fieldset class="fieldset">
     <legend class="legend">{{__('publisher')}}</legend>
-    <div class="space-y-6">
+    <div class="grid gap-6 md:grid-cols-2">
+        <x-lareon::editor.input :label="__('name')" name="{{$finalName}}[name]" :value="$value['name'] ?? null" labelPosition="start" :required="$required"/>
+        <x-lareon::editor.input :label="__('logo')" name="{{$finalName}}[logo]" :value="$value['logo'] ?? null" labelPosition="start" dir="ltr" :required="$required" placeholder="https://example.com/logo.png | /logo.png "/>
     </div>
 </fieldset>

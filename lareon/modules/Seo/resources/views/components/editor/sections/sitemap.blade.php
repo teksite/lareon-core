@@ -15,14 +15,15 @@
 @endphp
 <section>
     <div class="bg-slate-50 p-6 bordering rounded-lg space-y-6">
-        <x-lareon::editor.input type="number" min="0.1" max="0.9" step="0.1" :required="false" labelPosition="start" :label="__('priority')" name="{{$finalName}}[priority]" :value="$data['priority'] ?? 0.5" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('priority') , 'item'=>__('sitemap')])"/>
-        <x-lareon::editor.input-select :required="false" labelPosition="start" :label="__('change frequency')" name="{{$finalName}}[change_frequency]">
-            @foreach(\Lareon\Modules\Seo\App\Enums\ChangeFrequencyEnum::cases() as $case)
-                <option value="{{$case->value}}">{{__($case->name)}}</option>
-            @endforeach
-        </x-lareon::editor.input-select>
+        <div class="grid gap-6 md:grid-cols-2">
+            <x-lareon::editor.input type="number" min="0.1" max="0.9" step="0.1" :required="false" labelPosition="start" :label="__('priority')" name="{{$finalName}}[priority]" :value="$data['priority'] ?? 0.5" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('priority') , 'item'=>__('sitemap')])"/>
+            <x-lareon::editor.input-select :required="false" labelPosition="start" :label="__('change frequency')" name="{{$finalName}}[change_frequency]">
+                @foreach(\Lareon\Modules\Seo\App\Enums\ChangeFrequencyEnum::cases() as $case)
+                    <option value="{{$case->value}}">{{__($case->name)}}</option>
+                @endforeach
+            </x-lareon::editor.input-select>
 
-
+        </div>
         <fieldset class="space-y-6 fieldset" x-data="{
         items: {{ $initialImageItems->toJson() }},
         errors: @js($errors->getMessages()),

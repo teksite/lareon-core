@@ -1,4 +1,4 @@
-@props(['name','value' => [],'required' => false,])
+@props(['name','value' => [],'required' => true,])
 
 @php
     $finalName = $name . '[image]';
