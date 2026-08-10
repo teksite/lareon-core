@@ -5,7 +5,7 @@ namespace Lareon\Modules\Seo\App\Models;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 
-#[Fillable('model_id', 'model_type', 'schema','typr')]
+#[Fillable('model_id', 'model_type', 'schema','type')]
 class SeoSchemaModel extends Model
 {
     protected function casts(): array
@@ -17,7 +17,6 @@ class SeoSchemaModel extends Model
     public static function rules(): array
     {
         return [
-            'seo.schema' => 'sometimes|array',
             'seo.schema' => 'sometimes|array',
         ];
     }

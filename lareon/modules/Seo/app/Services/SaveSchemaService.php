@@ -9,7 +9,6 @@ class SaveSchemaService
 {
     public function sync(Model $model, array $inputs = []): void
     {
-
         if (!$this->checkMethod($model)) return;
 
         SeoSchemaModel::query()->updateOrCreate(
@@ -18,9 +17,9 @@ class SaveSchemaService
                 'model_id'   => $model->getKey(),
             ],
             [
-                'schema'         => removeNullValues($inputs ?? null),
-            ]
-        );
+                'schema' => removeNullValues($inputs ?? null),
+                'type'   => $inputs['type'] ?? 'webPage',
+            ]);
     }
 
     public function delete(Model $model): void

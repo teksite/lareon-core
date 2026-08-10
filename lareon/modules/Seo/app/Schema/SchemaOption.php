@@ -114,7 +114,7 @@ class SchemaOption
             'author_list'         => static::authorList(),
 
 
-//            'pageType'           => static::pageType(),
+            'page_types'           => static::pageType(),
 
             'article_type'  => static::articleType(),
             'organization_type'  => static::organizationType(),

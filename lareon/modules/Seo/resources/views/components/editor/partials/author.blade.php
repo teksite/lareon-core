@@ -8,7 +8,7 @@
 
         <x-lareon::editor.input-select labelPosition="start" :label="__('type')" name="{{$finalName}}[type]" :value="$value['type'] ?? null" :required="$required">
             @foreach(\Lareon\Modules\Seo\App\Schema\SchemaOption::get('author_list') as $key=>$desc)
-                <option value="{{$key}}">{{$desc}}</option>
+                <option value="{{$key}}">{{__($desc)}}</option>
             @endforeach
         </x-lareon::editor.input-select>
 
