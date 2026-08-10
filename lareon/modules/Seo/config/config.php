@@ -8,4 +8,9 @@ return [
         'default_change_frequency' => 'yearly',  // this value saved at database, so if you change it, you should change pre saved data in database manually
     ],
 
+    'schema' => [
+        'WebPage' =>'web-page',
+        'Article' => 'article-page',
+
+    ],
 ];

@@ -2,6 +2,8 @@
 
 
 return [
+    'WebPage'             => 'web page',
+    'Article'             => 'article',
     'Blog'                => 'blog',
     'Event'               => 'event',
     'JobPosition'         => 'jop position',

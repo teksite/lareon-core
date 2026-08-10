@@ -1,6 +1,6 @@
-@props(['value'=>[] ,'name'=>'seo'])
+@props(['value'=>[] ,'name'=>'seo', 'arrayName'=>'organization'])
 @php
-    $finalName = $name."[organization]";
+    $finalName = $name."[".$arrayName."]";
 @endphp
 
 <div class="grid gap-6 lg:grid-cols-2">

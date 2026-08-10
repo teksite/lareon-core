@@ -1,6 +1,6 @@
-@props(['value'=>[] ,'name'=>'seo'])
+@props(['value'=>[] ,'name'=>'seo', 'arrayName'=>'website'])
 @php
-    $finalName = $name."[website]";
+    $finalName = $name."[".$arrayName."]";
 @endphp
 <div class="space-y-6">
     <x-lareon::editor.input labelPosition="start" :required="true" :label="__('title')" name="{{$finalName}}[title]" :value="$value['title'] ?? null" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('title'),'item'=>__('website') ])"/>

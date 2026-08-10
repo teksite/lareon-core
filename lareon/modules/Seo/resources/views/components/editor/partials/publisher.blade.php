@@ -1,6 +1,6 @@
-@props(['name'=>'seo[schema]','value'=>[], 'required'=>false  ])
+@props(['name'=>'seo[schema]','value'=>[], 'required'=>false, 'arrayName'=>'publisher'])
 @php
-    $finalName = $name . '[publisher]';
+    $finalName = $name."[".$arrayName."]";
 @endphp
 <fieldset class="fieldset">
     <legend class="legend">{{__('publisher')}}</legend>

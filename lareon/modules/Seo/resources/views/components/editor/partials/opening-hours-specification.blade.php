@@ -1,8 +1,8 @@
-@props(['name','value' => [],'required' => true,])
+@props(['name','value' => [],'required' => true, 'arrayName'=>'openingHoursSpecification'])
 
 @php
 
-    $finalName = $name . '[openingHoursSpecification]';
+    $finalName = $name."[".$arrayName."]";
     $dottedName = str_replace(['[', ']'], ['.', ''], $finalName);
     $rawItems = old($dottedName, null) ?? $value ?? [];
 

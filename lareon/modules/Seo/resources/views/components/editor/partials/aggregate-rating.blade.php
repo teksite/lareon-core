@@ -1,6 +1,6 @@
-@props(['name','value'=>[], 'required'=>true  ])
+@props(['name','value'=>[], 'required'=>true ,'arrayName'=>'aggregateRating'  ])
 @php
-    $finalName = $name . '[aggregateRating]';
+    $finalName = $name."[".$arrayName."]";
 @endphp
 <fieldset class="fieldset">
     <legend class="legend">{{__('aggregate rating')}}</legend>
