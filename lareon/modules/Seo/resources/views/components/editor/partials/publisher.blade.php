@@ -1,4 +1,4 @@
-@props(['name','value'=>[], 'required'=>false  ])
+@props(['name'=>'seo[schema]','value'=>[], 'required'=>false  ])
 @php
     $finalName = $name . '[publisher]';
 @endphp

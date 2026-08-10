@@ -24,9 +24,9 @@ trait HasSeo
     public static function seoRules(): array
     {
         return [
-            SeoMetaModel::rules(),
-            SeoSitemap::rules(),
-            SeoSchemaModel::rules(),
+            ...SeoMetaModel::rules(),
+            ...SeoSitemap::rules(),
+            ...SeoSchemaModel::rules(),
         ];
     }
 }

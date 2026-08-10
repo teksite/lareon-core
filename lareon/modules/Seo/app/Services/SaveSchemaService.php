@@ -18,7 +18,7 @@ class SaveSchemaService
                 'model_id'   => $model->getKey(),
             ],
             [
-                'schema'         => $inputs ?? null,
+                'schema'         => removeNullValues($inputs ?? null),
             ]
         );
     }

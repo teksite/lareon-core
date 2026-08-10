@@ -12,6 +12,7 @@ class ContentSaverService
 
     public static function create(Model $model, array $inputs = []): Model
     {
+        dd($inputs);
         $instance = $model::query()->create(Arr::except($inputs, ['seo', 'meta_data']));
         app(SaveSeoService::class)->syncSeo($instance, $inputs['seo'] ?? []);
         return $instance;

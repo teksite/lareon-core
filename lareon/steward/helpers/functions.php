@@ -121,7 +121,7 @@ if (!function_exists('removeNullValues')) {
 
             $value = removeNullValues($value);
 
-            if ($value === null) {
+            if ($value === null || (is_string($value) && strlen(trim($value)) === 0)) {
                 unset($data[$key]);
                 continue;
             }

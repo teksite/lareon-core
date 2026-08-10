@@ -32,8 +32,8 @@ class SeoSitemap extends Model
 
             'seo.sitemap.priority'         => 'nullable|decimal:1|min:0.1|max:0.9',
             'seo.sitemap.change_frequency' => 'required|string',
-//            'seo.sitemap.image'                        =>'nullable|sometimes|array',
-//            'seo.sitemap.video'                        =>'nullable|sometimes|array',
+            'seo.sitemap.image'                        =>'nullable|sometimes|array',
+            'seo.sitemap.video'                        =>'nullable|sometimes|array',
         ];
     }
 

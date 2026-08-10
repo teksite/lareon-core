@@ -12,7 +12,6 @@ class SaveSitemapService
 {
     public function sync(Model $model, array $inputs = []): void
     {
-        dd($inputs);
         if (!$this->checkMethod($model)) return;
 
         if (!method_exists($model, 'path')) return;;

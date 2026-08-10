@@ -31,6 +31,7 @@ return new class extends Migration
         Schema::create('seo_schema_models', function (Blueprint $table) {
             $table->id();
             $table->morphs('model');
+            $table->string('type', 50);
             $table->json('schema')->nullable();
             $table->timestamps();
 
