@@ -11,6 +11,7 @@ return [
     'schema' => [
         'WebPage' =>'web-page',
         'Article' => 'article-page',
+        'VideoObject' => 'video-object-page',
 
     ],
 ];
