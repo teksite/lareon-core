@@ -27,9 +27,7 @@ class UpdatePageRequest extends FormRequest
     {
         return array_merge(
             Page::rules('update', $this->page->id),
-            SeoMetaModel::rules(),
-            SeoSitemap::rules(),
-            SeoSchemaModel::rules(),
+            Page::seoRules()
         );
     }
 }

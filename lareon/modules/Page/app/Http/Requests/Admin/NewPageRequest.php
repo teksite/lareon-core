@@ -27,9 +27,7 @@ class NewPageRequest extends FormRequest
     {
         return array_merge(
             Page::rules('create'),
-            SeoMetaModel::rules(),
-            SeoSitemap::rules(),
-            SeoSchemaModel::rules(),
+            Page::seoRules()
         );
     }
 }

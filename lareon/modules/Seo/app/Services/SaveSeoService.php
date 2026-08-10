@@ -10,7 +10,7 @@ class SaveSeoService
     {
         (new SaveMetaTagService())->sync($model, $inputs['meta'] ?? []);
         (new SaveSitemapService())->sync($model, $inputs['sitemap'] ?? []);
-        (new SaveSchemaService())->sync($model, $inputs['sitemap'] ?? []);
+        (new SaveSchemaService())->sync($model, $inputs['schema'] ?? []);
     }
 
 

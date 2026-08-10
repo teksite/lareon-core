@@ -3,34 +3,29 @@
 namespace Lareon\Modules\Seo\App\Services;
 
 use Illuminate\Database\Eloquent\Model;
-use Lareon\Modules\Seo\App\Models\SeoMetaModel;
+use Lareon\Modules\Seo\App\Models\SeoSchemaModel;
 
 class SaveSchemaService
 {
     public function sync(Model $model, array $inputs = []): void
     {
+
         if (!$this->checkMethod($model)) return;
 
-        SeoMetaModel::query()->updateOrCreate(
+        SeoSchemaModel::query()->updateOrCreate(
             [
                 'model_type' => get_class($model),
                 'model_id'   => $model->getKey(),
             ],
             [
-                'title'         => $inputs['title'] ?? null,
-                'description'   => $inputs['description'] ?? null,
-                'keywords'      => explode('|', $inputs['keywords'] ?? []),
-                'canonical_url' => $inputs['canonical_url'] ?? null,
-                'indexable'     => $inputs['indexable'],
-                'followable'    => $inputs['followable'],
-                'open_graph'    => removeNullValues($inputs['open_graph'] ?? null),
+                'schema'         => $inputs ?? null,
             ]
         );
     }
 
     public function delete(Model $model): void
     {
-        SeoMetaModel::query()->where('model_type', $model::class)->where('model_id', $model->getKey())->delete();
+        SeoSchemaModel::query()->where('model_type', $model::class)->where('model_id', $model->getKey())->delete();
     }
 
 

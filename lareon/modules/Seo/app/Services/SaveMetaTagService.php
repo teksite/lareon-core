@@ -19,10 +19,10 @@ class SaveMetaTagService
             [
                 'title'         => $inputs['title'] ?? null,
                 'description'   => $inputs['description'] ?? null,
-                'keywords'      => explode('|', $inputs['keywords'] ?? []),
+                'keywords'      => explode('|', $inputs['keywords'] ?? null),
                 'canonical_url' => $inputs['canonical_url'] ?? null,
-                'indexable'     => $inputs['indexable'],
-                'followable'    => $inputs['followable'],
+                'indexable'     => $inputs['indexable'] ?? 0,
+                'followable'    => $inputs['followable'] ?? 0,
                 'open_graph'    => removeNullValues($inputs['open_graph'] ?? null),
             ]
         );

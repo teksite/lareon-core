@@ -15,11 +15,11 @@ class SeoSitemap extends Model
     protected function casts(): array
     {
         return [
-            'last_modified'    => 'datetime',
-            'available_at'     => 'datetime',
-            'priority'         => 'decimal:1',
-            'image'            => 'array',
-            'video'            => 'array',
+            'last_modified' => 'datetime',
+            'available_at'  => 'datetime',
+            'priority'      => 'decimal:1',
+            'image'         => 'json',
+            'video'         => 'json',
         ];
     }
 
@@ -27,13 +27,13 @@ class SeoSitemap extends Model
     public static function rules(): array
     {
         return [
-            'seo.sitemap' => 'sometimes|array',
+            'seo.sitemap'            => 'sometimes|array',
             'seo.sitemap.activating' => 'sometimes|bool:0,1',
 
             'seo.sitemap.priority'         => 'nullable|decimal:1|min:0.1|max:0.9',
-            'seo.sitemap.change_frequency' => ['required', 'string'],
-            'seo.sitemap.image'                        =>'nullable|sometimes|array',
-            'seo.sitemap.video'                        =>'nullable|sometimes|array',
+            'seo.sitemap.change_frequency' => 'required|string',
+//            'seo.sitemap.image'                        =>'nullable|sometimes|array',
+//            'seo.sitemap.video'                        =>'nullable|sometimes|array',
         ];
     }
 

@@ -12,6 +12,7 @@ class SaveSitemapService
 {
     public function sync(Model $model, array $inputs = []): void
     {
+        dd($inputs);
         if (!$this->checkMethod($model)) return;
 
         if (!method_exists($model, 'path')) return;;
@@ -34,8 +35,8 @@ class SaveSitemapService
                 'available_at'     => $this->availableAt($model),
                 'priority'         => $inputs['priority'] ?? config('seo.sitemap.default_priority', 0.5),
                 'change_frequency' => $inputs['change_frequency'] ?? config('seo.sitemap.default_change_frequency', 'yearly'),
-                'image'            => $inputs['image'] ?? null,
-                'video'            => $inputs['video'] ?? null,
+                'image'            => $inputs['image'] ?? [],
+                'video'            => $inputs['video'] ?? [],
             ]
         );
     }

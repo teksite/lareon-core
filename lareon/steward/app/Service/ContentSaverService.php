@@ -28,8 +28,6 @@ class ContentSaverService
 
         app(SaveSeoService::class)->syncSeo($model, $inputs['seo'] ?? []);
 
-        app(SaveMetaDataService::class)->syncMetaData($model, $inputs['meta_data'] ?? []);
-
         return $model;
     }
 
