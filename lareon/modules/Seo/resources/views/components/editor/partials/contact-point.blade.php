@@ -30,7 +30,6 @@
     @enderror
 
     <div class="space-y-6">
-
         <template x-for="(item, index) in items" :key="index">
             <div class="mb-6 flex items-center justify-between gap-6">
                 <div class="w-full grid gap-6 md:grid-cols-3">

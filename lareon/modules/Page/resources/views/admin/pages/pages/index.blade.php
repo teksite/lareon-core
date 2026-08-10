@@ -27,7 +27,7 @@
                                 <x-lareon::links.action type="sub" :href="route('admin.pages.meta.edit' , $page)"/>
                             @endif
                             @if($page->path())
-                                <x-lareon::links.action type="show" :href="route('ages.show' , $page)"/>
+                                <x-lareon::links.action type="show" :href="$page->path()"/>
                             @endif
                             @if(\Illuminate\Support\Facades\Route::has('admin.pages.acl.edit'))
                                 <x-lareon::links.action type="setting" :href="route('admin.pages.acl.edit' , $page)" can="admin.page.acl.edit"/>
