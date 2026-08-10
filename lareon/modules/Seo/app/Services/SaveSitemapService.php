@@ -10,7 +10,7 @@ use Lareon\Steward\App\Enums\PublishStatusEnum;
 
 class SaveSitemapService
 {
-    public function syncSitemap(Model $model, array $inputs = []): void
+    public function sync(Model $model, array $inputs = []): void
     {
         if (!$this->checkMethod($model)) return;
 
@@ -40,7 +40,7 @@ class SaveSitemapService
         );
     }
 
-    public function deleteSitemap(Model $model): void
+    public function delete(Model $model): void
     {
         if (!$this->checkMethod($model)) return;
         SeoSitemap::query()->where('model_type', $model::class)->where('model_id', $model->getKey())->delete();

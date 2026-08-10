@@ -9,6 +9,11 @@ class SchemaOption
     /** @var array<string, array> */
     protected static array $cache = [];
 
+    public static function authorList(): array
+    {
+        return static::load('author-list');
+    }
+
     public static function dayList(): array
     {
         return static::load('day-list');
@@ -51,6 +56,11 @@ class SchemaOption
 
 
 
+
+    public static function articleType(): array
+    {
+        return static::load('article-type');
+    }
 
     public static function pageType(): array
     {
@@ -101,10 +111,12 @@ class SchemaOption
             'potential_action_list' => static::potentialActionList(),
             'currency_list'         => static::currencyList(),
             'language_list'         => static::languageList(),
+            'author_list'         => static::authorList(),
 
 
 //            'pageType'           => static::pageType(),
 
+            'article_type'  => static::articleType(),
             'organization_type'  => static::organizationType(),
             'localBusiness_type' => static::localBusinessType(),
 //            'eventStatus'        => static::eventStatus(),

@@ -2,19 +2,11 @@
 
 return [
     'pageType'           => [
-        'WebPage'             => [
-            'WebPage',
-        ],
-        'Article'             => [
-            'Article'     => "An article, such as a news article or piece of investigative report.",
-            'NewsArticle' => "A NewsArticle is an article whose content reports news, or provides background context and supporting materials for understanding the news.",
-            'BlogPosting' => "A blog post.",
-        ],
+
         'Blog'                => [
             'Blog',
         ],
         'Event'               => ['Event'],
-        'FAQPage'             => ['FAQPage'],
         'JobPosition'         => [
             'employmentType' => [
                 'Full_time'  => 'full time',

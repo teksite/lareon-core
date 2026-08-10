@@ -5,7 +5,7 @@ namespace Lareon\Modules\Seo\App\Services;
 use Illuminate\Database\Eloquent\Model;
 use Lareon\Modules\Seo\App\Models\SeoMetaModel;
 
-class SaveMetaTagService
+class SaveSchemaService
 {
     public function sync(Model $model, array $inputs = []): void
     {
@@ -36,6 +36,6 @@ class SaveMetaTagService
 
     private function checkMethod(Model $model): bool
     {
-        return method_exists($model, 'metaTag');
+        return method_exists($model, 'schemaStructure');
     }
 }
