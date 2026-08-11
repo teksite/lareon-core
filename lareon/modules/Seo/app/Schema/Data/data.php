@@ -6,7 +6,6 @@ return [
         'Blog'                => [
             'Blog',
         ],
-        'Event'               => ['Event'],
         'JobPosition'         => [
             'employmentType' => [
                 'Full_time'  => 'full time',
@@ -47,24 +46,9 @@ return [
                 'Web Application'           => 'Web Application',
             ],
         ],
-        'VideoObject'         => ['VideoObject'],
 
         'HowTo'  => ['HowTo'],
         'Recipe' => ['Recipe'],
-
-    ],
-
-    "eventPerformance"   => [
-        "Person"          => "person",
-        "PerformingGroup" => "performing group",
-        "MusicGroup"      => "music group",
-        "DanceGroup"      => "dance group",
-        "TheaterGroup"    => "theater group",
-    ],
-    "attendanceMode"     => [
-
-
-
 
     ],
 ];

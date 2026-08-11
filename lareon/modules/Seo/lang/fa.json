@@ -121,6 +121,13 @@
     "performer type": "نوع اجراکننده",
     "in stock": "موجود",
     "sold out": "ناموجود",
-    "pre order": "پیش‌فروش"
+    "pre order": "پیش‌فروش",
+    "offer": "پیشنهاد",
+    "offers": "پیشنهادها",
+    "availability": "در دسترس بودن",
+    "price": "قیمت",
+    "prices": "قیمت‌ها",
+    "price currency": "واحد پول قیمت",
+    "valid from": "معتبر از"
 
 }

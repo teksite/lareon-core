@@ -1,5 +1,6 @@
 <?php
 return [
+
     'IRR' => "Iranian Rial",
     'AFA' => "Afghan Afghani",
     'ALL' => "Albanian Lek",
@@ -154,7 +155,7 @@ return [
     'TOP' => "Tongan Pa'anga",
     'TTD' => "Trinidad & Tobago Dollar",
     'TND' => "Tunisian Dinar",
-    'try' => "Turkish Lira",
+    'TRY' => "Turkish Lira",
     'TMT' => "Turkmenistani Manat",
     'UGX' => "Ugandan Shilling",
     'UAH' => "Ukrainian Hryvnia",

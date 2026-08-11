@@ -99,13 +99,15 @@
                     {{-- Price Currency --}}
                     <div class="w-full flex flex-col gap-1">
                         <label class="input_label" :for="`offer_priceCurrency-${index}`" x-text="`{{ __('price currency') }} #${index + 1}`"></label>
-
-                        <input type="text" dir="ltr" @required($required) class="input block w-full"
-                               placeholder="USD"
-                               :class="{'input-error': hasError('{{ $dottedName }}.' + index + '.priceCurrency') }"
-                               :name="`{{ $finalName }}[${index}][priceCurrency]`"
-                               :id="`offer_priceCurrency-${index}`"
-                               x-model="item.priceCurrency">
+                        <select @required($required) class="input block w-full"
+                                :class="{ 'input-error': hasError('{{ $dottedName }}.' + index + '.priceCurrency') }"
+                                :name="`{{ $finalName }}[${index}][priceCurrency]`"
+                                :id="`offer_priceCurrency-${index}`"
+                                x-model="item.priceCurrency">
+                            @foreach(\Lareon\Modules\Seo\App\Schema\SchemaOption::get('currency_list') as $key=>$desc)
+                                <option value="{{$key}}">{{__($desc)}}</option>
+                            @endforeach
+                        </select>
 
                         <p class="message-error" x-show="hasError('{{ $dottedName }}.' + index + '.priceCurrency')" x-text="getError('{{ $dottedName }}.' + index + '.priceCurrency')"></p>
                     </div>
