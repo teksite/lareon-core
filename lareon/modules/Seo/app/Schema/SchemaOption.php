@@ -106,14 +106,10 @@ class SchemaOption
         return static::load('event-status');
     }
 
-    public static function eventPerformance(): array
-    {
-        return static::load('event-performance');
-    }
 
-    public static function attendanceMode(): array
+    public static function availabilityType(): array
     {
-        return static::load('attendance-mode');
+        return static::load('availability-type');
     }
 
 
@@ -141,9 +137,7 @@ class SchemaOption
             'organization_type'  => static::organizationType(),
             'localBusiness_type' => static::localBusinessType(),
             'performer_type'     => static::performerType(),
-//            'eventStatus'        => static::eventStatus(),
-//            'eventPerformance'   => static::eventPerformance(),
-//            'attendanceMode'     => static::attendanceMode(),
+            'availability_type'     => static::availabilityType(),
         ], $key, $default);
     }
 

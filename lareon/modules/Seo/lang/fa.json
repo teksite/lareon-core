@@ -116,6 +116,11 @@
     "performing group": "گروه اجراکننده",
     "music group": "گروه موسیقی",
     "dance group": "گروه رقص",
-    "theater group": "گروه تئاتر"
+    "theater group": "گروه تئاتر",
+    "performer": "اجراکننده",
+    "performer type": "نوع اجراکننده",
+    "in stock": "موجود",
+    "sold out": "ناموجود",
+    "pre order": "پیش‌فروش"
 
 }
