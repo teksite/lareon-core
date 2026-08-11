@@ -1,4 +1,4 @@
-@props(['name','value' => [],'required' => false,'arrayName'=>'FAQPage'])
+@props(['name','value' => [],'required' => false,'arrayName'=>'faq'])
 
 @php
     $finalName = $name."[".$arrayName."]";
@@ -35,8 +35,8 @@
     <div class="space-y-6">
 
         <template x-for="(item, index) in items" :key="index">
-            <div class="mb-6 flex items-center justify-between gap-6">
-                <div class="grid gap-6 md:grid-cols-2">
+            <div class="space-y-6">
+                <div class="flex items-center gap-6">
                     <div class="w-full flex flex-col gap-1">
                         <label class="input_label" :for="`faq_question-${index}`" x-text="`{{ __('question') }} #${index + 1}`"></label>
                         <input type="text" @required($required) class="input block w-full" placeholder="write your question"
@@ -46,19 +46,20 @@
                                x-model="item.question">
                         <p class="message-error" x-show="hasError('{{ $dottedName }}.' + index + '.question')" x-text="getError('{{ $dottedName }}.' + index + '.question')"></p>
                     </div>
-                    <div class="w-full flex flex-col gap-1">
-                        <label class="input_label" :for="`faq_acceptedAnswer-${index}`" x-text="`{{ __('accepted answer') }} #${index + 1}`"></label>
-                        <textarea @required($required) class="input block w-full" placeholder="write your acceptedAnswer"
-                               :class="{'input-error':hasError('{{ $dottedName }}.' + index + '.acceptedAnswer')}"
-                               :name="`{{ $finalName }}[${index}][acceptedAnswer]`"
-                               :id="`faq_acceptedAnswer-${index}`"
-                               x-model="item.acceptedAnswer"></textarea>
-                        <p class="message-error" x-show="hasError('{{ $dottedName }}.' + index + '.acceptedAnswer')" x-text="getError('{{ $dottedName }}.' + index + '.acceptedAnswer')"></p>
-                    </div>
+                    <x-lareon::buttons.simple class="min-w-fit w-fit" size="2xs" color="red" variant="outline" type="button" role="button" title="{{ __('double click to delete') }}" @dblclick="removeItem(index)">
+                        &times;
+                    </x-lareon::buttons.simple>
                 </div>
-                <x-lareon::buttons.simple size="2xs" color="red" variant="outline" type="button" role="button" title="{{ __('double click to delete') }}" @dblclick="removeItem(index)">
-                    &times;
-                </x-lareon::buttons.simple>
+
+                <div class="w-full flex flex-col gap-1">
+                    <label class="input_label" :for="`faq_acceptedAnswer-${index}`" x-text="`{{ __('accepted answer') }} #${index + 1}`"></label>
+                    <textarea @required($required) class="input block w-full" placeholder="write your acceptedAnswer"
+                              :class="{'input-error':hasError('{{ $dottedName }}.' + index + '.acceptedAnswer')}"
+                              :name="`{{ $finalName }}[${index}][acceptedAnswer]`"
+                              :id="`faq_acceptedAnswer-${index}`"
+                              x-model="item.acceptedAnswer"></textarea>
+                    <p class="message-error" x-show="hasError('{{ $dottedName }}.' + index + '.acceptedAnswer')" x-text="getError('{{ $dottedName }}.' + index + '.acceptedAnswer')"></p>
+                </div>
             </div>
         </template>
         <x-lareon::buttons.simple size="xs" color="blue" variant="outline" type="button" role="button" @click="addItem()">

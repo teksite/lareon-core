@@ -128,6 +128,9 @@
     "price": "قیمت",
     "prices": "قیمت‌ها",
     "price currency": "واحد پول قیمت",
-    "valid from": "معتبر از"
+    "valid from": "معتبر از",
+    "faq": "سوالات متداول",
+    "accepted answer": "پاسخ پذیرفته‌شده"
+
 
 }

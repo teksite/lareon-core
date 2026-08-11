@@ -6,6 +6,7 @@ return [
     'Article'             => 'article',
     'VideoObject'         => 'video object',
     'Event'               => 'event',
+    'FAQ'               => 'faq',
     'Blog'                => 'blog',
     'JobPosition'         => 'jop position',
     'Person'              => 'person',
