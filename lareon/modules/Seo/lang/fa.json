@@ -112,6 +112,10 @@
     "online": "آنلاین",
     "offline": "حضوری",
     "mixed": "ترکیبی",
-    "event status": "وضعیت رویداد"
+    "event status": "وضعیت رویداد",
+    "performing group": "گروه اجراکننده",
+    "music group": "گروه موسیقی",
+    "dance group": "گروه رقص",
+    "theater group": "گروه تئاتر"
 
 }

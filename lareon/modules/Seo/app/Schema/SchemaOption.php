@@ -14,6 +14,11 @@ class SchemaOption
         return static::load('author-list');
     }
 
+    public static function performerType(): array
+    {
+        return static::load('performer-type');
+    }
+
     public static function eventAttendanceModeList(): array
     {
         return static::load('event-attendance-mode');
@@ -135,6 +140,7 @@ class SchemaOption
             'article_type'       => static::articleType(),
             'organization_type'  => static::organizationType(),
             'localBusiness_type' => static::localBusinessType(),
+            'performer_type'     => static::performerType(),
 //            'eventStatus'        => static::eventStatus(),
 //            'eventPerformance'   => static::eventPerformance(),
 //            'attendanceMode'     => static::attendanceMode(),

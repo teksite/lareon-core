@@ -19,9 +19,7 @@
                 @endforeach
             </x-lareon::editor.input-select>
         </div>
-
         <div class="grid gap-6 md:grid-cols-2">
-
             <x-lareon::editor.input-select labelPosition="start" :label="__('event status')" name="{{$finalName}}[eventStatus]" :value="$value['eventStatus'] ?? null" :required="$required">
                 @foreach(\Lareon\Modules\Seo\App\Schema\SchemaOption::get('event_status_list') as $key=>$desc)
                     <option value="{{$desc}}">{{__($key)}}</option>
