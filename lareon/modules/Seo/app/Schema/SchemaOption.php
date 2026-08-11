@@ -19,9 +19,19 @@ class SchemaOption
         return static::load('event-attendance-mode');
     }
 
+    public static function eventStatusList(): array
+    {
+        return static::load('event-status-list');
+    }
+
     public static function dayList(): array
     {
         return static::load('day-list');
+    }
+
+    public static function timezoneList(): array
+    {
+        return static::load('timezone-list');
     }
 
     public static function langList(): array
@@ -58,8 +68,6 @@ class SchemaOption
     {
         return static::load('potential-action-list');
     }
-
-
 
 
     public static function articleType(): array
@@ -116,13 +124,15 @@ class SchemaOption
             'potential_action_list' => static::potentialActionList(),
             'currency_list'         => static::currencyList(),
             'language_list'         => static::languageList(),
-            'author_list'         => static::authorList(),
-            'event_attendance_mode'         => static::eventAttendanceModeList(),
+            'author_list'           => static::authorList(),
+            'event_attendance_mode' => static::eventAttendanceModeList(),
+            'event_status_list'     => static::eventStatusList(),
+            'timezone_list'         => static::timezoneList(),
 
 
-            'page_types'           => static::pageType(),
+            'page_types' => static::pageType(),
 
-            'article_type'  => static::articleType(),
+            'article_type'       => static::articleType(),
             'organization_type'  => static::organizationType(),
             'localBusiness_type' => static::localBusinessType(),
 //            'eventStatus'        => static::eventStatus(),

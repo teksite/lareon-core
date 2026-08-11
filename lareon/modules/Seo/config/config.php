@@ -9,10 +9,10 @@ return [
     ],
 
     'schema' => [
-        'WebPage' =>'web-page',
-        'Article' => 'article-page',
+        'WebPage'     => 'web-page',
+        'Article'     => 'article-page',
         'VideoObject' => 'video-object-page',
-        'Event' => 'event-page',
+        'Event'       => 'event-page',
 
     ],
 ];

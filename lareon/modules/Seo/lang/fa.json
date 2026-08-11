@@ -103,5 +103,15 @@
     "end date": "تاریخ پایان",
     "event attendance mode": "نحوه حضور در رویداد",
     "virtual location": "مکان مجازی",
-    "location": "مکان"
+    "location": "مکان",
+    "none": "بدون وضعیت",
+    "scheduled": "برنامه‌ریزی‌شده",
+    "postponed": "به تعویق افتاده",
+    "cancelled": "لغوشده",
+    "moved online": "به صورت آنلاین برگزار می‌شود",
+    "online": "آنلاین",
+    "offline": "حضوری",
+    "mixed": "ترکیبی",
+    "event status": "وضعیت رویداد"
+
 }

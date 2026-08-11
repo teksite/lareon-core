@@ -54,15 +54,6 @@ return [
 
     ],
 
-
-    'eventStatus'        => [
-        "none"         => '',
-        "scheduled"    => "https://schema.org/EventScheduled",
-        "postponed"    => "https://schema.org/EventPostponed",
-        "cancelled"    => "https://schema.org/EventCancelled",
-        "moved Online" => "https://schema.org/EventMovedOnline",
-
-    ],
     "eventPerformance"   => [
         "Person"          => "person",
         "PerformingGroup" => "performing group",
