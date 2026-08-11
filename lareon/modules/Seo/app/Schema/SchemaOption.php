@@ -14,6 +14,11 @@ class SchemaOption
         return static::load('author-list');
     }
 
+    public static function eventAttendanceModeList(): array
+    {
+        return static::load('event-attendance-mode');
+    }
+
     public static function dayList(): array
     {
         return static::load('day-list');
@@ -112,6 +117,7 @@ class SchemaOption
             'currency_list'         => static::currencyList(),
             'language_list'         => static::languageList(),
             'author_list'         => static::authorList(),
+            'event_attendance_mode'         => static::eventAttendanceModeList(),
 
 
             'page_types'           => static::pageType(),

@@ -98,5 +98,9 @@
     "A NewsArticle is an article whose content reports news, or provides background context and supporting materials for understanding the news": "یک مقاله خبری که محتوای آن به گزارش اخبار می‌پردازد یا برای درک بهتر اخبار، زمینه و اطلاعات تکمیلی ارائه می‌دهد",
     "A blog post": "یک پست وبلاگی",
     "schema type": "نوع اسکیما",
-    "web page": "برگه سایت"
+    "web page": "برگه سایت",
+    "start date": "تاریخ شروع",
+    "end date": "تاریخ پایان",
+    "event attendance mode": "نحوه حضور در رویداد",
+    "virtual location": "مکان مجازی"
 }

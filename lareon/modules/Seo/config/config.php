@@ -12,6 +12,7 @@ return [
         'WebPage' =>'web-page',
         'Article' => 'article-page',
         'VideoObject' => 'video-object-page',
+        'Event' => 'event-page',
 
     ],
 ];
