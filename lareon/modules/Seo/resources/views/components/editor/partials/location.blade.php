@@ -3,7 +3,7 @@
     $finalName = $name."[".$arrayName."]";
 @endphp
 <fieldset class="fieldset">
-    <legend>{{__('place')}}</legend>
+    <legend>{{__('location')}}</legend>
     <x-lareon::editor.input :label="__('name')" name="{{$finalName}}[name]" :value="$value['name'] ?? null" labelPosition="start" :required="$required" :placeholder="__('lareon::global.placeholders.empty.read',['attribute'=>__('meta')])"/>
 
     <x-seo::editor.partials.address name="{{$name}}" :value="$value['address'] ?? []" :name="$finalName"/>
