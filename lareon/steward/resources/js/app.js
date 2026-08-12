@@ -1,6 +1,5 @@
 import './bootstrap.js'
-import './tools.js'
-import {initInlineSelectBox, logout, runObserver, SlugMaker} from "./general.js";
+import {formTabObserver, initInlineSelectBox, logout, runObserver, SlugMaker} from "./general.js";
 import {Standalone} from "./browser.min.js";
 
 
@@ -56,9 +55,10 @@ function initSingleImageSelector() {
 
 
 document.addEventListener('DOMContentLoaded', function () {
-    logout();
+    formTabObserver();
     initSingleImageSelector('.imageBtn');
     new SlugMaker('-').attachToInput();
     initInlineSelectBox();
     runObserver();
+    logout();
 });

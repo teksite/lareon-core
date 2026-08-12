@@ -15,7 +15,7 @@
 
     @yield('form.before')
 
-    <form id="{{ $id }}" class="inner-content" {{$formAttributes}}>
+    <form id="{{ $id }}" class="inner-content" {{$formAttributes}} novalidate>
         @csrf
         @if($realMethod)
             @method($realMethod)
@@ -87,6 +87,12 @@
         </div>
 
         @yield('form.end')
+
+        <div id="form-error-summary" class="hidden mb-6 p-4 rounded-xl border border-red-300 bg-red-50">
+            <p class="font-semibold text-red-700 mb-2">{{ __('لطفاً موارد زیر را بررسی کنید') }}:</p>
+            <ul id="form-error-list" class="list-disc list-inside space-y-1 text-red-600 text-sm"></ul>
+        </div>
+
         <div class="mt-6">
             <x-lareon::buttons.nav class="min-w-36" :fullWidth="false" type="submit" :color="$buttonColor" :icon="$buttonIcon">
                 {{ $buttonTextKey }}

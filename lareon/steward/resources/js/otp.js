@@ -213,7 +213,6 @@ export function startOtpCooldown(button, originalHtml, seconds = 120) {
 
 
 
-
 export default function initiateOTP(){
     singleArrayInput();
     requestSendOTP();

@@ -1,4 +1,3 @@
-import Sortable from "sortablejs";
 import TomSelect from "tom-select";
 
 let caches = new Set();
@@ -160,8 +159,51 @@ function tomSelectMutation(node) {
 
 
 
-let observer;
+export function formTabObserver() {
+    document.querySelectorAll('.editor.tab-contents .tab-item').forEach((el, i) => {
+        el.setAttribute('x-show', `activeTab === ${i}`)
+        el.removeAttribute('style')
+    })
 
+    document.querySelectorAll('form').forEach(form => {
+        form.addEventListener('submit', function (e) {
+
+            if (form.checkValidity()) return;
+
+            e.preventDefault()
+
+            const invalidFields = Array.from(form.querySelectorAll(':invalid'))
+                .filter(f => f.willValidate)
+
+            if (invalidFields.length === 0) return
+
+            const firstField = invalidFields[0]
+            const tabItem = firstField.closest('.tab-item')
+            const tabContainer = tabItem?.closest('.tab-contents')
+            const wrapperEl = tabContainer?.closest('[x-data]')
+
+            const switchTabAndFocus = () => {
+                requestAnimationFrame(() => {
+                    firstField.focus()
+                    firstField.reportValidity()
+                })
+            }
+
+            if (tabItem && tabContainer && wrapperEl) {
+                const items = Array.from(tabContainer.children).filter(c => c.classList.contains('tab-item'))
+                const index = items.indexOf(tabItem)
+                const alpineData = window.Alpine.$data(wrapperEl)
+                alpineData.activeTab = index
+
+                window.Alpine.nextTick(switchTabAndFocus)
+            } else {
+                switchTabAndFocus()
+            }
+        })
+    })
+}
+
+let observer;
 export function runObserver() {
 
     if (observer) return;
@@ -183,3 +225,4 @@ export function runObserver() {
         subtree: true
     });
 }
+

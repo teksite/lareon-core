@@ -1,8 +1,7 @@
 import './bootstrap.js'
 import './general.js'
-import './tools.js'
 import {logout} from "./general.js";
-import initiateOTP from "./tools.js";
+import initiateOTP from "./otp.js";
 
 import { Passkeys } from '@laravel/passkeys';
 
