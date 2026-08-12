@@ -6,6 +6,5 @@
         <x-seo::editor.partials.person name="{{$name}}" :value="$value['person'] ?? []"/>
         <x-seo::editor.partials.same-as :name="$name" :value="$value['sameAs']?? []"/>
         <x-seo::editor.partials.organization :name="$name.'[worksFor]'" :value="$value['worksFor']['organization'] ?? []"  :title="__('works for')"/>
-
     </div>
 </fieldset>

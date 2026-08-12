@@ -114,7 +114,7 @@ class AdminEditor extends Component
 
     private function showTemplateSection(): bool
     {
-        return !!$this->instance && in_array(HasTemplate::class, array_keys(class_uses_recursive($this->instance)));
+        return !!$this->instance && in_array(HasTemplate::class, array_keys(class_uses_recursive($this->instance))) && count($this->instance->metaData) > 0;
     }
 
     private function showSeoSection(): bool

@@ -4,5 +4,5 @@
 @endphp
 <fieldset class="fieldset space-y-6">
     <legend class="legend">{{__('faq schema')}}</legend>
-    <x-seo::editor.partials.faq :name="$name" :value="$value['FAQPage']?? []"/>
+    <x-seo::editor.partials.faq :name="$name" :value="$value['faq']?? []"/>
 </fieldset>
