@@ -14,6 +14,7 @@ return [
         'VideoObject' => 'video-object-page',
         'Event'       => 'event-page',
         'FAQ'       => 'faq-page',
+        'Person'       => 'person-page',
 
     ],
 ];
