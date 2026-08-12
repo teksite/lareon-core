@@ -16,11 +16,18 @@ function schemaLoader() {
         viewEl.innerHTML = loader;
 
         try {
-            const url = "https://example.org/products.json";
-            const response = await fetch(url);
-            if (!response.ok) {
-                throw new Error(`Response status: ${response.status}`);
-            }
+            const url = "/tkadmin/ajax/seo/schema/loader";
+            const response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify({schema}),
+            });
+
+            if (!response.ok) throw new Error(`Response status: ${response.status}`);
+
         } catch (error) {
             console.error(error);
             viewEl.innerHTML = basicView;

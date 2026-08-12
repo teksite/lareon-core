@@ -7,5 +7,8 @@ use Illuminate\Http\Request;
 
 class SchemaLoaderController extends Controller
 {
-    //
+    public function get()
+    {
+        return '';
+    }
 }
