@@ -1,9 +1,9 @@
-@props(['name','value'=>[], 'required'=>true, 'arrayName'=>'address'])
+@props(['name','value'=>[], 'required'=>true, 'arrayName'=>'address' ,'title'=>__('address')])
 @php
     $finalName = $name."[".$arrayName."]";
 @endphp
 <fieldset class="fieldset">
-    <legend class="legend">{{__('address')}}</legend>
+    <legend class="legend">{{$title}}</legend>
     <div class="space-y-6">
         <x-lareon::editor.input :label="__('street')" name="{{$finalName}}[streetAddress]" :value="$value['streetAddress'] ?? null" labelPosition="start" :required="$required"/>
         <x-lareon::editor.input :label="__('locality')" name="{{$finalName}}[addressLocality]" :value="$value['addressLocality'] ?? null" labelPosition="start"/>

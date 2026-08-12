@@ -1,9 +1,10 @@
-@props(['name'=>'seo[schema]','value'=>[], 'required'=>false,'arrayName'=>'author'])
+@props(['name'=>'seo[schema]','value'=>[], 'required'=>false,'arrayName'=>'author' ,'title'=>__('author')])
 @php
     $finalName = $name."[".$arrayName."]";
 @endphp
 <fieldset class="fieldset space-y-6">
-    <legend class="legend">{{__('author')}}</legend>
+    <legend class="legend">{{$title}}</legend>
+
     <div class="grid gap-6 md:grid-cols-3">
 
         <x-lareon::editor.input-select labelPosition="start" :label="__('type')" name="{{$finalName}}[type]" :value="$value['type'] ?? null" :required="$required">

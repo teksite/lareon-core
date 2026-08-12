@@ -1,9 +1,9 @@
-@props(['name','value'=>[], 'required'=>false ,'arrayName'=>'article'])
+@props(['name','value'=>[], 'required'=>false ,'arrayName'=>'article' ,'title'=>__('article')])
 @php
         $finalName = $name."[".$arrayName."]";
 @endphp
 <fieldset class="fieldset">
-    <legend class="legend">{{__('article')}}</legend>
+    <legend class="legend">{{$title}}</legend>
     <div class="space-y-6">
         <x-lareon::editor.input-select labelPosition="start" :label="__('type')" name="{{$finalName}}[type]" :value="$value['type'] ?? null" :required="$required">
             @foreach(\Lareon\Modules\Seo\App\Schema\SchemaOption::get('article_type') as $key=>$desc)

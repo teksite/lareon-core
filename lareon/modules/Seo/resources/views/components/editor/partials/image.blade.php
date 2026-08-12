@@ -1,4 +1,4 @@
-@props(['name','value' => [],'required' => true, 'arrayName'=>'image'])
+@props(['name','value' => [],'required' => true, 'arrayName'=>'image' ,'title'=>__('image')])
 
 @php
     $finalName = $name."[".$arrayName."]";
@@ -12,7 +12,7 @@
         ->toArray();
 @endphp
 <fieldset class="fieldset">
-    <legend class="legend">{{__('image')}}</legend>
+    <legend class="legend">{{$title}}</legend>
 <div
     class="space-y-6"
     x-data="{

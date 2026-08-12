@@ -1,4 +1,4 @@
-@props(['name','value' => [],'required' => true,'arrayName'=>'ContactPoint'])
+@props(['name','value' => [],'required' => true,'arrayName'=>'ContactPoint' ,'title'=>__('contact point')])
 
 @php
     $finalName = $name."[".$arrayName."]";
@@ -24,6 +24,7 @@
     }"
 >
     <legend class="legend">{{ __('contact point') }}</legend>
+    <legend class="legend">{{$title}}</legend>
 
     @error($dottedName)
     <p class="mb-4 message-error">{{ $message }}</p>

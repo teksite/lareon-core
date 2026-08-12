@@ -1,4 +1,4 @@
-@props(['name','value' => [],'required' => true, 'arrayName'=>'offers'])
+@props(['name','value' => [],'required' => true, 'arrayName'=>'offers' ,'title'=>__('offers')])
 
 @php
     $finalName = $name."[".$arrayName."]";
@@ -21,7 +21,7 @@
         getError(key) { return this.errors[key]?.[0] ?? ''; }
     }"
 >
-    <legend class="legend">{{ __('offers') }}</legend>
+    <legend class="legend">{{$title}}</legend>
 
     @error($dottedName)
     <p class="mb-4 message-error">{{ $message }}</p>
