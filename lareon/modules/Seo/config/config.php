@@ -13,8 +13,15 @@ return [
         'Article'     => 'article-page',
         'VideoObject' => 'video-object-page',
         'Event'       => 'event-page',
-        'FAQ'       => 'faq-page',
-        'Person'       => 'person-page',
+        'FAQ'         => 'faq-page',
+        'Person'      => 'person-page',
+
+        'Blog'                => 'coming-soon',
+        'JobPosition'         => 'coming-soon',
+        'Product'             => 'coming-soon',
+        'SoftwareApplication' => 'coming-soon',
+        'HowTo'               => 'coming-soon',
+        'Recipe'              => 'coming-soon',
 
     ],
 ];
