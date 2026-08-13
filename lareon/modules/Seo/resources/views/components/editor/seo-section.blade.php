@@ -1,4 +1,4 @@
-@props(['value'])
+@props(['value' , 'instance'=>null])
 <div>
     <div x-data="{ tabs: [
         { id: 1, title: 'meta tags', active: true },

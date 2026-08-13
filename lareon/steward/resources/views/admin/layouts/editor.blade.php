@@ -20,7 +20,8 @@
         @if($realMethod)
             @method($realMethod)
         @endif
-
+        <input type="hidden" name="model" value="{{encrypt(get_class($instance))}}">
+        <input type="hidden" name="model_key" value="{{encrypt($instance?->getKey())}}">
         @yield('form.start')
 
         <div class="{{ $styleClass }}">
@@ -38,7 +39,7 @@
                         @if($hasSeo && $showSeoSection)
                             <x-lareon::editor.tabs.item :title="__('seo')">
                                 <x-lareon::editor.tabs.section class="">
-                                    <x-seo::editor.seo-section :value="$instance->seo()"/>
+                                    <x-seo::editor.seo-section :instance="$instance" :value="$instance->seo()"/>
                                 </x-lareon::editor.tabs.section>
                             </x-lareon::editor.tabs.item>
                         @endif
