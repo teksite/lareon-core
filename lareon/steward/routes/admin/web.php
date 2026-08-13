@@ -7,7 +7,7 @@ use Lareon\Steward\App\Http\Controllers\Web\Admin\Settings\LogsController;
 use Lareon\Steward\App\Http\Controllers\Web\Admin\Settings\MaintenanceModeController;
 use Lareon\Steward\App\Http\Controllers\Web\Admin\Settings\SystemInformationController;
 
-Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::name('settings.')->prefix('settings')->group(function () {
     Route::get('/information', [SystemInformationController::class, 'index'])->name('information.index');
