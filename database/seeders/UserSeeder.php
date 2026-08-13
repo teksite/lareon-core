@@ -31,10 +31,14 @@ class UserSeeder extends Seeder
            $user->roles()->sync($ownerRole->id);
         }
 
-        $userRole = Role::query()->firstWhere('title' ,'user');
+		$userRole = Role::query()->firstWhere('title', 'user');
 
-       User::factory(45)->create([
-           'parent_id' => $user->id,
-       ]);
+        $users = User::factory(45)->create([
+            'parent_id' => $user->id,
+        ]);
+
+        foreach ($users as $newUser) {
+            $newUser->roles()->attach($userRole->id);
+        }
     }
 }
