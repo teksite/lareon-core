@@ -35,6 +35,7 @@ function schemaLoader() {
         viewEl.innerHTML = loader;
 
         try {
+            selectorEl.disabled=true;
             const response = await fetch(url, {
                 method: "POST",
 
@@ -75,9 +76,10 @@ function schemaLoader() {
 
         } finally {
 
-            if (currentRequestId === requestId) {
-                controller = null;
-            }
+            if (currentRequestId === requestId) controller = null;
+            selectorEl.disabled=false;
+
+
         }
     });
 }

@@ -4,5 +4,5 @@
 @endphp
 <fieldset class="fieldset">
     <legend class="legend">{{$title}}</legend>
-    <x-lareon::editor.input dir="ltr" :label="__('url')" name="{{$finalName}}[url]" :value="$value['url'] ?? null" labelPosition="start" :required="$required" placeholder="https://example.com/stream/example | /stream/example "/>
+    <x-lareon::editor.input dir="ltr" :label="__('url')" name="{{$finalName}}[url]" :value="$value['url'] ?? null" labelPosition="top" :required="$required" placeholder="https://example.com/stream/example | /stream/example "/>
 </fieldset>
