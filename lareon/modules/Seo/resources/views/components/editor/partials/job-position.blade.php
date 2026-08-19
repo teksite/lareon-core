@@ -1,4 +1,4 @@
-@props(['name','value'=>[], 'required'=>false , 'arrayName'=>'event' ,'title'=>__('job position')])
+@props(['name','value'=>[], 'required'=>false , 'arrayName'=>'jobPosition' ,'title'=>__('job position')])
 @php
     $finalName = $name."[".$arrayName."]";
 @endphp
@@ -14,14 +14,14 @@
         <div class="grid gap-6 md:grid-cols-2">
             <x-lareon::editor.input type="text" :label="__('work hours')" name="{{$finalName}}[workHours]" :value="$value['workHours'] ?? null" labelPosition="top" :required="false" placeholder="(e.g. 8am-5pm, shift)"/>
 
-            <x-lareon::editor.input-select labelPosition="top" :label="__('employmentType')" name="{{$finalName}}[employmentType]" :value="$value['employmentType'] ?? null" :required="$required">
+            <x-lareon::editor.input-select labelPosition="top" :label="__('employment type')" name="{{$finalName}}[employmentType]" :value="$value['employmentType'] ?? null" :required="$required">
                 @foreach(\Lareon\Modules\Seo\App\Schema\SchemaOption::get('employment_type_list') as $key=>$desc)
                     <option value="{{$key}}">{{__($desc)}}</option>
                 @endforeach
             </x-lareon::editor.input-select>
         </div>
         <div class="grid gap-6 md:grid-cols-2">
-            <x-lareon::editor.input type="date" :label="__('start date')" name="{{$finalName}}[datePosted]" :value="$value['startDate'] ?? null" labelPosition="top" :required="$required"/>
+            <x-lareon::editor.input type="date" :label="__('start date')" name="{{$finalName}}[datePosted]" :value="$value['datePosted'] ?? null" labelPosition="top" :required="$required"/>
             <x-lareon::editor.input type="date" :label="__('valid through')" name="{{$finalName}}[validThrough]" :value="$value['validThrough'] ?? null" labelPosition="top" :required="$required"/>
         </div>
 

@@ -112,7 +112,22 @@
     "price currency": "واحد پول قیمت",
     "valid from": "معتبر از",
     "accepted answer": "پاسخ پذیرفته‌شده",
-    "works for": "کار می‌کند برای"
-
-
+    "works for": "کار می‌کند برای",
+    "hiring organization": "سازمان استخدام کننده",
+    "identifier": "شناسه",
+    "job position": "موقعیت شغلی",
+    "job title": "عنوان شغلی",
+    "industry": "صنعت",
+    "employment type": "نوع استخدام",
+    "work hours": "ساعات کاری",
+    "valid through": "اعتبار تا تاریخ",
+    "min salary": "حداقل حقوق",
+    "max salary": "حداکثر حقوق",
+    "per": "در بازه",
+    "responsibilities": "مسئولیت‌ها",
+    "skills": "مهارت‌ها",
+    "qualifications": "شرایط احراز",
+    "education requirements": "نیازهای تحصیلی",
+    "experience requirements": "نیازهای سابقه کاری",
+    "monetary amount": "مبلغ پولی"
 }
