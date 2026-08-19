@@ -1,0 +1,10 @@
+{
+    "version":"1.0.0",
+    "id": "Notifier",
+    "title": "Notifier",
+    "alias": "notifier",
+    "description": "",
+    "keywords": [],
+    "providers": "Lareon\\Modules\\Notifier\\App\\Providers\\NotifierServiceProvider"
+}
+
