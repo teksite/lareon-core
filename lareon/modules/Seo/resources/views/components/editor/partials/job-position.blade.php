@@ -26,11 +26,14 @@
         </div>
 
         <div class="grid gap-6 md:grid-cols-2">
-            <x-lareon::editor.input :label="__('responsibilities')" name="{{$finalName}}[responsibilities]" :value="$value['responsibilities'] ?? null" labelPosition="top" :required="false" />
+            <x-lareon::editor.input :label="__('responsibilities')" name="{{$finalName}}[responsibilities]" :value="$value['responsibilities'] ?? null" labelPosition="top" :required="false"/>
             <x-lareon::editor.input :label="__('skills')" name="{{$finalName}}[skills]" :value="$value['skills'] ?? null" labelPosition="top" :required="false"/>
             <x-lareon::editor.input :label="__('qualifications')" name="{{$finalName}}[qualifications]" :value="$value['qualifications'] ?? null" labelPosition="top" :required="false"/>
             <x-lareon::editor.input :label="__('education requirements')" name="{{$finalName}}[educationRequirements]" :value="$value['educationRequirements'] ?? null" labelPosition="top" :required="false"/>
             <x-lareon::editor.input :label="__('experience requirements')" name="{{$finalName}}[experienceRequirements]" :value="$value['experienceRequirements'] ?? null" labelPosition="top" :required="false"/>
         </div>
+
+
+
     </div>
 </fieldset>
