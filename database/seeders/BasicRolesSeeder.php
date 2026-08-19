@@ -17,7 +17,7 @@ class BasicRolesSeeder extends Seeder
 
         $allPermissions = Permission::query()->select(['id', 'title'])->get();
         $allPermissionIds = $allPermissions->pluck('id')->all();
-        $userPermissionIds = $allPermissions->filter(fn ($permission) => str_starts_with($permission->title, 'panel'))->pluck('id')->all();
+        $userPermissionIds = $allPermissions->filter(fn ($permission) => str_starts_with($permission->title, 'panel') || str_starts_with($permission->title, 'client'))->pluck('id')->all();
 
 
         foreach (Role::query()->whereIn('title' , ['owner', 'administrator', 'admin',])->get() as $role) {
