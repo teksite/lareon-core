@@ -13,11 +13,11 @@ class SaveMetaDataService
     /**
      * @throws \Throwable
      */
-    public function syncMetaData(Model $model, array $inputs = []): void
+    public function syncMetaData(Model $model, array $metaInputs = []): void
     {
         if (!$this->checkMethod($model)) return;
 
-        DB::transaction(function () use ($inputs, $model) {
+        DB::transaction(function () use ($metaInputs, $model) {
 
             $model->metaData()->delete();
             if (empty($metaInputs)) return [];
@@ -30,6 +30,10 @@ class SaveMetaDataService
                     continue;
                 }
 
+                $content = removeNullValues($value['data'] ?? []);
+                if (empty($content)) continue;
+
+                $content = json_encode(removeNullValues($value['data'] ?? []));
 
 
                 $rows[] = [
@@ -38,9 +42,7 @@ class SaveMetaDataService
                     'element_id'  => (int)$value['element_id'],
                     'model_type'  => $model::class,
                     'model_id'    => $model->id,
-                    'content'     => removeNullValues($value['data'] ?? null),
-                    'created_at'  => now(),
-                    'updated_at'  => now(),
+                    'content'     => $content,
                 ];
 
             }

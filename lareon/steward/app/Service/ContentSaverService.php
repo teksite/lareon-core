@@ -5,6 +5,7 @@ namespace Lareon\Steward\App\Service;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Lareon\Modules\Meta\App\Services\SaveMetaDataService;
+use Lareon\Modules\Meta\App\Traits\HasTemplate;
 use Lareon\Modules\Seo\App\Services\SaveSeoService;
 
 class ContentSaverService
@@ -26,6 +27,7 @@ class ContentSaverService
         $model::query()->update(Arr::except($inputs, ['seo', 'meta_data']));
         $model = $model->refresh();
 
+        app(SaveMetaDataService::class)->syncMetaData($model, $inputs['meta_data'] ?? []);
         app(SaveSeoService::class)->syncSeo($model, $inputs['seo'] ?? []);
 
         return $model;

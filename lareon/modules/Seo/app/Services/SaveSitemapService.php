@@ -18,7 +18,7 @@ class SaveSitemapService
         $url = $model->path();
 
         if (!$url) {
-            $this->deleteSitemap($model);
+            $this->delete($model);
             return;
         }
 

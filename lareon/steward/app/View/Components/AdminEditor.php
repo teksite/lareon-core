@@ -70,9 +70,9 @@ class AdminEditor extends Component
         $html_method = in_array($this->methodType, array_keys(Arr::except(self::HttpMethods, ['get']))) ? 'POST' : 'GET';
 
         $finalAttribute = removeNullValues([
-            'method' => $html_method,
-            'action'      => $this->action,
-            'enctype'     => $this->hasFile ? 'multipart/form-data' : null,
+            'method'  => $html_method,
+            'action'  => $this->action,
+            'enctype' => $this->hasFile ? 'multipart/form-data' : null,
         ]);
 
         $attributes = '';
@@ -114,7 +114,7 @@ class AdminEditor extends Component
 
     private function showTemplateSection(): bool
     {
-        return !!$this->instance && in_array(HasTemplate::class, array_keys(class_uses_recursive($this->instance))) && count($this->instance->metaData) > 0;
+        return !!$this->instance && in_array(HasTemplate::class, array_keys(class_uses_recursive($this->instance))) ;
     }
 
     private function showSeoSection(): bool
