@@ -13,6 +13,7 @@ class SchemaOption
     {
         return static::load('employment-type-list');
     }
+
     public static function authorList(): array
     {
         return static::load('author-list');
@@ -46,6 +47,10 @@ class SchemaOption
     public static function langList(): array
     {
         return static::load('language-list');
+    }
+    public static function perTimeList(): array
+    {
+        return static::load('per-title-list');
     }
 
     public static function areaList(): array
@@ -121,7 +126,7 @@ class SchemaOption
     {
         return Arr::get([
 
-            'employment_type_list'              => static::employmentTypeList(),
+            'employment_type_list'  => static::employmentTypeList(),
             'day_list'              => static::dayList(),
             'area_list'             => static::areaList(),
             'lang_list'             => static::langList(),
@@ -134,6 +139,7 @@ class SchemaOption
             'event_attendance_mode' => static::eventAttendanceModeList(),
             'event_status_list'     => static::eventStatusList(),
             'timezone_list'         => static::timezoneList(),
+            'per_time_list'              => static::perTimeList(),
 
 
             'page_types' => static::pageType(),
@@ -142,7 +148,7 @@ class SchemaOption
             'organization_type'  => static::organizationType(),
             'localBusiness_type' => static::localBusinessType(),
             'performer_type'     => static::performerType(),
-            'availability_type'     => static::availabilityType(),
+            'availability_type'  => static::availabilityType(),
         ], $key, $default);
     }
 
