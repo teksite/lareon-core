@@ -1,4 +1,4 @@
-@props(['name','value'=>[], 'required'=>false , 'arrayName'=>'event' ,'title'=>__('event')])
+@props(['name','value'=>[], 'required'=>false , 'arrayName'=>'identifier' ,'title'=>__('identifier')])
 @php
     $finalName = $name."[".$arrayName."]";
 @endphp

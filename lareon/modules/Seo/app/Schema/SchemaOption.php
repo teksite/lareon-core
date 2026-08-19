@@ -9,6 +9,10 @@ class SchemaOption
     /** @var array<string, array> */
     protected static array $cache = [];
 
+    public static function employmentTypeList(): array
+    {
+        return static::load('employment-type-list');
+    }
     public static function authorList(): array
     {
         return static::load('author-list');
@@ -117,6 +121,7 @@ class SchemaOption
     {
         return Arr::get([
 
+            'employment_type_list'              => static::employmentTypeList(),
             'day_list'              => static::dayList(),
             'area_list'             => static::areaList(),
             'lang_list'             => static::langList(),
