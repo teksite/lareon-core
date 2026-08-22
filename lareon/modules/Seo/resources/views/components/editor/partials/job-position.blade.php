@@ -32,8 +32,5 @@
             <x-lareon::editor.input :label="__('education requirements')" name="{{$finalName}}[educationRequirements]" :value="$value['educationRequirements'] ?? null" labelPosition="top" :required="false"/>
             <x-lareon::editor.input :label="__('experience requirements')" name="{{$finalName}}[experienceRequirements]" :value="$value['experienceRequirements'] ?? null" labelPosition="top" :required="false"/>
         </div>
-
-
-
     </div>
 </fieldset>
