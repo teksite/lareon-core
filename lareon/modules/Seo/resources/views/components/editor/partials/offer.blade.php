@@ -14,7 +14,7 @@
 
     </x-lareon::editor.input-select>
 
-    <div class="space-y-6" data-rtpe="AggregateOffer">
+    <div class="space-y-6" data-type="AggregateOffer">
         <x-lareon::editor.input :label="__('url')" name="{{$finalName}}[url]" :value="$value['url'] ?? null" labelPosition="top" :required="$required" :placeholder="__('lareon::global.placeholders.empty.read',['attribute'=>__('page')])"/>
         <div class="grid gap-6 md:grid-cols-3">
             <x-lareon::editor.input type="number" dir="ltr" :label="__('price')" name="{{$finalName}}[price]" :value="$value['price'] ?? null" labelPosition="top" :required="$required" :placeholder="__('lareon::global.placeholders.empty.read',['attribute'=>__('page')])"/>
@@ -48,7 +48,7 @@
     </div>
 
 
-    <div class="space-y-6" data-rtpe="offer">
+    <div class="space-y-6" data-type="offer">
         <x-lareon::editor.input :label="__('url')" name="{{$finalName}}[url]" :value="$value['url'] ?? null" labelPosition="top" :required="$required" :placeholder="__('lareon::global.placeholders.empty.read',['attribute'=>__('page')])"/>
         <div class="grid gap-6 md:grid-cols-3">
             <x-lareon::editor.input type="number" dir="ltr" :label="__('low price')" name="{{$finalName}}[lowPrice]" :value="$value['lowPrice'] ?? null" labelPosition="top" :required="$required" :placeholder="__('lareon::global.placeholders.empty.read',['attribute'=>__('page')])"/>

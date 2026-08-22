@@ -13,7 +13,7 @@ class NotifierDatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-        //
+            PermissionsSeeder::class,
         ]);
     }
 }
