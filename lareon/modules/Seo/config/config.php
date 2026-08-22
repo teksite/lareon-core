@@ -16,9 +16,9 @@ return [
         'FAQ'         => 'faq-page',
         'Person'      => 'person-page',
         'JobPosition' => 'job-position-page',
+        'Product'     => 'product-page',
 
         'Blog'                => 'coming-soon',
-        'Product'             => 'coming-soon',
         'SoftwareApplication' => 'coming-soon',
         'HowTo'               => 'coming-soon',
         'Recipe'              => 'coming-soon',
