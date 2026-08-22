@@ -81,9 +81,7 @@
                  </x-lareon::buttons.simple>
              </div>
 
-
                 <div class="grid gap-6 md:grid-cols-3">
-
                     {{-- Price --}}
                     <div class="w-full flex flex-col gap-1">
                         <label class="input_label" :for="`offer_price-${index}`" x-text="`{{ __('price') }} #${index + 1}`"></label>

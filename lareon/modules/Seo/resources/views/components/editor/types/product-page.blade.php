@@ -7,4 +7,5 @@
     <x-seo::editor.partials.product :name="$name" :value="$value['product']?? []"/>
     <x-seo::editor.partials.brand :name="$name" :value="$value['brand']?? []"/>
     <x-seo::editor.partials.aggregate-rating :name="$name" :value="$value['aggregateRating']?? []"/>
+    <x-seo::editor.partials.offer :name="$name" :value="$value['offer']?? []"/>
 </fieldset>

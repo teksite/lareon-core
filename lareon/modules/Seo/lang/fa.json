@@ -134,5 +134,10 @@
     "aggregate rating": "رتبه‌بندی کل",
     "count": "شمارش",
     "best rating":"بهترین امتیاز",
-    "worse rating": "بدترین امتیاز"
+    "worse rating": "بدترین امتیاز",
+    "high price": "",
+    "low price": "",
+    "availability": "",
+    "item condition": "",
+    "offer count": ""
 }

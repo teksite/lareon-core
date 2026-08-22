@@ -48,6 +48,7 @@ class SchemaOption
     {
         return static::load('language-list');
     }
+
     public static function perTimeList(): array
     {
         return static::load('per-title-list');
@@ -71,6 +72,16 @@ class SchemaOption
     public static function languageList(): array
     {
         return static::load('language-list');
+    }
+
+    public static function availabilityList(): array
+    {
+        return static::load('availability-list');
+    }
+
+    public static function itemConditionList(): array
+    {
+        return static::load('item-condition-list');
     }
 
     public static function contactOptionList(): array
@@ -139,7 +150,9 @@ class SchemaOption
             'event_attendance_mode' => static::eventAttendanceModeList(),
             'event_status_list'     => static::eventStatusList(),
             'timezone_list'         => static::timezoneList(),
-            'per_time_list'              => static::perTimeList(),
+            'per_time_list'         => static::perTimeList(),
+            'availability_list'     => static::availabilityList(),
+            'item_condition_list'   => static::itemConditionList(),
 
 
             'page_types' => static::pageType(),

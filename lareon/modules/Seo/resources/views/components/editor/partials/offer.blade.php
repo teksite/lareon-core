@@ -1,139 +1,61 @@
-@props(['name','value' => [],'required' => true, 'arrayName'=>'offers' ,'title'=>__('offers')])
-
+@props(['name','value'=>[], 'required'=>false, 'arrayName'=>'offer' ,'title'=>__('offer')])
 @php
     $finalName = $name."[".$arrayName."]";
-    $dottedName = str_replace(['[', ']'], ['.', ''], $finalName);
-    $rawItems = old($dottedName, null) ?? $value ?? [];
-
-    $initialItems = collect($rawItems)->map(fn ($item) =>is_array($item)
-       ? ['name'=>$item['name'] ?? '','price'=>$item['price'] ?? '','priceCurrency'=>$item['priceCurrency'] ?? '','validFrom'=>$item['validFrom'] ?? '','url'=>$item['url'] ?? '','availability'=>$item['availability'] ?? '',]
-       : ['name'=>'','price'=>'','priceCurrency'=>'','validFrom'=>'','url'=>'','availability'=>'',]
-)->values();
 @endphp
+<fieldset class="fieldset">
 
-<fieldset class="fieldset"
-          x-data="{
-        items: {{ $initialItems->toJson() }},
-        errors: @js($errors->getMessages()),
-        addItem() { this.items.push({ name: '',price: '',priceCurrency: '',validFrom: '',url: '',availability: '',}); },
-        removeItem(index) { this.items.splice(index, 1); },
-        hasError(key) { return this.errors[key] !== undefined; },
-        getError(key) { return this.errors[key]?.[0] ?? ''; }
-    }"
->
     <legend class="legend">{{$title}}</legend>
+    <x-lareon::editor.input-select :required="false" :label="__('offerType')" name="{{$finalName}}[offerType]" :value="$value['offerType'] ?? ''" labelPosition="top">
+        @foreach(['none'=>'' ,'Offer'=>'offer' , 'AggregateOffer'=>'aggregate offer'] as $key=>$item)
+            <option value="{{$key}}">
+                {{__($item)}}
+            </option>
+        @endforeach
 
-    @error($dottedName)
-    <p class="mb-4 message-error">{{ $message }}</p>
-    @enderror
+    </x-lareon::editor.input-select>
 
-    <div class="space-y-6">
+    <div class="space-y-6" data-rtpe="AggregateOffer">
+        <x-lareon::editor.input :label="__('url')" name="{{$finalName}}[url]" :value="$value['url'] ?? null" labelPosition="top" :required="$required" :placeholder="__('lareon::global.placeholders.empty.read',['attribute'=>__('page')])"/>
+        <div class="grid gap-6 md:grid-cols-3">
+            <x-lareon::editor.input type="number" dir="ltr" :label="__('price')" name="{{$finalName}}[price]" :value="$value['price'] ?? null" labelPosition="top" :required="$required" :placeholder="__('lareon::global.placeholders.empty.read',['attribute'=>__('page')])"/>
+            <x-seo::currency label="__('price currency')" name="{{$finalName}}[priceCurrency]" :value="$value['priceCurrency'] ?? null" :required="false" labelPosition="top"/>
+            <x-lareon::editor.input-date type="date" :label="__('price valid until')" name="{{$finalName}}[priceValidUntil]" :value="$value['priceValidUntil'] ?? null" :required="false" labelPosition="top"/>
+        </div>
+        <div class="grid gap-6 md:grid-cols-2">
 
-        <template x-for="(item, index) in items" :key="index">
-            <div class="space-y-6">
+            <x-lareon::editor.input-select :required="true" :label="__('availability')" name="{{$finalName}}[availability]" :value="$value['availability'] ?? ''" labelPosition="top">
+                <option value="">
+                    {{__('none')}}
+                </option>
+                @foreach(\Lareon\Modules\Seo\App\Schema\SchemaOption::get('availability_list') as $key=>$item)
+                    <option value="{{$key}}">
+                        {{__($item)}}
+                    </option>
+                @endforeach
+            </x-lareon::editor.input-select>
 
-             <div class="flex items-center gap-3 ">
-                 <div class="grid gap-6 md:grid-cols-3 w-full">
-
-                     {{-- Name --}}
-                     <div class="w-full flex flex-col gap-1">
-                         <label class="input_label" :for="`offer_name-${index}`" x-text="`{{ __('name') }} #${index + 1}`"></label>
-                         <input type="text" @required($required) class="input block w-full"
-                                :class="{ 'input-error': hasError('{{ $dottedName }}.' + index + '.name') }"
-                                :name="`{{ $finalName }}[${index}][name]`"
-                                :id="`offer_name-${index}`"
-                                x-model="item.name">
-                         <p class="message-error" x-show="hasError('{{ $dottedName }}.' + index + '.name')" x-text="getError('{{ $dottedName }}.' + index + '.name')"></p>
-                     </div>
-
-                     {{-- URL --}}
-                     <div class="w-full flex flex-col gap-1">
-                         <label class="input_label" :for="`offer_url-${index}`" x-text="`{{ __('url') }} #${index + 1}`"></label>
-
-                         <input type="text" dir="ltr" @required($required) class="input block w-full" placeholder="https://example.com/product | example.com/product "
-                                :class="{ 'input-error': hasError('{{ $dottedName }}.' + index + '.url')}"
-                                :name="`{{ $finalName }}[${index}][url]`"
-                                :id="`offer_url-${index}`"
-                                x-model="item.url">
-
-                         <p class="message-error" x-show="hasError('{{ $dottedName }}.' + index + '.url')" x-text="getError('{{ $dottedName }}.' + index + '.url')"></p>
-                     </div>
-
-                     {{-- Availability --}}
-                     <div class="w-full flex flex-col gap-1">
-                         <label class="input_label" :for="`offer_availability-${index}`" x-text="`{{ __('availability') }} #${index + 1}`"></label>
-
-                         <select @required($required) class="input block w-full"
-                                 :class="{ 'input-error': hasError('{{ $dottedName }}.' + index + '.availability') }"
-                                :name="`{{ $finalName }}[${index}][availability]`"
-                                :id="`offer_availability-${index}`"
-                                x-model="item.availability">
-                             @foreach(\Lareon\Modules\Seo\App\Schema\SchemaOption::get('availability_type') as $key=>$desc)
-                                 <option value="{{$key}}">{{__($desc)}}</option>
-                             @endforeach
-                         </select>
-                         <p class="message-error" x-show="hasError('{{ $dottedName }}.' + index + '.availability')" x-text="getError('{{ $dottedName }}.' + index + '.availability')"></p>
-                     </div>
-                 </div>
-
-                 <x-lareon::buttons.simple class="min-w-fit w-fit" size="2xs" color="red" variant="outline" type="button" role="button" title="{{ __('double click to delete') }}" @dblclick="removeItem(index)">
-                     &times;
-                 </x-lareon::buttons.simple>
-             </div>
+            <x-lareon::editor.input-select :required="true" :label="__('item condition')" name="{{$finalName}}[itemCondition]" :value="$value['itemCondition'] ?? ''" labelPosition="top">
+                <option value="">
+                    {{__('none')}}
+                </option>
+                @foreach(\Lareon\Modules\Seo\App\Schema\SchemaOption::get('item_condition_list') as $key=>$item)
+                    <option value="{{$key}}">
+                        {{__($item)}}
+                    </option>
+                @endforeach
+            </x-lareon::editor.input-select>
+        </div>
+    </div>
 
 
-                <div class="grid gap-6 md:grid-cols-3">
+    <div class="space-y-6" data-rtpe="offer">
+        <x-lareon::editor.input :label="__('url')" name="{{$finalName}}[url]" :value="$value['url'] ?? null" labelPosition="top" :required="$required" :placeholder="__('lareon::global.placeholders.empty.read',['attribute'=>__('page')])"/>
+        <div class="grid gap-6 md:grid-cols-3">
+            <x-lareon::editor.input type="number" dir="ltr" :label="__('low price')" name="{{$finalName}}[lowPrice]" :value="$value['lowPrice'] ?? null" labelPosition="top" :required="$required" :placeholder="__('lareon::global.placeholders.empty.read',['attribute'=>__('page')])"/>
+            <x-lareon::editor.input type="number" dir="ltr" :label="__('high price')" name="{{$finalName}}[highPrice]" :value="$value['highPrice'] ?? null" labelPosition="top" :required="$required" :placeholder="__('lareon::global.placeholders.empty.read',['attribute'=>__('page')])"/>
+            <x-seo::currency label="__('price currency')" name="{{$finalName}}[priceCurrency]" :value="$value['priceCurrency'] ?? null" :required="false" labelPosition="top"/>
+        </div>
+        <x-lareon::editor.input type="number" min="0" dir="ltr" :label="__('offer count')" name="{{$finalName}}[offerCount]" :value="$value['offerCount'] ?? null" labelPosition="top" :required="$required" :placeholder="__('lareon::global.placeholders.empty.read',['attribute'=>__('page')])"/>
 
-                    {{-- Price --}}
-                    <div class="w-full flex flex-col gap-1">
-                        <label class="input_label" :for="`offer_price-${index}`" x-text="`{{ __('price') }} #${index + 1}`"></label>
-
-                        <input type="number" min="0" step="any" @required($required) class="input block w-full"
-                               :class="{ 'input-error': hasError('{{ $dottedName }}.' + index + '.price')}"
-                               :name="`{{ $finalName }}[${index}][price]`"
-                               :id="`offer_price-${index}`"
-                               x-model="item.price">
-                        <p class="message-error" x-show="hasError('{{ $dottedName }}.' + index + '.price')" x-text="getError('{{ $dottedName }}.' + index + '.price')"></p>
-                    </div>
-
-                    {{-- Price Currency --}}
-                    <div class="w-full flex flex-col gap-1">
-                        <label class="input_label" :for="`offer_priceCurrency-${index}`" x-text="`{{ __('price currency') }} #${index + 1}`"></label>
-                        <select @required($required) class="input block w-full"
-                                :class="{ 'input-error': hasError('{{ $dottedName }}.' + index + '.priceCurrency') }"
-                                :name="`{{ $finalName }}[${index}][priceCurrency]`"
-                                :id="`offer_priceCurrency-${index}`"
-                                x-model="item.priceCurrency">
-                            @foreach(\Lareon\Modules\Seo\App\Schema\SchemaOption::get('currency_list') as $key=>$desc)
-                                <option value="{{$key}}">{{__($desc)}}</option>
-                            @endforeach
-                        </select>
-
-                        <p class="message-error" x-show="hasError('{{ $dottedName }}.' + index + '.priceCurrency')" x-text="getError('{{ $dottedName }}.' + index + '.priceCurrency')"></p>
-                    </div>
-
-                    {{-- Valid From --}}
-
-                    <div class="w-full flex flex-col gap-1">
-                        <label class="input_label" :for="`offer_validFrom-${index}`" x-text="`{{ __('valid from') }} #${index + 1}`"></label>
-
-                        <input type="datetime-local" @required($required) class="input block w-full"
-                               :class="{'input-error': hasError('{{ $dottedName }}.' + index + '.validFrom') }"
-                               :name="`{{ $finalName }}[${index}][validFrom]`"
-                               :id="`offer_validFrom-${index}`"
-                               x-model="item.validFrom">
-
-                        <p class="message-error" x-show="hasError('{{ $dottedName }}.' + index + '.validFrom')" x-text="getError('{{ $dottedName }}.' + index + '.validFrom')"></p>
-                    </div>
-
-
-                </div>
-
-
-            </div>
-        </template>
-        <x-lareon::buttons.simple size="xs" color="blue" variant="outline" type="button" role="button" @click="addItem()">
-            + {{ __('add') }}
-        </x-lareon::buttons.simple>
     </div>
 </fieldset>
