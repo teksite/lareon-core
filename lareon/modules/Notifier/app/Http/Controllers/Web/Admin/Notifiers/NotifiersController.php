@@ -6,6 +6,7 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Lareon\Modules\Notifier\App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Lareon\Modules\Notifier\App\Http\Requests\Admin\NewNotificationRequest;
 
 class NotifiersController extends Controller implements HasMiddleware
 {
@@ -47,7 +48,7 @@ class NotifiersController extends Controller implements HasMiddleware
      *
      * @throws \Throwable
      */
-    public function store(NewUserRequest $request)
+    public function store(NewNotificationRequest $request)
     {
 //        $res = $this->logic->create($request->validated());
 //
