@@ -10,6 +10,8 @@
                 <x-lareon::editor.input-textarea :required="false" :label="__('message')" name="message" :placeholder="__('lareon::global.placeholders.write.one',['attribute'=>__('message')])"></x-lareon::editor.input-textarea>
             </x-lareon::editor.tabs.section>
             <x-slot:aside>
+
+
             </x-slot:aside>
         </x-lareon::editor.tabs.item>
     @endsection

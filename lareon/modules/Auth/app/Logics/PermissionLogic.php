@@ -73,6 +73,7 @@ class PermissionLogic
     public function clearCache(): void
     {
         Cache::forget('all_permissions');
+        Cache::forget('authorize.permissions.gates');
     }
 
     public function renewAllPermissions(): void
