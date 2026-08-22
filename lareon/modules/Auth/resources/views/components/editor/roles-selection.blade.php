@@ -1,10 +1,12 @@
-@props(['name'=>'roles[]', 'value'=>null , 'multiple'=>false , 'labelPosition'=>'top' , 'label'=>__('roles') ,'required'=>true])
+@props(['name'=>'roles[]', 'value'=>null , 'multiple'=>false , 'labelPosition'=>'top' , 'label'=>__('roles') ,'required'=>true ,'inline'=>true])
 @php
-@
+    Cache::forget('roles');
+       $roles = Cache::has('roles')
+       ?   \Illuminate\Support\Facades\Cache::get('roles')
+       :   \Illuminate\Support\Facades\Cache::remember('roles' ,36000 , fn()=>\Teksite\Authorize\Models\Role::query()->pluck('title' ,'id')->toArray() )
 @endphp
-
-<x-lareon::editor.input-select :labelPosition="$labelPosition" :label="$roles" name="{{$name}}" :value="$value ?? null" :required="$required">
-    @foreach(\Lareon\Modules\Seo\App\Schema\SchemaOption::get('timezone_list') as $key=>$desc)
-        <option value="{{$desc}}">{{__($key)}} : {{$desc}}</option>
+<x-lareon::editor.input-select  :multiple="$multiple" :labelPosition="$labelPosition" :label="$label" name="{{$name}}" :value="$value ?? null" :required="$required" :inline="$inline">
+    @foreach($roles as $id=>$title)
+        <option value="{{$id}}">{{$title}}</option>
     @endforeach
 </x-lareon::editor.input-select>

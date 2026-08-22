@@ -5,14 +5,18 @@
     @endsection
     @section('form')
         <x-lareon::editor.tabs.item :title="__('content')">
+
             <x-lareon::editor.tabs.section>
                 <x-lareon::editor.input :required="true" labelPosition="top" :label="__('title')" name="title" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('title') , 'item'=>__('notification')])"/>
                 <x-lareon::editor.input-textarea :required="false" :label="__('message')" name="message" :placeholder="__('lareon::global.placeholders.write.one',['attribute'=>__('message')])"></x-lareon::editor.input-textarea>
             </x-lareon::editor.tabs.section>
+
             <x-slot:aside>
-
-
+                <x-lareon::editor.tabs.section>
+                    <x-auth::editor.roles-selection :inline="true" :multiple="true"/>
+                </x-lareon::editor.tabs.section>
             </x-slot:aside>
         </x-lareon::editor.tabs.item>
+
     @endsection
 </x-lareon::admin-editor>

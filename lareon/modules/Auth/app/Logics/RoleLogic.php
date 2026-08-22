@@ -71,7 +71,7 @@ class RoleLogic
     {
         Cache::forget('roles');
         Cache::rememberForever('roles', function () {
-            return Role::query()->select('id ,title')->get();
+            return Role::query()->pluck('title' ,'id')->toArray();
         });
     }
 
