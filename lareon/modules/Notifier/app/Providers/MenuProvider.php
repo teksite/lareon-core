@@ -39,7 +39,7 @@ class MenuProvider implements MenuRegisteringContract
                 'icon'   => 'megaphone',
                 'active' => request()->routeIs('admin.notifications.*'),
                 'permission'=>'admin.notification.read'
-            ],'auth'
+            ],'notifications'
         )->addManyItem(
         [
             [
@@ -51,10 +51,10 @@ class MenuProvider implements MenuRegisteringContract
             [
                 'title'  => 'new notification',
                 'order'  => 2,
-                'route'  => 'admin.authorize.permissions.create',
-                'active' => request()->routeIs('admin.authorize.permissions.create'),
+                'route'  => 'admin.notifications.create',
+                'active' => request()->routeIs('admin.notifications.create'),
             ],
-        ], 'auth');
+        ], 'notifications');
     }
 
     protected function panel(MenuRegisteringEvent $event): void

@@ -20,8 +20,10 @@
         @if($realMethod)
             @method($realMethod)
         @endif
-        <input type="hidden" name="model" value="{{encrypt(get_class($instance))}}">
-        <input type="hidden" name="model_key" value="{{encrypt($instance?->getKey())}}">
+        @isset($instance)
+            <input type="hidden" name="model" value="{{encrypt(get_class($instance ))}}">
+            <input type="hidden" name="model_key" value="{{encrypt($instance?->getKey())}}">
+        @endisset
         @yield('form.start')
 
         <div class="{{ $styleClass }}">

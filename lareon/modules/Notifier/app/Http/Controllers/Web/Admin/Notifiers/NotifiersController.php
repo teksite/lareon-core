@@ -31,7 +31,7 @@ class NotifiersController extends Controller implements HasMiddleware
     {
 //        $res = $this->logic->all();
 //        $users = $res->result;
-//        return view('user::admin.pages.users.index', compact('users'));
+//        return view('notifier::admin.pages.notifications.index', compact('users'));
     }
 
     /**
@@ -39,8 +39,7 @@ class NotifiersController extends Controller implements HasMiddleware
      */
     public function create()
     {
-//        $user=new User();
-//        return view('user::admin.pages.users.create' , compact('user'));
+        return view('notifier::admin.pages.notifications.create' );
     }
 
     /**

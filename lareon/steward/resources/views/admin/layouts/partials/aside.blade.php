@@ -1,4 +1,4 @@
-<aside class="fixed z-20 top-0 start-0 w-16 transition-all duration-100 " :class="sidebar ? '{{is_rtl() ? 'translate-x-full' : '-translate-x-full'}} xl:translate-x-0' : 'translate-x-0 {{is_rtl() ? 'xl:translate-x-full' :'xl:-translate-x-full'}}' ">
+<aside class="fixed z-20 top-0 start-0 w-20 transition-all duration-100 " :class="sidebar ? '{{is_rtl() ? 'translate-x-full' : '-translate-x-full'}} xl:translate-x-0' : 'translate-x-0 {{is_rtl() ? 'xl:translate-x-full' :'xl:-translate-x-full'}}' ">
     <div class="h-dvh relative x-box !p-0 xl:border-none flex flex-col justify-between">
         <div class="overflow-auto flex flex-col gap-1">
             <div class="">
