@@ -23,7 +23,9 @@ class NewNotificationRequest extends FormRequest
         return [
             'title' => 'required|string|max:100',
             'message' => 'required|string|max:500',
-            'pinned' => 'boolean',
+            'pinned' => 'sometimes|boolean',
+            'roles' => 'sometimes|array',
+            'roles.*' => 'exists:auth_roles,id'
         ];
     }
 }

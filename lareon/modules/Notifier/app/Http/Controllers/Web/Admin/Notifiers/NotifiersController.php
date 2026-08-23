@@ -7,11 +7,13 @@ use Illuminate\Routing\Controllers\Middleware;
 use Lareon\Modules\Notifier\App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Lareon\Modules\Notifier\App\Http\Requests\Admin\NewNotificationRequest;
+use Lareon\Modules\Notifier\App\Logics\NotificationLogic;
+use Teksite\Handler\Facade\Responder;
 
 class NotifiersController extends Controller implements HasMiddleware
 {
 
-    public function __construct() {}
+    public function __construct(public NotificationLogic $logic) {}
 
     public static function middleware()
     {
@@ -50,21 +52,15 @@ class NotifiersController extends Controller implements HasMiddleware
      */
     public function store(NewNotificationRequest $request)
     {
-//        $res = $this->logic->create($request->validated());
-//
-//        if ($res->success) {
-//            $this->logic->markAsVerified($res->result, $request->validated('email_verified_at'), $request->validated('phone_verified_at'));
-//            event(new UserCrudEvent($res->result, CrudTypeEnum::CREATE, $request->validated()));
-//            return Responder::success(trans('lareon::global.crud.success.created', ['attribute' => __('user')]))->route('admin.users.edit', $res->result)->go();
-//        }
-//        return Responder::failed(trans('lareon::global.crud.error.created', ['attribute' => __('user')]));
+        $res = $this->logic->prepare($request->validated());
+
 
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show()
     {
 //        if ($user->path()) return redirect()->to($user->path());
 //        abort(404);
@@ -73,7 +69,7 @@ class NotifiersController extends Controller implements HasMiddleware
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user)
+    public function edit()
     {
 //        return view('user::admin.pages.users.edit', compact('user'));
     }
@@ -83,7 +79,7 @@ class NotifiersController extends Controller implements HasMiddleware
      *
      * @throws \Throwable
      */
-    public function update(UpdateUserRequest $request, User $user)
+    public function update()
     {
 //        $res = $this->logic->update($user, $request->validated());
 //

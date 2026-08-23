@@ -6,6 +6,8 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Lareon\Modules\Notifier\App\Notifications\Channels\SmsChannel;
+use Lareon\Modules\Notifier\App\Notifications\Channels\TelegramChannel;
 
 class AwarenessNotification extends Notification
 {
@@ -26,7 +28,15 @@ class AwarenessNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        $channels = ['database',];
+
+        if ($notifiable->email_notifications) $channels[] = 'mail';
+
+        if ($notifiable->sms_notifications) $channels[] = SmsChannel::class;
+
+        if ($notifiable->telegram_notifications) $channels[] = TelegramChannel::class;
+
+        return $channels;
     }
 
     /**
@@ -35,9 +45,9 @@ class AwarenessNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+            ->line('The introduction to the notification.')
+            ->action('Notification Action', url('/'))
+            ->line('Thank you for using our application!');
     }
 
     /**
