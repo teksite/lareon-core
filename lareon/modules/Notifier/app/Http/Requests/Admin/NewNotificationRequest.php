@@ -1,4 +1,5 @@
 <?php
+
 namespace Lareon\Modules\Notifier\App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -21,11 +22,12 @@ class NewNotificationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|max:100',
+            'title'   => 'required|string|max:100',
             'message' => 'required|string|max:500',
-            'pinned' => 'sometimes|boolean',
-            'roles' => 'sometimes|array',
-            'roles.*' => 'exists:auth_roles,id'
+            'pinned'  => 'sometimes|boolean',
+            'roles'   => 'sometimes|array',
+            'roles.*' => 'exists:auth_roles,id',
+            'users.*' => 'exists:users,id',
         ];
     }
 }
