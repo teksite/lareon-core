@@ -135,9 +135,8 @@
     "count": "شمارش",
     "best rating":"بهترین امتیاز",
     "worse rating": "بدترین امتیاز",
-    "high price": "",
-    "low price": "",
-    "availability": "",
-    "item condition": "",
-    "offer count": ""
+    "high price": "بیشترین قیمت",
+    "low price": "کمترین قیمت",
+    "item condition": "وضعیت کالا",
+    "offer count": "تعداد پیشنهادها"
 }
