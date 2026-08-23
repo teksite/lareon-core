@@ -42,7 +42,7 @@ class NotifiersController extends Controller implements HasMiddleware
      */
     public function create()
     {
-        return view('notifier::admin.pages.notifications.create' );
+        return view('notifier::admin.pages.notifications.create');
     }
 
     /**
@@ -52,8 +52,7 @@ class NotifiersController extends Controller implements HasMiddleware
      */
     public function store(NewNotificationRequest $request)
     {
-        $res = $this->logic->prepare($request->validated());
-
+        $res = $this->logic->prepareUserQuery($request->validated());
 
     }
 

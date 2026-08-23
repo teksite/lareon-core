@@ -20,7 +20,7 @@ class NotificationLogic
      * @throws \Throwable
      * @throws BindingResolutionException
      */
-    public function prepareUser(array $inputs = [])
+    public function prepareUserQuery(array $inputs = [])
     {
         return ServiceWrapper::make(false)->do(function () use ($inputs) {
             $roleIds = array_filter($inputs['roles'] ?? []);
@@ -36,7 +36,7 @@ class NotificationLogic
                 if ($userIds) {
                     $query->orWhereIn('id', $userIds);
                 }
-            })->get();
+            });
 
         })->run();
     }
