@@ -4,7 +4,6 @@ namespace Lareon\Modules\Notifier\App\Http\Controllers\Web\Admin\Notifiers;
 
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
-use Lareon\Modules\Notifier\App\Events\AwarenessEvent;
 use Lareon\Modules\Notifier\App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Lareon\Modules\Notifier\App\Http\Requests\Admin\NewNotificationRequest;
@@ -63,7 +62,9 @@ class NotifiersController extends Controller implements HasMiddleware
             channels: $data['channels'],
         );
 
-        return redirect()->back();
+        return Responder::success()
+                        ->title(trans('lareon::global.crud.success.created', ['attribute' => __('notification')]))
+                        ->route('admin.notifications.index')->go();
     }
 
     /**
