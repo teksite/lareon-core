@@ -34,33 +34,30 @@ class MenuProvider implements MenuRegisteringContract
     {
         $event->add(
             [
-                'title'  => 'notifications',
-                'order'  => 120,
-                'icon'   => 'megaphone',
-                'active' => request()->routeIs('admin.notifications.*'),
-                'permission'=>'admin.notification.read'
-            ],'notifications'
+                'title'      => trans('notifications'),
+                'order'      => 120,
+                'icon'       => 'megaphone',
+                'active'     => request()->routeIs('admin.notifications.*'),
+                'permission' => 'admin.notification.read',
+            ], 'notifications'
         )->addManyItem(
-        [
             [
-                'title'  => 'notifications list',
-                'order'  => 1,
-                'route'  => 'admin.notifications.index',
-                'active' => request()->routeIs('admin.notifications.index'),
-            ],
-            [
-                'title'  => 'new notification',
-                'order'  => 2,
-                'route'  => 'admin.notifications.create',
-                'active' => request()->routeIs('admin.notifications.create'),
-            ],
-        ], 'notifications');
+                [
+                    'title'  => trans('lareon::global.crud.titles.all', ['attribute' => trans('notifications')]),
+                    'order'  => 1,
+                    'route'  => 'admin.notifications.index',
+                    'active' => request()->routeIs('admin.notifications.index'),
+                ],
+                [
+                    'title'  => trans('lareon::global.crud.titles.create', ['attribute' => trans('notification')]),
+                    'order'  => 2,
+                    'route'  => 'admin.notifications.create',
+                    'active' => request()->routeIs('admin.notifications.create'),
+                ],
+            ], 'notifications');
     }
 
-    protected function panel(MenuRegisteringEvent $event): void
-    {
-
-    }
+    protected function panel(MenuRegisteringEvent $event): void {}
 
 
 }
