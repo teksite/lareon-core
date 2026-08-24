@@ -10,6 +10,8 @@
     "license": "MIT",
     "require": {
         "php": "^8.3",
+        "ext-dom": "*",
+        "ext-libxml": "*",
         "laravel/fortify": "^1.36",
         "laravel/framework": "^13.7",
         "laravel/sanctum": "^4.0",
@@ -21,9 +23,7 @@
         "teksite/icon-laravel": "^0.2.0",
         "teksite/laravel-filemanager": "^0.2.2",
         "teksite/module": "^3.0",
-        "teksite/systeminfo-laravel": "^0.0.1",
-        "ext-dom": "*",
-        "ext-libxml": "*"
+        "teksite/systeminfo-laravel": "^0.0.1"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
@@ -104,11 +104,6 @@
         }
     },
     "minimum-stability": "stable",
-    "prefer-stable": true,
-    "repositories": {
-        "packagist": {
-            "type": "composer",
-            "url": "https://mirror-composer.runflare.com"
-        }
-    }
+    "prefer-stable": true
+
 }

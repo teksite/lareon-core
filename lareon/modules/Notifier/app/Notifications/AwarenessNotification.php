@@ -31,7 +31,8 @@ class AwarenessNotification extends Notification
     public function via(object $notifiable): array
     {
 
-        $via = ['broadcast'];
+        $via = [];
+//        $via = ['broadcast'];
         foreach ($this->channels as $channel) {
             if (ChannelsEnum::tryFrom($channel)) $via[] = $channel;
         }
@@ -65,11 +66,11 @@ class AwarenessNotification extends Notification
     /**
      * Broadcast notification.
      */
-    public function toBroadcast(object $notifiable): BroadcastMessage
-    {
-        return new BroadcastMessage([
-            'title'   => $this->title,
-            'message' => $this->message,
-        ]);
-    }
+//    public function toBroadcast(object $notifiable): BroadcastMessage
+//    {
+//        return new BroadcastMessage([
+//            'title'   => $this->title,
+//            'message' => $this->message,
+//        ]);
+//    }
 }

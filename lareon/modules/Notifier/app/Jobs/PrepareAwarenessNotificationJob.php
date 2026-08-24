@@ -27,11 +27,12 @@ class PrepareAwarenessNotificationJob implements ShouldQueue
         $userIds = array_filter($this->userIds);
 
         if (!$roleIds && !$userIds) return;
+
         $usersQuery = User::query()->where(function ($query) use ($roleIds, $userIds) {
 
             if ($roleIds) {
                 $query->whereHas('roles', function ($query) use ($roleIds) {
-                    $query->whereIn('roles.id', $roleIds);
+                    $query->whereIn('id', $roleIds);
                 });
             }
 
