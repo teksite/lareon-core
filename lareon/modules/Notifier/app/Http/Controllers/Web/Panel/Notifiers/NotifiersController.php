@@ -25,7 +25,11 @@ class NotifiersController extends Controller implements HasMiddleware
 
     public function index()
     {
+        $notifications = $this->logic->allByUser()->result;
+
+        return view('notifier::panel.pages.notifications.index', compact('notifications'));
     }
+
 
     public function show()
     {
