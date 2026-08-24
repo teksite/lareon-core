@@ -4,6 +4,7 @@ namespace Lareon\Modules\Notifier\App\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Lareon\Modules\Notifier\App\Enums\ChannelsEnum;
@@ -30,7 +31,7 @@ class AwarenessNotification extends Notification
     public function via(object $notifiable): array
     {
 
-        $via = [];
+        $via = ['broadcast'];
         foreach ($this->channels as $channel) {
             if (ChannelsEnum::tryFrom($channel)) $via[] = $channel;
         }
@@ -59,5 +60,16 @@ class AwarenessNotification extends Notification
             'title'   => $this->title,
             'message' => $this->message,
         ];
+    }
+
+    /**
+     * Broadcast notification.
+     */
+    public function toBroadcast(object $notifiable): BroadcastMessage
+    {
+        return new BroadcastMessage([
+            'title'   => $this->title,
+            'message' => $this->message,
+        ]);
     }
 }

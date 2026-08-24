@@ -13,42 +13,46 @@ class PrepareAwarenessNotificationJob implements ShouldQueue
 
     public int $tries = 5;
 
-    /**
-     * Create a new job instance.
-     */
-    public function __construct(public string $title, public string $message, public array $channels, public array $roleIds = [], public array $userIds = [])
-    {
-        //
-    }
+    public function __construct(
+        public string $title,
+        public string $message,
+        public array  $channels,
+        public array  $roleIds = [],
+        public array  $userIds = [],
+    ) {}
 
-    /**
-     * Execute the job.
-     */
     public function handle(): void
     {
-        $roleIds = array_filter($inputs['roles'] ?? []);
-        $userIds = array_filter($inputs['users'] ?? []);
+        $roleIds = array_filter($this->roleIds);
+        $userIds = array_filter($this->userIds);
 
+        if (!$roleIds && !$userIds) return;
         $usersQuery = User::query()->where(function ($query) use ($roleIds, $userIds) {
+
             if ($roleIds) {
                 $query->whereHas('roles', function ($query) use ($roleIds) {
                     $query->whereIn('roles.id', $roleIds);
                 });
             }
+
             if ($userIds) {
                 $query->orWhereIn('id', $userIds);
             }
         });
 
         $usersQuery->chunkById(1000, function ($users) {
+
             foreach ($users as $user) {
+
                 $user->notify(new AwarenessNotification(
                         title: $this->title,
                         message: $this->message,
                         channels: $this->channels,
                     )
                 );
+
             }
+
         });
     }
 }
