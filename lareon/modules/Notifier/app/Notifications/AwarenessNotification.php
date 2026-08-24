@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Lareon\Modules\Notifier\App\Enums\ChannelsEnum;
 use Lareon\Modules\Notifier\App\Notifications\Channels\SmsChannel;
 use Lareon\Modules\Notifier\App\Notifications\Channels\TelegramChannel;
 
@@ -29,16 +30,11 @@ class AwarenessNotification extends Notification
     public function via(object $notifiable): array
     {
 
-        $channels = ['database',];
-
-        $channels[] = 'mail';
-
-
-        if ($notifiable->sms_notifications) $channels[] = SmsChannel::class;
-
-        if ($notifiable->telegram_notifications) $channels[] = TelegramChannel::class;
-
-        return $channels;
+        $via = [];
+        foreach ($this->channels as $channel) {
+            if (ChannelsEnum::tryFrom($channel)) $via[] = $channel;
+        }
+        return $via;
     }
 
     /**
