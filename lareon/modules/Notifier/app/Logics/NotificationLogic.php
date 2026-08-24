@@ -13,9 +13,13 @@ use Teksite\Handler\Actions\ServiceWrapper;
 
 class NotificationLogic
 {
-    public function all(mixed $fetchData = []) {}
+    public function all(mixed $fetchData = []) {
 
-    public function first(array $inputs = []) {}
+    }
+
+    public function first(array $inputs = []) {
+
+    }
 
 
 

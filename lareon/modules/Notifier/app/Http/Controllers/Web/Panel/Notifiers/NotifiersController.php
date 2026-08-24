@@ -25,7 +25,6 @@ class NotifiersController extends Controller implements HasMiddleware
 
     public function index()
     {
-
     }
 
     public function show()

@@ -46,14 +46,13 @@ class PanelEditor extends Component
     }
 
 
-
     /**
      * Get the view / contents that represent the component.
      */
     public function render(): View|Closure|string
     {
-        return view('lareon::panel.layouts.editor' ,[
-        'instance'            => $this->instance,
+        return view('lareon::panel.layouts.editor', [
+            'instance'            => $this->instance,
             'formAttributes'      => $this->buildFormAttributes(),
             'realMethod'          => $this->buildRealMethod(),
             'showTemplateSection' => $this->showTemplateSection(),
@@ -63,7 +62,6 @@ class PanelEditor extends Component
             ...$this->resolveButtonPresentation(),
         ]);
     }
-
 
 
     private function buildFormAttributes(): string
@@ -116,7 +114,7 @@ class PanelEditor extends Component
 
     private function showTemplateSection(): bool
     {
-        return !!$this->instance && in_array(HasTemplate::class, array_keys(class_uses_recursive($this->instance))) ;
+        return !!$this->instance && in_array(HasTemplate::class, array_keys(class_uses_recursive($this->instance)));
     }
 
     private function showSeoSection(): bool

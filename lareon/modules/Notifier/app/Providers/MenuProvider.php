@@ -57,7 +57,19 @@ class MenuProvider implements MenuRegisteringContract
             ], 'notifications');
     }
 
-    protected function panel(MenuRegisteringEvent $event): void {}
+    protected function panel(MenuRegisteringEvent $event): void
+    {
+        $event->add(
+            [
+                'title'      => trans('notifications'),
+                'order'      => 120,
+                'icon'       => 'megaphone',
+                'active'     => request()->routeIs('panel.notifications.*'),
+                'route'      => 'panel.notifications.index',
+                'permission' => 'panel.notification.read',
+            ], 'notifications'
+        );
+    }
 
 
 }
