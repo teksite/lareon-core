@@ -11,7 +11,7 @@ use Lareon\Modules\Notifier\App\Enums\ChannelsEnum;
 use Lareon\Modules\Notifier\App\Notifications\Channels\SmsChannel;
 use Lareon\Modules\Notifier\App\Notifications\Channels\TelegramChannel;
 
-class AwarenessNotification extends Notification
+class AwarenessNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -22,6 +22,13 @@ class AwarenessNotification extends Notification
     {
         //
     }
+
+
+    public function backoff(): int
+    {
+        return 5;
+    }
+
 
     /**
      * Get the notification's delivery channels.
@@ -66,11 +73,11 @@ class AwarenessNotification extends Notification
     /**
      * Broadcast notification.
      */
-//    public function toBroadcast(object $notifiable): BroadcastMessage
-//    {
-//        return new BroadcastMessage([
-//            'title'   => $this->title,
-//            'message' => $this->message,
-//        ]);
-//    }
+    public function toBroadcast(object $notifiable): BroadcastMessage
+    {
+        return new BroadcastMessage([
+            'title'   => $this->title,
+            'message' => $this->message,
+        ]);
+    }
 }

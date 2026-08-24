@@ -11,6 +11,7 @@
         </x-lareon::editor.tabs.section>
 
     @endsection
+
     @section('aside')
         <x-lareon::editor.tabs.section>
             <x-auth::editor.roles-selection :inline="true" :multiple="true"/>
@@ -21,7 +22,7 @@
                 @foreach(\Lareon\Modules\Notifier\App\Enums\ChannelsEnum::cases() as $case)
                     <option value="{{ $case->value }}">{{__($case->name)}}</option>
                 @endforeach
-                    </x-lareon::editor.input-select>
-                </x-lareon::editor.tabs.section>
+            </x-lareon::editor.input-select>
+        </x-lareon::editor.tabs.section>
     @endsection
 </x-lareon::admin-editor>
