@@ -55,7 +55,6 @@ class NotifiersController extends Controller implements HasMiddleware
     public function store(NewNotificationRequest $request)
     {
         $data = $request->validated();
-
         PrepareAwarenessNotificationJob::dispatch(
             title: $data['title'],
             message: $data['message'],

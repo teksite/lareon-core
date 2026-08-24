@@ -17,9 +17,9 @@
                 </x-lareon::editor.tabs.section>
 
                 <x-lareon::editor.tabs.section>
-                    <x-lareon::editor.input-select  :multiple="true" labelPosition="top" :label="__('via')" name="channels[]" :required="true" :inline="true">
+                    <x-lareon::editor.input-select  :multiple="true" labelPosition="top" :label="__('via')" name="channels[]" :required="true" :inline="true" :value="old('channels')">
                         @foreach(\Lareon\Modules\Notifier\App\Enums\ChannelsEnum::cases() as $case)
-                            <option value="{{$case->value}}">{{__($case->name)}}</option>
+                            <option value="{{ $case->value }}">{{__($case->name)}}</option>
                         @endforeach
                     </x-lareon::editor.input-select>
                 </x-lareon::editor.tabs.section>

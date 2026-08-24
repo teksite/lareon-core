@@ -2,7 +2,10 @@
 
 namespace Lareon\Modules\Notifier\App\Enums;
 
-enum ChannelsEnum
+enum ChannelsEnum: string
 {
-    //
+    case Database = 'database';
+    case mail = 'mail';
+    case sms = 'sms';
+    case Telegram = 'telegram';
 }

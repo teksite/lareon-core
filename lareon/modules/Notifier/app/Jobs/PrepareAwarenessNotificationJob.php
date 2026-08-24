@@ -40,10 +40,9 @@ class PrepareAwarenessNotificationJob implements ShouldQueue
             }
         });
 
-        $usersQuery->chunkById(1000,  function ($users) {
+        $usersQuery->chunkById(1000, function ($users) {
             foreach ($users as $user) {
-                $user->notify(
-                    new AwarenessNotification(
+                $user->notify(new AwarenessNotification(
                         title: $this->title,
                         message: $this->message,
                         channels: $this->channels,

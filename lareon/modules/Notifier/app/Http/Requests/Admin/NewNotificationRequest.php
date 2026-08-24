@@ -26,7 +26,9 @@ class NewNotificationRequest extends FormRequest
         return [
             'title'    => 'required|string|max:100',
             'message'  => 'required|string|max:500',
-            'channels' => ['required', 'array', Rule::enum(ChannelsEnum::class)],
+            'channels' => ['required', 'array'],
+            'channels.*' => ['required', Rule::enum(ChannelsEnum::class)],
+
             'pinned'   => 'sometimes|boolean',
             'roles'    => 'sometimes|array',
             'roles.*'  => 'exists:auth_roles,id',

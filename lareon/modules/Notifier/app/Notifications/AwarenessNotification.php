@@ -28,6 +28,7 @@ class AwarenessNotification extends Notification
      */
     public function via(object $notifiable): array
     {
+
         $channels = ['database',];
 
         $channels[] = 'mail';
