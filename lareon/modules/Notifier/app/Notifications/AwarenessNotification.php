@@ -16,7 +16,7 @@ class AwarenessNotification extends Notification
     /**
      * Create a new notification instance.
      */
-    public function __construct(public string $title , public string $message , public array $channels)
+    public function __construct(public string $title, public string $message, public array $channels)
     {
         //
     }
@@ -30,7 +30,8 @@ class AwarenessNotification extends Notification
     {
         $channels = ['database',];
 
-        if ($notifiable->email_notifications) $channels[] = 'mail';
+        $channels[] = 'mail';
+
 
         if ($notifiable->sms_notifications) $channels[] = SmsChannel::class;
 
@@ -58,7 +59,8 @@ class AwarenessNotification extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            //
+            'title'   => $this->title,
+            'message' => $this->message,
         ];
     }
 }

@@ -17,9 +17,9 @@
                 </x-lareon::editor.tabs.section>
 
                 <x-lareon::editor.tabs.section>
-                    <x-lareon::editor.input-select  :multiple="true" labelPosition="top" :label="__('via')" name="via[]" :required="true" :inline="true">
-                        @foreach(['database' ,'email' ,'sms' ,'telegram'] as $title)
-                            <option value="{{$title}}">{{$title}}</option>
+                    <x-lareon::editor.input-select  :multiple="true" labelPosition="top" :label="__('via')" name="channels[]" :required="true" :inline="true">
+                        @foreach(\Lareon\Modules\Notifier\App\Enums\ChannelsEnum::cases() as $case)
+                            <option value="{{$case->value}}">{{__($case->name)}}</option>
                         @endforeach
                     </x-lareon::editor.input-select>
                 </x-lareon::editor.tabs.section>

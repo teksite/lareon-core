@@ -59,10 +59,12 @@ class NotifiersController extends Controller implements HasMiddleware
         PrepareAwarenessNotificationJob::dispatch(
             title: $data['title'],
             message: $data['message'],
-            roleIds: $data['roles'],
-            userIds: $data['users'],
-            channels: $data['via'],
+            roleIds: $data['roles'] ?? [],
+            userIds: $data['users'] ?? [],
+            channels: $data['channels'],
         );
+
+        return redirect()->back();
     }
 
     /**
