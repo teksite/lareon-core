@@ -17,11 +17,11 @@
                     </p>
                     <p id="passkey-error" class="text-sm text-red-600 mt-2 hidden"></p>
                     <div class="flex gap-3 mt-6">
-                        <x-lareon::buttons.simple type="submit" role="submit" size="xs" variant="solid" class="w-24" id="register-passkey">
+                        <x-lareon::buttons.simple type="submit" role="submit" size="xs" variant="solid"  class="min-w-36"  id="register-passkey">
                             {{ __('register') }}
                         </x-lareon::buttons.simple>
 
-                        <x-lareon::buttons.simple type="button" size="xs" variant="outline" class="w-24" id="cancel-passkey">
+                        <x-lareon::buttons.simple type="button" size="xs" variant="outline"  class="min-w-36"  id="cancel-passkey">
                             {{ __('cancel') }}
                         </x-lareon::buttons.simple>
                     </div>

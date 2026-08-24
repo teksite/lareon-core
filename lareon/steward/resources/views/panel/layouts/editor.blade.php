@@ -1,68 +1,30 @@
 @props([
-'type' => 'create', // create, edit, update, delete, restore
-'instance' => null,
-'publishStatus' => true,
-'action' => null,
-'method' => null,
-'hasTab' => true,
-'id' => 'editor-form',
-'hasFile' => false,
-'buttonText'=>null
+    'id' => 'editor-form',
+    'hasTab' => true,
+    'hasMeta' => true,
+    'hasSeo' => true,
 ])
 
 @php
-    $type = strtolower(trim($type));
-
-    $httpMethods = [
-        'create' => 'POST',
-        'store' => 'POST',
-        'edit' => 'PATCH',
-        'update' => 'PUT',
-        'patch' => 'PATCH',
-        'delete' => 'DELETE',
-        'destroy' => 'DELETE',
-        'restore' => 'POST',
-    ];
-
-    $method = $method ?? $httpMethods[$type] ?? 'POST';
-    $isEditMode = in_array($type, ['edit', 'update', 'patch']);
-    $isDeleteMode = in_array($type, ['delete', 'destroy']);
-    $isCreateMode = in_array($type, ['create', 'store']);
-
-    $buttonColor = match(true) {
-        $isDeleteMode => 'delete',
-        $isEditMode => 'update',
-        default => 'create'
-    };
-
-    $buttonText = $buttonText ?? match(true) {
-        $isDeleteMode => trans('lareon::global.buttons.delete'),
-        $isEditMode => trans('lareon::global.buttons.update'),
-        default => trans('lareon::global.buttons.create')
-    };
-
-    $buttonIcon = match(true) {
-        $isDeleteMode => 'trash',
-        $isEditMode => 'pen',
-        default => 'plus'
-    };
-
-    if ($hasFile) {
-        $formClasses .= " enctype='multipart/form-data'";
-    }
     $styleClass=config('lareon.admin.layout.editor')=== 'two_column' ? 'md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-7' : '';
 @endphp
 
 <x-lareon::panel-layout>
-    <x-slot:title>
-        @yield('title')
-    </x-slot:title>
+    <x-slot:title> @yield('title') </x-slot:title>
+    <x-slot:description> @yield('description') </x-slot:description>
+
 
     @yield('form.before')
 
-    <form id="{{ $id }}" class="inner-content" method="{{ $method === 'GET' ? 'GET' : 'POST' }}" action="{{ $action ?? url()->current() }}" {{$hasFile ?  'enctype="multipart/form-data"' : ''}}>
+    <form id="{{ $id }}" class="inner-content" {{$formAttributes}} novalidate>
         @csrf
-        @method($method)
+        @if($realMethod)
+            @method($realMethod)
+        @endif
+        @isset($instance)
+            <input type="hidden" name="model" value="{{encrypt(get_class($instance ))}}">
+            <input type="hidden" name="model_key" value="{{encrypt($instance?->getKey())}}">
+        @endisset
         <div class="grid grid-cols-1 gap-6 {{$styleClass}} ">
             <div class="md:col-span-2 lg:col-span-2 xl:col-span-5">
                 <div class="space-y-6">
@@ -85,13 +47,18 @@
                     </div>
                     @yield('form.end')
                 </div>
+
+                <div id="form-error-summary" class="hidden mb-6 p-4 rounded-xl border border-red-300 bg-red-50">
+                    <p class="font-semibold text-red-700 mb-2">{{ __('لطفاً موارد زیر را بررسی کنید') }}:</p>
+                    <ul id="form-error-list" class="list-disc list-inside space-y-1 text-red-600 text-sm"></ul>
+                </div>
             </div>
 
             <aside class="xl:col-span-2">
                 <div class="sticky top-6 space-y-6">
                     <div class="mt-6">
-                        <x-lareon::buttons.nav :fullWidth="false" type="submit" role="submit" :color="$buttonColor" :icon="$buttonIcon">
-                            {{ __($buttonText)}}
+                        <x-lareon::buttons.nav class="min-w-36" :fullWidth="false" type="submit" :color="$buttonColor" :icon="$buttonIcon">
+                            {{ $buttonTextKey }}
                         </x-lareon::buttons.nav>
                     </div>
                 </div>
