@@ -17,24 +17,6 @@ class NotificationLogic
 
     public function first(array $inputs = []) {}
 
-    /**
-     * @throws \Throwable
-     * @throws BindingResolutionException
-     */
-    public function sendNotifications(array $inputs = [])
-    {
-        $title = $inputs['title'];
-        $message = $inputs['message'] ?? '';
-        $roleIds = $inputs['roles'] ?? [];
-        $userIds = $inputs['users'] ?? [];
-        $channels = $inputs['via'] ?? [];
-        PrepareAwarenessNotificationJob::dispatch(title: $title,
-            message: $message,
-            roleIds: $roleIds,
-            userIds: $userIds,
-            channels: $channels,);
-
-    }
 
 
     public function delete(Model $model) {}

@@ -16,7 +16,7 @@ class PrepareAwarenessNotificationJob implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(public string $title, public string $message, public string $channels, public array $roleIds = [], public array $userIds = [])
+    public function __construct(public string $title, public string $message, public array $channels, public array $roleIds = [], public array $userIds = [])
     {
         //
     }

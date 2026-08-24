@@ -8,6 +8,7 @@ use Lareon\Modules\Notifier\App\Events\AwarenessEvent;
 use Lareon\Modules\Notifier\App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Lareon\Modules\Notifier\App\Http\Requests\Admin\NewNotificationRequest;
+use Lareon\Modules\Notifier\App\Jobs\PrepareAwarenessNotificationJob;
 use Lareon\Modules\Notifier\App\Logics\NotificationLogic;
 use Teksite\Handler\Facade\Responder;
 
@@ -53,43 +54,38 @@ class NotifiersController extends Controller implements HasMiddleware
      */
     public function store(NewNotificationRequest $request)
     {
-       $res = $this->logic->sendNotifications($request->validated());
+        $data = $request->validated();
 
-
-
+        PrepareAwarenessNotificationJob::dispatch(
+            title: $data['title'],
+            message: $data['message'],
+            roleIds: $data['roles'],
+            userIds: $data['users'],
+            channels: $data['via'],
+        );
     }
 
     /**
      * Display the specified resource.
      */
-    public function show()
-    {
-
-    }
+    public function show() {}
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit()
-    {
-    }
+    public function edit() {}
 
     /**
      * Update the specified resource in storage.
      *
      * @throws \Throwable
      */
-    public function update()
-    {
-
-    }
+    public function update() {}
 
     /**
      * Remove the specified resource from storage.
      *
      * @throws \Throwable
      */
-    public function destroy()
-    {
-    }
+    public function destroy() {}
 }
