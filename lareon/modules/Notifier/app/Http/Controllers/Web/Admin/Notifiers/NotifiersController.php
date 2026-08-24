@@ -4,6 +4,7 @@ namespace Lareon\Modules\Notifier\App\Http\Controllers\Web\Admin\Notifiers;
 
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Lareon\Modules\Notifier\App\Events\AwarenessEvent;
 use Lareon\Modules\Notifier\App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Lareon\Modules\Notifier\App\Http\Requests\Admin\NewNotificationRequest;
@@ -32,9 +33,9 @@ class NotifiersController extends Controller implements HasMiddleware
      */
     public function index()
     {
-//        $res = $this->logic->all();
-//        $users = $res->result;
-//        return view('notifier::admin.pages.notifications.index', compact('users'));
+        $res = $this->logic->all();
+        $notifications = $res->result;
+        return view('notifier::admin.pages.notifications.index', compact('notifications'));
     }
 
     /**
@@ -52,7 +53,9 @@ class NotifiersController extends Controller implements HasMiddleware
      */
     public function store(NewNotificationRequest $request)
     {
-        $res = $this->logic->prepareUserQuery($request->validated());
+       $res = $this->logic->sendNotifications($request->validated());
+
+
 
     }
 
@@ -61,8 +64,7 @@ class NotifiersController extends Controller implements HasMiddleware
      */
     public function show()
     {
-//        if ($user->path()) return redirect()->to($user->path());
-//        abort(404);
+
     }
 
     /**
@@ -70,7 +72,6 @@ class NotifiersController extends Controller implements HasMiddleware
      */
     public function edit()
     {
-//        return view('user::admin.pages.users.edit', compact('user'));
     }
 
     /**
@@ -80,14 +81,6 @@ class NotifiersController extends Controller implements HasMiddleware
      */
     public function update()
     {
-//        $res = $this->logic->update($user, $request->validated());
-//
-//        if ($res->success) {
-//            $this->logic->markAsVerified($user, $request->validated('email_verified_at'), $request->validated('phone_verified_at'));
-//            event(new UserCrudEvent($user, CrudTypeEnum::UPDATE, $request->validated()));
-//            return Responder::success(trans('lareon::global.crud.success.updated', ['attribute' => __('user')]))->go();
-//        }
-//        return Responder::failed(trans('lareon::global.crud.error.updated', ['attribute' => __('user')]))->go();
 
     }
 
@@ -96,14 +89,7 @@ class NotifiersController extends Controller implements HasMiddleware
      *
      * @throws \Throwable
      */
-    public function destroy(User $user)
+    public function destroy()
     {
-//        $res = $this->logic->delete($user);
-//
-//        if ($res->success) {
-//            event(new UserCrudEvent($user, CrudTypeEnum::DELETE));
-//            return Responder::success(trans('lareon::global.crud.success.deleted', ['attribute' => __('user')]))->route('admin.users.index')->go();
-//        }
-//        return Responder::failed(trans('lareon::global.crud.error.deleted', ['attribute' => __('user')]))->go();
     }
 }

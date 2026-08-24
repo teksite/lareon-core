@@ -5,6 +5,7 @@ namespace Lareon\Modules\Notifier\App\Logics;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Model;
+use Lareon\Modules\Notifier\App\Jobs\PrepareAwarenessNotificationJob;
 use Lareon\Modules\User\App\Models\User;
 use Teksite\Authorize\Models\Role;
 use Teksite\Handler\Actions\ServiceWrapper;
@@ -20,25 +21,19 @@ class NotificationLogic
      * @throws \Throwable
      * @throws BindingResolutionException
      */
-    public function prepareUserQuery(array $inputs = [])
+    public function sendNotifications(array $inputs = [])
     {
-        return ServiceWrapper::make(false)->do(function () use ($inputs) {
-            $roleIds = array_filter($inputs['roles'] ?? []);
-            $userIds = array_filter($inputs['users'] ?? []);
+        $title = $inputs['title'];
+        $message = $inputs['message'] ?? '';
+        $roleIds = $inputs['roles'] ?? [];
+        $userIds = $inputs['users'] ?? [];
+        $channels = $inputs['via'] ?? [];
+        PrepareAwarenessNotificationJob::dispatch(title: $title,
+            message: $message,
+            roleIds: $roleIds,
+            userIds: $userIds,
+            channels: $channels,);
 
-            return User::query()->where(function ($query) use ($roleIds, $userIds) {
-                if ($roleIds) {
-                    $query->whereHas('roles', function ($query) use ($roleIds) {
-                        $query->whereIn('roles.id', $roleIds);
-                    });
-                }
-
-                if ($userIds) {
-                    $query->orWhereIn('id', $userIds);
-                }
-            });
-
-        })->run();
     }
 
 

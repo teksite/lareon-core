@@ -15,6 +15,14 @@
                 <x-lareon::editor.tabs.section>
                     <x-auth::editor.roles-selection :inline="true" :multiple="true"/>
                 </x-lareon::editor.tabs.section>
+
+                <x-lareon::editor.tabs.section>
+                    <x-lareon::editor.input-select  :multiple="true" labelPosition="top" :label="__('via')" name="via[]" :required="true" :inline="true">
+                        @foreach(['database' ,'email' ,'sms' ,'telegram'] as $title)
+                            <option value="{{$title}}">{{$title}}</option>
+                        @endforeach
+                    </x-lareon::editor.input-select>
+                </x-lareon::editor.tabs.section>
             </x-slot:aside>
         </x-lareon::editor.tabs.item>
 
