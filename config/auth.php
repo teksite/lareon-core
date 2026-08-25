@@ -39,6 +39,11 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
+        ],
     ],
 
     /*
@@ -64,10 +69,10 @@ return [
             'model' => env('AUTH_MODEL', \Lareon\Modules\User\App\Models\User::Class),
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+         'admins' => [
+             'driver' => 'eloquent',
+             'model' => env('ADMIN_MODEL', \Lareon\Steward\App\Models\Admin::Class),
+         ],
     ],
 
     /*

@@ -22,8 +22,8 @@ class NotificationLogic
     public function allByUser(mixed $fetchData = [], Authenticatable|User $user = null)
     {
         $user ??= auth()->user();
-       return ServiceWrapper::make(false)->do(function () use ($user) {
-            return FetchDataService::get($user->notifications() , ['title']);
+        return ServiceWrapper::make(false)->do(function () use ($user) {
+            return FetchDataService::get($user->notifications(), ['title']);
         })->run();
     }
 
