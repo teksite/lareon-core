@@ -15,18 +15,22 @@ return new class extends Migration
             $table->id();
             $table->string('title')->unique();
             $table->string('description')->nullable();
-            $table->float('hierarchy', 2)->default(15);
+            $table->unsignedInteger('hierarchy')->default(15);
             $table->timestamps();
         });
 
         Schema::create('auth_permission_role', function (Blueprint $table) {
             $table->foreignId('role_id')->constrained('auth_roles')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('permission_id')->constrained('auth_permissions')->cascadeOnUpdate()->cascadeOnDelete();
+
+            $table->unique(['role_id','permission_id',]);
         });
 
         Schema::create('auth_role_models', function (Blueprint $table) {
             $table->foreignId('role_id')->constrained('auth_roles')->cascadeOnDelete()->cascadeOnUpdate();
             $table->morphs('model');
+
+            $table->unique([ 'role_id', 'model_type', 'model_id',]);
         });
     }
 
