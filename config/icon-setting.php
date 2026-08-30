@@ -8,8 +8,9 @@ return [
     |--------------------------------------------------------------------------
     */
     'cache'               => [
+        'key'     => 'svg_icons.icons',
         'enabled' => env('SVG_ICONS_CACHE_ENABLED', false),
-        'ttl'     => env('SVG_ICONS_CACHE_TTL', 86400), // 24 hours
+        'ttl'     => env('SVG_ICONS_CACHE_TTL', 2592000), // 30 days
     ],
 
     /*
@@ -17,8 +18,11 @@ return [
     | Storage Path for Custom Icons
     |--------------------------------------------------------------------------
     */
-    'custom_solid_icon'   => storage_path('app/svg-icons/solid.json'),
-    'custom_outline_icon' => storage_path('app/svg-icons/outline.json'),
+    'path'=>[
+        'solid'=>public_path('vendor/icons/solid.json'), // set it null to read from default icons
+        'outline'=>public_path('vendor/icons/outline.json'),
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | component to load icons
