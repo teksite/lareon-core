@@ -2,11 +2,12 @@
 
 @source "../views";
 @theme {
+    --color-main_light: #ffa793;
     --color-main_color: #ff4c28;
-    --color-main_color_alt: #88220f;
+    --color-main_color_dark: #88220f;
     --color-second_color: #51a2ff;
     --color-second_color_dark: #003f93;
-    --color-second_color_light: #bfdfff;
+    --color-second_color_light: #cadef4;
 
     --color-line_light: #d4d4d8
 }
