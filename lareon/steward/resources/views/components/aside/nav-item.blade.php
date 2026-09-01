@@ -11,7 +11,7 @@
 @endphp
 
 <div x-data="{open:false}" @click.outside="open=false" class="group p-1">
-    <button @click="open=!open" type="button" role="button" class="group-hover:bg-slate-100 flex items-center gap-1 flex-col w-full bordering p-1 rounded-lg mx-auto {{$active ? 'bg-blue-100 text-blue-900 border border-blue-900' : 'bordering'}}" :class="{'border border-blue-900' : open}">
+    <button @click="open=!open" type="button" role="button" class="group-hover:bg-slate-100 flex items-center gap-1 flex-col w-full bordering p-1 rounded-lg mx-auto {{$active ? 'bg-second_color_light text-second_color_dark' : 'bordering'}}" :class="{'border border-blue-900' : open}">
         <x-tkicon class="stroke-current fill-none" type="{{$menu['icon-type'] ?? 'outline' }}" icon="{{$menu['icon'] ??  'circle'}}" high="{{$size}}" width="{{$size}}"/>
         <span class="text-xs font-semibold">
         {{__($menu['title'])}}
