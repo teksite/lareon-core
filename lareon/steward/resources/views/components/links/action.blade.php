@@ -13,55 +13,55 @@
     $configs = [
         'show' => [
             'icon' => 'eye',
-            'color' => 'text-violet-600 hover:bg-violet-50',
+            'color' => 'text-violet-600 border-violet-300 bg-violet-50',
             'title' => trans('show'),
             'target' => '_blank',
         ],
         'edit' => [
             'icon' => 'pen',
-            'color' => 'text-amber-600 hover:bg-amber-50',
+            'color' => 'text-amber-600 border-amber-300 bg-amber-50',
             'title' => trans('edit'),
             'target' => '_self',
         ],
         'delete' => [
             'icon' => 'trash',
-            'color' => 'text-red-600 hover:bg-red-50',
+            'color' => 'text-red-600 border-red-300 bg-red-50',
             'title' => trans('delete'),
             'target' => '_self',
         ],
         'restore' => [
             'icon' => 'recycle',
-            'color' => 'text-green-600 hover:bg-green-50',
+            'color' => 'text-green-600 border-green-300 bg-green-50',
             'title' => trans('restore'),
             'target' => '_self',
         ],
         'prune' => [
             'icon' => 'brush-clear',
-            'color' => 'text-red-600 hover:bg-red-50',
+            'color' => 'text-red-600 border-red-300 bg-red-50',
             'title' => trans('restore'),
             'target' => '_self',
         ],
         'create' => [
             'icon' => 'database',
-            'color' => 'text-emerald-600 hover:bg-emerald-50',
+            'color' => 'text-emerald-600 border-emerald-300 bg-emerald-50',
             'title' => trans('create'),
             'target' => '_self',
         ],
         'sub' => [
             'icon' => 'box-arrow-in',
-            'color' => 'text-purple-600 hover:bg-purple-50',
+            'color' => 'text-purple-600 border-purple-300 bg-purple-50',
             'title' => trans('sub Items'),
             'target' => '_self',
         ],
         'download' => [
             'icon' => 'cloud-download',
-            'color' => 'text-indigo-600 hover:bg-indigo-50',
+            'color' => 'text-indigo-600 border-indigo-300 bg-indigo-50',
             'title' => trans('download'),
             'target' => '_blank',
         ],
         'setting' => [
             'icon' => 'gears',
-            'color' => 'text-orange-600 hover:bg-orange-50',
+            'color' => 'text-orange-600 border-orange-300 bg-orange-50',
             'title' => trans('settings'),
             'target' => '_self',
         ],
@@ -69,7 +69,7 @@
 
     $config = $configs[$type] ?? [
         'icon' => 'link',
-        'color' => 'text-gray-600 hover:bg-gray-50',
+        'color' => 'text-gray-600 border-gray-300 bg-gray-50',
         'title' => trans('link'),
         'target' => '_blank',
     ];
@@ -86,7 +86,7 @@
     $target = $target ?? ($href ? $config['target'] : null);
     $hasForm = $method && in_array(strtoupper($method), ['POST', 'PUT', 'PATCH', 'DELETE']);
 
-    $baseClasses = "cursor-pointer select-none inline-flex items-center gap-1 rounded-md transition-colors duration-200 {$sizeClass} {$config['color']} focus:outline-none focus:ring-2 focus:ring-offset-1";
+    $baseClasses = "cursor-pointer select-none inline-flex items-center gap-1 rounded-md transition-colors duration-200 border {$sizeClass} {$config['color']} focus:outline-none focus:ring-1 focus:ring-offset-1";
     $attributes = $attributes->merge(['class' => $baseClasses, 'title' => $title]);
 @endphp
 

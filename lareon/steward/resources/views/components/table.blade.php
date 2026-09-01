@@ -18,7 +18,7 @@
         ['order' => $column, 'sort' => $nextDirection]
     ));
     $sortIcon = function($column) use ($sortColumn, $sortDirection) {
-        if ($sortColumn !== $column) return '↕️';
+        if ($sortColumn !== $column) return '⇅️';
         return $sortDirection === 'asc' ? '↑' : '↓';
     };
 @endphp
@@ -41,7 +41,7 @@
             @endforeach
         </tr>
         </thead>
-        <tbody class="divide-y divide-line_light bg-slate-50 *:hover:bg-blue-50">
+        <tbody class="divide-y divide-line_light bg-slate-50 *:hover:bg-slate-100">
         @if($rows && count($rows) > 0)
             {{ $slot }}
         @else
