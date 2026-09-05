@@ -51,9 +51,9 @@ class MenuProvider implements MenuRegisteringContract
 
                   ], [
                       'title'  => 'sitemap',
-                      'route'  => 'admin.seo.sitemaps.edit',
+                      'route'  => 'admin.seo.sitemaps.index',
                       'order'  => 2,
-                      'active' => request()->routeIs('admin.seo.sitemaps.edit'),
+                      'active' => request()->routeIs('admin.seo.sitemaps.index'),
                       'permission' => 'admin.seo.sitemap.edit',
 
 
@@ -66,9 +66,9 @@ class MenuProvider implements MenuRegisteringContract
 
                   ], [
                       'title'  => 'redirects',
-                      'route'  => 'admin.seo.redirects.edit',
+                      'route'  => 'admin.seo.redirects.index',
                       'order'  => 4,
-                      'active' => request()->routeIs('admin.seo.redirects.edit'),
+                      'active' => request()->routeIs('admin.seo.redirects.index'),
                       'permission' => 'admin.seo.redirect.edit',
 
                   ],

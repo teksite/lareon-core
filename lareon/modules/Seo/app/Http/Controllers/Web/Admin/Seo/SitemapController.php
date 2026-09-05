@@ -20,12 +20,18 @@ class SitemapController extends Controller implements HasMiddleware
         ];
     }
 
-    public function edit()
+    public function index()
+    {
+        return view('seo::admin.pages.sitemap.index' );
+
+    }
+
+    public function generate()
     {
 
     }
 
-    public function update()
+    public function scan()
     {
 
     }

@@ -18,11 +18,12 @@ Route::prefix('seo')->name('seo.')->group(function () {
     });
 
     Route::name('sitemaps.')->prefix('sitemap')->group(function () {
-        Route::get('/', [SitemapController::class, 'edit'])->name('edit');
-        Route::patch('/', [SitemapController::class, 'update'])->name('update');
+        Route::get('/', [SitemapController::class, 'index'])->name('index');
+        Route::patch('/', [SitemapController::class, 'generate'])->name('generate');
+        Route::post('/', [SitemapController::class, 'scan'])->name('scan');
     });
     Route::name('redirects.')->prefix('redirects')->group(function () {
-        Route::get('/', [SitemapController::class, 'edit'])->name('edit');
-        Route::patch('/', [SitemapController::class, 'update'])->name('update');
+        Route::get('/', [SitemapController::class, 'index'])->name('index');
+        Route::patch('/', [SitemapController::class, 'scan'])->name('scan');
     });
 });

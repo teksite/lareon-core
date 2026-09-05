@@ -140,5 +140,9 @@
     "low price": "کمترین قیمت",
     "item condition": "وضعیت کالا",
     "offer count": "تعداد پیشنهادها",
-    "manage and edit the robots.txt file to control how search engine crawlers access and index your website’s pages and resources": "فایل robots.txt را مدیریت و ویرایش کنید تا نحوه دسترسی و ایندکس صفحات و منابع وب‌سایت توسط خزنده‌های موتورهای جستجو را کنترل کنید."
+    "manage and edit the robots.txt file to control how search engine crawlers access and index your website’s pages and resources": "فایل robots.txt را مدیریت و ویرایش کنید تا نحوه دسترسی و ایندکس صفحات و منابع وب‌سایت توسط خزنده‌های موتورهای جستجو را کنترل کنید.",
+    "create and manage your website’s XML sitemap to help search engines discover, crawl, and index your website pages more efficiently": "نقشه سایت XML وب‌‌سایت خود را ایجاد و مدیریت کنید تا موتورهای جستجو بتوانند صفحات سایت را بهتر و سریع‌‌تر پیدا، خزش و ایندکس کنند",
+    "click the Update button to regenerate the sitemap file(s)": "برای ایجاد مجدد فایل(های) نقشه سایت، روی دکمه بروز‌ررسانس کلیک کنید",
+    "for automatic and continuous updates, it is recommended to configure a Cron Job, Scheduler, or Job to regularly regenerate and update the sitemap files": "برای به‌روزرسانی خودکار و مداوم، توصیه می‌شود یک Cron Job، Scheduler یا Job تنظیم کنید تا فایل‌های نقشه سایت به‌صورت منظم ایجاد و به‌روزرسانی شوند",
+    "sitemap generation type": "نوع ایجاد نقشه سایت"
 }
