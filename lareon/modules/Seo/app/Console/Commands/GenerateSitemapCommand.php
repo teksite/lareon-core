@@ -5,7 +5,7 @@ namespace Lareon\Modules\Seo\App\Console\Commands;
 use Illuminate\Console\Command;
 use Lareon\Modules\Seo\App\Services\SitemapGeneratorService;
 
-class GenerateSitemap extends Command
+class GenerateSitemapCommand extends Command
 {
     /**
      * The name and signature of the console command.

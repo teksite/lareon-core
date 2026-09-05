@@ -26,7 +26,7 @@ return [
          * We intentionally use a lower value because
          * image/video metadata can make XML files very large.
          */
-        'max_urls_per_file' => 40000,
+        'max_urls_per_file' => 500,
 
         /*
          * Output directory.

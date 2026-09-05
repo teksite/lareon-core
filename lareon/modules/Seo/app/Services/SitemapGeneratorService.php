@@ -11,7 +11,7 @@ use Spatie\Sitemap\Tags\Url;
 
 class SitemapGeneratorService
 {
-    private const int DEFAULT_CHUNK_SIZE = 40_000;
+    private const int DEFAULT_CHUNK_SIZE = 40000;
 
     public function generate(): void
     {
@@ -47,122 +47,69 @@ class SitemapGeneratorService
      */
     private function generateIndex(): void
     {
-        $directory = config(
-            'seo.sitemap.directory',
-            public_path('sitemaps')
-        );
-
-        $indexPath = public_path(
-            config('seo.sitemap.filename', 'sitemap.xml')
-        );
+        $directory = config('seo.sitemap.directory', public_path('sitemaps'));
+        $indexPath = public_path(config('seo.sitemap.filename', 'sitemap.xml'));
 
         $this->prepareDirectory($directory);
-
-        /*
-         * Remove old generated sitemap files.
-         *
-         * This prevents stale sitemap files from remaining
-         * inside /public/sitemaps.
-         */
         $this->cleanGeneratedFiles($directory);
 
         $index = SitemapIndex::create();
 
-        /*
-         * Get groups without loading all rows.
-         */
         SeoSitemap::query()
-            //  ->where('available_at', null)
-                  ->select('group')
+                  ->where(function ($q) {
+                      $q->whereNull('available_at')->orWhere('available_at', '<=', now());
+                  })
                   ->whereNotNull('group')
+                  ->select('group')
                   ->distinct()
                   ->orderBy('group')
                   ->pluck('group')
-                  ->each(function (string $group) use (
-                      $directory,
-                      $index
-                  ) {
-                      $this->generateGroup(
-                          $group,
-                          $directory,
-                          $index
-                      );
+                  ->each(function (string $group) use ($directory, $index) {
+                      $this->generateGroup($group, $directory, $index);
                   });
 
-        $this->writeAtomically(
-            $index,
-            $indexPath
-        );
+        $this->writeAtomically($index, $indexPath);
     }
 
     /**
      * Generate all sitemap files belonging to one group.
      */
-    private function generateGroup(
-        string       $group,
-        string       $directory,
-        SitemapIndex $index
-    ): void
+    private function generateGroup(string $group, string $directory, SitemapIndex $index): void
     {
         $fileNumber = 0;
+        $urlCount = 0;
 
         $sitemap = Sitemap::create();
 
         SeoSitemap::query()
-            //   ->where('available_at', null)
+                  ->where(function ($q) {
+                      $q->whereNull('available_at')->orWhere('available_at', '<=', now());
+                  })
                   ->where('group', $group)
+                  ->whereNotNull('url')
+                  ->where('url', '!=', '')
                   ->orderBy('id')
-                  ->chunkById(
-                      $this->chunkSize(),
-                      function ($items) use (
-                          &$sitemap,
-                          &$fileNumber,
-                          $group,
-                          $directory,
-                          $index
-                      ) {
-                          foreach ($items as $item) {
+                  ->chunkById($this->chunkSize(), function ($items) use (&$sitemap, &$fileNumber, &$urlCount, $group, $directory, $index) {
+                      foreach ($items as $item) {
+                          $sitemap->add($this->makeUrl($item));
 
-                              $sitemap->add(
-                                  $this->makeUrl($item)
-                              );
+                          $urlCount++;
 
-                              /*
-                               * We deliberately split by URL count.
-                               *
-                               * 40,000 is below Google's 50,000 limit.
-                               */
-                              if (
-                                  $sitemap->getUrls()->count()
-                                  >= $this->chunkSize()
-                              ) {
-                                  $this->writeGroupFile(
-                                      $sitemap,
-                                      $group,
-                                      $fileNumber,
-                                      $directory,
-                                      $index
-                                  );
+                          if ($urlCount === $this->chunkSize()) {
+                              $this->writeGroupFile($sitemap, $group, $fileNumber, $directory, $index);
 
-                                  $fileNumber++;
-
-                                  $sitemap = Sitemap::create();
-                              }
+                              $fileNumber++;
+                              $urlCount = 0;
+                              $sitemap = Sitemap::create();
                           }
                       }
-                  );
+                  });
 
         /*
          * Write remaining URLs.
          */
-        if ($sitemap->getUrls()->isNotEmpty()) {
-            $this->writeGroupFile(
-                $sitemap,
-                $group,
-                $fileNumber,
-                $directory,
-                $index
-            );
+        if ($urlCount > 0) {
+            $this->writeGroupFile($sitemap, $group, $fileNumber, $directory, $index);
         }
     }
 
@@ -224,17 +171,9 @@ class SitemapGeneratorService
 
         $path = $directory . DIRECTORY_SEPARATOR . $filename;
 
-        $this->writeAtomically(
-            $sitemap,
-            $path
-        );
+        $this->writeAtomically($sitemap, $path);
 
-        /*
-         * URL used inside sitemap.xml.
-         */
-        $index->add(
-            $this->publicSitemapUrl($filename)
-        );
+        $index->add($this->publicSitemapUrl($filename));
     }
 
     /**
@@ -244,16 +183,11 @@ class SitemapGeneratorService
      * group_1_sitemap.xml
      * group_2_sitemap.xml
      */
-    private function groupFilename(
-        string $group,
-        int    $fileNumber
-    ): string
+    private function groupFilename(string $group, int $fileNumber): string
     {
         $safeGroup = $this->sanitizeGroup($group);
 
-        if ($fileNumber === 0) {
-            return "{$safeGroup}_sitemap.xml";
-        }
+        if ($fileNumber === 0) return "{$safeGroup}_sitemap.xml";
 
         return "{$safeGroup}_{$fileNumber}_sitemap.xml";
     }
@@ -265,17 +199,11 @@ class SitemapGeneratorService
     {
         $group = trim($group);
 
-        $group = preg_replace(
-            '/[^a-zA-Z0-9_-]+/',
-            '-',
-            $group
-        );
+        $group = preg_replace('/[^a-zA-Z0-9_-]+/', '-', $group);
 
         $group = trim($group, '-_');
 
-        if ($group === '') {
-            return 'default';
-        }
+        if ($group === '') return 'default';
 
         return substr($group, 0, 100);
     }
@@ -283,10 +211,12 @@ class SitemapGeneratorService
     /**
      * Build sitemap query.
      */
-    private function query()
+    private function query(): \Illuminate\Database\Eloquent\Builder
     {
         return SeoSitemap::query()
-                         ->where('activating', true)
+                         ->where(function ($q) {
+                             $q->whereNull('available_at')->orWhere('available_at', '<=', now());
+                         })
                          ->whereNotNull('url')
                          ->where('url', '!=', '')
                          ->orderBy('id');
@@ -297,17 +227,8 @@ class SitemapGeneratorService
      */
     private function absoluteUrl(string $url): string
     {
-        if (
-            str_starts_with($url, 'http://') ||
-            str_starts_with($url, 'https://')
-        ) {
-            return $url;
-        }
-
-        return rtrim(
-                config('seo.sitemap.base_url', config('app.url')),
-                '/'
-            ) . '/' . ltrim($url, '/');
+        if (str_starts_with($url, 'http://') || str_starts_with($url, 'https://')) return $url;
+        return rtrim(config('seo.sitemap.base_url', config('app.url')), '/') . '/' . ltrim($url, '/');
     }
 
     /**
@@ -315,10 +236,8 @@ class SitemapGeneratorService
      */
     private function publicSitemapUrl(string $filename): string
     {
-        return rtrim(
-                config('seo.sitemap.base_url', config('app.url')),
-                '/'
-            ) . '/sitemaps/' . rawurlencode($filename);
+        $baseUrl = rtrim(config('seo.sitemap.base_url', config('app.url')), '/');
+        return $baseUrl . '/sitemaps/' . rawurlencode($filename);
     }
 
     /**
@@ -326,15 +245,10 @@ class SitemapGeneratorService
      */
     private function chunkSize(): int
     {
+
         return max(
             1,
-            min(
-                (int)config(
-                    'seo.sitemap.max_urls_per_file',
-                    self::DEFAULT_CHUNK_SIZE
-                ),
-                50_000
-            )
+            min((int)config('seo.sitemap.max_urls_per_file', self::DEFAULT_CHUNK_SIZE), 50000)
         );
     }
 
@@ -343,13 +257,7 @@ class SitemapGeneratorService
      */
     private function prepareDirectory(string $directory): void
     {
-        if (!File::exists($directory)) {
-            File::makeDirectory(
-                $directory,
-                0755,
-                true
-            );
-        }
+        if (!File::exists($directory)) File::makeDirectory($directory, 0755, true);
     }
 
     /**
@@ -357,21 +265,11 @@ class SitemapGeneratorService
      */
     private function cleanGeneratedFiles(string $directory): void
     {
-        if (!File::isDirectory($directory)) {
-            return;
-        }
+        if (!File::isDirectory($directory)) return;
 
         foreach (File::files($directory) as $file) {
-
-            if (
-                $file->getExtension() !== 'xml'
-            ) {
-                continue;
-            }
-
-            File::delete(
-                $file->getRealPath()
-            );
+            if ($file->getExtension() !== 'xml') continue;
+            File::delete($file->getRealPath());
         }
     }
 
@@ -382,40 +280,24 @@ class SitemapGeneratorService
      * This prevents users / Google from reading a partially
      * generated XML file.
      */
-    private function writeAtomically(
-        Sitemap|SitemapIndex $sitemap,
-        string               $path
-    ): void
+    private function writeAtomically(Sitemap|SitemapIndex $sitemap, string $path): void
     {
         $directory = dirname($path);
 
         $this->prepareDirectory($directory);
 
-        $temporaryPath =
-            $path . '.tmp-' . bin2hex(random_bytes(8));
+        $temporaryPath = $path . '.tmp-' . bin2hex(random_bytes(8));
 
         try {
 
-            $sitemap->writeToFile(
-                $temporaryPath
-            );
+            $sitemap->writeToFile($temporaryPath);
 
-            if (!File::exists($temporaryPath)) {
-                throw new \RuntimeException(
-                    "Sitemap file was not created: {$temporaryPath}"
-                );
-            }
+            if (!File::exists($temporaryPath)) throw new \RuntimeException("Sitemap file was not created: {$temporaryPath}");
 
-            File::move(
-                $temporaryPath,
-                $path
-            );
-
+            File::move($temporaryPath, $path);
         } finally {
 
-            if (File::exists($temporaryPath)) {
-                File::delete($temporaryPath);
-            }
+            if (File::exists($temporaryPath)) File::delete($temporaryPath);
         }
     }
 }

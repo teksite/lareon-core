@@ -3,7 +3,7 @@
 namespace Lareon\Modules\Seo\App\Providers;
 
 use Illuminate\Console\Scheduling\Schedule;
-use Lareon\Modules\Seo\App\Console\Commands\GenerateSitemap;
+use Lareon\Modules\Seo\App\Console\Commands\GenerateSitemapCommand;
 use Teksite\Module\Providers\Support\BaseModuleServiceProvider as ServiceProvider;
 
 class SeoServiceProvider extends ServiceProvider
@@ -36,7 +36,7 @@ class SeoServiceProvider extends ServiceProvider
      * @var string[]
      */
     protected array $commands = [
-        GenerateSitemap::class,
+        GenerateSitemapCommand::class,
     ];
 
     /**
