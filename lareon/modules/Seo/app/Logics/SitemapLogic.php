@@ -59,11 +59,8 @@ class SitemapLogic
         })->run();
     }
 
-    public function create(array $inputs = []) {}
+    public function scan() {}
 
-    public function update(Model $model, array $inputs = []) {}
-
-    public function delete(Model $model) {}
 
 }
 

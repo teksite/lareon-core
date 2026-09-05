@@ -28,12 +28,12 @@ return [
         /*
          * Output directory.
          */
-        'directory'                => public_path('sitemaps'),
+        'directory'                => public_path('sitemaps'), // multiple file directories
 
         /*
          * Main sitemap file.
          */
-        'filename'                 => 'sitemap.xml',
+        'filename'                 => 'sitemap.xml', // main file name
 
         /*
          * Base URL.
@@ -43,16 +43,18 @@ return [
          */
         'base_url'                 => env('APP_URL'),
 
-        /*
-       * index | single
-       */
-        'type'                     => SitemapType::Index,
 
-        'generator_type' => SitemapGeneratorType::Crawler,
+        'type'                     => SitemapType::Index, // index means multiple file , sinlge all in one files
+
+        'generator_type' => SitemapGeneratorType::Crawler, // crawler or from database
 
         'except' => [
             'urls'   => [],
             'routes' => ['admin', 'panel',],
+        ],
+
+        'scan_models'=>[
+          \Lareon\Modules\Page\App\Models\Page::class,
         ],
 
     ],

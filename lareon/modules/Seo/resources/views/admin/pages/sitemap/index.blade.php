@@ -18,10 +18,16 @@
                     {{__('for automatic and continuous updates, it is recommended to configure a Cron Job, Scheduler, or Job to regularly regenerate and update the sitemap files')}}.
                 </div>
                 <div class="flex justify-between items-end mt-12">
-                    <p class="text-gray-600">
-                        {{__('sitemap generation type')}}:
-                        <span class="text-gray-900 text-lg font-black">{{config('seo.sitemap.type' ,'index')}}</span>
-                    </p>
+                   <div>
+                       <p class="text-gray-600">
+                           {{__('sitemap type')}}:
+                           <span class="text-gray-900 text-lg font-black">{{config('seo.sitemap.type' ,'index')}}</span>
+                       </p>
+                       <p class="text-gray-600">
+                           {{__('generation type')}}:
+                           <span class="text-gray-900 text-lg font-black">{{config('seo.sitemap.generator_type' ,'database')}}</span>
+                       </p>
+                   </div>
                     <x-lareon::buttons.nav rounded="md" size="xs" class="min-w-fit w-fit" color="update" type="submit" :fullWidth="false">
                         {{__('update')}}
                     </x-lareon::buttons.nav>
