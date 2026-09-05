@@ -86,7 +86,6 @@
     "clips": "بخش‌های ویدیو",
     "An article, such as a news article or piece of investigative report": "یک مقاله، مانند یک مقاله خبری یا یک گزارش تحقیقی",
     "A NewsArticle is an article whose content reports news, or provides background context and supporting materials for understanding the news": "یک مقاله خبری که محتوای آن به گزارش اخبار می‌پردازد یا برای درک بهتر اخبار، زمینه و اطلاعات تکمیلی ارائه می‌دهد",
-
     "A blog post": "یک پست وبلاگی",
     "schema type": "نوع اسکیما",
     "web page": "برگه سایت",
@@ -134,7 +133,7 @@
     "brand": "برند",
     "aggregate rating": "رتبه‌بندی کل",
     "count": "شمارش",
-    "best rating":"بهترین امتیاز",
+    "best rating": "بهترین امتیاز",
     "worse rating": "بدترین امتیاز",
     "high price": "بیشترین قیمت",
     "low price": "کمترین قیمت",
@@ -144,5 +143,8 @@
     "create and manage your website’s XML sitemap to help search engines discover, crawl, and index your website pages more efficiently": "نقشه سایت XML وب‌‌سایت خود را ایجاد و مدیریت کنید تا موتورهای جستجو بتوانند صفحات سایت را بهتر و سریع‌‌تر پیدا، خزش و ایندکس کنند",
     "click the Update button to regenerate the sitemap file(s)": "برای ایجاد مجدد فایل(های) نقشه سایت، روی دکمه بروز‌ررسانس کلیک کنید",
     "for automatic and continuous updates, it is recommended to configure a Cron Job, Scheduler, or Job to regularly regenerate and update the sitemap files": "برای به‌روزرسانی خودکار و مداوم، توصیه می‌شود یک Cron Job، Scheduler یا Job تنظیم کنید تا فایل‌های نقشه سایت به‌صورت منظم ایجاد و به‌روزرسانی شوند",
-    "sitemap generation type": "نوع ایجاد نقشه سایت"
+    "sitemap generation type": "نوع ایجاد نقشه سایت",
+    "sitemap": "نقشه سایت",
+    "sitemap type": "نوع نقشه سایت",
+    "generation type": "نوع تولید کننده"
 }
