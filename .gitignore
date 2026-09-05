@@ -18,6 +18,14 @@
 /public/fonts-manifest.dev.json
 /public/hot
 /public/storage
+/public/sitempaps/
+/public/sitemap.xml
+/public_html/build
+/public_html/fonts-manifest.dev.json
+/public_html/hot
+/public_html/storage
+/public_html/sitempaps/
+/public_html/sitemap.xml
 /storage/*.key
 /storage/pail
 /vendor

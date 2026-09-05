@@ -28,6 +28,21 @@
                 </div>
             </form>
         </x-lareon::box>
+        <div class="mt-12 p-6" dir="ltr">
+            @if(isset($files['index']) && $files['index'])
+                <a href="{{$files['index']}}">{{$files['index']}}</a>
+            @else
+                {{__('not generated or not available')}}
+            @endif
+            <ul class="space-y-3 mt-6">
+                @foreach($files['files'] ?? [] as $item)
+                    <li class="flex items-center gap-1 ps-3">
+                        <span>↳</span><a href="{{$item}}">{{$item}}</a>
+                    </li>
+                @endforeach
+            </ul>
+
+        </div>
 
     </section>
 

@@ -22,17 +22,13 @@ class SitemapController extends Controller implements HasMiddleware
 
     public function index()
     {
-        return view('seo::admin.pages.sitemap.index' );
+        $files = $this->logic->getFiles()->result;
+
+        return view('seo::admin.pages.sitemap.index' ,compact('files'));
 
     }
 
-    public function generate()
-    {
+    public function generate() {}
 
-    }
-
-    public function scan()
-    {
-
-    }
+    public function scan() {}
 }
