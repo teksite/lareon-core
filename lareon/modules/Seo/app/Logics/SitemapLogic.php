@@ -3,11 +3,11 @@
 namespace Lareon\Modules\Seo\App\Logics;
 
 use Illuminate\Contracts\Container\BindingResolutionException;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
 use Lareon\Modules\Seo\App\Enums\SitemapGeneratorType;
 use Lareon\Modules\Seo\App\Services\CrawlerSitemapGeneratorService;
 use Lareon\Modules\Seo\App\Services\DbSitemapGeneratorService;
+use Lareon\Modules\Seo\App\Services\SitemapScannerService;
 use Symfony\Component\Finder\SplFileInfo;
 use Teksite\Handler\Actions\ServiceWrapper;
 
@@ -51,15 +51,22 @@ class SitemapLogic
     public function generate()
     {
         return ServiceWrapper::make(false)->do(function () {
-          match (config('seo,sitemap.generator_type' , SitemapGeneratorType::DB )) {
-              SitemapGeneratorType::DB => app(DbSitemapGeneratorService::class)->generate(),
-              SitemapGeneratorType::Crawler => app(CrawlerSitemapGeneratorService::class)->generate(),
-              default => throw new \InvalidArgumentException("Invalid sitemap generator type"),
-          };
+            match (config('seo,sitemap.generator_type', SitemapGeneratorType::DB)) {
+                SitemapGeneratorType::DB      => app(DbSitemapGeneratorService::class)->generate(),
+                SitemapGeneratorType::Crawler => app(CrawlerSitemapGeneratorService::class)->generate(),
+                default                       => throw new \InvalidArgumentException("Invalid sitemap generator type"),
+            };
         })->run();
     }
 
-    public function scan() {}
+    public function scan()
+    {
+
+        return ServiceWrapper::make(false)->do(function () {
+            app(SitemapScannerService::class)->scan();
+        })->run();
+
+    }
 
 
 }

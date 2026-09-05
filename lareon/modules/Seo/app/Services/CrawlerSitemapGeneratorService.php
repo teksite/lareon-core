@@ -164,7 +164,7 @@ class CrawlerSitemapGeneratorService implements GeneratorSitemap
         $directory = $this->sitemapDirectory();
 
         if (! File::isDirectory($directory)) return;
-        
+
         foreach (File::files($directory) as $file) {
             if ($file->getExtension() !== 'xml')  continue;
             File::delete($file->getRealPath());

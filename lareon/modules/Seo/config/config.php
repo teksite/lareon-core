@@ -46,7 +46,7 @@ return [
 
         'type'                     => SitemapType::Index, // index means multiple file , sinlge all in one files
 
-        'generator_type' => SitemapGeneratorType::Crawler, // crawler or from database
+        'generator_type' => SitemapGeneratorType::DB, // crawler or from database
 
         'except' => [
             'urls'   => [],
