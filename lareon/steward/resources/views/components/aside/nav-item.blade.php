@@ -17,12 +17,12 @@
         {{__($menu['title'])}}
     </span>
     </button>
-    <div  x-show="open"  class="absolute z-10 -end-48  top-1 bottom-0 h-[99%] w-48 bg-slate-50 rounded-e-lg bordering">
+    <div class="absolute overflow-y-auto -inset-e-48  top-1 bottom-0 h-[99%] w-48 bg-slate-50 rounded-e-lg bordering transition-all duration-75 ease-in -z-10" :class="{ 'translate-x-0  visible': open, 'invisible translate-x-full': !open }">
         <span class="block text-center font-bold text-sm py-2">
             {{__($menu['title'])}}
         </span>
         <hr class="bordering my-1">
-        <ul class="space-y-3">
+        <ul class="space-y-3 ">
             @foreach($menu['children'] ?? [] as $child)
                 <li>
                     <x-lareon::aside.item-link :menu="$child" size="10"/>
