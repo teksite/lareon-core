@@ -28,7 +28,7 @@ class SaveSitemapService
                 'model_id'   => $model->getKey(),
             ],
             [
-                'group'            => $this->group($model),
+                'group'            => $inputs['group'] ?? $this->group($model),
                 'url'              => $url,
                 'last_modified'    => $this->lastModified($model),
                 'available_at'     => $this->availableAt($model),
