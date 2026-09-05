@@ -86,6 +86,7 @@
     "clips": "بخش‌های ویدیو",
     "An article, such as a news article or piece of investigative report": "یک مقاله، مانند یک مقاله خبری یا یک گزارش تحقیقی",
     "A NewsArticle is an article whose content reports news, or provides background context and supporting materials for understanding the news": "یک مقاله خبری که محتوای آن به گزارش اخبار می‌پردازد یا برای درک بهتر اخبار، زمینه و اطلاعات تکمیلی ارائه می‌دهد",
+
     "A blog post": "یک پست وبلاگی",
     "schema type": "نوع اسکیما",
     "web page": "برگه سایت",
@@ -138,5 +139,6 @@
     "high price": "بیشترین قیمت",
     "low price": "کمترین قیمت",
     "item condition": "وضعیت کالا",
-    "offer count": "تعداد پیشنهادها"
+    "offer count": "تعداد پیشنهادها",
+    "manage and edit the robots.txt file to control how search engine crawlers access and index your website’s pages and resources": "فایل robots.txt را مدیریت و ویرایش کنید تا نحوه دسترسی و ایندکس صفحات و منابع وب‌سایت توسط خزنده‌های موتورهای جستجو را کنترل کنید."
 }
