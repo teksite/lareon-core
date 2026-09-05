@@ -3,10 +3,13 @@
 namespace Lareon\Modules\Seo\App\Models;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
 use Lareon\Modules\Seo\App\Enums\ChangeFrequencyEnum;
+use Lareon\Modules\Seo\App\Observers\SeoSitemapObserver;
 
+#[ObservedBy(SeoSitemapObserver::class)]
 #[Fillable(['model_type', 'model_id', 'group', 'url', 'priority', 'change_frequency', 'last_modified', 'image', 'video', 'available_at'])]
 class SeoSitemap extends Model
 {
