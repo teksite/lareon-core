@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
 use Lareon\Modules\Seo\App\Enums\ChangeFrequencyEnum;
 
-#[Fillable(['model_type', 'model_id', 'group', 'url', 'priority', 'change_frequency', 'last_modified', 'image', 'video', 'available_at','activating'])]
+#[Fillable(['model_type', 'model_id', 'group', 'url', 'priority', 'change_frequency', 'last_modified', 'image', 'video', 'available_at'])]
 class SeoSitemap extends Model
 {
 
@@ -15,7 +15,6 @@ class SeoSitemap extends Model
     protected function casts(): array
     {
         return [
-            'activating'   => 'boolean',
             'last_modified' => 'datetime',
             'available_at'  => 'datetime',
             'priority'      => 'decimal:1',

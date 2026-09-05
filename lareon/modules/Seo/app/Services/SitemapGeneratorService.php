@@ -72,7 +72,7 @@ class SitemapGeneratorService
          * Get groups without loading all rows.
          */
         SeoSitemap::query()
-                  ->where('activating', true)
+            //  ->where('available_at', null)
                   ->select('group')
                   ->whereNotNull('group')
                   ->distinct()
@@ -109,7 +109,7 @@ class SitemapGeneratorService
         $sitemap = Sitemap::create();
 
         SeoSitemap::query()
-                  ->where('activating', true)
+            //   ->where('available_at', null)
                   ->where('group', $group)
                   ->orderBy('id')
                   ->chunkById(
@@ -195,7 +195,7 @@ class SitemapGeneratorService
 
             }
         }
-        
+
         if (is_array($item->video)) {
             foreach ($item->video as $video) {
 
