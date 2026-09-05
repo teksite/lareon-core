@@ -7,6 +7,7 @@ use Illuminate\Routing\Controllers\Middleware;
 use Lareon\Modules\Seo\App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Lareon\Modules\Seo\App\Logics\SitemapLogic;
+use Teksite\Handler\Facade\Responder;
 
 class SitemapController extends Controller implements HasMiddleware
 {
@@ -28,7 +29,13 @@ class SitemapController extends Controller implements HasMiddleware
 
     }
 
-    public function generate() {}
+    public function generate() {
+        $res = $this->logic->generate();
+        return Responder::fromResult($res,
+            trans('lareon::global.crud.success.created', ['attribute' => __('page')]),
+            trans('lareon::global.crud.error.created', ['attribute' => __('page')]),
+        )->go();
+    }
 
     public function scan() {}
 }

@@ -1,5 +1,6 @@
 <?php
 
+use Lareon\Modules\Seo\App\Enums\SitemapGeneratorType;
 use Lareon\Modules\Seo\App\Enums\SitemapType;
 
 return [
@@ -15,10 +16,6 @@ return [
 
         'default_change_frequency' => 'yearly',
 
-        /*
-         * index | single
-         */
-        'type' => SitemapType::Index->value,
 
         /*
          * Google maximum is 50,000 URLs.
@@ -26,17 +23,17 @@ return [
          * We intentionally use a lower value because
          * image/video metadata can make XML files very large.
          */
-        'max_urls_per_file' => 500,
+        'max_urls_per_file'        => 40000,
 
         /*
          * Output directory.
          */
-        'directory' => public_path('sitemaps'),
+        'directory'                => public_path('sitemaps'),
 
         /*
          * Main sitemap file.
          */
-        'filename' => 'sitemap.xml',
+        'filename'                 => 'sitemap.xml',
 
         /*
          * Base URL.
@@ -44,7 +41,19 @@ return [
          * Example:
          * https://example.com
          */
-        'base_url' => env('APP_URL'),
+        'base_url'                 => env('APP_URL'),
+
+        /*
+       * index | single
+       */
+        'type'                     => SitemapType::Index,
+
+        'generator_type' => SitemapGeneratorType::Crawler,
+
+        'except' => [
+            'urls'   => [],
+            'routes' => ['admin', 'panel',],
+        ],
 
     ],
 

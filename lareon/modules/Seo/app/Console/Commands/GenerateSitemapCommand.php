@@ -3,7 +3,10 @@
 namespace Lareon\Modules\Seo\App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Lareon\Modules\Seo\App\Services\SitemapGeneratorService;
+use Lareon\Modules\Seo\App\Enums\SitemapGeneratorType;
+use Lareon\Modules\Seo\App\Services\CrawlerSitemapGeneratorService;
+use Lareon\Modules\Seo\App\Services\DbSitemapGeneratorService;
+use Symfony\Component\Console\Input\InputOption;
 
 class GenerateSitemapCommand extends Command
 {
@@ -14,7 +17,7 @@ class GenerateSitemapCommand extends Command
      */
 
 
-    protected $signature = 'seo:sitemap:generate';
+    protected $name = 'seo:sitemap:generate';
 
     /**
      * The console command description.
@@ -30,10 +33,20 @@ class GenerateSitemapCommand extends Command
     {
         $this->components->info('Generating sitemap...');
 
+        $type = $this->option('generator');
+        if ($type) {
+            $generator = SitemapGeneratorType::tryFrom($type);
+        } else {
+            $generator = config('seo.sitemap.generator_type');
+        }
+
         try {
 
-            app(SitemapGeneratorService::class)->generate();
-
+            match ($generator) {
+                SitemapGeneratorType::DB      => app(DbSitemapGeneratorService::class)->generate(),
+                SitemapGeneratorType::Crawler => app(CrawlerSitemapGeneratorService::class)->generate(),
+                default                       => throw new \InvalidArgumentException("Invalid sitemap generator type [$generator]"),
+            };
         } catch (\Throwable $e) {
 
             report($e);
@@ -50,5 +63,13 @@ class GenerateSitemapCommand extends Command
         );
 
         return self::SUCCESS;
+    }
+
+
+    protected function getOptions(): array
+    {
+        return [
+            ['generator', null, InputOption::VALUE_OPTIONAL, 'generate by db or crawler or by config'],
+        ];
     }
 }

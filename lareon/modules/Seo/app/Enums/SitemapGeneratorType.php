@@ -2,9 +2,9 @@
 
 namespace Lareon\Modules\Seo\App\Enums;
 
-enum SitemapType: string
+enum SitemapGeneratorType: string
 {
-   case Index= 'index';
-   case Single= 'single';
+   case DB= 'database';
+   case Crawler= 'crawler';
 
 }

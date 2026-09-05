@@ -25,14 +25,12 @@ class PublishScope implements Scope
 
         if ($this->canSeeAllRecords()) return;
 
-        $hasPublishedAtColumn = $this->hasPublishedAtColumn($model->getTable());
+        $builder->where('publish_status', PublishStatusEnum::PUBLISHED->value);
 
-        $builder->where(function (Builder $query) use ($hasPublishedAtColumn) {
-            $query->where('publish_status', PublishStatusEnum::PUBLISHED->value)
-                  ->orWhere(function (Builder $subQuery) use ($hasPublishedAtColumn) {
-                      $subQuery->where('publish_status', PublishStatusEnum::POSTPONE->value)
-                               ->when($hasPublishedAtColumn, fn(Builder $q) => $q->where('published_at', '<=', now()));
-                  });
+        if (!$this->hasPublishedAtColumn($model->getTable())) return;
+
+        $builder->where(function (Builder $query) {
+            $query->whereNull('published_at')->orWhere('published_at', '<=', now());
         });
     }
 

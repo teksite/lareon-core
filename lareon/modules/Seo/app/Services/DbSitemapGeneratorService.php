@@ -3,23 +3,24 @@
 namespace Lareon\Modules\Seo\App\Services;
 
 use Illuminate\Support\Facades\File;
+use Lareon\Modules\Seo\App\Contracts\GeneratorSitemap;
 use Lareon\Modules\Seo\App\Enums\SitemapType;
 use Lareon\Modules\Seo\App\Models\SeoSitemap;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\SitemapIndex;
 use Spatie\Sitemap\Tags\Url;
 
-class SitemapGeneratorService
+class DbSitemapGeneratorService implements GeneratorSitemap
 {
     private const int DEFAULT_CHUNK_SIZE = 40000;
 
     public function generate(): void
     {
-        $type = config('seo.sitemap.type', SitemapType::Index->value);
+        $type = config('seo.sitemap.type', SitemapType::Index);
 
         match ($type) {
-            SitemapType::Single->value => $this->generateSingle(),
-            SitemapType::Index->value  => $this->generateIndex(),
+            SitemapType::Single => $this->generateSingle(),
+            SitemapType::Index  => $this->generateIndex(),
             default                    => throw new \InvalidArgumentException("Invalid sitemap type [{$type}]."),
         };
     }
