@@ -4,7 +4,7 @@ namespace Lareon\Modules\Seo\App\Services;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SitemapScannerService
+class SitemapModelScannerService
 {
     private const int DEFAULT_CHUNK_SIZE = 1000;
 

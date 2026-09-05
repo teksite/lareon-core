@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\File;
 use Lareon\Modules\Seo\App\Enums\SitemapGeneratorType;
 use Lareon\Modules\Seo\App\Services\CrawlerSitemapGeneratorService;
 use Lareon\Modules\Seo\App\Services\DbSitemapGeneratorService;
-use Lareon\Modules\Seo\App\Services\SitemapScannerService;
+use Lareon\Modules\Seo\App\Services\SitemapModelScannerService;
 use Symfony\Component\Finder\SplFileInfo;
 use Teksite\Handler\Actions\ServiceWrapper;
 
@@ -63,7 +63,7 @@ class SitemapLogic
     {
 
         return ServiceWrapper::make(false)->do(function () {
-            app(SitemapScannerService::class)->scan();
+            app(SitemapModelScannerService::class)->scan();
         })->run();
 
     }

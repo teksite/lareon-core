@@ -37,5 +37,11 @@ class SitemapController extends Controller implements HasMiddleware
         )->go();
     }
 
-    public function scan() {}
+    public function scan() {
+        $res = $this->logic->scan();
+        return Responder::fromResult($res,
+            trans('lareon::global.crud.success.created', ['attribute' => __('page')]),
+            trans('lareon::global.crud.error.created', ['attribute' => __('page')]),
+        )->go();
+    }
 }

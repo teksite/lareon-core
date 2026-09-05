@@ -57,9 +57,7 @@ class DbSitemapGeneratorService implements GeneratorSitemap
         $index = SitemapIndex::create();
 
         SeoSitemap::query()
-                  ->where(function ($q) {
-                      $q->whereNull('available_at')->orWhere('available_at', '<=', now());
-                  })
+                  ->where('available_at', '<=', now())
                   ->whereNotNull('group')
                   ->select('group')
                   ->distinct()
@@ -83,9 +81,7 @@ class DbSitemapGeneratorService implements GeneratorSitemap
         $sitemap = Sitemap::create();
 
         SeoSitemap::query()
-                  ->where(function ($q) {
-                      $q->whereNull('available_at')->orWhere('available_at', '<=', now());
-                  })
+                  ->where('available_at', '<=', now())
                   ->where('group', $group)
                   ->whereNotNull('url')
                   ->where('url', '!=', '')
@@ -215,9 +211,7 @@ class DbSitemapGeneratorService implements GeneratorSitemap
     private function query(): \Illuminate\Database\Eloquent\Builder
     {
         return SeoSitemap::query()
-                         ->where(function ($q) {
-                             $q->whereNull('available_at')->orWhere('available_at', '<=', now());
-                         })
+                         ->where('available_at', '<=', now())
                          ->whereNotNull('url')
                          ->where('url', '!=', '')
                          ->orderBy('id');

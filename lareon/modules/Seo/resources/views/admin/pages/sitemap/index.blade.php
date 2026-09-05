@@ -37,7 +37,7 @@
 
                     <form method="post" action="{{route('admin.seo.sitemaps.scan')}}">
                         @csrf
-                        <x-lareon::buttons.nav rounded="md" size="xs" class="min-w-fit w-fit" color="update" type="submit" :fullWidth="false">
+                        <x-lareon::buttons.nav rounded="md" variant="outline" size="xs" class="min-w-fit w-fit" color="update" type="submit" :fullWidth="false">
                             {{__('scan')}}
                         </x-lareon::buttons.nav>
                     </form>
