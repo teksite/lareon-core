@@ -24,7 +24,7 @@ class ContentSaverService
      */
     public static function update(Model $model, array $inputs = []): Model
     {
-        $model::query()->update(Arr::except($inputs, ['seo', 'meta_data']));
+        $model->update(Arr::except($inputs, ['seo', 'meta_data']));
         $model = $model->refresh();
 
         app(SaveMetaDataService::class)->syncMetaData($model, $inputs['meta_data'] ?? []);
