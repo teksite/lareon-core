@@ -16,8 +16,6 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         $admin = $this->makeAdmin();
-
-
         $this->makeUsers($admin);
     }
 
@@ -49,9 +47,7 @@ class UserSeeder extends Seeder
     {
         $userRole = Role::query()->firstWhere('title', 'user');
 
-        $users = User::factory(45)->create([
-            'parent_id' => $admin->id,
-        ]);
+        $users = User::factory(45)->create();
 
 
         foreach ($users as $newUser) {

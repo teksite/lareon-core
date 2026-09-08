@@ -17,7 +17,7 @@ class FactorySeeder extends Seeder
     {
         $i = 0;
         $group = ['page', 'post'];
-        while ($i < 10000) {
+        while ($i < 250) {
             (new PageLogic())->create([
                 "title" => "title $i",
                 "slug"  => "title-$i",
