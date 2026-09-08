@@ -58,8 +58,6 @@ class PageLogic
     public function update(Page $page, array $inputs = []): ServiceResult
     {
         return ServiceWrapper::make(true)->do(function () use ($page, $inputs) {
-
-
             return ContentSaverService::update($page, $inputs);
         })->run();
     }

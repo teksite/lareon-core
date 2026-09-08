@@ -18,33 +18,38 @@
 @pushonce('headerScripts')
     @vite(['lareon/modules/Meta/resources/js/app.js', 'lareon/modules/Meta/resources/css/app.css'])
 @endpushonce
-
 @php
-    $stringifiedName = arrayToDot($name);
+
+    $finalItemsName = $name . '[data]';
+    $stringifiedName = arrayToDot($finalItemsName);
     $modelClass = rtrim($model ,'::class');
     if (!class_exists($modelClass)) throw new \InvalidArgumentException("Model [{$modelClass}] does not exist." );
     $selectedValues = filled($selected) ? array_map('strval', (array) $selected) : [];
-    $items = $modelClass::query()->whereIn((new $modelClass)->getKeyName(), $value)->select([$dataValue, $dataLabel, $dataSearch,])->get();
     $finalId = $attributes->get('id') ?? 'dynamic_select_' . \Illuminate\Support\Str::random(8);
+
+    $items = $modelClass::query()->whereIn((new $modelClass)->getKeyName(), $value)
+    ->select([$dataValue, $dataLabel, $dataSearch])
+    ->get();
+
 @endphp
 
 <div>
     <x-lareon::accordion.single :title="__($title)" :open="$open" :accordion="$accordion">
+        <input type="hidden" name="{{ $name }}[element_id]" value="{{ $elementId }}">
 
         <div class="flex gap-1 items-stretch">
 
             <div class="w-full">
-
                 <label class='input_label' for="{{$finalId}}">
                     {{$title}}
                     @if($required)
                         <span class="text-red-600 text-xs font-bold">*</span>
                     @endif
                 </label>
-                
+
                 <select
                     id="{{ $finalId }}"
-                    name="{{ $multiple ? $name . '[]' : $name }}"
+                    name="{{ $multiple ? $finalItemsName . '[]' : $finalItemsName }}"
                     @required($required)
                     {{$multiple === "true" ? 'multiple' : ''}}
                     data-model="{{ $modelClass }}"
@@ -61,15 +66,14 @@
 
                     @foreach($items as $item)
                         @php
-                            $itemValue = data_get($item, $dataValue);
-                            $itemLabel = data_get($item, $dataLabel);
-                            $itemSearch = data_get($item, $dataSearch);
+                            $itemValue = $item->$dataValue;
+                            $itemLabel = $item->$dataLabel;
+                            $itemSearch = $item->$dataSearch;
                         @endphp
-
                         <option
                             value="{{ $itemValue }}"
                             data-search="{{ $itemSearch }}"
-                            @selected(in_array((string) $itemValue, $selectedValues, true))
+                            selected
                         >
                             {{ $itemLabel }}
                         </option>

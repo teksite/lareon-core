@@ -1,11 +1,14 @@
-import Sortable from 'sortablejs';
 import TomSelect from "tom-select";
 
 import('tom-select/dist/css/tom-select.css');
 
-function loadSortableElement() {
+async function loadSortableElement() {
     const sourceList = document.getElementById('elements-list');
     const targetList = document.getElementById('template-elements-list');
+
+    if (!sourceList || !targetList) return;
+
+    const {default: Sortable} = await import('sortablejs');
 
     if (!sourceList || !targetList) return;
     Sortable.create(sourceList, {
@@ -230,11 +233,15 @@ function loadSortableElement() {
     loadInitialElements();
 }
 
-function initSelectAjax() {
+async function initSelectAjax() {
     const selectEls = document.querySelectorAll('.dynamic-select');
 
     if (!selectEls.length) return;
 
+    const [{default: TomSelect}] = await Promise.all([
+        import('tom-select'),
+        import('tom-select/dist/css/tom-select.css'),
+    ]);
 
     selectEls.forEach((el) => {
         if (el.tomselect) return;
@@ -254,6 +261,8 @@ function initSelectAjax() {
         new TomSelect(el, {
             valueField,
             labelField,
+            loadThrottle: 750,
+
             searchField: searchField.split('|'),
             /*        plugins: isMultiple
                         ? {
@@ -272,8 +281,8 @@ function initSelectAjax() {
                     },
                     body: JSON.stringify({valueField, labelField, searchField, query, model,}),
                 }).then(response => response.json())
-                 .then(json => {
-                     callback(json.data);
+                    .then(json => {
+                        callback(json.data);
                     }).catch(() => {
                     callback();
                 });

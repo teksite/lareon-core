@@ -16,7 +16,6 @@ class SaveMetaDataService
     public function syncMetaData(Model $model, array $metaInputs = []): void
     {
         if (!$this->checkMethod($model)) return;
-
         DB::transaction(function () use ($metaInputs, $model) {
 
             $model->metaData()->delete();
