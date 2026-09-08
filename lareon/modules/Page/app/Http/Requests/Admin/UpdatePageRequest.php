@@ -25,6 +25,7 @@ class UpdatePageRequest extends FormRequest
      */
     public function rules(): array
     {
+        dd(request()->all());
         return array_merge(
             Page::rules('update', $this->page->id),
             Page::seoRules()

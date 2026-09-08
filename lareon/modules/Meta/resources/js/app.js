@@ -1,6 +1,8 @@
 import Sortable from 'sortablejs';
 import TomSelect from "tom-select";
 
+import('tom-select/dist/css/tom-select.css');
+
 function loadSortableElement() {
     const sourceList = document.getElementById('elements-list');
     const targetList = document.getElementById('template-elements-list');
@@ -229,68 +231,76 @@ function loadSortableElement() {
 }
 
 function initSelectAjax() {
-
     const selectEls = document.querySelectorAll('.dynamic-select');
 
     if (!selectEls.length) return;
-    import('tom-select/dist/css/tom-select.css');
+
 
     selectEls.forEach((el) => {
-
         if (el.tomselect) return;
 
-        const config = {
-            valueField: el.getAttribute('data-value-field') ?? 'id',
-            labelField: el.getAttribute('data-label-field') ?? 'title',
-            searchField: el.getAttribute('data-search-field') ?? 'title',
-            isMultiple: el.hasAttribute('multiple') ?? false,
-        };
+        const valueField = el.dataset.valueField ?? 'id';
+        const labelField = el.dataset.labelField ?? 'title';
+        const searchField = el.dataset.searchField ?? 'title';
+        const model = el.dataset.model ?? null;
+        const url = el.dataset.url ?? '/tkadmin/ajax/models/search';
 
+        const isMultiple = el.hasAttribute('multiple');
 
+        if (!model) {
+            throw new Error('model should be defined');
+            return;
+        }
         new TomSelect(el, {
-            valueField: config.valueField,
-            labelField: config.labelField,
-            searchField: config.searchField,
-            create: false,
-            closeAfterSelect: !config.isMultiple,
-            maxOptions: null,
-            plugins: config.isMultiple
-                ? {
-                    remove_button: {
-                        title: 'Remove this item',
+            valueField,
+            labelField,
+            searchField: searchField.split('|'),
+            /*        plugins: isMultiple
+                        ? {
+                            remove_button: {
+                                title: 'Remove this item',
+                            },
+                        }
+                        : {},
+        */
+            load: function (query, callback) {
+                fetch(url, {
+                    method: 'post',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
                     },
-                }
-                : {},
+                    body: JSON.stringify({valueField, labelField, searchField, query, model,}),
+                }).then(response => response.json())
+                 .then(json => {
+                     callback(json.data);
+                    }).catch(() => {
+                    callback();
+                });
 
+            },
             render: {
-                option: function (item, escape) {
+                option(item, escape) {
                     return `
                         <div class="py-2">
                             <div class="mb-1">
                                 <span class="h4">
-                                    ${escape(item[config.labelField] ?? '')}
+                                   ${escape(item[valueField] ?? '')}
                                 </span>
-                            </div>
-
-                            <div class="description">
-                                ${escape(item[config.searchField] ?? '')}
                             </div>
                         </div>
                     `;
                 },
 
-                item: function (item, escape) {
-
+                item(item, escape) {
                     return `
                         <div class="py-2">
-                            ${escape(item[config.labelField] ?? '')}
+                            ${escape(item[labelField] ?? '')}
                         </div>
                     `;
-                }
+                },
             },
-
         });
-
     });
 }
 
