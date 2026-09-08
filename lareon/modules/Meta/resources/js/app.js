@@ -1,6 +1,7 @@
 import Sortable from 'sortablejs';
+import TomSelect from "tom-select";
 
-document.addEventListener('DOMContentLoaded', () => {
+function loadSortableElement() {
     const sourceList = document.getElementById('elements-list');
     const targetList = document.getElementById('template-elements-list');
 
@@ -225,4 +226,75 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     loadInitialElements();
+}
+
+function initSelectAjax() {
+
+    const selectEls = document.querySelectorAll('.dynamic-select');
+
+    if (!selectEls.length) return;
+    import('tom-select/dist/css/tom-select.css');
+
+    selectEls.forEach((el) => {
+
+        if (el.tomselect) return;
+
+        const config = {
+            valueField: el.getAttribute('data-value-field') ?? 'id',
+            labelField: el.getAttribute('data-label-field') ?? 'title',
+            searchField: el.getAttribute('data-search-field') ?? 'title',
+            isMultiple: el.hasAttribute('multiple') ?? false,
+        };
+
+
+        new TomSelect(el, {
+            valueField: config.valueField,
+            labelField: config.labelField,
+            searchField: config.searchField,
+            create: false,
+            closeAfterSelect: !config.isMultiple,
+            maxOptions: null,
+            plugins: config.isMultiple
+                ? {
+                    remove_button: {
+                        title: 'Remove this item',
+                    },
+                }
+                : {},
+
+            render: {
+                option: function (item, escape) {
+                    return `
+                        <div class="py-2">
+                            <div class="mb-1">
+                                <span class="h4">
+                                    ${escape(item[config.labelField] ?? '')}
+                                </span>
+                            </div>
+
+                            <div class="description">
+                                ${escape(item[config.searchField] ?? '')}
+                            </div>
+                        </div>
+                    `;
+                },
+
+                item: function (item, escape) {
+
+                    return `
+                        <div class="py-2">
+                            ${escape(item[config.labelField] ?? '')}
+                        </div>
+                    `;
+                }
+            },
+
+        });
+
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    loadSortableElement();
+    initSelectAjax()
 });
