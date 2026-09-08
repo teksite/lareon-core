@@ -285,7 +285,7 @@ function initSelectAjax() {
                         <div class="py-2">
                             <div class="mb-1">
                                 <span class="h4">
-                                   ${escape(item[valueField] ?? '')}
+                                   ${escape(item[labelField] ?? '')}
                                 </span>
                             </div>
                         </div>
@@ -295,7 +295,7 @@ function initSelectAjax() {
                 item(item, escape) {
                     return `
                         <div class="py-2">
-                            ${escape(item[labelField] ?? '')}
+                           ${escape(item[labelField] ?? '')}
                         </div>
                     `;
                 },

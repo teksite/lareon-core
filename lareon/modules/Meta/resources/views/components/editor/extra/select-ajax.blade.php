@@ -20,17 +20,11 @@
 @endpushonce
 
 @php
-
     $stringifiedName = arrayToDot($name);
-
     $modelClass = rtrim($model ,'::class');
     if (!class_exists($modelClass)) throw new \InvalidArgumentException("Model [{$modelClass}] does not exist." );
-
-
     $selectedValues = filled($selected) ? array_map('strval', (array) $selected) : [];
-
-    $items = $modelClass::query()->whereIn((new $modelClass)->getKeyName(), $value)->select([$dataValue,    $dataLabel,    $dataSearch,])->get();
-
+    $items = $modelClass::query()->whereIn((new $modelClass)->getKeyName(), $value)->select([$dataValue, $dataLabel, $dataSearch,])->get();
     $finalId = $attributes->get('id') ?? 'dynamic_select_' . \Illuminate\Support\Str::random(8);
 @endphp
 
@@ -47,12 +41,12 @@
                         <span class="text-red-600 text-xs font-bold">*</span>
                     @endif
                 </label>
-
+                
                 <select
                     id="{{ $finalId }}"
                     name="{{ $multiple ? $name . '[]' : $name }}"
                     @required($required)
-                    multiple="{{$multiple}}"
+                    {{$multiple === "true" ? 'multiple' : ''}}
                     data-model="{{ $modelClass }}"
                     data-value-field="{{ $dataValue }}"
                     data-label-field="{{ $dataLabel }}"
