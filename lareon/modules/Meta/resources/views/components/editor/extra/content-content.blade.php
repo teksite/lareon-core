@@ -34,30 +34,25 @@
     <div>
         <div class="grid gap-3 md:grid-cols-2">
             <div class="w-full">
-                <x-lareon::inputs.label :title="__('title')" for="dynamic_title-{{ $randomItem }}"/>
-                <x-lareon::inputs.text name="{{ $name }}[data][title]" id="dynamic_title-{{ $randomItem }}" class="block w-full" :value="$value['title'] ?? ''"/>
+                <x-lareon::editor.input :required="false" labelPosition="top" :label="__('title')" name="{{ $name }}[data][title]" :value="$value['title']" :placeholder="__('lareon::global.placeholders.write.one',['attribute'=>__('title') ])"/>
             </div>
 
             <div class="w-full">
-                <x-lareon::inputs.label :title="__('image')" for="dynamic_image-{{ $randomItem }}"/>
-                <x-lareon::inputs.text name="{{ $name }}[data][image]" id="dynamic_image-{{ $randomItem }}" class="block w-full" :value="$value['image'] ?? ''" dir="ltr"/>
+                <x-lareon::editor.input :required="false" dir="ltr" labelPosition="top" :label="__('image')" name="{{ $name }}[data][image]" :value="$value['image']" :placeholder="__('lareon::global.placeholders.write.one',['attribute'=>__('image')])"/>
             </div>
         </div>
 
         <div>
-            <x-lareon::inputs.label :title="__('content')" for="dynamic_content-{{ $randomItem }}"/>
-            <x-lareon::inputs.textarea name="{{ $name }}[data][content]" id="dynamic_content-{{ $randomItem }}" class="block w-full">{{ $value['content'] ?? '' }}</x-lareon::inputs.textarea>
+            <x-lareon::editor.input-textarea :required="false" labelPosition="top" :label="__('content')" name="{{ $name }}[data][content]"  :placeholder="__('lareon::global.placeholders.write.one',['attribute'=>__('content')])">{{$value['content']}}</x-lareon::editor.input-textarea>
         </div>
 
         <div class="grid gap-3 md:grid-cols-2">
             <div class="w-full">
-                <x-lareon::inputs.label :title="__('link title')" for="dynamic_link_title-{{ $randomItem }}"/>
-                <x-lareon::inputs.text name="{{ $name }}[data][link_title]" id="dynamic_link_title-{{ $randomItem }}" class="block w-full" :value="$value['link_title'] ?? ''"/>
+                <x-lareon::editor.input :required="false" labelPosition="top" :label="__('link title')" name="{{ $name }}[data][link_title]" :value="$value['link_title']" :placeholder="__('lareon::global.placeholders.write.one',['attribute'=>__('link title')])"/>
             </div>
 
             <div class="w-full">
-                <x-lareon::inputs.label :title="__('link url')" for="dynamic_link_url-{{ $randomItem }}"/>
-                <x-lareon::inputs.text name="{{ $name }}[data][link_url]" id="dynamic_link_url-{{ $randomItem }}" class="block w-full" :value="$value['link_url'] ?? ''" dir="ltr"/>
+                <x-lareon::editor.input :required="false" dir="ltr" labelPosition="top" :label="__('link url')" name="{{ $name }}[data][link_url]" :value="$value['link_url']" :placeholder="__('lareon::global.placeholders.write.one',['attribute'=>__('link url')])"/>
             </div>
         </div>
     </div>
