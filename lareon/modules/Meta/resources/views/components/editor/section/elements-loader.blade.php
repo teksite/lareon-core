@@ -4,7 +4,7 @@
     @if(count($elements))
         @foreach($elements as $element)
             <x-lareon::editor.tabs.section>
-                @includeIf($element['view'],$element['props'] )
+                @includeIf($element['view'],$element['props'] ,[...$element['props']['arguments'] ?? []] )
             </x-lareon::editor.tabs.section>
         @endforeach
     @else
