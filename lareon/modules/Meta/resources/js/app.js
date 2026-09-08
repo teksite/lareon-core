@@ -254,10 +254,15 @@ async function initSelectAjax() {
 
         const isMultiple = el.hasAttribute('multiple');
 
+
+
         if (!model) {
             throw new Error('model should be defined');
             return;
         }
+
+        let controller = null;
+
         new TomSelect(el, {
             valueField,
             labelField,
@@ -273,6 +278,9 @@ async function initSelectAjax() {
                         : {},
         */
             load: function (query, callback) {
+                controller?.abort();
+                controller = new AbortController();
+
                 fetch(url, {
                     method: 'post',
                     headers: {
@@ -283,7 +291,8 @@ async function initSelectAjax() {
                 }).then(response => response.json())
                     .then(json => {
                         callback(json.data);
-                    }).catch(() => {
+                    }).catch(error => {
+                    if (error.name === 'AbortError') return;
                     callback();
                 });
 

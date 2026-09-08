@@ -56,7 +56,7 @@
                     data-value-field="{{ $dataValue }}"
                     data-label-field="{{ $dataLabel }}"
                     data-search-field="{{ $dataSearch }}"
-                    {{ $attributes->merge(['class' => 'dynamic-select']) }}
+                    {{ $attributes->merge(['class' => 'dynamic-select input']) }}
                 >
                     @if($placeholder && !$multiple)
                         <option value="">
