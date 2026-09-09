@@ -4,9 +4,6 @@ namespace Lareon\Steward\App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
-use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Input\InputOption;
 
 class AppReset extends Command
@@ -60,26 +57,7 @@ class AppReset extends Command
                 $this->call('module:db-seed');
                 $this->call('db:seed');
             }
-
-
-          /*  if ($doRestore) {
-                if (is_dir($backupPath)) {
-                    $files = File::allFiles($backupPath);
-                    if (count($files) > 0) {
-                        $this->line('restoring backup data:');
-
-                        foreach ($files as $file) {
-                            $fileName = $file->getBasename();
-                            $path = $file->getPathname();
-                            $this->print(function () use ($path, $db) {
-                                DB::unprepared(file_get_contents($path));
-                                // exec("mysql --user={$db['username']} --password={$db['password']} --host={$db['host']} --database {$db['database']} < $path");
-                            }, "$fileName");
-                        }
-                        $this->newLine();
-                    }
-                }
-            }*/
+            // Todo ADD RESTORE SQL BACKUP
 
             $this->newLine();
             $this->line("<fg=cyan;options=bold>clearing cached data</>");

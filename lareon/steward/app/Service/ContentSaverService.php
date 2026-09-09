@@ -5,7 +5,6 @@ namespace Lareon\Steward\App\Service;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Lareon\Modules\Meta\App\Services\SaveMetaDataService;
-use Lareon\Modules\Meta\App\Traits\HasTemplate;
 use Lareon\Modules\Seo\App\Services\SaveSeoService;
 
 class ContentSaverService

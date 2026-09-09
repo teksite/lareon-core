@@ -2,15 +2,8 @@
 
 namespace Lareon\Steward\App\Console\Commands;
 
-use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Str;
-use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
-use Teksite\Module\Console\BasicMigrator;
 use Teksite\Module\Console\GeneratorModuleCommand;
 
 class MenuProviderMakeCommand extends GeneratorModuleCommand

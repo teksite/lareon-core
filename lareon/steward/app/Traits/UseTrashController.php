@@ -26,27 +26,27 @@ trait UseTrashController
     }
 
 
-    public function reinstate($id)
+    public function reinstate($id,)
     {
         $res = $this->logic->restoreOne($id);
 
         return Responder::fromResult($res,
             trans('lareon::global.crud.success.restored', ['attribute' => __($this->attribute)]),
             trans('lareon::global.crud.error.restored', ['attribute' => __($this->attribute)]),
-            route($this->indexRoute)
+            route($this->indexRoute),
         )->go();
 
     }
 
 
-    public function prune($id)
+    public function prune($id,)
     {
         $res = $this->logic->wipeOne($id);
 
         return Responder::fromResult($res,
             trans('lareon::global.crud.success.pruned', ['attribute' => __($this->attribute)]),
             trans('lareon::global.crud.error.pruned', ['attribute' => __($this->attribute)]),
-            route($this->indexRoute)
+            route($this->indexRoute),
         )->go();
     }
 
@@ -57,7 +57,7 @@ trait UseTrashController
         return Responder::fromResult($res,
             trans('lareon::global.crud.success.allRestored'),
             trans('lareon::global.crud.error.allRestored'),
-            route($this->backTo)
+            route($this->backTo),
         )->go();
 
     }
@@ -70,7 +70,7 @@ trait UseTrashController
         return Responder::fromResult($res,
             trans('lareon::global.crud.success.allPruned'),
             trans('lareon::global.crud.error.allPruned'),
-            route($this->backTo)
+            route($this->backTo),
         )->go();
     }
 

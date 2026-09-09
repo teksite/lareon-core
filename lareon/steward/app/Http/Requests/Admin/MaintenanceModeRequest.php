@@ -4,7 +4,6 @@ namespace Lareon\Steward\App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-
 class MaintenanceModeRequest extends FormRequest
 {
     /**

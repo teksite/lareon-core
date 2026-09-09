@@ -6,12 +6,10 @@ use Illuminate\Support\Facades\Artisan;
 use InvalidArgumentException;
 use Lareon\Steward\App\Enums\CacheAction;
 use Lareon\Steward\App\Enums\CacheType;
-use Lareon\Steward\App\Enums\MenuAreaType;
-use Lareon\Steward\App\Events\MenuRegisteringEvent;
 
 class CacheManagerService
 {
-    public function run(CacheType $type, CacheAction $action): int
+    public function run(CacheType $type, CacheAction $action,): int
     {
 
         $command = match ($type) {
@@ -80,7 +78,7 @@ class CacheManagerService
     protected function invalid(): never
     {
         throw new InvalidArgumentException(
-            'Invalid cache action.'
+            'Invalid cache action.',
         );
     }
 }

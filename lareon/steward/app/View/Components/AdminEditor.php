@@ -7,7 +7,6 @@ use Illuminate\Support\Arr;
 use Illuminate\View\Component;
 use Illuminate\Contracts\View\View;
 use Lareon\Modules\Meta\App\Traits\HasTemplate;
-use Lareon\Modules\Page\App\Models\Page;
 use Lareon\Modules\Seo\App\Traits\HasSeo;
 
 class AdminEditor extends Component

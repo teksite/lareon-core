@@ -2,7 +2,6 @@
 
 namespace Lareon\Steward\App\Http\Controllers\Web\Admin\Settings;
 
-
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
