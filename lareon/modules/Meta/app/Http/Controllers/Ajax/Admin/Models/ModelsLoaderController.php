@@ -6,7 +6,6 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Lareon\Modules\Meta\App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Lareon\Modules\Page\App\Models\Page;
 use Teksite\Handler\Facade\Responder;
 
 class ModelsLoaderController extends Controller implements HasMiddleware

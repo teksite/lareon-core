@@ -96,7 +96,6 @@ class PagesController extends Controller implements HasMiddleware
         return Responder::fromResult($res,
             trans('lareon::global.crud.success.updated', ['attribute' => __('page')]),
             trans('lareon::global.crud.error.updated', ['attribute' => __('page')]),
-
         )->go();
 
     }
