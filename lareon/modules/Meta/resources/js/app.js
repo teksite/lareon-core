@@ -258,7 +258,6 @@ async function initSelectAjax() {
 
         if (!model) {
             throw new Error('model should be defined');
-            return;
         }
 
         let controller = null;

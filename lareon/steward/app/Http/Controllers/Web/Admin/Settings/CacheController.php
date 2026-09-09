@@ -11,8 +11,8 @@ use Lareon\Steward\App\Enums\CacheType;
 use Lareon\Steward\App\Http\Controllers\Controller;
 use Lareon\Steward\App\Http\Requests\Admin\CacheExecutionRequest;
 use Lareon\Steward\App\Service\CacheManagerService;
-use Teksite\Handler\Actions\ServiceWrapper;
 use Teksite\Handler\Facade\Responder;
+use Teksite\Handler\Services\ServiceWrapper;
 
 class CacheController extends Controller implements HasMiddleware
 {

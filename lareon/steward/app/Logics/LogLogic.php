@@ -5,8 +5,9 @@ namespace Lareon\Steward\App\Logics;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Facades\File;
 use Symfony\Component\Finder\SplFileInfo;
-use Teksite\Handler\Actions\ServiceResult;
-use Teksite\Handler\Actions\ServiceWrapper;
+use Teksite\Handler\Contracts\ServiceResultContract;
+use Teksite\Handler\Services\ServiceWrapper;
+use Throwable;
 
 
 class LogLogic
@@ -25,9 +26,9 @@ class LogLogic
 
     /**
      * @throws BindingResolutionException
-     * @throws \Throwable
+     * @throws Throwable
      */
-    public function getLogFiles(): ServiceResult
+    public function getLogFiles(): ServiceResultContract
     {
         return ServiceWrapper::make(hasTransaction: false)->do(
             fn() => collect(File::files($this->getLogPath(null)))
@@ -39,9 +40,9 @@ class LogLogic
 
     /**
      * @throws BindingResolutionException
-     * @throws \Throwable
+     * @throws Throwable
      */
-    public function getLogContent(string $name = 'laravel'): ServiceResult
+    public function getLogContent(string $name = 'laravel'): ServiceResultContract
     {
         return ServiceWrapper::make(hasTransaction: false)->do(function () use ($name) {
             $path = $this->getLogPath($name);
@@ -50,7 +51,7 @@ class LogLogic
     }
 
 
-    public function clearContent(string $name): ServiceResult
+    public function clearContent(string $name): ServiceResultContract
     {
         return ServiceWrapper::make(hasTransaction: false)->do(function () use ($name) {
             $path = $this->getLogPath($name);
@@ -59,7 +60,7 @@ class LogLogic
     }
 
 
-    public function delete(string $name): ServiceResult
+    public function delete(string $name): ServiceResultContract
     {
         return ServiceWrapper::make(hasTransaction: false)->do(function () use ($name) {
             $path = $this->getLogPath($name);

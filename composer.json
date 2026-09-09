@@ -21,7 +21,7 @@
         "spatie/schema-org": "^5.0",
         "teksite/authorize": "^2.0",
         "teksite/extralaravel": "^2.0",
-        "teksite/handler": "^2.0",
+        "teksite/handler": "^3.0.0",
         "teksite/icon-laravel": "^1.0.0",
         "teksite/laravel-filemanager": "^0.2.2",
         "teksite/module": "^3.0",

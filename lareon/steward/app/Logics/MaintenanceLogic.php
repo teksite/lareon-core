@@ -4,10 +4,8 @@ namespace Lareon\Steward\App\Logics;
 
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\File;
-use Symfony\Component\Finder\SplFileInfo;
-use Teksite\Handler\Actions\ServiceResult;
-use Teksite\Handler\Actions\ServiceWrapper;
+use Teksite\Handler\Contracts\ServiceResultContract;
+use Teksite\Handler\Services\ServiceWrapper;
 
 
 class MaintenanceLogic
@@ -20,7 +18,7 @@ class MaintenanceLogic
      * @throws \Throwable
      * @throws BindingResolutionException
      */
-    public function up(): ServiceResult
+    public function up(): ServiceResultContract
     {
         return ServiceWrapper::make(hasTransaction: false)->do(function () {
             Artisan::call('up');
@@ -33,7 +31,7 @@ class MaintenanceLogic
      * @throws BindingResolutionException|\Throwable
      *
  */
-    public function down(string $secretString): ServiceResult
+    public function down(string $secretString): ServiceResultContract
     {
         return ServiceWrapper::make(hasTransaction: false)->do(function () use ($secretString) {
             Artisan::call('down', ['--secret' => $secretString]);

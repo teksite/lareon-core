@@ -25,14 +25,14 @@ class ExecutionLogRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'   => ['required', 'string',],
+            'name' => ['required', 'string',],
         ];
     }
 
     public function after(): array
     {
         return [
-            fn(Validator $validator) => $this->validateFileName($validator),
+            fn(Validator $validator,) => $this->validateFileName($validator),
         ];
     }
 
@@ -40,14 +40,14 @@ class ExecutionLogRequest extends FormRequest
      * @throws BindingResolutionException
      * @throws \Throwable
      */
-    private function validateFileName(Validator $validator): void
+    private function validateFileName(Validator $validator,): void
     {
         if ($validator->errors()->isNotEmpty()) return;
 
         $fileName = $this->request->get('name');
         $files = (new LogLogic())->getLogFiles()->result;
-        if (!in_array($fileName ,$files )){
-            $validator->errors()->add('name', trans('lareon::errors.the_file_not_exist' ,['attribute' => $fileName]));
+        if (!in_array($fileName, $files)) {
+            $validator->errors()->add('name', trans('lareon::errors.the_file_not_exist', ['attribute' => $fileName]));
             return;
         }
     }

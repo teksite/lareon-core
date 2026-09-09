@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Lareon\Modules\Meta\App\Models\MetaElement;
-use Teksite\Handler\Actions\ServiceResult;
-use Teksite\Handler\Actions\ServiceWrapper;
+use Teksite\Handler\Contracts\ServiceResult;
+use Teksite\Handler\Services\ServiceWrapper;
 use Teksite\Handler\Services\FetchDataService;
 
 class MetaElementLogic

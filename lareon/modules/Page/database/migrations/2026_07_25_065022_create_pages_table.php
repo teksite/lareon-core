@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Lareon\Steward\App\Enums\PublishStatusEnum;
 
 return new class extends Migration {
     /**
@@ -20,7 +21,7 @@ return new class extends Migration {
             $table->string('title');
             $table->text('excerpt')->nullable();
             $table->text('body')->nullable();
-            $table->tinyInteger('publish_status')->default(\Lareon\Steward\App\Enums\PublishStatusEnum::PUBLISHED->value);
+            $table->tinyInteger('publish_status')->default(PublishStatusEnum::PUBLISHED->value);
             $table->timestamp('published_at')->nullable();
             $table->timestamps();
             $table->softDeletes();

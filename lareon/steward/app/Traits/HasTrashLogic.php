@@ -3,9 +3,7 @@
 namespace Lareon\Steward\App\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
-use Teksite\Handler\Actions\ServiceResult;
-use Teksite\Handler\Contracts\ServiceResult as ServiceResultContract;
-use Teksite\Handler\Actions\ServiceWrapper;
+use Teksite\Handler\Services\ServiceWrapper;
 use Teksite\Handler\Services\FetchDataService;
 
 trait HasTrashLogic
@@ -71,7 +69,7 @@ trait HasTrashLogic
      */
     public function restore(int|array|null $id = null): ServiceResultContract
     {
-        if (is_null($id)) return new ServiceResult(false, null);
+        if (is_null($id)) return new \Teksite\Handler\Data\ServiceResult(false, null);
 
         return ServiceWrapper::make(true)
                              ->do(fn() => $this->scopedTrashedQuery($id)->restore())
