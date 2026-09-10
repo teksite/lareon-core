@@ -8,7 +8,7 @@ use Lareon\Modules\Page\App\Models\Page;
 use Lareon\Steward\App\Service\ContentSaverService;
 use Lareon\Steward\App\Traits\HasTrashLogic;
 use Teksite\Handler\Contracts\ServiceResultContract;
-use Teksite\Handler\Services\FetchDataService;
+use Teksite\Handler\Facade\FetchData;
 use Teksite\Handler\Services\ServiceWrapper;
 
 
@@ -22,7 +22,7 @@ class PageLogic
     public function all(mixed $fetchData = []): ServiceResultContract
     {
         return ServiceWrapper::make(false)->do(
-            fn() => FetchDataService::get(Page::class, ['title', 'slug', 'publish_status'], with: ['primaryMedia'])
+            fn() => FetchData::get(Page::class, ['title', 'slug', 'publish_status'], with: ['primaryMedia'])
         )->run();
     }
 
