@@ -1,5 +1,5 @@
 <x-lareon::panel-editor type="update" method="patch" :instance="$user" :action="route('panel.profile.password.update')" :hasTab="false">
-@section('title', __('lareon::global.crud.titles.edit',['attribute'=>__('profile')]) . "($user->fullname)")
+@section('title', __('lareon::global.crud.titles.edit',['attribute'=>__('profile')]) . "($user->name)")
     @section('nav' ,view('user::panel.pages.profile.partials.nav'))
     @section('form')
         <x-lareon::box type="y" class="space-y-3">

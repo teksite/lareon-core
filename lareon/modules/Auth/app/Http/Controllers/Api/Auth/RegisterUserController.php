@@ -22,7 +22,6 @@ class RegisterUserController extends Controller
     public function store(RegisterApiRequest $request)
     {
         $name = $request->input('name');
-        $lastname = $request->input('lastname');
         $password = $request->input('password');
         $contactType = $request->contactType;
         $contactValue = $request->contactValue;
@@ -31,8 +30,6 @@ class RegisterUserController extends Controller
 
         $data = [
             'name'                 => $name,
-            'lastname'             => $lastname,
-            'password'             => $password,
             $contactType->value    => $contactValue,
             $contactAltType->value => $contactAltValue,
         ];

@@ -1,5 +1,5 @@
 <x-lareon::admin-editor method="update" :instance="$user" :action="route('admin.users.update', $user)" :publishInfo="true" :publishStatus="false">
-    @section('title', __('lareon::global.crud.titles.edit',['attribute'=>__('user')]) . "($user->fullname)")
+    @section('title', __('lareon::global.crud.titles.edit',['attribute'=>__('user')]) . "($user->name)")
     @section('header.start')
         <x-lareon::links.nav :href="route('admin.users.index')" :content="__('lareon::global.buttons.all_attribute' ,['attribute'=>__('users')])" color="index" can="admin.user.read"/>
         <x-lareon::links.nav :href="route('admin.users.create')" :content="__('lareon::global.buttons.new_attribute' ,['attribute'=>__('user')])" color="create" can="admin.user.create"/>
@@ -15,7 +15,6 @@
             <x-lareon::editor.tabs.section>
                 <div class="grid gap-6 lg:grid-cols-2">
                     <x-lareon::editor.input :required="true" labelPosition="start" :label="__('first name')" name="name" :value="$user->name" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('name') , 'item'=>__('user')])"/>
-                    <x-lareon::editor.input :required="true" labelPosition="start" :label="__('last name')" name="lastname" :value="$user->lastname" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('last name') , 'item'=>__('user')])"/>
                 </div>
                 <div class="space-y-6">
                     <x-lareon::editor.input :required="true" type="tel" dir="ltr" :value="$user->phone" :label="__('phone')" name="phone" :placeholder="__('lareon::global.placeholders.write.unique.two',['attribute'=>__('phone') , 'item'=>__('user')])"/>

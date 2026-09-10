@@ -22,8 +22,7 @@ class UserSeeder extends Seeder
     private function makeAdmin()
     {
         $user = User::query()->create([
-            'name'     => 'sina',
-            'lastname' => 'Zangiband',
+            'name'     => 'sina Zangiband',
             'email'    => 'sina.zangiband@gmail.com',
             'password' => Hash::make('sina.zangiband@gmail.com'),
             'phone'    => '989126037279',

@@ -9,7 +9,6 @@
                 <legend class="legend">{{__('basic data')}}</legend>
                 <div class="grid gap-6 lg:grid-cols-2">
                     <x-lareon::editor.input :required="true" labelPosition="start" :label="__('first name')" name="name" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('name') , 'item'=>__('user')])"/>
-                    <x-lareon::editor.input :required="true" labelPosition="start" :label="__('last name')" name="lastname" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('last name') , 'item'=>__('user')])"/>
                 </div>
                 <div class="space-y-6">
                     <x-lareon::editor.input :required="true" type="tel" dir="ltr" :label="__('phone')" name="phone" :placeholder="__('lareon::global.placeholders.write.unique.two',['attribute'=>__('phone') , 'item'=>__('user')])"/>

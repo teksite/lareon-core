@@ -1,7 +1,7 @@
 <x-auth::layout :title="trans('lareon::global.auth.sign_up')" :indexable="true">
     <div class="w-full">
         <div class="text-center">
-            <x-tkicon type="outline" icon="user" size="32" class="mx-auto mb-3"></x-icon>
+            <x-tkicon type="outline" icon="user" size="32" class="mx-auto mb-3" />
             <h1 class="text-center !mb-0 text-xl">{{__('lareon::global.auth.register')}}</h1>
         </div>
         <hr class="my-6 border-zinc-300">
@@ -10,7 +10,6 @@
             <div class="mb-6 space-y-6">
                 <div class="grid gap-6 md:grid-cols-2">
                     <x-lareon::editor.input :label="__('name')" name="name" autocomplete="name" :placeholder="__('lareon::global.placeholders.write.one',['attribute'=>__('name')])" :required="true"/>
-                    <x-lareon::editor.input :label="__('lastname')" name="lastname" autocomplete="lastname" :placeholder="__('lareon::global.placeholders.write.one',['attribute'=>__('lastname')])" :required="true"/>
                 </div>
                 <div class=" space-y-6">
                     <x-lareon::editor.input :label="__('email')" name="email" autocomplete="email" :placeholder="__('lareon::global.placeholders.write.unique.one',['attribute'=>__('email')])" :required="true"/>
@@ -39,7 +38,7 @@
         @section('footer')
             <section class="">
                 <a href="/" class="text-sm inline-flex items-center gap-1">
-                    <x-tkicon icon="home" type="outline" size="20"></x-icon>
+                    <x-tkicon icon="home" type="outline" size="20" />
                     {{__('lareon::global.links.back_home')}}
                 </a>
             </section>

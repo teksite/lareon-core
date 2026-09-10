@@ -22,7 +22,7 @@ class UserLogic
     public function all(mixed $fetchData = [],): ServiceResultContract
     {
         return ServiceWrapper::make(false)
-                             ->do(fn() => FetchDataService::get(User::class, ['name', 'lastname', 'email', 'phone']))
+                             ->do(fn() => FetchDataService::get(User::class, ['name', 'email', 'phone']))
                              ->run();
     }
 
@@ -32,7 +32,7 @@ class UserLogic
     public function allByParent(mixed $fetchData = [],): ServiceResultContract
     {
         return ServiceWrapper::make(false)
-                             ->do(fn() => FetchDataService::get(auth()->user()->children(), ['name', 'lastname', 'email', 'phone']))
+                             ->do(fn() => FetchDataService::get(auth()->user()->children(), ['name', 'email', 'phone']))
                              ->run();
     }
 

@@ -23,7 +23,7 @@ use Teksite\Extralaravel\Rules\MobileRule;
 use Teksite\Extralaravel\Traits\MustVerifyPhone;
 
 #[UseFactory(UserFactory::class)]
-#[Fillable(['name', 'lastname', 'email', 'phone', 'password', 'slug' ,'parent_id'])]
+#[Fillable(['name', 'email', 'phone', 'password', 'slug' ,'parent_id'])]
 #[Hidden(['password', 'remember_token' ,'two_factor_secret','two_factor_recovery_codes','two_factor_confirmed_at'])]
 class User extends Authenticatable implements MustVerifyEmail , PasskeyUser
 {
@@ -49,7 +49,6 @@ class User extends Authenticatable implements MustVerifyEmail , PasskeyUser
         return match (true) {
             $operation === 'create'=> [
                 'name'     => 'required|string|max:255',
-                'lastname' => 'required|string|max:255',
                 'password' => 'required|string|min:6|confirmed',
                 'phone'    => ['required','unique:users', 'string', new MobileRule(MobilePatterns::IRAN)],
                 'email'    => 'required|string|email|max:255|unique:users',
@@ -57,7 +56,6 @@ class User extends Authenticatable implements MustVerifyEmail , PasskeyUser
             ],
             ($operation === 'update' && $userId) => [
                 'name'     => 'required|string|max:255',
-                'lastname' => 'required|string|max:255',
                 'password' => 'nullable|string|min:6|confirmed',
                 'phone'    => ['required', 'string', new MobileRule(MobilePatterns::IRAN), Rule::unique('users', 'phone')->ignore($userId)],
                 'email'    => ['required', 'string', 'email', Rule::unique('users', 'email')->ignore($userId)],
@@ -88,11 +86,5 @@ class User extends Authenticatable implements MustVerifyEmail , PasskeyUser
         // TODO: Implement sendPhoneVerificationNotification() method.
     }
 
-    public function fullname(): Attribute
-    {
-        return Attribute::make(
-            get: fn () => ucfirst($this->name) . ' ' . ucfirst($this->lastname)
-        );
-    }
 
 }

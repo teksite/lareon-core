@@ -1,5 +1,5 @@
 <x-lareon::panel-layout>
-    @section('title', __('lareon::global.crud.titles.edit',['attribute'=>__('profile')]) . "($user->fullname)")
+    @section('title', __('lareon::global.crud.titles.edit',['attribute'=>__('profile')]) . "($user->name)")
     @section('nav' ,view('user::panel.pages.profile.partials.nav'))
 
     <div class="inner-content">

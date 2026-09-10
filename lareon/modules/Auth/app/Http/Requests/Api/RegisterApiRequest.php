@@ -28,7 +28,6 @@ class RegisterApiRequest extends BaseApiRequest
             'contact_alt' => ['bail', 'required', 'string', 'min:5', 'max:100',],
             'password'    => ['bail', 'required', 'string','confirmed' ,'min:5', 'max:20'],
             'name'    => ['bail', 'required', 'string'],
-            'lastname'    => ['bail', 'required', 'string'],
             'token' => ['bail', 'required', 'string', 'min:5', 'max:100'],
         ];
     }

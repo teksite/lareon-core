@@ -12,13 +12,13 @@
                     <td>
                         <img src="{{$user->avatar ?? asset('assets/images/avatar-default.jpg')}}" alt="{{$user->name}}" width="35" height="35" fetchpriority="low" decoding="async" loading="lazy">
                     </td>
-                    <td>{{$user->fullname}}</td>
+                    <td>{{$user->name}}</td>
                     <td>{{$user->phone}}</td>
                     <td>{{$user->email}}</td>
                     <td>
                         <x-lareon::date :date="$user->created_at"/>
                     </td>
-                    <td> {{$user->parent()?->fullname ?? '-'}} </td>
+                    <td> {{$user->parent()?->name ?? '-'}} </td>
                     <td>
                         <x-lareon::action-box class="action">
                             @if(\Illuminate\Support\Facades\Route::has('admin.users.meta.edit'))
