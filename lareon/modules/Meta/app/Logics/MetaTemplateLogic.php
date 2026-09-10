@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 use Lareon\Modules\Meta\App\Models\MetaTemplate;
 use Teksite\Handler\Contracts\ServiceResultContract;
 use Teksite\Handler\Data\ServiceResult;
-use Teksite\Handler\Services\FetchDataService;
+use Teksite\Handler\Facade\FetchData;
 use Teksite\Handler\Services\ServiceWrapper;
 
 class MetaTemplateLogic
@@ -21,7 +21,7 @@ class MetaTemplateLogic
     public function all(mixed $fetchData = [],): ServiceResultContract
     {
         return ServiceWrapper::make(false)
-                             ->do(fn() => FetchDataService::get(MetaTemplate::class, ['title', 'template']),
+                             ->do(fn() => FetchData::get(MetaTemplate::class, ['title', 'template']),
                              )->run();
     }
 

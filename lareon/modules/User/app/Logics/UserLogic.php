@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 use Lareon\Modules\User\App\Models\User;
 use Teksite\Authorize\Models\Role;
 use Teksite\Handler\Contracts\ServiceResultContract;
-use Teksite\Handler\Services\FetchDataService;
+use Teksite\Handler\Facade\FetchData;
 use Teksite\Handler\Services\ServiceWrapper;
 use Throwable;
 
@@ -22,7 +22,7 @@ class UserLogic
     public function all(mixed $fetchData = [],): ServiceResultContract
     {
         return ServiceWrapper::make(false)
-                             ->do(fn() => FetchDataService::get(User::class, ['name', 'email', 'phone']))
+                             ->do(fn() => FetchData::get(User::class, ['name', 'email', 'phone']))
                              ->run();
     }
 
@@ -32,7 +32,7 @@ class UserLogic
     public function allByParent(mixed $fetchData = [],): ServiceResultContract
     {
         return ServiceWrapper::make(false)
-                             ->do(fn() => FetchDataService::get(auth()->user()->children(), ['name', 'email', 'phone']))
+                             ->do(fn() => FetchData::get(auth()->user()->children(), ['name', 'email', 'phone']))
                              ->run();
     }
 
@@ -60,7 +60,7 @@ class UserLogic
             $inputs['slug'] ??= strtolower(uniqid().'-'.Str::random(4));
             $inputs['parent_id'] = auth()->id();
             $user = User::create($inputs);
-            $rolesIds = $this->assignRole($user, config('general.default_user_role', 'user'));
+//            $this->assignRole($user, config('general.default_user_role', 'user'));
             return $user;
         })->run();
     }

@@ -59,13 +59,12 @@ class UsersController extends Controller implements HasMiddleware
     public function store(NewUserRequest $request)
     {
         $res = $this->logic->create($request->validated());
-
         if ($res->success) {
             $this->logic->markAsVerified($res->result, $request->validated('email_verified_at'), $request->validated('phone_verified_at'));
             event(new UserCrudEvent($res->result, CrudTypeEnum::CREATE, $request->validated()));
             return Responder::success(trans('lareon::global.crud.success.created', ['attribute' => __('user')]))->route('admin.users.edit', $res->result)->go();
         }
-        return Responder::failed(trans('lareon::global.crud.error.created', ['attribute' => __('user')]));
+        return Responder::failed(trans('lareon::global.crud.error.created', ['attribute' => __('user')]))->go();
 
     }
 

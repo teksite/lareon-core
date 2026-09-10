@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 use Lareon\Modules\Meta\App\Models\MetaElement;
 use Teksite\Handler\Contracts\ServiceResultContract;
 use Teksite\Handler\Data\ServiceResult;
-use Teksite\Handler\Services\FetchDataService;
+use Teksite\Handler\Facade\FetchData;
 use Teksite\Handler\Services\ServiceWrapper;
 
 class MetaElementLogic
@@ -20,7 +20,7 @@ class MetaElementLogic
     public function all(mixed $fetchData = [],): ServiceResultContract
     {
         return ServiceWrapper::make(false)
-                             ->do(fn() => FetchDataService::get(MetaElement::class, ['title', 'element']),
+                             ->do(fn() => FetchData::get(MetaElement::class, ['title', 'element']),
                              )->run();
     }
 

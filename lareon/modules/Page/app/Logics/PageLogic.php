@@ -7,9 +7,9 @@ use Illuminate\Support\Arr;
 use Lareon\Modules\Page\App\Models\Page;
 use Lareon\Steward\App\Service\ContentSaverService;
 use Lareon\Steward\App\Traits\HasTrashLogic;
-use Teksite\Handler\Actions\ServiceWrapper;
-use Teksite\Handler\contracts\ServiceResult;
+use Teksite\Handler\Contracts\ServiceResultContract;
 use Teksite\Handler\Services\FetchDataService;
+use Teksite\Handler\Services\ServiceWrapper;
 
 
 class PageLogic
@@ -19,7 +19,7 @@ class PageLogic
     /**
      * @throws \Throwable
      */
-    public function all(mixed $fetchData = []): ServiceResult
+    public function all(mixed $fetchData = []): ServiceResultContract
     {
         return ServiceWrapper::make(false)->do(
             fn() => FetchDataService::get(Page::class, ['title', 'slug', 'publish_status'], with: ['primaryMedia'])
@@ -31,7 +31,7 @@ class PageLogic
      * @throws BindingResolutionException
      * @throws \Throwable
      */
-    public function first(array $inputs = [], bool $any = true): ServiceResult
+    public function first(array $inputs = [], bool $any = true): ServiceResultContract
     {
         return ServiceWrapper::make(false)->do(function () use ($inputs) {
             $query = Page::query();
@@ -45,7 +45,7 @@ class PageLogic
     /**
      * @throws \Throwable
      */
-    public function create(array $inputs = []): ServiceResult
+    public function create(array $inputs = []): ServiceResultContract
     {
         return ServiceWrapper::make(true)->do(function () use ($inputs) {
             return ContentSaverService::create(new Page, $inputs);
@@ -55,7 +55,7 @@ class PageLogic
     /**
      * @throws \Throwable
      */
-    public function update(Page $page, array $inputs = []): ServiceResult
+    public function update(Page $page, array $inputs = []): ServiceResultContract
     {
         return ServiceWrapper::make(true)->do(function () use ($page, $inputs) {
             return ContentSaverService::update($page, $inputs);
@@ -65,7 +65,7 @@ class PageLogic
     /**
      * @throws \Throwable
      */
-    public function delete(Page $page): ServiceResult
+    public function delete(Page $page): ServiceResultContract
     {
         return ServiceWrapper::make(false)->do(function () use ($page) {
             return ContentSaverService::delete($page);

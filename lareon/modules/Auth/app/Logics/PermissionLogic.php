@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 use Teksite\Authorize\Models\Permission;
 use Teksite\Handler\Contracts\ServiceResultContract;
-use Teksite\Handler\Services\FetchDataService;
+use Teksite\Handler\Facade\FetchData;
 use Teksite\Handler\Services\ServiceWrapper;
 
 
@@ -19,7 +19,7 @@ class PermissionLogic
     public function all(mixed $fetchData = []): ServiceResultContract
     {
         return ServiceWrapper::make(false)
-                             ->do(fn() => FetchDataService::get(Permission::class, 'title'))
+                             ->do(fn() => FetchData::get(Permission::class, 'title'))
                              ->run();
 
     }
