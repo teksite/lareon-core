@@ -3,8 +3,9 @@
 namespace Lareon\Steward\App\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
+use Teksite\Handler\Contracts\ServiceResultContract;
+use Teksite\Handler\Facade\FetchData;
 use Teksite\Handler\Services\ServiceWrapper;
-use Teksite\Handler\Services\FetchDataService;
 
 trait HasTrashLogic
 {
@@ -55,7 +56,7 @@ trait HasTrashLogic
     public function getTrashes(int $perPage = 25, mixed $fetchData = []): ServiceResultContract
     {
         return ServiceWrapper::make(false)
-                             ->do(fn() => FetchDataService::get(
+                             ->do(fn() => FetchData::get(
                                  $this->trashedQuery(),
                                  ['title',  'deleted_at'],
                                  perPage: $perPage,

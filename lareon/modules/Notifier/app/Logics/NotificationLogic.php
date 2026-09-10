@@ -8,9 +8,8 @@ use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Model;
 use Lareon\Modules\Notifier\App\Jobs\PrepareAwarenessNotificationJob;
 use Lareon\Modules\User\App\Models\User;
-use Teksite\Authorize\Models\Role;
-use Teksite\Handler\Actions\ServiceWrapper;
-use Teksite\Handler\Services\FetchDataService;
+use Teksite\Handler\Facade\FetchData;
+use Teksite\Handler\Services\ServiceWrapper;
 
 
 class NotificationLogic
@@ -23,7 +22,7 @@ class NotificationLogic
     {
         $user ??= auth()->user();
         return ServiceWrapper::make(false)->do(function () use ($user) {
-            return FetchDataService::get($user->notifications(), ['title']);
+            return FetchData::get($user->notifications(), ['title']);
         })->run();
     }
 
