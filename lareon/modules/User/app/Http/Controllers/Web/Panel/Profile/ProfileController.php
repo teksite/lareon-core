@@ -8,8 +8,6 @@ use Illuminate\Routing\Controllers\Middleware;
 use Lareon\Modules\User\App\Events\UserCrudEvent;
 use Lareon\Modules\User\App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Lareon\Modules\User\App\Http\Requests\Admin\NewUserRequest;
-use Lareon\Modules\User\App\Http\Requests\Admin\UpdateUserRequest;
 use Lareon\Modules\User\App\Http\Requests\Panel\UpdateProfileRequest;
 use Lareon\Modules\User\App\Logics\UserLogic;
 use Lareon\Modules\User\App\Models\User;

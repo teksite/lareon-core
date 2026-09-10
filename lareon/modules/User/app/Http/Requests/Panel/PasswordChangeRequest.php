@@ -5,7 +5,6 @@ namespace Lareon\Modules\User\App\Http\Requests\Panel;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
-use Lareon\Modules\User\App\Models\User;
 
 class PasswordChangeRequest extends FormRequest
 {

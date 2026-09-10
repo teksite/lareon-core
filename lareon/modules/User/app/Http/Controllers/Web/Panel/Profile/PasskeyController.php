@@ -9,8 +9,8 @@ use Laravel\Passkeys\Passkey;
 use Lareon\Modules\User\App\Http\Controllers\Controller;
 use Lareon\Modules\User\App\Logics\UserLogic;
 use Lareon\Modules\User\App\Models\User;
-use Teksite\Handler\Actions\ServiceWrapper;
 use Teksite\Handler\Facade\Responder;
+use Teksite\Handler\Services\ServiceWrapper;
 
 class PasskeyController extends Controller implements HasMiddleware
 {

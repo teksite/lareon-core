@@ -3,7 +3,6 @@
 namespace Lareon\Modules\User\App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Lareon\Modules\User\App\Models\User;
 
 class UpdateUserACLRequest extends FormRequest
 {

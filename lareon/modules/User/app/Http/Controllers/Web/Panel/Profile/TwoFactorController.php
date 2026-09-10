@@ -5,15 +5,10 @@ namespace Lareon\Modules\User\App\Http\Controllers\Web\Panel\Profile;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
-use Lareon\Modules\User\App\Events\UserCrudEvent;
 use Lareon\Modules\User\App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Lareon\Modules\User\App\Http\Requests\Admin\NewUserRequest;
-use Lareon\Modules\User\App\Http\Requests\Admin\UpdateUserRequest;
 use Lareon\Modules\User\App\Logics\UserLogic;
 use Lareon\Modules\User\App\Models\User;
-use Lareon\Steward\App\Enums\CrudTypeEnum;
-use Teksite\Handler\Facade\Responder;
 
 class TwoFactorController extends Controller implements HasMiddleware
 {

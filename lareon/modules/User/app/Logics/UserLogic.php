@@ -5,22 +5,21 @@ namespace Lareon\Modules\User\App\Logics;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Arr;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Lareon\Modules\User\App\Models\User;
 use Teksite\Authorize\Models\Role;
-use Teksite\Handler\Actions\ServiceWrapper;
-use Teksite\Handler\contracts\ServiceResult;
+use Teksite\Handler\Contracts\ServiceResultContract;
 use Teksite\Handler\Services\FetchDataService;
+use Teksite\Handler\Services\ServiceWrapper;
+use Throwable;
 
 
 class UserLogic
 {
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
-    public function all(mixed $fetchData = []): ServiceResult
+    public function all(mixed $fetchData = [],): ServiceResultContract
     {
         return ServiceWrapper::make(false)
                              ->do(fn() => FetchDataService::get(User::class, ['name', 'lastname', 'email', 'phone']))
@@ -28,9 +27,9 @@ class UserLogic
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
-    public function allByParent(mixed $fetchData = []): ServiceResult
+    public function allByParent(mixed $fetchData = [],): ServiceResultContract
     {
         return ServiceWrapper::make(false)
                              ->do(fn() => FetchDataService::get(auth()->user()->children(), ['name', 'lastname', 'email', 'phone']))
@@ -40,9 +39,9 @@ class UserLogic
 
     /**
      * @throws BindingResolutionException
-     * @throws \Throwable
+     * @throws Throwable
      */
-    public function first(array $inputs = [], bool $any = true): ServiceResult
+    public function first(array $inputs = [], bool $any = true,): ServiceResultContract
     {
         return ServiceWrapper::make(false)->do(function () use ($inputs) {
             $query = User::query();
@@ -53,12 +52,12 @@ class UserLogic
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
-    public function create(array $inputs = []): ServiceResult
+    public function create(array $inputs = [],): ServiceResultContract
     {
         return ServiceWrapper::make(true)->do(function () use ($inputs) {
-            $inputs['slug'] ??= strtolower(uniqid() . '-' . Str::random(4));
+            $inputs['slug'] ??= strtolower(uniqid().'-'.Str::random(4));
             $inputs['parent_id'] = auth()->id();
             $user = User::create($inputs);
             $rolesIds = $this->assignRole($user, config('general.default_user_role', 'user'));
@@ -67,12 +66,12 @@ class UserLogic
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
-    public function update(Authenticatable|User $user, array $inputs = []): ServiceResult
+    public function update(Authenticatable|User $user, array $inputs = [],): ServiceResultContract
     {
         return ServiceWrapper::make(false)->do(function () use ($user, $inputs) {
-            if (!isset($inputs['password']) || $inputs['password'] === null)  unset($inputs['password']);
+            if (!isset($inputs['password']) || $inputs['password'] === null) unset($inputs['password']);
 
             $user->fill(Arr::except($inputs, ['permissions', 'roles', 'enable_2fa', 'meta', 'seo']));
             $this->toggle2fa($user, $inputs['enable_2fa'] ?? null);
@@ -83,19 +82,19 @@ class UserLogic
 
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
-    public function changePassword(Authenticatable|User $user, array $inputs = []): ServiceResult
+    public function changePassword(Authenticatable|User $user, array $inputs = [],): ServiceResultContract
     {
         return ServiceWrapper::make(false)->do(function () use ($user, $inputs) {
-         $user->update(['password' =>$inputs['password']]);
+            $user->update(['password' => $inputs['password']]);
         })->run();
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
-    public function delete(Authenticatable|User $user): ServiceResult
+    public function delete(Authenticatable|User $user,): ServiceResultContract
     {
         return ServiceWrapper::make(false)->do(function () use ($user) {
             $user->roles()->detach();
@@ -104,9 +103,9 @@ class UserLogic
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
-    public function markAsVerified(Authenticatable|User $user, int|null|bool $email = -1, int|null|bool $phone = -1): ServiceResult
+    public function markAsVerified(Authenticatable|User $user, int|null|bool $email = -1, int|null|bool $phone = -1,): ServiceResultContract
     {
         return ServiceWrapper::make(false)->do(function () use ($phone, $email, $user) {
             $cols = [
@@ -131,14 +130,14 @@ class UserLogic
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
-    public function assignRole(Authenticatable|User $user, string|int|Role $inputs, string $action = 'creating'): ServiceResult
+    public function assignRole(Authenticatable|User $user, string|int|Role $inputs, string $action = 'creating',): ServiceResultContract
     {
         return ServiceWrapper::make(false)->do(function () use ($inputs, $action, $user) {
             $roleArray = $user->assignRole($inputs);
             if (empty($roleArray)) {
-                throw new \Exception("the user with id: " . $user->id . " has no role => attaching role is failed in $action the user");
+                throw new \Exception("the user with id: ".$user->id." has no role => attaching role is failed in $action the user");
             }
         })->run();
     }
@@ -146,9 +145,9 @@ class UserLogic
 
     /**
      * @throws BindingResolutionException
-     * @throws \Throwable
+     * @throws Throwable
      */
-    public function updateACL(Authenticatable|User $user, array $inputs)
+    public function updateACL(Authenticatable|User $user, array $inputs,)
     {
         return ServiceWrapper::make(false)->do(function () use ($inputs, $user) {
             $roles = $inputs['roles'] ?? [];
@@ -165,7 +164,7 @@ class UserLogic
     }
 
 
-    public function toggle2fa(Authenticatable|User $user, int|null $status = null): void
+    public function toggle2fa(Authenticatable|User $user, int|null $status = null,): void
     {
         if ($status === 0) {
             $user->forceFill([
