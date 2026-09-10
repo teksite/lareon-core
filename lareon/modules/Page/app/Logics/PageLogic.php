@@ -22,7 +22,7 @@ class PageLogic
     public function all(mixed $fetchData = []): ServiceResultContract
     {
         return ServiceWrapper::make(false)->do(
-            fn() => FetchData::get(Page::class, ['title', 'slug', 'publish_status'], with: ['primaryMedia'])
+            fn() => FetchData::get(Page::class, ['title', 'slug', 'publish_status'], with:[ 'primaryMedia'])
         )->run();
     }
 

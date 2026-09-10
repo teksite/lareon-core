@@ -36,7 +36,6 @@ class PagesController extends Controller implements HasMiddleware
     {
         $pages = $this->logic->all()->result;
         $trashCount = $this->logic->trashCount()->result;
-
         return view('page::admin.pages.pages.index', compact('pages', 'trashCount'));
     }
 
@@ -79,7 +78,6 @@ class PagesController extends Controller implements HasMiddleware
      */
     public function edit(Page $page)
     {
-
         return view('page::admin.pages.pages.edit', compact('page'));
     }
 
