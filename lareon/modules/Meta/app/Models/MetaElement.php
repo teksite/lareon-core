@@ -5,6 +5,7 @@ namespace Lareon\Modules\Meta\App\Models;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Validation\Rule;
 
@@ -37,7 +38,7 @@ class MetaElement extends Model
         };
     }
 
-    public function templates(): HasMany
+    public function templates(): BelongsToMany
     {
         return $this->belongsToMany(MetaTemplate::class, 'templates_elements','element_id','template_id')->withPivot(['name' , 'title' ,'model_type' , 'settings']);
     }

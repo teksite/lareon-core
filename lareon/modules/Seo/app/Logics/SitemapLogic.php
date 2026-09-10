@@ -9,8 +9,8 @@ use Lareon\Modules\Seo\App\Services\CrawlerSitemapGeneratorService;
 use Lareon\Modules\Seo\App\Services\DbSitemapGeneratorService;
 use Lareon\Modules\Seo\App\Services\SitemapModelScannerService;
 use Symfony\Component\Finder\SplFileInfo;
-use Teksite\Handler\Actions\ServiceWrapper;
-
+use Teksite\Handler\Contracts\ServiceResultContract;
+use Teksite\Handler\Services\ServiceWrapper;
 
 class SitemapLogic
 {
@@ -19,7 +19,7 @@ class SitemapLogic
      * @throws BindingResolutionException
      * @throws \Throwable
      */
-    public function getFiles()
+    public function getFiles(): ServiceResultContract
     {
         return ServiceWrapper::make(false)->do(function () {
             $filesUrl = [];
@@ -33,8 +33,8 @@ class SitemapLogic
             if (file_exists($indexPath)) $indexUrl = url('/sitemap.xml');
             if (File::isDirectory($sitemapsDir)) {
                 $filesUrl = collect(File::files($sitemapsDir))
-                    ->filter(fn(SplFileInfo $file) => $file->getExtension() === 'xml')
-                    ->map(fn(SplFileInfo $file) => url('/sitemaps/' . $file->getFilename()))
+                    ->filter(fn(SplFileInfo $file,) => $file->getExtension() === 'xml')
+                    ->map(fn(SplFileInfo $file,) => url('/sitemaps/'.$file->getFilename()))
                     ->values()
                     ->toArray();
             }
@@ -43,12 +43,12 @@ class SitemapLogic
                 'index' => $indexUrl,
                 'files' => $filesUrl,
             ];
-        }
+        },
         )->run();
 
     }
 
-    public function generate()
+    public function generate(): ServiceResultContract
     {
         return ServiceWrapper::make(false)->do(function () {
             match (config('seo,sitemap.generator_type', SitemapGeneratorType::DB)) {
@@ -59,7 +59,7 @@ class SitemapLogic
         })->run();
     }
 
-    public function scan()
+    public function scan(): ServiceResultContract
     {
 
         return ServiceWrapper::make(false)->do(function () {

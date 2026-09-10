@@ -4,7 +4,6 @@ namespace Lareon\Modules\Meta\App\Logics;
 
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Arr;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Lareon\Modules\Meta\App\Models\MetaTemplate;
@@ -12,11 +11,12 @@ use Teksite\Handler\Contracts\ServiceResultContract;
 use Teksite\Handler\Data\ServiceResult;
 use Teksite\Handler\Facade\FetchData;
 use Teksite\Handler\Services\ServiceWrapper;
+use Throwable;
 
 class MetaTemplateLogic
 {
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function all(mixed $fetchData = [],): ServiceResultContract
     {
@@ -28,7 +28,7 @@ class MetaTemplateLogic
 
     /**
      * @throws BindingResolutionException
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function first(array $inputs = [], bool $any = true,): ServiceResultContract
     {
@@ -41,7 +41,7 @@ class MetaTemplateLogic
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function create(array $inputs = [],): ServiceResultContract
     {
@@ -51,7 +51,7 @@ class MetaTemplateLogic
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function update(MetaTemplate $template, array $inputs = [],): ServiceResultContract
     {
@@ -65,7 +65,7 @@ class MetaTemplateLogic
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function delete(MetaTemplate $template,): ServiceResultContract
     {
@@ -95,7 +95,7 @@ class MetaTemplateLogic
 
     /**
      * @throws BindingResolutionException
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function getFiles(?string $path = null,): ServiceResult
     {

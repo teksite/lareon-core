@@ -3,8 +3,9 @@
 namespace Lareon\Modules\Seo\App\Logics;
 
 use Illuminate\Support\Facades\File;
-use Teksite\Handler\Actions\ServiceWrapper;
-use Teksite\Handler\contracts\ServiceResult;
+use Teksite\Handler\Contracts\ServiceResultContract;
+use Teksite\Handler\Data\ServiceResult;
+use Teksite\Handler\Services\ServiceWrapper;
 
 
 class RobotLogic
@@ -25,7 +26,7 @@ class RobotLogic
      * @return ServiceResult The file contents
      * @throws
      */
-    public function getContent(): ServiceResult
+    public function getContent(): ServiceResultContract
     {
         return ServiceWrapper::make(hasTransaction: false)->do(function () {
             $this->ensureFileExists();
@@ -37,10 +38,10 @@ class RobotLogic
      * Updates the contents of the robots.txt file
      *
      * @param array $inputs Array containing the new content under 'content' key
-     * @return ServiceResult The updated file contents
+     * @return ServiceResultContract The updated file contents
      * @throws
      */
-    public function changeContent(array $inputs): ServiceResult
+    public function changeContent(array $inputs,): ServiceResultContract
     {
         return ServiceWrapper::make(hasTransaction: false)->do(function () use ($inputs) {
             $content = trim((string)($inputs['content'] ?? ''));
@@ -53,9 +54,9 @@ class RobotLogic
     private function ensureFileExists(): void
     {
         if (File::exists($this->filePath)) return;
-
         File::put($this->filePath, $this->defaultContent(), lock: true);
     }
+
     /**
      * default content for robot.txt
      *
@@ -68,32 +69,32 @@ class RobotLogic
         $sitemapUrl = "{$homeUrl}/sitemap.xml";
 
         return <<<EOT
-        User-agent: *
-        Disallow: {$adminPath}/
-        Disallow: /login/
-        Allow: /
+            User-agent: *
+            Disallow: {$adminPath}/
+            Disallow: /login/
+            Allow: /
 
-        Sitemap: {$sitemapUrl}
+            Sitemap: {$sitemapUrl}
 
-        # Prevent crawling of search results pages
-        Disallow: /search/
+            # Prevent crawling of search results pages
+            Disallow: /search/
 
-        # Block crawling of common temporary or cache files
-        Disallow: /*.php$
-        Disallow: /*.tmp$
+            # Block crawling of common temporary or cache files
+            Disallow: /*.php$
+            Disallow: /*.tmp$
 
-        # Crawl delay for politeness (optional)
-        Crawl-delay: 10
+            # Crawl delay for politeness (optional)
+            Crawl-delay: 10
 
-        # Host directive (optional, for some search engines)
-        Host: {$homeUrl}
-        EOT;
+            # Host directive (optional, for some search engines)
+            Host: {$homeUrl}
+            EOT;
     }
 
-    private function extractPath(string $url): string
+    private function extractPath(string $url,): string
     {
         $path = parse_url($url, PHP_URL_PATH) ?: '/tkadmin';
-        return '/' . ltrim($path, '/');
+        return '/'.ltrim($path, '/');
     }
 
 }

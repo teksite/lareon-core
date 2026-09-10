@@ -7,8 +7,6 @@ use Lareon\Modules\Seo\App\Schema\SchemaOption;
 
 trait UseValidating
 {
-
-
     protected function validateContactPoint(Validator $validator, string $path): void
     {
 

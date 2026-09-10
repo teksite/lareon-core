@@ -60,7 +60,7 @@ class UserLogic
             $inputs['slug'] ??= strtolower(uniqid().'-'.Str::random(4));
             $inputs['parent_id'] = auth()->id();
             $user = User::create($inputs);
-//            $this->assignRole($user, config('general.default_user_role', 'user'));
+            $this->assignRole($user, config('general.default_user_role', 'user'));
             return $user;
         })->run();
     }
