@@ -8,20 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Lareon\Modules\Meta\App\Models\MetaTemplate;
-use Teksite\Handler\Contracts\ServiceResult;
-use Teksite\Handler\Services\ServiceWrapper;
+use Teksite\Handler\Contracts\ServiceResultContract;
+use Teksite\Handler\Data\ServiceResult;
 use Teksite\Handler\Services\FetchDataService;
+use Teksite\Handler\Services\ServiceWrapper;
 
 class MetaTemplateLogic
 {
     /**
      * @throws \Throwable
      */
-    public function all(mixed $fetchData = []): ServiceResult
+    public function all(mixed $fetchData = [],): ServiceResultContract
     {
         return ServiceWrapper::make(false)
-                             ->do(
-                                 fn() => FetchDataService::get(MetaTemplate::class, ['title', 'template'])
+                             ->do(fn() => FetchDataService::get(MetaTemplate::class, ['title', 'template']),
                              )->run();
     }
 
@@ -30,7 +30,7 @@ class MetaTemplateLogic
      * @throws BindingResolutionException
      * @throws \Throwable
      */
-    public function first(array $inputs = [], bool $any = true): ServiceResult
+    public function first(array $inputs = [], bool $any = true,): ServiceResultContract
     {
         return ServiceWrapper::make(false)->do(function () use ($inputs) {
             $query = MetaTemplate::query();
@@ -43,7 +43,7 @@ class MetaTemplateLogic
     /**
      * @throws \Throwable
      */
-    public function create(array $inputs = []): ServiceResult
+    public function create(array $inputs = [],): ServiceResultContract
     {
         return ServiceWrapper::make(true)->do(function () use ($inputs) {
             return MetaTemplate::query()->create($inputs);
@@ -53,7 +53,7 @@ class MetaTemplateLogic
     /**
      * @throws \Throwable
      */
-    public function update(MetaTemplate $template, array $inputs = []): ServiceResult
+    public function update(MetaTemplate $template, array $inputs = [],): ServiceResultContract
     {
         return ServiceWrapper::make(false)->do(function () use ($template, $inputs) {
             $template->update(['title' => $inputs['title']]);
@@ -67,7 +67,7 @@ class MetaTemplateLogic
     /**
      * @throws \Throwable
      */
-    public function delete(MetaTemplate $template): ServiceResult
+    public function delete(MetaTemplate $template,): ServiceResultContract
     {
         return ServiceWrapper::make(false)->do(function () use ($template) {
             $template->delete();
@@ -75,7 +75,7 @@ class MetaTemplateLogic
     }
 
 
-    public function attachElements(MetaTemplate $template, array $elements = []): void
+    public function attachElements(MetaTemplate $template, array $elements = [],): void
     {
         $template->elements()->detach();
         foreach ($elements['items'] ?? [] as $key => $element) {
@@ -84,7 +84,7 @@ class MetaTemplateLogic
                 'name'     => $element['name'],
                 'title'    => $element['title'],
                 'settings' => [
-                    'arguments'=> $element['args'] ?? [],
+                    'arguments' => $element['args'] ?? [],
                 ],
                 'sort'     => $key,
 
@@ -97,20 +97,20 @@ class MetaTemplateLogic
      * @throws BindingResolutionException
      * @throws \Throwable
      */
-    public function getFiles(?string $path = null): ServiceResult
+    public function getFiles(?string $path = null,): ServiceResult
     {
         $models = config('meta.models', []);
         $files = [];
         foreach ($models as $key => ['model' => $model, 'path' => $path]) {
-            $dir = resource_path('views/' . $path);
+            $dir = resource_path('views/'.$path);
             if (!File::isDirectory($dir)) return new ServiceResult(true, []);
 
             $files[$key] = collect(File::allFiles($dir))
-                ->map(function ($file) use ($path) {
+                ->map(function ($file,) use ($path) {
 
                     return Str::of($file->getRelativePathname())
-                              ->prepend($path . '/')
-                              ->after($path . DIRECTORY_SEPARATOR)
+                              ->prepend($path.'/')
+                              ->after($path.DIRECTORY_SEPARATOR)
                               ->replace('\\', '/')
                               ->replaceLast('.blade.php', '')
                               ->toString();
@@ -123,7 +123,7 @@ class MetaTemplateLogic
     }
 
 
-    public function getUnregistered(?string $path = null): array
+    public function getUnregistered(?string $path = null,): array
     {
         $files = $this->getFiles($path)->result ?? [];
 
@@ -131,10 +131,10 @@ class MetaTemplateLogic
 
         $unregistered = [];
 
-        foreach ($files as $key => $files) {
-            foreach ($files as $file) {
+        foreach ($files as $key => $fils) {
+            foreach ($fils as $file) {
 
-                $isRegistered = MetaTemplate::query()->where(function ($q) use ($file, $key) {
+                $isRegistered = MetaTemplate::query()->where(function ($q,) use ($file, $key) {
                     $q->where('model_type', $key)->where('template', $file);
 
                 })->exists();

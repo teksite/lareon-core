@@ -4,24 +4,23 @@ namespace Lareon\Modules\Meta\App\Logics;
 
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Arr;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Lareon\Modules\Meta\App\Models\MetaElement;
-use Teksite\Handler\Contracts\ServiceResult;
-use Teksite\Handler\Services\ServiceWrapper;
+use Teksite\Handler\Contracts\ServiceResultContract;
+use Teksite\Handler\Data\ServiceResult;
 use Teksite\Handler\Services\FetchDataService;
+use Teksite\Handler\Services\ServiceWrapper;
 
 class MetaElementLogic
 {
     /**
      * @throws \Throwable
      */
-    public function all(mixed $fetchData = []): ServiceResult
+    public function all(mixed $fetchData = [],): ServiceResultContract
     {
         return ServiceWrapper::make(false)
-                             ->do(
-                                 fn() => FetchDataService::get(MetaElement::class, ['title', 'element'])
+                             ->do(fn() => FetchDataService::get(MetaElement::class, ['title', 'element']),
                              )->run();
     }
 
@@ -30,7 +29,7 @@ class MetaElementLogic
      * @throws BindingResolutionException
      * @throws \Throwable
      */
-    public function first(array $inputs = [], bool $any = true): ServiceResult
+    public function first(array $inputs = [], bool $any = true,): ServiceResultContract
     {
         return ServiceWrapper::make(false)->do(function () use ($inputs) {
             $query = MetaElement::query();
@@ -43,7 +42,7 @@ class MetaElementLogic
     /**
      * @throws \Throwable
      */
-    public function create(array $inputs = []): ServiceResult
+    public function create(array $inputs = [],): ServiceResultContract
     {
         return ServiceWrapper::make(true)->do(function () use ($inputs) {
             return MetaElement::query()->create($inputs);
@@ -53,7 +52,7 @@ class MetaElementLogic
     /**
      * @throws \Throwable
      */
-    public function update(MetaElement $elements, array $inputs = []): ServiceResult
+    public function update(MetaElement $elements, array $inputs = [],): ServiceResultContract
     {
         return ServiceWrapper::make(false)->do(function () use ($elements, $inputs) {
             $elements->update([
@@ -67,7 +66,7 @@ class MetaElementLogic
     /**
      * @throws \Throwable
      */
-    public function delete(MetaElement $elements): ServiceResult
+    public function delete(MetaElement $elements,): ServiceResultContract
     {
         return ServiceWrapper::make(false)->do(function () use ($elements) {
             $elements->delete();
@@ -79,7 +78,7 @@ class MetaElementLogic
      * @throws BindingResolutionException
      * @throws \Throwable
      */
-    public function getFiles(?string $path = null): ServiceResult
+    public function getFiles(?string $path = null,): ServiceResult
     {
         $config = config('meta.elements');
         $module = $config['modules'] ?? 'meta';
@@ -90,9 +89,9 @@ class MetaElementLogic
 
 
         $files = collect(File::allFiles($path))
-            ->map(function ($file) use ($path) {
+            ->map(function ($file,) use ($path) {
                 return Str::of($file->getPathname())
-                          ->after($path . DIRECTORY_SEPARATOR)
+                          ->after($path.DIRECTORY_SEPARATOR)
                           ->replace('\\', '/')
                           ->replaceLast('.blade.php', '')
                           ->toString();
@@ -108,7 +107,7 @@ class MetaElementLogic
      * @throws BindingResolutionException
      * @throws \Throwable
      */
-    public function getElementPath(string $element, ?string $path = null): ServiceResult
+    public function getElementPath(string $element, ?string $path = null,): ServiceResult
     {
         $config = config('meta.elements');
         $module = $config['modules'] ?? 'meta';
@@ -117,7 +116,7 @@ class MetaElementLogic
 
         $element = trim($element, '/');
 
-        $file = $path . DIRECTORY_SEPARATOR . $element . '.php';
+        $file = $path.DIRECTORY_SEPARATOR.$element.'.php';
 
         if (!File::exists($file)) return new ServiceResult(false, null);
 
@@ -128,21 +127,21 @@ class MetaElementLogic
      * @throws BindingResolutionException
      * @throws \Throwable
      */
-    public function getElementView(string $element): ServiceResult
+    public function getElementView(string $element,): ServiceResult
     {
         $base = modulePath('meta', 'resources/views/components/editor/extra', true);
 
-        $file = $base . DIRECTORY_SEPARATOR . $element . '.blade.php';
+        $file = $base.DIRECTORY_SEPARATOR.$element.'.blade.php';
 
         if (!File::exists($file)) return new ServiceResult(false, null);
 
         $element = str_replace('/', '.', $element);
 
-        return new ServiceResult(true, 'meta::components.editor.extra.' . $element);
+        return new ServiceResult(true, 'meta::components.editor.extra.'.$element);
     }
 
 
-    public function getUnregistered(?string $path = null): array
+    public function getUnregistered(?string $path = null,): array
     {
         $files = $this->getFiles($path)->result ?? [];
         $registeredPath = MetaElement::query()->select('element')->get()->pluck('element')->toArray();
@@ -157,7 +156,7 @@ class MetaElementLogic
     {
         return ServiceWrapper::make(false)
                              ->do(
-                                 fn() => MetaElement::query()->select(['id', 'title', 'settings'])->get()
+                                 fn() => MetaElement::query()->select(['id', 'title', 'settings'])->get(),
                              )->run();
     }
 
