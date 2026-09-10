@@ -11,8 +11,8 @@ use Lareon\Modules\Auth\App\Http\Requests\Api\LoginApiRequest;
 use Lareon\Modules\Auth\App\Services\AuthTokenService;
 use Lareon\Modules\User\App\Http\Resources\UserResource;
 use Lareon\Modules\User\App\Models\User;
-use Teksite\Handler\Actions\ServiceWrapper;
 use Teksite\Handler\Facade\Responder;
+use Teksite\Handler\Services\ServiceWrapper;
 
 
 class LoginController extends Controller

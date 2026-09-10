@@ -6,9 +6,9 @@ use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 use Teksite\Authorize\Models\Permission;
-use Teksite\Handler\Actions\ServiceWrapper;
-use Teksite\Handler\contracts\ServiceResult;
+use Teksite\Handler\Contracts\ServiceResultContract;
 use Teksite\Handler\Services\FetchDataService;
+use Teksite\Handler\Services\ServiceWrapper;
 
 
 class PermissionLogic
@@ -16,7 +16,7 @@ class PermissionLogic
     /**
      * @throws \Throwable
      */
-    public function all(mixed $fetchData = []): ServiceResult
+    public function all(mixed $fetchData = []): ServiceResultContract
     {
         return ServiceWrapper::make(false)
                              ->do(fn() => FetchDataService::get(Permission::class, 'title'))

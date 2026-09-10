@@ -8,7 +8,7 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 use Lareon\Modules\Auth\App\Events\PermissionCrudEvent;
 use Lareon\Modules\Auth\App\Listeners\NewPermissionListener;
 
-class EventServiceProvider  extends ServiceProvider
+class EventServiceProvider extends ServiceProvider
 {
     /**
      * The event handler mappings for the application.
@@ -17,8 +17,8 @@ class EventServiceProvider  extends ServiceProvider
      */
     protected $listen = [
         PermissionCrudEvent::class => [
-            NewPermissionListener::class
-        ]
+            NewPermissionListener::class,
+        ],
     ];
 
 

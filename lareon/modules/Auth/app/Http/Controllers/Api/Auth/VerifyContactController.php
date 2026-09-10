@@ -7,8 +7,8 @@ use Lareon\Modules\Auth\App\Enums\ContactType;
 use Lareon\Modules\Auth\App\Http\Controllers\Controller;
 use Lareon\Modules\Auth\App\Http\Requests\Api\VerifyContactApiRequest;
 use Lareon\Modules\User\App\Logics\UserLogic;
-use Teksite\Handler\Actions\ServiceWrapper;
 use Teksite\Handler\Facade\Responder;
+use Teksite\Handler\Services\ServiceWrapper;
 
 
 class VerifyContactController extends Controller

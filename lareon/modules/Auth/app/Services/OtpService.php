@@ -2,7 +2,6 @@
 
 namespace Lareon\Modules\Auth\App\Services;
 
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use Lareon\Modules\Auth\App\Enums\ContactType;
 use Lareon\Modules\Auth\App\Enums\ActionType;

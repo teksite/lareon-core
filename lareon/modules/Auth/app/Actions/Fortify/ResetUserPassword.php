@@ -2,6 +2,7 @@
 
 namespace Lareon\Modules\Auth\App\Actions\Fortify;
 
+use App\Actions\Fortify\PasswordValidationRules;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;

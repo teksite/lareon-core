@@ -2,7 +2,6 @@
 
 namespace Lareon\Modules\Auth\App\Services;
 
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Lareon\Modules\Auth\App\Enums\ActionType;

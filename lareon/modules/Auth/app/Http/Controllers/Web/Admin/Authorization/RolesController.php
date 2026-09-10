@@ -4,7 +4,6 @@ namespace Lareon\Modules\Auth\App\Http\Controllers\Web\Admin\Authorization;
 
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
-use Illuminate\Support\Facades\Gate;
 use Lareon\Modules\Auth\App\Events\RoleCrudEvent;
 use Lareon\Modules\Auth\App\Http\Controllers\Controller;
 use Lareon\Modules\Auth\App\Http\Requests\Admin\NewRoleRequest;

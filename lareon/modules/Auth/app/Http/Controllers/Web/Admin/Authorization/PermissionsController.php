@@ -3,7 +3,6 @@
 namespace Lareon\Modules\Auth\App\Http\Controllers\Web\Admin\Authorization;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Lareon\Modules\Auth\App\Events\PermissionCrudEvent;
