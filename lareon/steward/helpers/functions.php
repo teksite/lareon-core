@@ -89,11 +89,12 @@ if (!function_exists('userCan')) {
      * check current user is authenticated and then check have permission(s) or not
      *
      * @param string|array|null $permission
+     * @param string            $guard
      * @return bool
      */
-    function userCan(string|array|null $permission = null): bool
+    function userCan(string|array|null $permission = null , string $guard = 'admin'): bool
     {
-        $user = Auth::user();
+        $user = Auth::user($$guard);
         if (is_null($user)) return false;
 
         $permissions = (array)$permission;

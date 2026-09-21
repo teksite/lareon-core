@@ -7,6 +7,9 @@ use Illuminate\Routing\Controllers\Middleware;
 use Lareon\Steward\App\Enums\CrudTypeEnum;
 use Lareon\Steward\App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Lareon\Steward\App\Http\Requests\Admin\NewAdminRequest;
+use Lareon\Steward\App\Http\Requests\Admin\UpdateAdminRequest;
+use Lareon\Steward\App\Logics\AdminLogic;
 use Lareon\Steward\App\Models\Admin;
 use Teksite\Handler\Facade\Responder;
 
@@ -89,7 +92,6 @@ class AdminsController extends Controller implements HasMiddleware
         $res = $this->logic->update($user, $request->validated());
 
         if ($res->success) {
-            $this->logic->markAsVerified($user, $request->validated('email_verified_at'), $request->validated('phone_verified_at'));
             event(new AdminCrudEvent($user, CrudTypeEnum::UPDATE, $request->validated()));
             return Responder::success(trans('lareon::global.crud.success.updated', ['attribute' => __('user')]))->go();
         }

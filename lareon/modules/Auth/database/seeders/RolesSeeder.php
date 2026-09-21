@@ -29,6 +29,11 @@ class RolesSeeder extends Seeder
                 'description'=>'users can access to all parts of the app but can not edit the owner and administrator user',
             ],
             [
+                'title'=>'manager',
+                'hierarchy'=>'10',
+                'description'=>'users can access to all parts of the app but can not edit the owner and administrator user',
+            ],
+            [
                 'title'=>'user',
                 'hierarchy'=>'50',
                 'description'=>'regular users that just make an account',

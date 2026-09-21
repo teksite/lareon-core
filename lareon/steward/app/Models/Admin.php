@@ -25,7 +25,8 @@ use Teksite\Authorize\Traits\HasAuthorization;
 class Admin extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable, HasAuthorization , TwoFactorAuthenticatable , HasApiTokens;
+    use HasFactory, Notifiable, HasAuthorization, TwoFactorAuthenticatable, HasApiTokens;
+
     protected $table = 'users_admins';
 
 
@@ -36,20 +37,30 @@ class Admin extends Authenticatable
         ];
     }
 
-    public static function rules(string $operation, int|null $userId = null,): array
+    public static function rules(string $operation, int|null $adminId = null,): array
     {
         return match (true) {
-            $operation === 'create'              => [
+            $operation === 'create'=> [
                 'name'     => 'required|string|max:255',
                 'password' => 'required|string|min:6|confirmed',
                 'email'    => 'required|string|email|max:255|unique:users_admins',
             ],
-            ($operation === 'update' && $userId) => [
+            ($operation === 'update' && $adminId) => [
                 'name'     => 'required|string|max:255',
                 'password' => 'nullable|string|min:6|confirmed',
-                'email'    => ['required', 'string', 'email', Rule::unique('users_admins', 'email')->ignore($userId)],
+                'email'    => ['required', 'string', 'email', Rule::unique('users_admins', 'email')->ignore($adminId)],
             ],
-            default                              => throw new \InvalidArgumentException("Operation '{$operation}' is not valid. Allowed: create, update")
+            default=> throw new \InvalidArgumentException("Operation '{$operation}' is not valid. Allowed: create, update")
         };
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(self::class, 'parent_id');
+    }
+
+    public function children()
+    {
+        return $this->hasMany(self::class, 'parent_id');
     }
 }
