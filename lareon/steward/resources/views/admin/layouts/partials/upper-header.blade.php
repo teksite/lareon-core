@@ -1,5 +1,7 @@
 <div class="w-fit min-w-fit">
-    {{auth('admin')->user()?->name ?? '-'}}
+  <span class="font-bold uppercase">
+      {{__('hi')}} {{auth('admin')->user()?->name ?? '-'}}!
+  </span>
 </div>
 <div class="p-0.5 mb-6 flex flex-col sm:flex-row items-center justify-between">
     <div class="w-full sm:min-w-fit sm:w-fit sm:max-fit flex items-center justify-between sm:justify-start gap-3">
