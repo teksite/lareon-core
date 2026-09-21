@@ -46,7 +46,7 @@ class UserSeeder extends Seeder
     {
         $userRole = Role::query()->firstWhere('title', 'user');
 
-        $users = User::factory(45)->create();
+        $users = User::factory(10)->create();
 
 
         foreach ($users as $newUser) {

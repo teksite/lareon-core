@@ -25,6 +25,5 @@ class UserRolePermissionSeeder extends Seeder
             $role->permissions()->sync($userPermissionIds);
         }
 
-
     }
 }
