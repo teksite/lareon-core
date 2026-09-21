@@ -23,7 +23,7 @@ use Teksite\Authorize\Traits\HasAuthorization;
 #[UseFactory(AdminFactory::class)]
 #[Fillable(['name', 'email', 'password', 'parent_id', 'active'])]
 #[Hidden(['password', 'remember_token', 'two_factor_secret', 'two_factor_recovery_codes'])]
-#[ScopedBy([AdminActiveScope::class])]
+//#[ScopedBy([AdminActiveScope::class])]
 class Admin extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */

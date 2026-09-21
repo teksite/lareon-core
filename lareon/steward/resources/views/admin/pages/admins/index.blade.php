@@ -7,7 +7,7 @@
     @section('list')
         <x-lareon::table :rows="$admins" :headers="['id'=>'#' ,'name'=>__('name'),'email'=>__('email'),'created_at'=>__('created at') ,'parent_id'=> __('creator') ,'']">
             @foreach($admins as $key=>$admin)
-                <tr>
+                <tr class="{{$admin->active === 1 ?: 'bg-red-100'}}">
                     <td class="p-3">{{$admins->firstItem() + $key}}</td>
 
                     <td>{{$admin->name}}</td>
