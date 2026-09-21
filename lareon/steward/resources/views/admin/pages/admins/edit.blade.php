@@ -14,11 +14,11 @@
         <x-lareon::editor.tabs.item :title="__('basic data')">
             <x-lareon::editor.tabs.section>
                 <div class="grid gap-6 lg:grid-cols-2">
-                    <x-lareon::editor.input :required="true" labelPosition="start" :label="__('first name')" name="name" :value="$admin->name" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('name') , 'item'=>__('admin')])"/>
-                </div>
-                <div class="space-y-6">
+                    <x-lareon::editor.input :required="true" :label="__('first name')" name="name" :value="$admin->name" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('name') , 'item'=>__('admin')])"/>
                     <x-lareon::editor.input :required="true" type="email" dir="ltr" :value=" $admin->email" :label="__('email')" name="email" :placeholder="__('lareon::global.placeholders.write.unique.two',['attribute'=>__('email') , 'item'=>__('admin') ])"/>
                 </div>
+                <x-lareon::editor.input-radio :value="$admin->active" type="inline" :required="true" :options="[[__('no') , 0] , [__('yes') ,1]]" :label="__('active')" name="active" inputsClass="flex items-center gap-1"/>
+
             </x-lareon::editor.tabs.section>
         </x-lareon::editor.tabs.item>
 
