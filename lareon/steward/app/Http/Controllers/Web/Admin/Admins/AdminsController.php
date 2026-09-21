@@ -1,32 +1,26 @@
 <?php
 
-namespace Lareon\Modules\User\App\Http\Controllers\Web\Admin\Users;
+namespace Lareon\Steward\App\Http\Controllers\Web\Admin\Admins;
 
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
-use Lareon\Modules\User\App\Events\UserCrudEvent;
-use Lareon\Modules\User\App\Http\Requests\Admin\NewUserRequest;
-use Lareon\Modules\User\App\Http\Requests\Admin\UpdateUserRequest;
-use Lareon\Modules\User\App\Logics\UserLogic;
-use Lareon\Modules\User\App\Models\User;
 use Lareon\Steward\App\Enums\CrudTypeEnum;
 use Lareon\Steward\App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Lareon\Steward\App\Models\Admin;
 use Teksite\Handler\Facade\Responder;
 
-
-class UsersController extends Controller implements HasMiddleware
+class AdminsController extends Controller implements HasMiddleware
 {
-
-    public function __construct(public UserLogic $logic) {}
+    public function __construct(public AdminLogic $logic) {}
 
     public static function middleware()
     {
         return [
-            new Middleware('can:admin.user.read'),
-            new Middleware('can:admin.user.create', only: ['create', 'store']),
-            new Middleware('can:admin.user.edit', only: ['edit', 'update']),
-            new Middleware('can:admin.user.delete', only: ['destroy']),
+            new Middleware('can:admin.admin.read'),
+            new Middleware('can:admin.admin.create', only: ['create', 'store']),
+            new Middleware('can:admin.admin.edit', only: ['edit', 'update']),
+            new Middleware('can:admin.admin.delete', only: ['destroy']),
         ];
     }
 
@@ -38,8 +32,8 @@ class UsersController extends Controller implements HasMiddleware
     public function index()
     {
         $res = $this->logic->all();
-        $users = $res->result;
-        return view('user::admin.pages.users.index', compact('users'));
+        $admins = $res->result;
+        return view('lareon::admin.pages.admins.index', compact('admins'));
     }
 
     /**
@@ -47,8 +41,8 @@ class UsersController extends Controller implements HasMiddleware
      */
     public function create()
     {
-        $user=new User();
-        return view('user::admin.pages.users.create' , compact('user'));
+        $admin=new Admin();
+        return view('lareon::admin.pages.admins.create' , compact('admin'));
     }
 
     /**
@@ -56,13 +50,13 @@ class UsersController extends Controller implements HasMiddleware
      *
      * @throws \Throwable
      */
-    public function store(NewUserRequest $request)
+    public function store(NewAdminRequest $request)
     {
         $res = $this->logic->create($request->validated());
         if ($res->success) {
             $this->logic->markAsVerified($res->result, $request->validated('email_verified_at'), $request->validated('phone_verified_at'));
-            event(new UserCrudEvent($res->result, CrudTypeEnum::CREATE, $request->validated()));
-            return Responder::success(trans('lareon::global.crud.success.created', ['attribute' => __('user')]))->route('admin.users.edit', $res->result)->go();
+            event(new AdminCrudEvent($res->result, CrudTypeEnum::CREATE, $request->validated()));
+            return Responder::success(trans('lareon::global.crud.success.created', ['attribute' => __('user')]))->route('admin.admins.edit', $res->result)->go();
         }
         return Responder::failed(trans('lareon::global.crud.error.created', ['attribute' => __('user')]))->go();
 
@@ -71,7 +65,7 @@ class UsersController extends Controller implements HasMiddleware
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show(Admin $user)
     {
         if ($user->path()) return redirect()->to($user->path());
         abort(404);
@@ -80,9 +74,9 @@ class UsersController extends Controller implements HasMiddleware
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user)
+    public function edit(Admin $user)
     {
-        return view('user::admin.pages.users.edit', compact('user'));
+        return view('lareon::admin.pages.admins.edit', compact('user'));
     }
 
     /**
@@ -90,13 +84,13 @@ class UsersController extends Controller implements HasMiddleware
      *
      * @throws \Throwable
      */
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(UpdateAdminRequest $request, Admin $user)
     {
         $res = $this->logic->update($user, $request->validated());
 
         if ($res->success) {
             $this->logic->markAsVerified($user, $request->validated('email_verified_at'), $request->validated('phone_verified_at'));
-            event(new UserCrudEvent($user, CrudTypeEnum::UPDATE, $request->validated()));
+            event(new AdminCrudEvent($user, CrudTypeEnum::UPDATE, $request->validated()));
             return Responder::success(trans('lareon::global.crud.success.updated', ['attribute' => __('user')]))->go();
         }
         return Responder::failed(trans('lareon::global.crud.error.updated', ['attribute' => __('user')]))->go();
@@ -107,13 +101,13 @@ class UsersController extends Controller implements HasMiddleware
      *
      * @throws \Throwable
      */
-    public function destroy(User $user)
+    public function destroy(Admin $user)
     {
         $res = $this->logic->delete($user);
 
         if ($res->success) {
-            event(new UserCrudEvent($user, CrudTypeEnum::DELETE));
-            return Responder::success(trans('lareon::global.crud.success.deleted', ['attribute' => __('user')]))->route('admin.users.index')->go();
+            event(new AdminCrudEvent($user, CrudTypeEnum::DELETE));
+            return Responder::success(trans('lareon::global.crud.success.deleted', ['attribute' => __('user')]))->route('admin.admins.index')->go();
         }
         return Responder::failed(trans('lareon::global.crud.error.deleted', ['attribute' => __('user')]))->go();
     }

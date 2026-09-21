@@ -41,13 +41,13 @@ return [
                 //Panel Routes
                 [
                     'path'       => 'panel/web.php',
-                    'middleware' => ['web', 'auth', 'verified'],
+                    'middleware' => ['web', 'auth:web', 'verified'],
                     'prefix'     => 'panel',
                     'name'       => 'panel.',  //DO NOT CHANGE IT,
                 ],
                 [
                     'path'       => 'panel/ajax.php',
-                    'middleware' => ['api', 'web', 'auth', 'verified'],
+                    'middleware' => ['api', 'web', 'auth:web', 'verified'],
                     'prefix'     => 'panel/ajax',
                     'name'       => 'admin.ajax.',  //DO NOT CHANGE IT,
                 ],
@@ -143,13 +143,13 @@ return [
             //Panel Routes
             [
                 'path'       => 'panel/web.php',
-                'middleware' => ['web', 'auth', 'verified'],
+                'middleware' => ['web', 'auth:web', 'verified'],
                 'prefix'     => 'panel',
                 'name'       => 'panel.',  //DO NOT CHANGE IT,
             ],
             [
                 'path'       => 'panel/ajax.php',
-                'middleware' => ['api', 'web', 'auth', 'verified'],
+                'middleware' => ['api', 'web', 'auth:web', 'verified'],
                 'prefix'     => 'panel/ajax',
                 'name'       => 'admin.ajax.',  //DO NOT CHANGE IT,
             ],

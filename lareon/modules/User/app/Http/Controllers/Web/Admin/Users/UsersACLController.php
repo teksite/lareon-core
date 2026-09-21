@@ -19,7 +19,7 @@ use Teksite\Handler\Facade\Responder;
 class UsersACLController extends Controller implements HasMiddleware
 {
 
-    public function __construct(public UserLogic $logic) {}
+    public function __construct(public UserLogic $logic,) {}
 
     public static function middleware()
     {
@@ -29,10 +29,12 @@ class UsersACLController extends Controller implements HasMiddleware
     }
 
 
-    public function edit(User $user)
+    public function edit(User $user,)
     {
         $permissions = (new PermissionLogic())->tree();
-        $rolesGroup = Role::query()->orderBy('hierarchy')->get(['id' , 'title' , 'hierarchy' ])->groupBy(fn($role) => intdiv($role->hierarchy, 10) * 10)->toArray();
+
+        $permissions = array_filter($permissions, fn($item,) => in_array($item['title'] ?? '', ['client', 'panel']));
+        $rolesGroup = Role::query()->where('hierarchy' ,'>=' ,50)->orderBy('hierarchy')->get(['id', 'title', 'hierarchy'])->groupBy(fn($role,) => intdiv($role->hierarchy, 10) * 10)->toArray();
         return view('user::admin.pages.users.acl', compact('user', 'permissions', 'rolesGroup'));
     }
 
@@ -41,7 +43,7 @@ class UsersACLController extends Controller implements HasMiddleware
      *
      * @throws \Throwable
      */
-    public function update(UpdateUserACLRequest $request, User $user)
+    public function update(UpdateUserACLRequest $request, User $user,)
     {
         $res = $this->logic->updateACL($user, $request->validated());
 

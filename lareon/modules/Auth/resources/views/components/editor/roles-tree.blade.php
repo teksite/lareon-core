@@ -10,6 +10,7 @@
                     <li class="flex items-center justify-start gap-2">
                         <x-lareon::inputs.checkbox :value="$role['id']" id="role_{{$group}}_{{$role['id']}}" name="roles[]" :checked="in_array($role['id'] , $consideredValue)" />
                         <x-lareon::inputs.label :title="$role['title']" for="role_{{$group}}_{{$role['id']}}"/>
+                       <span class="text-xs text-gray-600">{{__('hierarchy')}}:{{$role['hierarchy']}}</span>
                     </li>
                 @endforeach
             </ul>

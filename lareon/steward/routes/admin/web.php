@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Lareon\Steward\App\Http\Controllers\Web\Admin\Admins\AdminsController;
 use Lareon\Steward\App\Http\Controllers\Web\Admin\DashboardController;
 use Lareon\Steward\App\Http\Controllers\Web\Admin\Settings\CacheController;
 use Lareon\Steward\App\Http\Controllers\Web\Admin\Settings\LogsController;
@@ -27,3 +28,5 @@ Route::name('settings.')->prefix('settings')->group(function () {
         Route::delete('/', [LogsController::class, 'delete'])->name('destroy');
     });
 });
+
+Route::resource('admins' ,AdminsController::class);

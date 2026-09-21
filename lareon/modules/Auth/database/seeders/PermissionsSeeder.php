@@ -124,6 +124,29 @@ class PermissionsSeeder extends Seeder
                 'description'=>'have access to change role-permission of users (in the admin panel)',
             ],
 
+
+            /* admins */
+            [
+                'title'=>'admin.admin.read',
+                'description'=>'have access to read one or all admins (in the admin panel)',
+            ],
+            [
+                'title'=>'admin.admin.create',
+                'description'=>'have access to create a new admin (in the admin panel)',
+            ],
+            [
+                'title'=>'admin.admin.edit',
+                'description'=>'have access to edit admins (in the admin panel)',
+            ],
+            [
+                'title'=>'admin.admin.delete',
+                'description'=>'have access to delete admins (in the admin panel)',
+            ],
+            [
+                'title'=>'admin.admin.acl.edit',
+                'description'=>'have access to change role-permission of admins (in the admin panel)',
+            ],
+
             /*  PANEL   */
             [
                 'title'=>'panel',

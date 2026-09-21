@@ -22,7 +22,7 @@ class MenuProvider implements MenuRegisteringContract
         return [MenuAreaType::ADMIN, MenuAreaType::PANEL];
     }
 
-    public function register(MenuRegisteringEvent $event): void
+    public function register(MenuRegisteringEvent $event,): void
     {
         match ($event->area) {
             MenuAreaType::ADMIN => $this->admin($event),
@@ -30,7 +30,7 @@ class MenuProvider implements MenuRegisteringContract
         };
     }
 
-    protected function admin(MenuRegisteringEvent $event): void
+    protected function admin(MenuRegisteringEvent $event,): void
     {
         $event->add(
             [
@@ -76,9 +76,33 @@ class MenuProvider implements MenuRegisteringContract
                   ],
               ], 'settings');
 
+
+        $event->add([
+            'title'  => trans('admins'),
+            'order'  => 11,
+            'icon'   => 'laurel-wreath',
+            'active' => request()->routeIs('admin.admins.*'),
+        ], 'admins')
+              ->addManyItem([
+                  [
+                      'title'      => trans('lareon::global.crud.titles.all', ['attribute' => trans('admins')]),
+                      'order'      => 1,
+                      'route'      => 'admin.admins.index',
+                      'active'     => request()->routeIs('admin.admins.index'),
+                      'permission' => 'admin.admin.read',
+
+                  ], [
+                      'title'      => trans('lareon::global.crud.titles.create', ['attribute' => trans('admin')]),
+                      'order'      => 2,
+                      'route'      => 'admin.admins.create',
+                      'active'     => request()->routeIs('admin.admins.create'),
+                      'permission' => 'admin.admin.create',
+                  ],
+              ], 'admins');
+
     }
 
-    protected function panel(MenuRegisteringEvent $event): void
+    protected function panel(MenuRegisteringEvent $event,): void
     {
         $event->add(
             [
@@ -87,7 +111,7 @@ class MenuProvider implements MenuRegisteringContract
                 'icon'   => 'home',
                 'route'  => 'panel.dashboard',
                 'active' => request()->routeIs('panel.dashboard'),
-            ],'dashboard');
+            ], 'dashboard');
         $event->add(
             [
                 'title'  => trans('admin panel'),
@@ -95,7 +119,7 @@ class MenuProvider implements MenuRegisteringContract
                 'icon'   => 'gear',
                 'route'  => 'admin.dashboard',
                 'active' => request()->routeIs('admin.dashboard'),
-            ],'adminpanel');
+            ], 'adminpanel');
     }
 
 
