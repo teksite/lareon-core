@@ -7,6 +7,15 @@
             >
             @yield('title')
         </ul>
+        <div class="w-fit min-w-fit">
+            <p>
+                web: {{auth('web')->user()?->name ?? '-'}}
+
+            </p>
+            <p>
+                admin: {{auth('admin')->user()?->name ?? '-'}}
+            </p>
+        </div>
         @if(isset($moduleData) && is_array($moduleData))
             <div class="flex items-center gap-3">
                 @foreach($moduleData as $data )

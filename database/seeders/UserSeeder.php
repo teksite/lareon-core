@@ -15,39 +15,24 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $admin = $this->makeAdmin();
-        $this->makeUsers($admin);
-    }
-
-    private function makeAdmin()
-    {
-        $user = User::query()->create([
-            'name'     => 'sina Zangiband',
-            'email'    => 'sina.zangiband@gmail.com',
-            'password' => Hash::make('sina.zangiband@gmail.com'),
-            'phone'    => '989126037279',
-            'slug'     => '989126037279',
+        $userZero = User::query()->create([
+            'name'     => 'sina zb',
+            'email'    => 'zb.sina@gmail.com',
+            'password' => Hash::make('zb.sina@gmail.com'),
+            'phone'    => '989382295515',
+            'slug'     => '989382295515',
 
         ]);
-        $user->markEmailAsVerified();
-        $user->markPhoneAsVerified();
-        $ownerRole = Role::query()->firstWhere('title', 'owner');
+        $userZero->markEmailAsVerified();
+        $userZero->markPhoneAsVerified();
 
-        if ($ownerRole) $user->roles()->sync($ownerRole->id);
 
-        return $user;
-    }
-
-    /**
-     * @param \Illuminate\Database\Eloquent\Model|User $admin
-     * @return void
-     */
-    private function makeUsers(\Illuminate\Database\Eloquent\Model|User $admin): void
-    {
         $userRole = Role::query()->firstWhere('title', 'user');
 
-        $users = User::factory(10)->create();
+        $userZero->roles()->attach($userRole->id);
 
+
+        $users = User::factory(10)->create();
 
         foreach ($users as $newUser) {
             $newUser->roles()->attach($userRole->id);

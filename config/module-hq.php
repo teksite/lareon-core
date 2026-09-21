@@ -21,19 +21,19 @@ return [
                 //Admin Routes
                 [
                     'path'       => 'admin/web.php',
-                    'middleware' => ['web', 'auth', 'verified'],
+                    'middleware' => ['web', 'auth:admin',],
                     'prefix'     => 'tkadmin',
                     'name'       => 'admin.',  //DO NOT CHANGE IT,
                 ],
                 [
                     'path'       => 'admin/ajax.php',
-                    'middleware' => ['api', 'web', 'auth', 'verified'],
+                    'middleware' => ['api', 'web', 'auth:admin',],
                     'prefix'     => 'tkadmin/ajax',
                     'name'       => 'admin.ajax.',  //DO NOT CHANGE IT,
                 ],
                 [
                     'path'       => 'admin/api.php',
-                    'middleware' => ['api','verified', 'auth:sanctum'],
+                    'middleware' => ['api', 'verified', 'auth:sanctum'],
                     'prefix'     => 'admin/api/v1',
                     'name'       => 'admin.api.v1.',  //DO NOT CHANGE IT,
                 ],
@@ -123,13 +123,13 @@ return [
             //Admin Routes
             [
                 'path'       => 'admin/web.php',
-                'middleware' => ['web', 'auth', 'verified'],
+                'middleware' => ['web', 'auth:admin',],
                 'prefix'     => 'tkadmin',
                 'name'       => 'admin.',  //DO NOT CHANGE IT,
             ],
             [
                 'path'       => 'admin/ajax.php',
-                'middleware' => ['api', 'web', 'auth', 'verified'],
+                'middleware' => ['api', 'web', 'auth:admin',],
                 'prefix'     => 'tkadmin/ajax',
                 'name'       => 'admin.ajax.',  //DO NOT CHANGE IT,
             ],
