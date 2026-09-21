@@ -5,6 +5,7 @@ namespace Lareon\Steward\App\Http\Controllers\Web\Admin\Admins;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Lareon\Steward\App\Enums\CrudTypeEnum;
+use Lareon\Steward\App\Events\AdminCrudEvent;
 use Lareon\Steward\App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Lareon\Steward\App\Http\Requests\Admin\NewAdminRequest;
@@ -57,29 +58,27 @@ class AdminsController extends Controller implements HasMiddleware
     {
         $res = $this->logic->create($request->validated());
         if ($res->success) {
-            $this->logic->markAsVerified($res->result, $request->validated('email_verified_at'), $request->validated('phone_verified_at'));
             event(new AdminCrudEvent($res->result, CrudTypeEnum::CREATE, $request->validated()));
-            return Responder::success(trans('lareon::global.crud.success.created', ['attribute' => __('user')]))->route('admin.admins.edit', $res->result)->go();
+            return Responder::success(trans('lareon::global.crud.success.created', ['attribute' => __('admin')]))->route('admin.admins.edit', $res->result)->go();
         }
-        return Responder::failed(trans('lareon::global.crud.error.created', ['attribute' => __('user')]))->go();
+        return Responder::failed(trans('lareon::global.crud.error.created', ['attribute' => __('admin')]))->go();
 
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Admin $user)
+    public function show(Admin $admin)
     {
-        if ($user->path()) return redirect()->to($user->path());
         abort(404);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Admin $user)
+    public function edit(Admin $admin)
     {
-        return view('lareon::admin.pages.admins.edit', compact('user'));
+        return view('lareon::admin.pages.admins.edit', compact('admin'));
     }
 
     /**
@@ -87,15 +86,15 @@ class AdminsController extends Controller implements HasMiddleware
      *
      * @throws \Throwable
      */
-    public function update(UpdateAdminRequest $request, Admin $user)
+    public function update(UpdateAdminRequest $request, Admin $admin)
     {
-        $res = $this->logic->update($user, $request->validated());
+        $res = $this->logic->update($admin, $request->validated());
 
         if ($res->success) {
-            event(new AdminCrudEvent($user, CrudTypeEnum::UPDATE, $request->validated()));
-            return Responder::success(trans('lareon::global.crud.success.updated', ['attribute' => __('user')]))->go();
+            event(new AdminCrudEvent($admin, CrudTypeEnum::UPDATE, $request->validated()));
+            return Responder::success(trans('lareon::global.crud.success.updated', ['attribute' => __('admin')]))->go();
         }
-        return Responder::failed(trans('lareon::global.crud.error.updated', ['attribute' => __('user')]))->go();
+        return Responder::failed(trans('lareon::global.crud.error.updated', ['attribute' => __('admin')]))->go();
     }
 
     /**
@@ -103,14 +102,14 @@ class AdminsController extends Controller implements HasMiddleware
      *
      * @throws \Throwable
      */
-    public function destroy(Admin $user)
+    public function destroy(Admin $admin)
     {
-        $res = $this->logic->delete($user);
+        $res = $this->logic->delete($admin);
 
         if ($res->success) {
-            event(new AdminCrudEvent($user, CrudTypeEnum::DELETE));
-            return Responder::success(trans('lareon::global.crud.success.deleted', ['attribute' => __('user')]))->route('admin.admins.index')->go();
+            event(new AdminCrudEvent($admin, CrudTypeEnum::DELETE));
+            return Responder::success(trans('lareon::global.crud.success.deleted', ['attribute' => __('admin')]))->route('admin.admins.index')->go();
         }
-        return Responder::failed(trans('lareon::global.crud.error.deleted', ['attribute' => __('user')]))->go();
+        return Responder::failed(trans('lareon::global.crud.error.deleted', ['attribute' => __('admin')]))->go();
     }
 }

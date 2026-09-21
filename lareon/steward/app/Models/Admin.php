@@ -40,21 +40,23 @@ class Admin extends Authenticatable
     public static function rules(string $operation, int|null $adminId = null,): array
     {
         return match (true) {
-            $operation === 'create'=> [
+            $operation === 'create' => [
                 'name'     => 'required|string|max:255',
+                'active'   => 'required|in:0,1',
                 'password' => 'required|string|min:6|confirmed',
                 'email'    => 'required|string|email|max:255|unique:users_admins',
             ],
             ($operation === 'update' && $adminId) => [
                 'name'     => 'required|string|max:255',
+                'active'   => 'required|in:0,1',
                 'password' => 'nullable|string|min:6|confirmed',
                 'email'    => ['required', 'string', 'email', Rule::unique('users_admins', 'email')->ignore($adminId)],
             ],
-            default=> throw new \InvalidArgumentException("Operation '{$operation}' is not valid. Allowed: create, update")
+            default => throw new \InvalidArgumentException("Operation '{$operation}' is not valid. Allowed: create, update")
         };
     }
 
-    public function parent()
+    public function parent(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(self::class, 'parent_id');
     }

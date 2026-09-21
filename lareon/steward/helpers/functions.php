@@ -94,7 +94,8 @@ if (!function_exists('userCan')) {
      */
     function userCan(string|array|null $permission = null , string $guard = 'admin'): bool
     {
-        $user = Auth::user($$guard);
+        $user = auth($guard)->user();
+
         if (is_null($user)) return false;
 
         $permissions = (array)$permission;
