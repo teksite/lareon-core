@@ -14,8 +14,9 @@ class AuthenticatedSessionController extends Controller
     /**
      * Display the login view.
      */
-    public function create(): View
+    public function create(): RedirectResponse|View
     {
+        if(auth()->guard('admin')->check()) return redirect()->route('admin.dashboard');
         return view('lareon::auth.pages.login');
     }
 
@@ -24,6 +25,8 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
+        if(auth()->guard('admin')->check()) abort(403);
+
         $request->authenticate();
         $request->session()->regenerate();
         return redirect()->intended(route('admin.dashboard', absolute: false));

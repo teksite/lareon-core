@@ -1,5 +1,6 @@
 <footer>
 </footer>
-<form action="{{route('logout')}}" method="POST" id="logoutForm">
+<form action="{{route('admin.auth.logout')}}" method="POST" id="logoutForm">
+    @method('DELETE')
     @csrf
 </form>
