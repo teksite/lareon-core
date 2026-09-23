@@ -1,10 +1,12 @@
 <x-lareon::auth-layout>
     <!-- Session Status -->
-    {{--    <x-auth-session-status class="mb-4" :status="session('status')" />--}}
-
-    <form method="POST" action="{{ route('login') }}">
+    @if (isset($status) && $status)
+        <div {{ $attributes->merge(['class' => 'font-medium text-sm text-green-600']) }}>
+            {{ $status }}
+        </div>
+    @endif
+    <form method="POST" action="{{ route('admin.auth.store') }}">
         @csrf
-
         <!-- Email Address -->
         <div>
             <x-lareon::editor.input :label="__('email')" name="email" :required="true"/>
