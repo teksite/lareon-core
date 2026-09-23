@@ -161,7 +161,6 @@ return [
             ],
 
             //Client Routes
-
             [
                 'path'       => 'web.php',
                 'middleware' => ['web'],
@@ -182,7 +181,6 @@ return [
             ],
 
             //AUTH Routes
-
             [
                 'path'       => 'auth/web.php',
                 'middleware' => ['web'],
