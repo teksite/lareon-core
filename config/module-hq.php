@@ -84,8 +84,8 @@ return [
                 [
                     'path'       => 'auth/web.php',
                     'middleware' => ['web'],
-                    'prefix'     => 'auth',
-                    'name'       => 'auth.',  //DO NOT CHANGE IT,
+                    'prefix'     => 'tkadmin/auth',
+                    'name'       => 'admin.auth.',  //DO NOT CHANGE IT,
                 ],
                 [
                     'path'       => 'auth/ajax.php',
