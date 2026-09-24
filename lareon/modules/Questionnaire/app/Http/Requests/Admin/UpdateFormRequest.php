@@ -2,6 +2,9 @@
 namespace Lareon\Modules\Questionnaire\App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Lareon\Modules\Questionnaire\App\Models\Form;
+use Lareon\Modules\Questionnaire\App\Models\FormAnnouncement;
+use Lareon\Modules\Questionnaire\App\Models\FormRule;
 
 class UpdateFormRequest extends FormRequest
 {
@@ -10,7 +13,7 @@ class UpdateFormRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return userCan('admin.questionnaire.form.edit');
     }
 
     /**
@@ -20,8 +23,6 @@ class UpdateFormRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
-        ];
+        return array_merge(Form::rules('update' , $this->form->id),FormAnnouncement::rulesForModels(), FormRule::rulesForModels(), );
     }
 }

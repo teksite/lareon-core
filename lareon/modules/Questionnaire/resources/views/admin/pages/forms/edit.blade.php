@@ -1,31 +1,39 @@
-<x-lareon::admin-editor :action="route('admin.pages.update' , $page)" method="update" :instance="$page" >
-    @section('title', __('lareon::global.crud.titles.edit',['attribute'=>__('page') . " ($page->title)"]))
+<x-lareon::admin-editor :action="route('admin.questionnaire.forms.update' , $form)" method="update" :instance="$form" >
+    @section('title', __('lareon::global.crud.titles.edit',['attribute'=>__('form') . " ($form->title)"]))
     @section('header.start')
-        <x-lareon::links.nav :href="route('admin.pages.index')" :content="__('lareon::global.buttons.all_attribute' ,['attribute'=>__('pages')])" color="index"/>
-        <x-lareon::links.nav :href="route('admin.pages.create')" :content="__('lareon::global.buttons.new_one')" color="create" can="admin.page.create"/>
+        <x-lareon::links.nav :href="route('admin.questionnaire.forms.index')" :content="__('lareon::global.buttons.all_attribute' ,['attribute'=>__('forms')])" color="index" can="admin.questionnaire.form.read" />
+        <x-lareon::links.nav :href="route('admin.questionnaire.forms.create')" :content="__('lareon::global.buttons.new_one')" color="create" can="admin.questionnaire.form.create" />
     @endsection
     @section('header.end')
-        <x-lareon::links.action type="delete" :href="route('admin.pages.destroy', $page)" method="delete"  :label="trans('lareon::global.buttons.delete')" can="admin.page.delete"/>
-
+        <x-lareon::links.action type="delete" :href="route('admin.questionnaire.forms.destroy', $form)" method="delete"  :label="trans('lareon::global.buttons.delete')" can="admin.form.delete" />
     @endsection
 
     @section('form')
-        <x-lareon::editor.tabs.item :title="__('content')">
-            <div class="space-y-6">
-                <x-lareon::editor.input :required="true" labelPosition="start" :label="__('title')" name="title" :value="$page->title" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('title') , 'item'=>__('page')])"/>
-                <x-lareon::editor.input-slug :required="true" labelPosition="start" :label="__('slug')" :value="$page->slug" :placeholder="__('lareon::global.placeholders.write.unique.two',['attribute'=>__('slug') , 'item'=>__('page')])"/>
-            </div>
-
-            <div class="space-y-6 y-box">
-                <x-lareon::editor.input-textarea :required="false" :label="__('excerpt')" name="excerpt" :placeholder="__('lareon::global.placeholders.write.one',['attribute'=>__('excerpt')])">{!! $page->excerpt !!}</x-lareon::editor.input-textarea>
-                <x-lareon::editor.section.input-editor rows="9" :required="false" :label="__('body')" name="body" :placeholder="__('lareon::global.placeholders.write.one',['attribute'=>__('body')])">{!! $page->body!!}</x-lareon::editor.section.input-editor>
-            </div>
+        <x-lareon::editor.tabs.item :title="__('body')">
+            <x-lareon::editor.tabs.section>
+                <x-lareon::editor.input :required="true" labelPosition="start" :label="__('title')" name="title" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('title') , 'item'=>__('form')])" :value="$form->title"/>
+                <x-lareon::editor.input-textarea :required="false" :label="__('body')" name="body">{{$form->body}}</x-lareon::editor.input-textarea>
+            </x-lareon::editor.tabs.section>
 
             <x-slot:aside>
-                <x-lareon::editor.input-image :required="false" wrapperMode="y-box" :value="$page->primaryMedia?->id" name="primary_media_id"/>
-                <x-lareon::editor.section.template type="page" :required="false" wrapperMode="y-box" :value="old('template' , $page->template_id ?? null)"/>
+                <x-lareon::editor.tabs.section>
+                    <x-lareon::editor.input-check :options="[[__('active') , 1 ]]" name="active" :value="$form->active"/>
+                    <x-lareon::editor.input-check :options="[[__('has file') , 1 ]]" name="has_file" :value="$form->has_file"/>
+                    <x-lareon::editor.input-check :options="[[__('response to client') , 1 ]]" name="response_client" :value="$form->response_client"/>
+                </x-lareon::editor.tabs.section>
             </x-slot:aside>
+        </x-lareon::editor.tabs.item>
 
+        <x-lareon::editor.tabs.item :title="__('rules')">
+            <x-lareon::editor.tabs.section>
+                <x-questionnaire::editor.rules :value="$form->validationRules?->rules ?? []" />
+            </x-lareon::editor.tabs.section>
+        </x-lareon::editor.tabs.item>
+
+        <x-lareon::editor.tabs.item :title="__('announcements')" >
+            <x-lareon::editor.tabs.section>
+                <x-questionnaire::editor.announcements :value="$form->announcement?->toArray() ?? []"/>
+            </x-lareon::editor.tabs.section>
         </x-lareon::editor.tabs.item>
     @endsection
 

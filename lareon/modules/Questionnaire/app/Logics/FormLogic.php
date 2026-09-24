@@ -51,7 +51,7 @@ class FormLogic
 
             $form = Form::query()->create(Arr::except($inputs, ['rules', 'announcements']));
             $form->validationRules()->create(['rules' => $inputs['rules'] ?? []]);
-            $form->announcement()->create($inputs['announcements'] ?? []);
+            $form->announcement()->create($inputs['announcements'] ?? '');
             return $form;
         })->run();
     }
@@ -66,7 +66,7 @@ class FormLogic
 
             $form->update(Arr::except($inputs, ['rules', 'announcements']));
             $form->validationRules()->updateOrCreate(['form_id' => $form->id], ['rules' => $inputs['rules'] ?? []]);
-            $form->announcement()->updateOrCreate(['form_id' => $form->id], $inputs['announcements'] ?? []);
+            $form->announcement()->updateOrCreate(['form_id' => $form->id], $inputs['announcements'] ?? '');
             return $form;
         })->run();
     }

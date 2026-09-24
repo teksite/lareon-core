@@ -6,7 +6,7 @@
         <x-lareon::links.nav :href="route('admin.questionnaire.forms.trash.index')" :content="$trashCount" color="trash" can="admin.questionnaire.form.delete"/>
     @endsection
     @section('list')
-        <x-lareon::table :rows="$forms" :headers="['id'=>'#' ,'title'=>__('title') ,'active'=>__('active'),'created_at'=>__('created at') ,__('inbox') ,'']">
+        <x-lareon::table :rows="$forms" :headers="['id'=>'#' ,'title'=>__('title') ,'active'=>__('active') ,__('inbox') ,'created_at'=>__('created at'),'']">
             @foreach($forms as $key=>$form)
                 <tr>
                     <td class="p-3">{{$forms->firstItem() + $key}}</td>
@@ -16,6 +16,9 @@
                         <span class="{{$form->active==1 ? 'badge-green':__('badge-yellow')}}">
                             {{$form->active ?__('active'):__('deactivated')}}
                         </span>
+                    </td>
+                    <td>
+                      {{$form->inbox_count}}
                     </td>
                     <td>
                         <x-lareon::date :date="$form->created_at"/>

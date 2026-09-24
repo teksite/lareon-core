@@ -120,6 +120,19 @@
         @apply text-yellow-600  text-sm font-bold inline-block px-1
     }
 
+    .badge-green {
+        @apply text-green-600 bg-green-50 text-xs font-bold inline-block p-1 rounded-xl
+    }
+    .badge-red {
+        @apply text-red-600 bg-red-50 text-xs font-bold inline-block p-1 rounded-xl
+    }
+    .badge-cyan {
+        @apply text-cyan-600 bg-cyan-50 text-xs font-bold inline-block p-1 rounded-xl
+    }
+    .badge-yellow {
+        @apply text-yellow-600 bg-yellow-50 text-xs font-bold inline-block p-1 rounded-xl
+    }
+
 }
 
 

@@ -2,6 +2,9 @@
 namespace Lareon\Modules\Questionnaire\App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Lareon\Modules\Questionnaire\App\Models\Form;
+use Lareon\Modules\Questionnaire\App\Models\FormAnnouncement;
+use Lareon\Modules\Questionnaire\App\Models\FormRule;
 
 class NewFormRequest extends FormRequest
 {
@@ -10,7 +13,7 @@ class NewFormRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return userCan('admin.questionnaire.form.create');
     }
 
     /**
@@ -20,8 +23,7 @@ class NewFormRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
-        ];
+        return array_merge(Form::rules(),FormAnnouncement::rulesForModels(), FormRule::rulesForModels());
+
     }
 }
