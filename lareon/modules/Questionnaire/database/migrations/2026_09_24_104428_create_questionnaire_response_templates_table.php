@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('questionnaire_response_templates', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('form_id')->constrained('questionnaire_forms')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->string('template')->nullable();
             $table->timestamps();
         });
     }
