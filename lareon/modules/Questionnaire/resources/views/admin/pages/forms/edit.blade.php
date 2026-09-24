@@ -21,9 +21,9 @@
                     <x-lareon::editor.input-check :options="[[__('has file') , 1 ]]" name="has_file" :value="$form->has_file"/>
                     <x-lareon::editor.input-check :options="[[__('response to client') , 1 ]]" name="response_client" :value="$form->response_client"/>
                 </x-lareon::editor.tabs.section>
-                <x-lareon::editor.tabs.section>
-                    <x-questionnaire::editor.template  :value="$form->template"/>
 
+                <x-lareon::editor.tabs.section>
+                    <x-questionnaire::editor.template :value="$form->template"/>
                 </x-lareon::editor.tabs.section>
             </x-slot:aside>
         </x-lareon::editor.tabs.item>
