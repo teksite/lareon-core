@@ -22,7 +22,7 @@ class MenuProvider implements MenuRegisteringContract
         return [MenuAreaType::ADMIN, MenuAreaType::PANEL];
     }
 
-    public function register(MenuRegisteringEvent $event): void
+    public function register(MenuRegisteringEvent $event,): void
     {
         match ($event->area) {
             MenuAreaType::ADMIN => $this->admin($event),
@@ -30,7 +30,7 @@ class MenuProvider implements MenuRegisteringContract
         };
     }
 
-    protected function admin(MenuRegisteringEvent $event): void
+    protected function admin(MenuRegisteringEvent $event,): void
     {
         $event->add(
             [
@@ -65,10 +65,7 @@ class MenuProvider implements MenuRegisteringContract
               ], 'questionnaire');
     }
 
-    protected function panel(MenuRegisteringEvent $event): void
-    {
-
-    }
+    protected function panel(MenuRegisteringEvent $event,): void {}
 
 
 }

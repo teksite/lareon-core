@@ -9,15 +9,17 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Lareon\Modules\Questionnaire\App\Models\Form;
+use Lareon\Modules\Questionnaire\App\Models\FormInbox;
 
-class NewFormSubmitionEvent
+class NewInboxEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
      * Create a new event instance.
      */
-    public function __construct()
+    public function __construct(public Form $form ,public FormInbox $inbox)
     {
         //
     }
