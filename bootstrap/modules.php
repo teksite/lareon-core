@@ -37,6 +37,6 @@
   'Questionnaire' => [
     'provider' => 'Lareon\\Modules\\Questionnaire\\App\\Providers\\QuestionnaireServiceProvider',
     'active' => true,
-    'type' => 'self',
+    'type' => 'steward',
   ],
 ];

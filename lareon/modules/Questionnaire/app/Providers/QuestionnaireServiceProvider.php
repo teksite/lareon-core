@@ -27,7 +27,7 @@ class QuestionnaireServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected string $type = "self";
+    protected string $type = "steward";
 
 
     /**
@@ -44,7 +44,7 @@ class QuestionnaireServiceProvider extends ServiceProvider
      */
     protected array $providers = [
         EventServiceProvider::class,
-        RouteServiceProvider::class,
+        //RouteServiceProvider::class,
     ];
 
 
