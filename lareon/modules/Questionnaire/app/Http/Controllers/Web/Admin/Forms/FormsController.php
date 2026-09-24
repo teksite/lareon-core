@@ -3,6 +3,7 @@
 namespace Lareon\Modules\Questionnaire\App\Http\Controllers\Web\Admin\Forms;
 
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\File;
 use Lareon\Modules\Questionnaire\App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Lareon\Modules\Questionnaire\App\Http\Requests\Admin\NewFormRequest;
@@ -42,7 +43,7 @@ class FormsController extends Controller
     public function create()
     {
         $form = new Form();
-        return view('questionnaire::admin.pages.forms.create' ,compact('form'));
+        return view('questionnaire::admin.pages.forms.create', compact('form' ,));
     }
 
     /**
@@ -70,7 +71,7 @@ class FormsController extends Controller
      */
     public function edit(Form $form,)
     {
-        return view('questionnaire::admin.pages.forms.edit', compact('form'));
+        return view('questionnaire::admin.pages.forms.edit', compact('form' ));
     }
 
     /**

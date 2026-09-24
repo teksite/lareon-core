@@ -16,13 +16,19 @@
                     <x-lareon::editor.input-check :options="[[__('has file') , 1 ]]" name="has_file" value="0"/>
                     <x-lareon::editor.input-check :options="[[__('response to client') , 1 ]]" name="response_client" value="0"/>
                 </x-lareon::editor.tabs.section>
+                <x-lareon::editor.tabs.section>
+                    <x-questionnaire::editor.template />
+
+                </x-lareon::editor.tabs.section>
             </x-slot:aside>
         </x-lareon::editor.tabs.item>
+
         <x-lareon::editor.tabs.item :title="__('rules')">
             <x-lareon::editor.tabs.section>
                 <x-questionnaire::editor.rules/>
             </x-lareon::editor.tabs.section>
         </x-lareon::editor.tabs.item>
+
         <x-lareon::editor.tabs.item :title="__('announcements')">
             <x-lareon::editor.tabs.section>
                 <x-questionnaire::editor.announcements />
