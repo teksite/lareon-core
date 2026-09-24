@@ -13,12 +13,12 @@
 <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 ">
     <div class="mb-6">
         <a href="/" class="text-center flex flex-col items-center gap-3">
-            <x-lareon::logo class="w-32 h-auto mx-auto"/>
+            <x-lareon::logo class="w-16 h-auto mx-auto"/>
             <span class="font-bold text-lg">LAREON</span>
         </a>
     </div>
 
-    <x-lareon::box class="w-full max-w-2xl">
+    <x-lareon::box class="w-full max-w-xl">
         {{ $slot }}
     </x-lareon::box>
 </div>
