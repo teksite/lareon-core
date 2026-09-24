@@ -61,7 +61,7 @@
         </p>
 
         @if($enabling)
-            <div class="mt-6"><
+            <div class="mt-6">
                 <x-lareon::editor.input-check :options="[[__('enable 2FA') , 1 ]]" name="enable_2fa" value="1"/>
             </div>
         @endif

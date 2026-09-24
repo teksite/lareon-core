@@ -22,7 +22,7 @@ class FormLogic
     public function all(mixed $fetchData = [],)
     {
         return ServiceWrapper::make(false)->do(
-            fn() => FetchData::get(Form::class, ['title', 'active']),
+            fn() => FetchData::get(Form::class, ['title', 'active'], withCount: ['inbox']),
         )->run();
     }
 

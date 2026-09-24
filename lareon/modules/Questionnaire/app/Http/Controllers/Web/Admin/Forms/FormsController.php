@@ -30,10 +30,10 @@ class FormsController extends Controller
      */
     public function index()
     {
-        $forms = $this->logic->get()->result;
-        $count = $this->logic->trashCount()?->result;
+        $forms = $this->logic->all()->result;
+        $trashCount = $this->logic->trashCount()?->result;
 
-        return view('questionnaire::admin.pages.forms.index', compact('forms', 'count'));
+        return view('questionnaire::admin.pages.forms.index', compact('forms', 'trashCount'));
     }
 
     /**
@@ -41,7 +41,8 @@ class FormsController extends Controller
      */
     public function create()
     {
-        return view('questionnaire::admin.pages.forms.create');
+        $form = new Form();
+        return view('questionnaire::admin.pages.forms.create' ,compact('form'));
     }
 
     /**
@@ -49,7 +50,7 @@ class FormsController extends Controller
      */
     public function store(NewFormRequest $request,)
     {
-        $res = $this->logic->register($request->validated());
+        $res = $this->logic->create($request->validated());
         return Responder::fromResult($res, route('admin.questionnaire.forms.edit', $res->result))->go();
     }
 
@@ -58,7 +59,7 @@ class FormsController extends Controller
      */
     public function show(Form $form,)
     {
-        $inboxes = $this->logic->getInboxes($form)->result;
+        $inboxes = $this->logic->getFormInboxes($form)->result;
         $count = $this->logic->trashCount()?->result;
 
         return view('questionnaire::admin.pages.forms.inbox', compact('form', 'inboxes', 'count'));
@@ -77,7 +78,7 @@ class FormsController extends Controller
      */
     public function update(UpdateFormRequest $request, Form $form,)
     {
-        $res = $this->logic->change($request->validated(), $form);
+        $res = $this->logic->update($form, $request->validated());
         return Responder::fromResult($res, route('admin.questionnaire.forms.edit', $form))->go();
     }
 
