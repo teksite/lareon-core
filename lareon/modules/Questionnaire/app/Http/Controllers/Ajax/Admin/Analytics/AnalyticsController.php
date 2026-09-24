@@ -6,6 +6,7 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Lareon\Modules\Questionnaire\App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Lareon\Modules\Questionnaire\App\Logics\AnalyticInboxLogic;
 use Teksite\Handler\Facade\Responder;
 
 class AnalyticsController extends Controller implements HasMiddleware

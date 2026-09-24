@@ -6,10 +6,10 @@ use Lareon\Modules\Questionnaire\App\Http\Controllers\Web\Admin\Forms\FormsContr
 use Lareon\Modules\Questionnaire\App\Http\Controllers\Web\Admin\Forms\TrashFormsController;
 use Lareon\Modules\Questionnaire\App\Http\Controllers\Web\Admin\Inboxes\ExportController;
 use Lareon\Modules\Questionnaire\App\Http\Controllers\Web\Admin\Inboxes\InboxesController;
-use Lareon\Modules\Questionnaire\App\Http\Controllers\Web\Admin\Inboxes\TrashInboxController;
+use Lareon\Modules\Questionnaire\App\Http\Controllers\Web\Admin\Inboxes\TrashInboxesController;
 
 Route::prefix('questionnaire')->name('questionnaire.')->group(function () {
-    Route::trashResource('inboxes', TrashInboxController::class);
+    Route::trashResource('inboxes', TrashInboxesController::class);
     Route::resource('inboxes', InboxesController::class);
 
     Route::trashResource('forms', TrashFormsController::class);
