@@ -5,20 +5,23 @@ namespace Lareon\Modules\Questionnaire\App\Models;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Lareon\Modules\Questionnaire\App\Events\NewInboxEvent;
 use Lareon\Steward\App\Models\Admin;
 
 #[Fillable(['form_id', 'title', 'data', 'url', 'note', 'reader_id', 'ip_address', 'read_at'])]
 class FormInbox extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'questionnaire_inboxes';
 
     protected static function boot(): void
     {
         parent::boot();
-        static::created(function (FormInbox $inbox,): void {
-            event(new NewInboxEvent($inbox));
-        });
+//        static::created(function (FormInbox $inbox,): void {
+//            event(new NewInboxEvent($inbox));
+//        });
     }
 
     protected function casts(): array

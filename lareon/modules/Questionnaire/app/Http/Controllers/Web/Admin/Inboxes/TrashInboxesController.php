@@ -14,10 +14,10 @@ class TrashInboxesController extends Controller implements HasMiddleware
 {
     use UseTrashController;
 
-    public string $attribute = 'form';
+    public string $attribute = 'inbox';
 
     public ?string $view = null;
-    public string $backTo = 'admin.questionnaire.inboxes.trash.index';
+    public string $backTo = 'admin.questionnaire.inboxes.index';
 
     public string $indexRoute = 'admin.questionnaire.inboxes.trash.index';
     public string $pruneRoute = 'admin.questionnaire.inboxes.trash.prune';

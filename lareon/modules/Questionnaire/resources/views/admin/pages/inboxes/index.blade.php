@@ -6,7 +6,7 @@
         <x-lareon::links.nav :href="route('admin.questionnaire.inboxes.trash.index')" :content="$trashCount" color="trash" can="admin.questionnaire.form.delete"/>
     @endsection
     @section('list')
-        <x-lareon::table :rows="$inboxes" :headers="['id'=>'#' ,'form'=>__('form'),'url','created_at'=>__('created at'),'read_at'=>__('read at'),'reader_id'=>__('reader by'),'']">
+        <x-lareon::table :rows="$inboxes" :headers="['id'=>'#' ,'form'=>__('form'),'url','created_at'=>__('created at'),'read_at'=>__('read at'),'reader_id'=>__('read by'),'']">
             @foreach($inboxes as $key=>$inbox)
                 <tr class="{{$inbox->read_at===null ? 'font-bold' : ''}}">
                     <td class="p-3">{{$inboxes->firstItem() + $key}}</td>
