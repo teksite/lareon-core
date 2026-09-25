@@ -22,7 +22,7 @@ class InboxLogic
     public function all(mixed $fetchData = [],)
     {
         return ServiceWrapper::make(false)->do(
-            fn() => FetchData::get(FormInbox::class, ['form.title',], withCount: ['form']),
+            fn() => FetchData::get(FormInbox::class, ['form.title','url','ip'], withCount: ['form','readBy']),
         )->run();
     }
 
@@ -32,7 +32,7 @@ class InboxLogic
     public function allByForm(Form|int $form, mixed $fetchData = [],)
     {
         return ServiceWrapper::make(false)->do(
-            fn() => FetchData::get($form->inbox(), ['id',]),
+            fn() => FetchData::get($form->inbox(), ['id','url','ip'] , withCount: ['form','readBy']),
         )->run();
     }
 
@@ -81,13 +81,13 @@ class InboxLogic
     public function update(FormInbox $inbox, array $inputs = [],)
     {
         return ServiceWrapper::make(true)->do(function () use ($inbox, $inputs) {
-            $preNote = $inbox->note;
+            $note = $inbox->note ?? [];
             $newNote = [
-                'author' => auth()->user()->name.' '.auth()->id(),
+                'author' => auth()->user()->name.' ('.auth()->id().'):',
                 'note'   => $inputs['note'],
             ];
-
-            $inbox->note = array_push($preNote, $newNote);
+            $note[] = $newNote;
+            $inbox->note=$note;
             $inbox->save();
 
             return $inbox;

@@ -5,7 +5,7 @@
         <x-lareon::links.nav :href="route('admin.questionnaire.forms.create')" :content="__('lareon::global.buttons.new_one')" color="create" can="admin.questionnaire.form.create"/>
     @endsection
     @section('header.end')
-        <x-lareon::links.action type="delete" :href="route('admin.questionnaire.forms.destroy', $form)" method="delete" :label="trans('lareon::global.buttons.delete')" can="admin.form.delete"/>
+        <x-lareon::links.action type="delete" :href="route('admin.questionnaire.forms.destroy', $form)" method="delete" :label="trans('lareon::global.buttons.delete')" can="admin.questionnaire.form.delete"/>
     @endsection
 
     @section('form')

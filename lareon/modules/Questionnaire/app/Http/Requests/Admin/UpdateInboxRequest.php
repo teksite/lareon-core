@@ -21,7 +21,7 @@ class UpdateInboxRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'note'=>'string|required|max:600',
         ];
     }
 }

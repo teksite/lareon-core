@@ -25,7 +25,7 @@
                     </td>
                     <td>
                         <x-lareon::action-box class="action">
-                            <x-lareon::links.action type="sub" :href="route('admin.questionnaire.forms.show' , $form)" can="admin.questionnaire.form.edit"/>
+                            <x-lareon::links.action type="sub" :href="route('admin.questionnaire.inboxes.index').'?form='.$form->id" can="admin.questionnaire.form.edit"/>
                             <x-lareon::links.action type="edit" :href="route('admin.questionnaire.forms.edit' , $form)" can="admin.questionnaire.form.edit"/>
                             <x-lareon::links.action type="delete" method="delete" :href="route('admin.questionnaire.forms.destroy' , $form)" can="admin.questionnaire.form.delete"/>
                         </x-lareon::action-box>
