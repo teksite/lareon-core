@@ -10,6 +10,8 @@
     "map": "نقشه",
     "field": "فیلد",
     "address": "آدرس",
+    "activated": "فعال",
+    "deactivated":"غیر‌فعال",
     "fax": "فاکس",
     "always" : "همیشه",
     "hourly" : "ساعتی",
