@@ -1,10 +1,10 @@
 <?php
 
-namespace Lareon\Modules\Questionnaire\App\View;
+namespace Lareon\Modules\Questionnaire\App\View\Components;
 
 use Closure;
-use Illuminate\View\Component;
 use Illuminate\Contracts\View\View;
+use Illuminate\View\Component;
 use Lareon\Modules\Questionnaire\App\Models\Form;
 
 class FormLayout extends Component

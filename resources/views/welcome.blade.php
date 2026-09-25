@@ -47,7 +47,7 @@
                 </nav>
             @endif
         </header>
-        <x-questionnaire::form-layout form="1" :page="$page->title"  />
+        <x-questionnaire::form-layout form="1" page="home"  />
 
         @if (Route::has('login'))
             <div class="h-14.5 hidden lg:block"></div>

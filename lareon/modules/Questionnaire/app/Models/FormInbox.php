@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Lareon\Steward\App\Models\Admin;
 
 #[Fillable(['form_id', 'title', 'data', 'url', 'note', 'reader_id', 'ip_address', 'read_at'])]
+
 class FormInbox extends Model
 {
     protected $table = 'questionnaire_inboxes';

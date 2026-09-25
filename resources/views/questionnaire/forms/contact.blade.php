@@ -1,33 +1,105 @@
-@php($random = rand(100, 999))
-<div class="grid gap-6 md:grid-cols-2">
-    <div class="mb-6">
-        <x-input.label for="name-{{$random}}" :title="__('name')"/>
-        <x-input.text id="name-{{$random}}" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required/>
-        <x-input.error :messages="$errors->get('name')" class="mt-2"/>
+<div class="grid gap-5 sm:grid-cols-2">
+
+    <div>
+        <label for="first_name"
+               class="mb-2 block text-sm font-medium text-zinc-800">
+            First name
+        </label>
+
+        <input
+            id="first_name"
+            name="first_name"
+            type="text"
+            placeholder="Your first name"
+            class="w-full rounded-xl border border-zinc-200 bg-white px-4 py-3.5 text-sm text-zinc-900 outline-none transition placeholder:text-zinc-400 hover:border-zinc-300 focus:border-zinc-900 focus:ring-4 focus:ring-zinc-900/5"
+        >
     </div>
-    <div class="mb-6">
-        <x-input.label for="company-{{$random}}" :title="__('company')"/>
-        <x-input.text id="company-{{$random}}" class="block mt-1 w-full" type="text" name="company" :value="old('company')"
-                      required/>
-        <x-input.error :messages="$errors->get('company')" class="mt-2"/>
+
+    <div>
+        <label for="last_name"
+               class="mb-2 block text-sm font-medium text-zinc-800">
+            Last name
+        </label>
+
+        <input
+            id="last_name"
+            name="last_name"
+            type="text"
+            placeholder="Your last name"
+            class="w-full rounded-xl border border-zinc-200 bg-white px-4 py-3.5 text-sm text-zinc-900 outline-none transition placeholder:text-zinc-400 hover:border-zinc-300 focus:border-zinc-900 focus:ring-4 focus:ring-zinc-900/5"
+        >
+    </div>
+
+</div>
+
+
+{{-- Email --}}
+<div>
+    <label for="email"
+           class="mb-2 block text-sm font-medium text-zinc-800">
+        Email address
+    </label>
+
+    <input
+        id="email"
+        name="email"
+        type="email"
+        placeholder="you@company.com"
+        class="w-full rounded-xl border border-zinc-200 bg-white px-4 py-3.5 text-sm text-zinc-900 outline-none transition placeholder:text-zinc-400 hover:border-zinc-300 focus:border-zinc-900 focus:ring-4 focus:ring-zinc-900/5"
+    >
+</div>
+
+
+{{-- Subject --}}
+<div>
+    <label for="subject"
+           class="mb-2 block text-sm font-medium text-zinc-800">
+        Subject
+    </label>
+
+    <div class="relative">
+        <select
+            id="subject"
+            name="subject"
+            class="w-full appearance-none rounded-xl border border-zinc-200 bg-white px-4 py-3.5 text-sm text-zinc-700 outline-none transition hover:border-zinc-300 focus:border-zinc-900 focus:ring-4 focus:ring-zinc-900/5"
+        >
+            <option value="">Select a topic</option>
+            <option value="support">Technical support</option>
+            <option value="sales">Sales</option>
+            <option value="partnership">Partnership</option>
+            <option value="feedback">Feedback</option>
+            <option value="other">Other</option>
+        </select>
+
+        <svg
+            class="pointer-events-none absolute right-4 top-1/2 size-4 -translate-y-1/2 text-zinc-400"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+        >
+            <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.8"
+                d="M6 9l6 6 6-6"
+            />
+        </svg>
     </div>
 </div>
 
-<div class="mb-6">
-    <x-input.label for="email-{{$random}}" :title="__('email')"/>
-    <x-input.text id="email-{{$random}}" class="block mt-1 w-full" type="email" name="email" :value="old('email')"
-                  required/>
-    <x-input.error :messages="$errors->get('email')" class="mt-2"/>
-</div>
 
-<div class="mb-6">
-    <x-input.label for="phone-{{$random}}" :title="__('phone')"/>
-    <x-input.text id="phone-{{$random}}" class="block mt-1 w-full" type="tel" name="phone" :value="old('phone')" required/>
-    <x-input.error :messages="$errors->get('phone')" class="mt-2"/>
-</div>
+{{-- Message --}}
+<div>
+    <label for="message"
+           class="mb-2 block text-sm font-medium text-zinc-800">
+        Message
+    </label>
 
-<div class="mb-6">
-    <x-input.label for="message-{{$random}}" :title="__('message')"/>
-    <x-input.textarea id="message-{{$random}}" class="block mt-1 w-full" rows="6" max="512" name="message" required>{{old('message')}}</x-input.textarea>
-    <x-input.error :messages="$errors->get('message')" class="mt-2"/>
+    <textarea
+        id="message"
+        name="message"
+        rows="6"
+        placeholder="How can we help you?"
+        class="w-full resize-none rounded-xl border border-zinc-200 bg-white px-4 py-3.5 text-sm text-zinc-900 outline-none transition placeholder:text-zinc-400 hover:border-zinc-300 focus:border-zinc-900 focus:ring-4 focus:ring-zinc-900/5"
+    ></textarea>
 </div>
