@@ -19,7 +19,7 @@ class NewInboxEvent
     /**
      * Create a new event instance.
      */
-    public function __construct(public Form $form ,public FormInbox $inbox)
+    public function __construct(public FormInbox $inbox)
     {
         //
     }

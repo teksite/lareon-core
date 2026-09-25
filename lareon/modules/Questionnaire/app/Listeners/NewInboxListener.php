@@ -8,9 +8,12 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 use Lareon\Modules\Questionnaire\App\Models\Form;
 use Lareon\Modules\Questionnaire\App\Models\FormInbox;
+use Lareon\Modules\Questionnaire\App\Notifications\AdminNewFormSubmitNotifiaction;
 
 class NewInboxListener
 {
@@ -23,7 +26,7 @@ class NewInboxListener
     {
         $inbox = $event->inbox;
 
-        $form = $event->form;
+        $form = $inbox->form;
 
         $announcements = $form->announcement;
 
@@ -70,7 +73,7 @@ class NewInboxListener
 
         foreach ($emails as $to) {
             try {
-                Notification::route('mail', $to)->notify(new NewFormSubmitNotifiaction($content));
+                Notification::route('mail', $to)->notify(new AdminNewFormSubmitNotifiaction($content));
 
             } catch (Exception $exception) {
                 Log::error("sending mail to (admin side) $to failed");

@@ -5,13 +5,21 @@ namespace Lareon\Modules\Questionnaire\App\Models;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Lareon\Modules\Questionnaire\App\Events\NewInboxEvent;
 use Lareon\Steward\App\Models\Admin;
 
 #[Fillable(['form_id', 'title', 'data', 'url', 'note', 'reader_id', 'ip_address', 'read_at'])]
-
 class FormInbox extends Model
 {
     protected $table = 'questionnaire_inboxes';
+
+    protected static function boot(): void
+    {
+        parent::boot();
+        static::created(function (FormInbox $inbox,): void {
+            event(new NewInboxEvent($inbox));
+        });
+    }
 
     protected function casts(): array
     {
@@ -43,7 +51,6 @@ class FormInbox extends Model
             'data_info.page_title' => 'nullable|string',
             'data_info.fullname'   => 'prohibited',
         ];
-
     }
 
     public function readBy(): BelongsTo
@@ -54,5 +61,13 @@ class FormInbox extends Model
     public function form(): BelongsTo
     {
         return $this->belongsTo(Form::class, 'form_id');
+    }
+
+    public function markAsRead(Admin|null $admin = null,): void
+    {
+        if ($this->read_at === null || $this->reader_id === null) {
+            $adminId = $admin === null ? auth('admin')->id() : $admin->id;
+            $this->forceFill(['read_at' => now(), 'reader_id' => $adminId])->save();
+        }
     }
 }

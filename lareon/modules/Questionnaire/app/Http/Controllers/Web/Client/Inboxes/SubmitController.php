@@ -17,7 +17,6 @@ class SubmitController extends Controller
     public function store(NewSubmitRequest $request)
     {
         $res = $this->logic->create($request->form, $request->validated());
-
         return Responder::fromResult($res)->go();
     }
 }

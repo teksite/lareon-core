@@ -32,12 +32,11 @@ trait UseClientSideSubmit
     /**
      * Get the validated data and append server-side data.
      */
-    public function validated($key = null, $default = null): mixed
+    public function validated($key = null, $default = null,): mixed
     {
         $validated = parent::validated();
 
         $validated['data_info']['ip_address'] = $this->ip();
-
         $validated['data_info']['form'] = $this->form;
 
         if ($key !== null) return data_get($validated, $key, $default);
