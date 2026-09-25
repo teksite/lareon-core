@@ -14,7 +14,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        $middleware->append([ \App\Http\Middleware\ClearCacheDailyMiddleware::class,]);
+        $middleware->append([
+            \App\Http\Middleware\ClearCacheDailyMiddleware::class,
+            \Teksite\Extralaravel\Middleware\HoneypotMiddleware::class
+            ]);
         $middleware->api(prepend:[DecryptAuthenticationTokenMiddleware::class ]);
 
     }

@@ -17,8 +17,8 @@
                             {{$form->active ?__('activated'):__('deactivated')}}
                         </span>
                     </td>
-                    <td>
-                      {{$form->inbox_count}}
+                    <td class="select-none">
+                     <span title="{{__('all')}}"> {{$form->inbox_count}}</span> / <span title="{{__('unread')}}" class="{{$form->unread_inbox_count > 0 ? 'font-bold' :''}}">{{$form->unread_inbox_count}}</span>
                     </td>
                     <td>
                         <x-lareon::date :date="$form->created_at"/>

@@ -51,6 +51,10 @@ class Form extends Model
     {
         return $this->hasMany(FormInbox::class, 'form_id');
     }
+    public function unreadInbox(): HasMany
+    {
+        return $this->inbox()->where('read_at', null);
+    }
 
     public function validationRules(): HasOne
     {
