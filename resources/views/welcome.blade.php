@@ -47,11 +47,7 @@
                 </nav>
             @endif
         </header>
-@foreach(\Lareon\Modules\Page\App\Models\Page::query()->limit(100)->get() as $page)
-    <div class="mb-2">
-        <a href="{{$page->path()}}">{{$page->title}}</a>
-    </div>
-@endforeach
+
         @if (Route::has('login'))
             <div class="h-14.5 hidden lg:block"></div>
         @endif
