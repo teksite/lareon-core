@@ -2,51 +2,38 @@
 
 namespace Lareon\Modules\Questionnaire\App\Http\Controllers\Web\Admin\Inboxes;
 
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Lareon\Modules\Questionnaire\App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
+use Lareon\Modules\Questionnaire\App\Logics\FormLogic;
+use Lareon\Modules\Questionnaire\App\Logics\InboxLogic;
+use Lareon\Steward\App\Traits\UseTrashController;
 
-class TrashInboxesController extends Controller
+class TrashInboxesController extends Controller implements HasMiddleware
 {
+    use UseTrashController;
 
-    /**
-     * Display  a list of the resource.
-     */
-    public function index(): \Illuminate\Contracts\View\View
+    public string $attribute = 'form';
+
+    public ?string $view = null;
+    public string $backTo = 'admin.questionnaire.inboxes.trash.index';
+
+    public string $indexRoute = 'admin.questionnaire.inboxes.trash.index';
+    public string $pruneRoute = 'admin.questionnaire.inboxes.trash.prune';
+    public string $reinstateRoute = 'admin.questionnaire.inboxes.trash.reinstate';
+    public string $flushRoute = 'admin.questionnaire.inboxes.trash.flush';
+    public string $restoreRoute = 'admin.questionnaire.inboxes.trash.restore';
+
+
+    public function __construct(public InboxLogic $logic) {}
+
+    public static function middleware(): array
     {
-        //
+        return [
+            new Middleware('can:admin.questionnaire.inbox.delete'),
+            new Middleware('can:admin.questionnaire.inbox.trash', only: ['prune', 'flush']),
+        ];
     }
-
-    /**
-     * restore one instance from trash
-     */
-    public function reinstate($id): RedirectResponse
-    {
-        //
-    }
-
-    /**
-     * delete one instance from DB forever
-     */
-    public function prune($id): RedirectResponse
-    {
-      //;
-    }
-
-    /**
-     *  restore all instances.
-     */
-    public function restore(): RedirectResponse
-    {
-       //
-    }
-
-    /**
-     * delete all instances forever.
-     */
-    public function flush(): RedirectResponse
-    {
-        //
-    }
-
 
 }

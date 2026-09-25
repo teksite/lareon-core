@@ -29,7 +29,7 @@ class InboxLogic
     /**
      * @throws \Throwable
      */
-    public function allByForm(Form $form, mixed $fetchData = [],)
+    public function allByForm(Form|int $form, mixed $fetchData = [],)
     {
         return ServiceWrapper::make(false)->do(
             fn() => FetchData::get($form->inbox(), ['id',]),

@@ -16,13 +16,13 @@ class TrashFormsController extends Controller implements HasMiddleware
     public string $attribute = 'form';
 
     public ?string $view = null;
-    public string $backTo = 'admin.questionnaire.inboxes.trash.index';
+    public string $backTo = 'admin.questionnaire.forms.trash.index';
 
-    public string $indexRoute = 'admin.questionnaire.inboxes.trash.index';
-    public string $pruneRoute = 'admin.questionnaire.inboxes.trash.prune';
-    public string $reinstateRoute = 'admin.questionnaire.inboxes.trash.reinstate';
-    public string $flushRoute = 'admin.questionnaire.inboxes.trash.flush';
-    public string $restoreRoute = 'admin.questionnaire.inboxes.trash.restore';
+    public string $indexRoute = 'admin.questionnaire.forms.trash.index';
+    public string $pruneRoute = 'admin.questionnaire.forms.trash.prune';
+    public string $reinstateRoute = 'admin.questionnaire.forms.trash.reinstate';
+    public string $flushRoute = 'admin.questionnaire.forms.trash.flush';
+    public string $restoreRoute = 'admin.questionnaire.forms.trash.restore';
 
 
     public function __construct(public FormLogic $logic) {}
