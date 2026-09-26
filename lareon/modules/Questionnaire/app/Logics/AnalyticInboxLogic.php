@@ -107,7 +107,7 @@ class AnalyticInboxLogic
         };
     }
 
-    private function queryInboxes(Carbon $fromDate, Carbon $toDate, string $range)
+    private function queryInboxes(Carbon $fromDate, Carbon $toDate, string $range): \Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection
     {
         return FormInbox::query()->whereBetween('created_at', [$fromDate, $toDate])
                     ->select([

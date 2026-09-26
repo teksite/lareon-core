@@ -53,7 +53,9 @@ class FormsController extends Controller
     public function store(NewFormRequest $request,)
     {
         $res = $this->logic->create($request->validated());
-        return Responder::fromResult($res, success_url: route('admin.questionnaire.forms.edit', $res->result))->go();
+        return Responder::fromResult($res, success_url: $res->success
+            ? route('admin.questionnaire.forms.edit', ['form' => $res->result])
+            : null,)->go();
     }
 
     /**

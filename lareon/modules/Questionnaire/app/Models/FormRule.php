@@ -21,7 +21,7 @@ class FormRule extends Model
     public static function rulesForModels(): array
     {
         return [
-            'rules'     => 'nullable|array',
+            'rules'     => 'sometimes|array',
             'rules.*.*' => 'string|required',
         ];
     }
