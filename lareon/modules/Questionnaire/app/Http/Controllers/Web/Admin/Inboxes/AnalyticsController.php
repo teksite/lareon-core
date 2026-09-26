@@ -1,11 +1,10 @@
 <?php
 
-namespace Lareon\Modules\Questionnaire\App\Http\Controllers\Web\Admin\Analytics;
+namespace Lareon\Modules\Questionnaire\App\Http\Controllers\Web\Admin\Inboxes;
 
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Lareon\Modules\Questionnaire\App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Lareon\Modules\Questionnaire\App\Logics\AnalyticInboxLogic;
 
 class AnalyticsController extends Controller implements HasMiddleware

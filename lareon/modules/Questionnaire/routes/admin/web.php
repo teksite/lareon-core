@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Lareon\Modules\Questionnaire\App\Http\Controllers\Web\Admin\Analytics\AnalyticsController;
 use Lareon\Modules\Questionnaire\App\Http\Controllers\Web\Admin\Forms\FormsController;
 use Lareon\Modules\Questionnaire\App\Http\Controllers\Web\Admin\Forms\TrashFormsController;
+use Lareon\Modules\Questionnaire\App\Http\Controllers\Web\Admin\Inboxes\AnalyticsController;
 use Lareon\Modules\Questionnaire\App\Http\Controllers\Web\Admin\Inboxes\ExportController;
 use Lareon\Modules\Questionnaire\App\Http\Controllers\Web\Admin\Inboxes\InboxesController;
 use Lareon\Modules\Questionnaire\App\Http\Controllers\Web\Admin\Inboxes\TrashInboxesController;
