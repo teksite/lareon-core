@@ -1,32 +1,32 @@
 <x-lareon::admin-layout>
-    @section('title', __('forms analytics'))
-    @section('description', __('analytics help provide a comprehensive overview at a glance'))
+    @section('title', __('export'))
+    @section('description', __('export form submissions to excel'))
 
-    <form action="{{ route('admin.questionnaire.analytics.show') }}" method="GET" id="inboxLineChartForm">
-        <x-lareon::box class="flex items-end gap-3 mb-12">
-            <div class="flex gap-1">
-                <div class="flex gap-1">
-                    <x-lareon::editor.input-date :label="__('from date')" id="fromDate" name="fromDate" type="date" :value="request()->fromDate ?? now()->startOfMonth()->format('Y-m-d')"/>
-                    <x-lareon::editor.input-date :label="__('until date')" id="toDate" name="toDate" type="date" :value="request()->toDate ?? now()->endOfMonth()->format('Y-m-d')"/>
-                </div>
-                <div class="flex gap-1">
-                    <x-lareon::editor.input-select id="range" name="range" :label="__('range')">
-                        <option value="month">{{ __('month') }}</option>
-                        <option value="year">{{ __('year') }}</option>
-                        <option value="week">{{ __('week') }}</option>
-                        <option value="day">{{ __('day') }}</option>
-                    </x-lareon::editor.input-select>
-                </div>
-            </div>
-            <x-lareon::buttons.nav class="min-w-24" :fullWidth="false" type="submit" color="blue">
-                {{ __('submit') }}
-            </x-lareon::buttons.nav>
-        </x-lareon::box>
-    </form>
+   <x-lareon::box type="y">
+       <form action="{{route('admin.questionnaire.export.execute')}}" method="POST">
+           @csrf
+           <div class="grid md::grid-cols-2 lg:grid-cols-3 gap-6 items-end">
+               <div class="md:col-span-2 lg:col-span-1">
+                   <x-lareon::editor.input-select name="form" id="form_title" class="block w-full" :label="__('form')">
+                       @foreach($forms as $form)
+                           <option value="{{$form->id}}">
+                               {{$form->title}}
+                           </option>
+                       @endforeach
+                   </x-lareon::editor.input-select>
+               </div>
+               <div class="flex items-center gap-3">
+                   <x-lareon::editor.input-date :label="__('from date')" id="fromDate" name="date[start]" type="date"/>
+                   <x-lareon::editor.input-date :label="__('until date')" id="toDate" name="end" type="date"/>
+               </div>
 
-    <div id="inboxLineChart" class="w-full h-[400px]"></div>
-    @push('headerScripts')
-        @vite(['lareon/modules/Questionnaire/resources/js/app.js'])
-    @endpush
+           </div>
+           <div class="flex items-center justify-end self-end mt-6">
+               <x-lareon::buttons.nav class="min-w-24" :fullWidth="false" type="submit">
+                   {{ __('export') }}
+               </x-lareon::buttons.nav>
+           </div>
+       </form>
+   </x-lareon::box>
 
 </x-lareon::admin-layout>
