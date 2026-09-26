@@ -48,20 +48,21 @@ class MenuProvider implements MenuRegisteringContract
                       'permission' => 'admin.questionnaire.form.read',
 
                   ],
-/*                  [
+                  [
                       'title'      => trans('lareon::global.crud.titles.all', ['attribute' => trans('inboxes')]),
                       'order'      => 2,
                       'route'      => 'admin.questionnaire.inboxes.index',
                       'active'     => request()->routeIs('admin.questionnaire.inboxes.*'),
                       'permission' => 'admin.questionnaire.inbox.read',
 
-                  ], [
-                      'title'      => trans('lareon::global.crud.titles.all', ['attribute' => trans('inboxes')]),
+                  ],
+                  [
+                      'title'      => trans('forms analytics'),
                       'order'      => 2,
                       'route'      => 'admin.questionnaire.analytics.show',
                       'active'     => request()->routeIs('admin.questionnaire.analytics.*'),
                       'permission' => 'admin.questionnaire.inbox.export',
-                  ],*/
+                  ],
 
               ], 'questionnaire');
     }

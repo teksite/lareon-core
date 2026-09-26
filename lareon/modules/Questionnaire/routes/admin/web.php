@@ -16,7 +16,7 @@ Route::prefix('questionnaire')->name('questionnaire.')->group(function () {
     Route::resource('forms', FormsController::class);
 
 
-    Route::get('analytics', [AnalyticsController::class, 'show'])->name('inboxes.analytics.show');
+    Route::get('analytics', [AnalyticsController::class, 'show'])->name('analytics.show');
 
     Route::prefix('export')->name('inboxes.export.')->group(function () {
         Route::get('/execute', [ExportController::class, 'export'])->name('execute');

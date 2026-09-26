@@ -20,9 +20,12 @@ class AnalyticsController extends Controller implements HasMiddleware
 
     public function __construct(public AnalyticInboxLogic $logic,) {}
 
+    /**
+     * @throws \Throwable
+     */
     public function get(Request $request,)
     {
-        $res = $this->logic->getForChart($request->get('fromDate'), $request->get('toDate'), $request->get('range', 'day'));
+        $res = $this->logic->getForChart($request->input('fromDate'), $request->input('toDate'), $request->input('range', 'day'));
         return Responder::fromResult($res)->reply();
     }
 }

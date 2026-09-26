@@ -47,6 +47,8 @@ class FormsController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     *
+     * @throws \Throwable
      */
     public function store(NewFormRequest $request,)
     {

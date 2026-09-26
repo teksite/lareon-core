@@ -38,7 +38,7 @@ class Form extends Model
         ];
 
         $rules['title'] = match (true) {
-            $operation === 'create' => 'required|string|max:255|unique:questionnaire_forms,slug',
+            $operation === 'create' => 'required|string|max:255|unique:questionnaire_forms,title',
             $operation === 'update' => ['required', 'string', 'max:255', Rule::unique('questionnaire_forms', 'title')->ignore($ignoreId)],
             default                 => throw new \InvalidArgumentException("Operation '{$operation}' is not valid. Allowed: create, update")
         };
