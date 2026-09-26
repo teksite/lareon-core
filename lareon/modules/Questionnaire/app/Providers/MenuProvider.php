@@ -58,9 +58,16 @@ class MenuProvider implements MenuRegisteringContract
                   ],
                   [
                       'title'      => trans('forms analytics'),
-                      'order'      => 2,
+                      'order'      => 3,
                       'route'      => 'admin.questionnaire.analytics.show',
-                      'active'     => request()->routeIs('admin.questionnaire.analytics.*'),
+                      'active'     => request()->routeIs('admin.questionnaire.analytics.show'),
+                      'permission' => 'admin.questionnaire.inbox.read',
+                  ],
+                  [
+                      'title'      => trans('export'),
+                      'order'      => 4,
+                      'route'      => 'admin.questionnaire.export.index',
+                      'active'     => request()->routeIs('admin.questionnaire.export.index'),
                       'permission' => 'admin.questionnaire.inbox.export',
                   ],
 

@@ -19,7 +19,7 @@
                 </div>
             </div>
             <x-lareon::buttons.nav class="min-w-24" :fullWidth="false" type="submit" color="blue">
-                {{ 'submit' }}
+                {{ __('submit') }}
             </x-lareon::buttons.nav>
         </x-lareon::box>
     </form>

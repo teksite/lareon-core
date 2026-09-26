@@ -18,8 +18,8 @@ Route::prefix('questionnaire')->name('questionnaire.')->group(function () {
 
     Route::get('analytics', [AnalyticsController::class, 'show'])->name('analytics.show');
 
-    Route::prefix('export')->name('inboxes.export.')->group(function () {
-        Route::get('/execute', [ExportController::class, 'export'])->name('execute');
+    Route::prefix('export')->name('export.')->group(function () {
+        Route::post('/execute', [ExportController::class, 'export'])->name('execute');
         Route::get('/', [ExportController::class, 'index'])->name('index');
     });
 });
