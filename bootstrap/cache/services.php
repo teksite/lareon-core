@@ -39,14 +39,16 @@
     35 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
     36 => 'Termwind\\Laravel\\TermwindServiceProvider',
     37 => 'Spatie\\Sitemap\\SitemapServiceProvider',
-    38 => '\\Teksite\\Authorize\\AuthorizeServiceProvider',
-    39 => 'Teksite\\Extralaravel\\ExtraLaravelServiceProvider',
-    40 => 'Teksite\\Handler\\HandlerServiceProvider',
-    41 => 'Teksite\\IconLaravel\\IconLaravelServiceProvider',
-    42 => 'Teksite\\FileManager\\FileManagerServiceProvider',
-    43 => 'Teksite\\Module\\ModuleServiceProvider',
-    44 => 'Teksite\\SystemInfo\\SystemInformationProvider',
-    45 => 'App\\Providers\\AppServiceProvider',
+    38 => 'Staudenmeir\\LaravelAdjacencyList\\IdeHelperServiceProvider',
+    39 => 'Staudenmeir\\LaravelCte\\DatabaseServiceProvider',
+    40 => '\\Teksite\\Authorize\\AuthorizeServiceProvider',
+    41 => 'Teksite\\Extralaravel\\ExtraLaravelServiceProvider',
+    42 => 'Teksite\\Handler\\HandlerServiceProvider',
+    43 => 'Teksite\\IconLaravel\\IconLaravelServiceProvider',
+    44 => 'Teksite\\FileManager\\FileManagerServiceProvider',
+    45 => 'Teksite\\Module\\ModuleServiceProvider',
+    46 => 'Teksite\\SystemInfo\\SystemInformationProvider',
+    47 => 'App\\Providers\\AppServiceProvider',
   ),
   'eager' => 
   array (
@@ -73,14 +75,15 @@
     20 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
     21 => 'Termwind\\Laravel\\TermwindServiceProvider',
     22 => 'Spatie\\Sitemap\\SitemapServiceProvider',
-    23 => '\\Teksite\\Authorize\\AuthorizeServiceProvider',
-    24 => 'Teksite\\Extralaravel\\ExtraLaravelServiceProvider',
-    25 => 'Teksite\\Handler\\HandlerServiceProvider',
-    26 => 'Teksite\\IconLaravel\\IconLaravelServiceProvider',
-    27 => 'Teksite\\FileManager\\FileManagerServiceProvider',
-    28 => 'Teksite\\Module\\ModuleServiceProvider',
-    29 => 'Teksite\\SystemInfo\\SystemInformationProvider',
-    30 => 'App\\Providers\\AppServiceProvider',
+    23 => 'Staudenmeir\\LaravelCte\\DatabaseServiceProvider',
+    24 => '\\Teksite\\Authorize\\AuthorizeServiceProvider',
+    25 => 'Teksite\\Extralaravel\\ExtraLaravelServiceProvider',
+    26 => 'Teksite\\Handler\\HandlerServiceProvider',
+    27 => 'Teksite\\IconLaravel\\IconLaravelServiceProvider',
+    28 => 'Teksite\\FileManager\\FileManagerServiceProvider',
+    29 => 'Teksite\\Module\\ModuleServiceProvider',
+    30 => 'Teksite\\SystemInfo\\SystemInformationProvider',
+    31 => 'App\\Providers\\AppServiceProvider',
   ),
   'deferred' => 
   array (
@@ -245,6 +248,7 @@
     'validation.presence' => 'Illuminate\\Validation\\ValidationServiceProvider',
     'Illuminate\\Contracts\\Validation\\UncompromisedVerifier' => 'Illuminate\\Validation\\ValidationServiceProvider',
     'command.tinker' => 'Laravel\\Tinker\\TinkerServiceProvider',
+    'Staudenmeir\\LaravelAdjacencyList\\Barryvdh\\LaravelIdeHelper\\Console\\ModelsCommand' => 'Staudenmeir\\LaravelAdjacencyList\\IdeHelperServiceProvider',
   ),
   'when' => 
   array (
@@ -291,6 +295,9 @@
     array (
     ),
     'Laravel\\Tinker\\TinkerServiceProvider' => 
+    array (
+    ),
+    'Staudenmeir\\LaravelAdjacencyList\\IdeHelperServiceProvider' => 
     array (
     ),
   ),

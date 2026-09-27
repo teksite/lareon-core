@@ -105,6 +105,20 @@
       0 => 'Spatie\\Sitemap\\SitemapServiceProvider',
     ),
   ),
+  'staudenmeir/laravel-adjacency-list' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Staudenmeir\\LaravelAdjacencyList\\IdeHelperServiceProvider',
+    ),
+  ),
+  'staudenmeir/laravel-cte' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Staudenmeir\\LaravelCte\\DatabaseServiceProvider',
+    ),
+  ),
   'teksite/authorize' => 
   array (
     'providers' => 
