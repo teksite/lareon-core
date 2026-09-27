@@ -1,1 +1,22 @@
-/* add your css file */
+.list-group-item:hover {
+    z-index: 0;
+}
+
+.nested-sortable, .list-group-item {
+    margin-top: 5px;
+}
+
+
+.list-group-item:focus, .list-group-item:hover {
+    z-index: 1;
+    text-decoration: none;
+}
+.list-group-item {
+    position: relative;
+    display: block;
+    padding:  0;
+    margin-bottom: -1px;
+}
+#nestedMenus > .list-group-item{
+    margin-bottom: 32px;
+}

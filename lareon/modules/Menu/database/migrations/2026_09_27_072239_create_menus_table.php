@@ -13,7 +13,12 @@ return new class extends Migration
     {
         Schema::create('menus', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->string('label')->unique();
+            $table->text('classes')->nullable();
             $table->timestamps();
+
+            $table->index('label');
         });
     }
 

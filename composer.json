@@ -20,6 +20,7 @@
         "maatwebsite/excel": "^4.0",
         "spatie/laravel-sitemap": "*",
         "spatie/schema-org": "^5.0",
+        "staudenmeir/laravel-adjacency-list": "*",
         "teksite/authorize": "^2.0",
         "teksite/extralaravel": "^2.0",
         "teksite/handler": "^3.0",
