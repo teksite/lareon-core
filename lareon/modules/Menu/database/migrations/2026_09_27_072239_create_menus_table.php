@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('label')->unique();
             $table->text('classes')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->index('label');
         });

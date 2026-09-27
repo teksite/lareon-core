@@ -52,7 +52,7 @@ class MenusController extends Controller implements HasMiddleware
     public function store(NewMenuRequest $request,)
     {
         $res = $this->logic->create($request->validated());
-        return Responder::fromResult($res, success_url: route('admin.appearance.menus.index'))->go();
+        return Responder::fromResult($res, success_url: route('admin.visual.menus.index'))->go();
     }
 
     /**
@@ -79,7 +79,7 @@ class MenusController extends Controller implements HasMiddleware
     public function update(UpdateMenuRequest $request, Menu $menu,)
     {
         $res = $this->logic->update($menu, $request->validated());
-        return Responder::fromResult($res, success_url: route('admin.appearance.menus.edit', $menu))->go();
+        return Responder::fromResult($res, success_url: route('admin.visual.menus.edit', $menu))->go();
     }
 
     /**
@@ -88,6 +88,6 @@ class MenusController extends Controller implements HasMiddleware
     public function destroy(Menu $menu,)
     {
         $res = $this->logic->delete($menu);
-        return Responder::fromResult($res, success_url: route('admin.appearance.menus.index'))->go();
+        return Responder::fromResult($res, success_url: route('admin.visual.menus.index'))->go();
     }
 }

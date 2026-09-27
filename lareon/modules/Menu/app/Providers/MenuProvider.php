@@ -36,19 +36,18 @@ class MenuProvider implements MenuRegisteringContract
             [
                 'title'  => trans('visual'),
                 'order'  => 102,
-                'icon'   => 'paper-board',
+                'icon'   => 'eye',
                 'active' => request()->routeIs('admin.visual.*'),
-            ], 'questionnaire')
+            ], 'visual')
               ->addManyItem([
                   [
                       'title'      => trans('lareon::global.crud.titles.all', ['attribute' => trans('menus')]),
                       'order'      => 1,
                       'route'      => 'admin.visual.menus.index',
                       'active'     => request()->routeIs('admin.visual.menus.index'),
-                      'permission' => 'admin.visual.menu.read',
+                      'permission' => 'admin.menu.read',
 
                   ],
-
               ], 'visual');
     }
 
