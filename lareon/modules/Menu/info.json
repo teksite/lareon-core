@@ -1,0 +1,10 @@
+{
+    "version":"1.0.0",
+    "id": "Menu",
+    "title": "Menu",
+    "alias": "menu",
+    "description": "",
+    "keywords": [],
+    "providers": "Lareon\\Modules\\Menu\\App\\Providers\\MenuServiceProvider"
+}
+

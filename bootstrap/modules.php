@@ -39,4 +39,9 @@
     'active' => true,
     'type' => 'steward',
   ],
+  'Menu' => [
+    'provider' => 'Lareon\\Modules\\Menu\\App\\Providers\\MenuServiceProvider',
+    'active' => true,
+    'type' => 'steward',
+  ],
 ];

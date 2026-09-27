@@ -1,0 +1,51 @@
+{
+    "name": "teksite/menu",
+    "description": "This package is made for lareon (laravel)",
+    "keywords": ["laravel", "laravel" , "Menu"],
+
+    "authors": [
+        {
+            "name": "Sina Zangiband",
+            "email": "sina.zangiband@gmail.com",
+            "homepage": "https://teksite.net",
+            "role":"manager"
+        },
+        {
+            "name": "Sina zb",
+            "email": "sina.zangiband@laratek.ir",
+            "homepage": "https://laratek.ir",
+            "role": "developer"
+        }
+    ],
+    "require": {
+
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Lareon\\Modules\\Menu\\App\\Providers\\MenuServiceProvider"
+            ],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Lareon\\Modules\\Menu\\App\\": "app/",
+            "Lareon\\Modules\\Menu\\Database\\Factories\\": "database/factories/",
+            "Lareon\\Modules\\Menu\\Database\\Seeders\\": "database/seeders/"
+        },
+         "files": [
+
+         ]
+    },
+    "require-dev": {
+
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Lareon\\Modules\\Menu\\Tests\\": "tests/"
+        }
+    }
+}
