@@ -2,7 +2,6 @@
 
 namespace Lareon\Modules\Menu\App\Logics;
 
-use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
