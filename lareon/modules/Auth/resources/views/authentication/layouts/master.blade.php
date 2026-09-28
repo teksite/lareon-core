@@ -16,8 +16,8 @@
 </head>
 <body class="bg-slate-200">
 <main class="ms-auto me-0 max-h-svh h-svh min-h-svh bg-center bg-cover bg-no-repeat bg-wavy p-3">
-    <div class="grid sm:grid-cols-2 xl:grid-cols-3 h-full items-stretch">
-        <div class="y-box flex flex-col gap-6 justify-between w-full">
+    <div class="h-full items-stretch overflow-hidden">
+        <div class=" w-full max-w-120 y-box flex flex-col gap-6 justify-between  h-full overflow-auto">
             <header>
                 @yield('header')
             </header>
@@ -31,11 +31,10 @@
                 @yield('footer')
             </footer>
         </div>
-
     </div>
-    <div class="absolute top-5 end-5 ">
+    <div class="absolute top-5 inset-e-5 ">
         @foreach($errors?->all() as $error)
-            <div class="bg-white">
+            <div class="bg-white text-red-600 font-bold text-sm">
                 {{$error}}
             </div>
         @endforeach
