@@ -1,22 +1,11 @@
-@props(['required'=>false , 'value'=>null , 'wrapperMode'=>null , 'path' ] )
+@props(['required'=>false , 'type' , 'value'=>null , 'wrapperMode'=>null ] )
 @php
     $wrapperClass=match ($wrapperMode){
         'x-box'=>'x-box',
         'y-box'=>'y-box',
         default => null
     };
-$path=resource_path("view/$path");
-
-$templates= File::isDirectory($path)
-         ? collect(File::files($sitemapsDir))
-                    ->filter(fn(SplFileInfo $file,) => $file->getExtension() === '.blade.php')
-                    ->map(fn(SplFileInfo $file,) => $file->getFilename())
-                    ->values()
-                    ->toArray()
-
-     :$templates=[];
-
-
+   $templates = \Lareon\Modules\Meta\App\Models\MetaTemplate::query()->where('model_type', $type)->pluck('title' ,'id')->toArray();
 
 @endphp
 

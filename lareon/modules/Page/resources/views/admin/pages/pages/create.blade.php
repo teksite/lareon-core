@@ -17,7 +17,7 @@
 
             <x-slot:aside>
                 <x-lareon::editor.input-image :required="false" wrapperMode="y-box" name="primary_media_id"/>
-                <x-lareon::editor.section.template type="page" :required="false" wrapperMode="y-box" :value="old('template')"/>
+                <x-meta::editor.section.template type="page" :required="false" wrapperMode="y-box" :value="old('template')"/>
             </x-slot:aside>
         </x-lareon::editor.tabs.item>
     @endsection

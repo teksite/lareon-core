@@ -11,7 +11,7 @@ class NewGadgetRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return userCan('admin.gadgets.create');
+        return userCan('admin.gadget.create');
     }
 
     /**

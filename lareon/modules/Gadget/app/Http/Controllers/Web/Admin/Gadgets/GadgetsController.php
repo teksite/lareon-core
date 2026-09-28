@@ -36,7 +36,7 @@ class GadgetsController extends Controller implements HasMiddleware
     {
         $gadgets = $this->logic->all()->result;
         $trashCount = $this->logic->trashCount()->result;
-        return view('page::admin.pages.gadgets.index', compact('gadgets', 'trashCount'));
+        return view('gadget::admin.pages.gadgets.index', compact('gadgets', 'trashCount'));
     }
 
     /**
@@ -45,7 +45,7 @@ class GadgetsController extends Controller implements HasMiddleware
     public function create()
     {
         $gadget= new Gadget();
-        return view('page::admin.pages.gadgets.create' , compact('gadget'));
+        return view('gadget::admin.pages.gadgets.create' , compact('gadget'));
     }
 
     /**
@@ -78,7 +78,7 @@ class GadgetsController extends Controller implements HasMiddleware
      */
     public function edit(Gadget $gadget)
     {
-        return view('page::admin.pages.gadgets.edit', compact('gadget'));
+        return view('gadget::admin.pages.gadgets.edit', compact('gadget'));
     }
 
 

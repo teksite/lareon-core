@@ -11,7 +11,7 @@ class UpdateGadgetRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return userCan('admin.gadgets.edit');
+        return userCan('admin.gadget.edit');
     }
 
     /**
