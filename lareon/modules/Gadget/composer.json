@@ -1,0 +1,51 @@
+{
+    "name": "teksite/gadget",
+    "description": "This package is made for lareon (laravel)",
+    "keywords": ["laravel", "laravel" , "Gadget"],
+
+    "authors": [
+        {
+            "name": "Sina Zangiband",
+            "email": "sina.zangiband@gmail.com",
+            "homepage": "https://teksite.net",
+            "role":"manager"
+        },
+        {
+            "name": "Sina zb",
+            "email": "sina.zangiband@laratek.ir",
+            "homepage": "https://laratek.ir",
+            "role": "developer"
+        }
+    ],
+    "require": {
+
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Lareon\\Modules\\Gadget\\App\\Providers\\GadgetServiceProvider"
+            ],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Lareon\\Modules\\Gadget\\App\\": "app/",
+            "Lareon\\Modules\\Gadget\\Database\\Factories\\": "database/factories/",
+            "Lareon\\Modules\\Gadget\\Database\\Seeders\\": "database/seeders/"
+        },
+         "files": [
+
+         ]
+    },
+    "require-dev": {
+
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Lareon\\Modules\\Gadget\\Tests\\": "tests/"
+        }
+    }
+}

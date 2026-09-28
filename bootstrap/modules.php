@@ -44,4 +44,9 @@
     'active' => true,
     'type' => 'steward',
   ],
+  'Gadget' => [
+    'provider' => 'Lareon\\Modules\\Gadget\\App\\Providers\\GadgetServiceProvider',
+    'active' => true,
+    'type' => 'steward',
+  ],
 ];
