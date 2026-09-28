@@ -38,7 +38,7 @@ class MenuRegisteringEvent
      */
     public function add(array $item, string $group = null): self
     {
-        $this->items[$this->area->value][] = [...$item, 'group' => $group];
+        $this->items[$this->area->value][$item['title']] = [...$item, 'group' => $group];
         return $this;
     }
 
