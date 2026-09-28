@@ -16,7 +16,7 @@
         </x-lareon::editor.input-select>
     @endsection
     @section('list')
-        <x-lareon::table :rows="$ips" :headers="['id'=>'#','ip_address'=>__('ip'),'type'=>__('type') ,'created_at'=>__('created at'),'']">
+        <x-lareon::table :rows="$ips" :headers="['id'=>'#',__('ip'),__('type') ,__('created at'),'']">
             @foreach($ips as $key=>$ip)
                 <tr>
                     <td class="p-3">{{$ips->firstItem() + $key}}</td>
