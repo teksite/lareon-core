@@ -16,7 +16,7 @@ return [
         'unauthorized'       => 'شما مجوز انجام این عملیات را ندارید',
         'forbidden'          => 'دسترسی غیرمجاز',
         'sign_in'            => 'ورود به سیستم',
-        'sign_up'            => 'ثبت‌نام در سیستم',
+        'sign_up'            => 'ثبت‌نام',
         'email_verification' => 'تأیید ایمیل',
         'phone_verification' => 'تأیید نلفن',
         'confirm_password'   => 'تایید گذر‌واژه',

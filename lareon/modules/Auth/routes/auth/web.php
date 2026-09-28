@@ -14,14 +14,14 @@ Route::group(['middleware' => config('fortify.middleware', ['web'])], function (
 
     Route::post(RoutePath::for('two-factor.login', '/two-factor-challenge'), [TwoFactorAuthenticatedSessionController::class, 'viaTOTP'])
          ->middleware(array_filter([
-             'guest:' . config('fortify.guard'),
-             $twoFactorLimiter ? 'throttle:' . $twoFactorLimiter : null,
+             'guest:'.config('fortify.guard'),
+             $twoFactorLimiter ? 'throttle:'.$twoFactorLimiter : null,
          ]))->name('two-factor.login.store');
 
     Route::post('two-factor-recovery-challenge', [TwoFactorAuthenticatedSessionController::class, 'viaRecovery'])
          ->middleware(array_filter([
-             'guest:' . config('fortify.guard'),
-             $twoFactorLimiter ? 'throttle:' . $twoFactorLimiter : null,
+             'guest:'.config('fortify.guard'),
+             $twoFactorLimiter ? 'throttle:'.$twoFactorLimiter : null,
          ]))->name('recovery.login.store');
 
     Route::prefix('two-factor-otp-challenge')->name('otp.')->group(function () {
@@ -31,7 +31,7 @@ Route::group(['middleware' => config('fortify.middleware', ['web'])], function (
 });
 
 
-Route::middleware('guest')->prefix('oauth/{provider}')->whereIn('provider', array_keys(config('lareon.oauth.types')))->name('oauth.')->group(function () {
-         Route::get('/', [OAuthsController::class, 'redirect'])->name('redirect');
-         Route::get('/callback', [OAuthsController::class, 'callback'])->name('callback');
-     });
+Route::middleware('guest')->prefix('oauth')->name('oauth.')->group(function () {
+    Route::get('{provider}', [OAuthsController::class, 'redirect'])->name('redirect');
+    Route::get('/callback/{provider}', [OAuthsController::class, 'callback'])->name('callback');
+});

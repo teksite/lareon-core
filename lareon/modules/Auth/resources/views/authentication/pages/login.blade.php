@@ -1,5 +1,5 @@
 <x-auth::layout :title="trans('lareon::global.auth.sign_in')" :indexable="true">
-@section('title',__('login'))
+    @section('title',__('login'))
     <div class="w-full">
         <div class="text-center">
             <x-tkicon type="outline" icon="user" size="32" class="mx-auto mb-3"/>
@@ -7,7 +7,7 @@
         </div>
         <hr class="my-6 border-zinc-300">
 
-        <x-auth::passkey />
+        <x-auth::passkey/>
 
         <form method="POST" action="{{ route('login.store') }}" class="formAction space-y-3">
             @csrf
@@ -36,22 +36,36 @@
             <div class="mb-3">
                 {{--                <x-captcha::load />--}}
             </div>
-            <div class="">
                 <x-lareon::buttons.simple type="submit" role="submit" :fullWidth="true">
                     {{__('lareon::global.buttons.sign_in')}}
                 </x-lareon::buttons.simple>
-            </div>
-        </form>
             @if (Route::has('register'))
-                <a href="{{route('register')}}" class="px-3 py-2 bg-blue-300/25 text-blue-600 block text-center mt-12 rounded-2xl font-bold">
-                    {{__('lareon::global.auth.sign_up')}}
-                </a>
+                <div class="w-full text-center">
+                    <a href="{{route('register')}}" class="px-3 py-2 text-blue-600 block text-center rounded-2xl font-bold text-sm">
+                        {{__("i don't account yet")}}!
+                    </a>
+                </div>
             @endif
+
+        </form>
+
+        <div class="mt-6">
+            <div class="flex items-center gap-3">
+                <hr class="border-slate-300 w-full">
+                <span class="w-fit min-w-fit text-gray-600 font-bold text-sm">
+                   {{__('or')}} {{__('via')}}
+                </span>
+                <hr class="border-slate-300 w-full">
+            </div>
+            <div class="flex items-center gap-3 justify-center mt-3">
+                <x-auth::oauth-ways/>
+            </div>
+        </div>
 
         @section('footer')
             <section class="">
                 <a href="/" class="text-sm inline-flex items-center gap-1">
-                    <x-tkicon icon="home" type="outline" size="20" />
+                    <x-tkicon icon="home" type="outline" size="20"/>
                     {{__('lareon::global.links.back_home')}}
                 </a>
             </section>
