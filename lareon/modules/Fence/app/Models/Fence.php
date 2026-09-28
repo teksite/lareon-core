@@ -21,7 +21,7 @@ class Fence extends Model
     public static function rules(): array
     {
         return [
-            'ip_address' => 'required|ip|unique:restrict_ips,ip_address',
+            'ip_address' => 'required|ip',
             'type'       => ['required', Rule::enum(GuardType::class)],
         ];
     }

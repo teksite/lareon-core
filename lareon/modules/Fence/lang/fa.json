@@ -2,5 +2,6 @@
     "restricted ips": "ip‌های محدود شده",
     "restricted ip": "ip محدود شده",
     "blacklist": "لیست سیاه",
-    "whitelist": "لیست سفید"
+    "whitelist": "لیست سفید",
+    "you can restrict users from accessing the application based on their IP addresses": "می‌توانید دسترسی کاربران به برنامه را بر اساس آدرس IP آن‌ها محدود کنید"
 }

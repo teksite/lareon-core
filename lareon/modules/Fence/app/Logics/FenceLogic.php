@@ -2,45 +2,51 @@
 
 namespace Lareon\Modules\Fence\App\Logics;
 
-use Illuminate\Support\Arr;
-use Illuminate\Database\Eloquent\Model;
 use Lareon\Modules\Fence\App\Contracts\FenceStoreContract;
 use Teksite\Handler\Services\ServiceWrapper;
 
-
 class FenceLogic
 {
-
-    public string $storeType;
-
     public function __construct(protected FenceStoreContract $store,) {}
 
-    public function all(mixed $fetchData = [],)
+    /**
+     * @throws \Throwable
+     */
+    public function all(array $filters = [], int $perPage = 25)
     {
-        return ServiceWrapper::make(true)->do(fn() => $this->store->all())->run();
+        return ServiceWrapper::make(true)->do(fn() => $this->store->all($filters, $perPage))->run();
     }
 
-    public function first(array $inputs = [],)
+    /**
+     * @throws \Throwable
+     */
+    public function first(string $ip,)
     {
         return ServiceWrapper::make(true)->do(fn() => $this->store->first($ip))->run();
     }
 
+    /**
+     * @throws \Throwable
+     */
     public function create(array $inputs = [],)
     {
         return ServiceWrapper::make(true)->do(fn() => $this->store->create($inputs))->run();
     }
 
-
-    public function delete(array $inputs,)
+    /**
+     * @throws \Throwable
+     */
+    public function delete(array|string $ips,)
     {
-        return ServiceWrapper::make(true)->do(fn() => $this->store->delete($inputs))->run();
+        $ips=(array)$ips;
+        return ServiceWrapper::make(true)->do(fn() => $this->store->delete($ips))->run();
     }
 
-    public function exists(string $ip,): mixed
+    /**
+     * @throws \Throwable
+     */
+    public function exists(string $ip,)
     {
         return ServiceWrapper::make(true)->do(fn() => $this->store->exists($ip))->run();
     }
-
-
 }
-

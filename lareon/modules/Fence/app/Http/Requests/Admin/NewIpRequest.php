@@ -29,13 +29,6 @@ class NewIpRequest extends FormRequest
 
 
 
-    public function after(): array
-    {
-        return [
-            fn(Validator $validator) =>'dsfsf'
-        ];
-    }
-
     private function uniqueIpAddressRule(bool $isFileStorage,)
     {
         if ($isFileStorage) {

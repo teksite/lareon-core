@@ -2,44 +2,28 @@
 
 namespace Lareon\Modules\Fence\App\Contracts;
 
+use Illuminate\Pagination\LengthAwarePaginator;
+use Lareon\Modules\Fence\App\Models\Fence;
+
 interface FenceStoreContract
 {
     /**
-     * Get all stored IP addresses.
-     *
-     * @return array
+     * @param array{search?: string|null, type?: int|string|null} $filters
      */
-    public function all(): array;
+    public function all(array $filters = [], int $perPage = 25): LengthAwarePaginator;
+
+    public function first(string $ip): ?Fence;
 
     /**
-     * Get the first matching IP address.
-     *
-     * @param string $ip
-     * @return array|null
+     * @param array{ip_address: string, type: int|string|\Lareon\Modules\Fence\App\Enums\GuardType} $inputs
      */
-    public function first(string $ip): ?array;
+    public function create(array $inputs): Fence;
 
     /**
-     * Store a new IP address.
-     *
-     * @param array $data
-     * @return array
-     */
-    public function create(array $data): array;
-
-    /**
-     * Delete IP addresses.
-     *
-     * @param array $ips
-     * @return int
+     * @param string[] $ips
+     * @return int deleted item
      */
     public function delete(array $ips): int;
 
-    /**
-     * Determine whether an IP exists.
-     *
-     * @param string $ip
-     * @return bool
-     */
     public function exists(string $ip): bool;
 }

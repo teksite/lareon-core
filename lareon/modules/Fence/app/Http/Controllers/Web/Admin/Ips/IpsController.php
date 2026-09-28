@@ -25,10 +25,12 @@ class IpsController extends Controller implements HasMiddleware
 
     /**
      * Display a listing of the resource.
+     *
+     * @throws \Throwable
      */
-    public function index()
+    public function index(Request $request)
     {
-        $ips = $this->logic->all()->result;
+        $ips = $this->logic->all($request->only(['search', 'type']))->result;
         return view('fence::admin.pages.ips.index', compact('ips'));
     }
 
@@ -57,9 +59,9 @@ class IpsController extends Controller implements HasMiddleware
         abort(404);
     }
 
-    public function destroy(DeleteIpRequest $request)
+    public function destroy(string|array $ip)
     {
-        $res = $this->logic->delete($request->validated());
+        $res = $this->logic->delete($ip);
         return Responder::fromResult($res, success_url: route('admin.settings.ips.index'))->go();
     }
 }

@@ -2,7 +2,11 @@
 
 namespace Lareon\Modules\Fence\App\Providers;
 
+use Illuminate\Cache\DatabaseStore;
 use Illuminate\Console\Scheduling\Schedule;
+use Lareon\Modules\Fence\App\Contracts\FenceStoreContract;
+use Lareon\Modules\Fence\App\Services\DatabaseStoreDriver;
+use Lareon\Modules\Fence\App\Services\FileStoreDriver;
 use Teksite\Module\Providers\Support\BaseModuleServiceProvider as ServiceProvider;
 
 class FenceServiceProvider extends ServiceProvider
@@ -50,7 +54,7 @@ class FenceServiceProvider extends ServiceProvider
     /**
      * Define module schedules.
      */
-    protected function configureSchedules(Schedule $schedule): void
+    protected function configureSchedules(Schedule $schedule,): void
     {
         // $schedule->command('inspire')->hourly();
         // ...
@@ -71,5 +75,17 @@ class FenceServiceProvider extends ServiceProvider
     public function register(): void
     {
         parent::register();
+        $this->registerFenceStore();
+    }
+
+    private function registerFenceStore(): void
+    {
+        $this->app->singleton(FenceStoreContract::class, function ($app,) {
+            return match (config('fence.store_type', 'file')) {
+                'database' => $app->make(DatabaseStoreDriver::class),
+                'file'     => $app->make(FileStoreDriver::class, ['path' => config('fence.store_file'),]),
+                default    => throw new \InvalidArgumentException(sprintf('Unsupported Fence store type [%s].', config('fence.store_type')),),
+            };
+        });
     }
 }
