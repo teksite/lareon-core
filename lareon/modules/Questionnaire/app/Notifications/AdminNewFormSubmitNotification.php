@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class AdminNewFormSubmitNotifiaction extends Notification
+class AdminNewFormSubmitNotification extends Notification
 {
     use Queueable;
 

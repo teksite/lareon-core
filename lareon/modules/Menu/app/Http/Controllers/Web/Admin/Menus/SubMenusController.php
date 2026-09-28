@@ -28,29 +28,36 @@ class SubMenusController extends Controller implements HasMiddleware
 
     /**
      * Display a listing of the resource.
+     *
+     * @throws \Throwable
      */
     public function index(Menu $menu,)
     {
-        $items = $this->logic->get($menu)->result;
-        return view('menu::admin.pages.submenus.index', compact('menu', 'items'));
+        $items = $this->logic->allByMenu($menu)->result;
+        return view('menu::admin.pages.sub.index', compact('menu', 'items'));
     }
 
     /**
      * Update the specified resource in storage.
+     *
+     * @throws \Throwable
      */
     public function store(NewSubMenuRequest $request, Menu $menu,)
     {
         $result = $this->logic->create($menu,$request->validated());
 
-        return Responder::fromResult($result, success_url: route('admin.appearance.menus.sub.index', $menu))->go();
+        return Responder::fromResult($result, success_url: route('admin.visual.menus.sub.index', $menu))->go();
     }
 
     /**
      * Remove the specified resource from storage.
+     *
+     * @throws \Throwable
      */
     public function update(UpdateSubMenuRequest $request, Menu $menu,)
     {
-        $result = $this->logic->update($menu,$request->validated());
-        return Responder::fromResult($result, success_url: route('admin.appearance.menus.sub.index', $menu))->go();
+        $result = $this->logic->sync($menu, $request->validated('items') ?? []);
+
+        return Responder::fromResult($result, success_url: route('admin.visual.menus.sub.index', $menu))->go();
     }
 }
