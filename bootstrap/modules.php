@@ -49,4 +49,9 @@
     'active' => true,
     'type' => 'steward',
   ],
+  'Fence' => [
+    'provider' => 'Lareon\\Modules\\Fence\\App\\Providers\\FenceServiceProvider',
+    'active' => true,
+    'type' => 'steward',
+  ],
 ];

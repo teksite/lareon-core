@@ -1,0 +1,51 @@
+{
+    "name": "teksite/fence",
+    "description": "This package is made for lareon (laravel)",
+    "keywords": ["laravel", "laravel" , "Fence"],
+
+    "authors": [
+        {
+            "name": "Sina Zangiband",
+            "email": "sina.zangiband@gmail.com",
+            "homepage": "https://teksite.net",
+            "role":"manager"
+        },
+        {
+            "name": "Sina zb",
+            "email": "sina.zangiband@laratek.ir",
+            "homepage": "https://laratek.ir",
+            "role": "developer"
+        }
+    ],
+    "require": {
+
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Lareon\\Modules\\Fence\\App\\Providers\\FenceServiceProvider"
+            ],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Lareon\\Modules\\Fence\\App\\": "app/",
+            "Lareon\\Modules\\Fence\\Database\\Factories\\": "database/factories/",
+            "Lareon\\Modules\\Fence\\Database\\Seeders\\": "database/seeders/"
+        },
+         "files": [
+
+         ]
+    },
+    "require-dev": {
+
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Lareon\\Modules\\Fence\\Tests\\": "tests/"
+        }
+    }
+}

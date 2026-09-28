@@ -1,0 +1,10 @@
+{
+    "version":"1.0.0",
+    "id": "Fence",
+    "title": "Fence",
+    "alias": "fence",
+    "description": "",
+    "keywords": [],
+    "providers": "Lareon\\Modules\\Fence\\App\\Providers\\FenceServiceProvider"
+}
+
