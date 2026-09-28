@@ -45,10 +45,7 @@ return new class extends Migration
             $table->primary(['entry_uuid', 'tag']);
             $table->index('tag');
 
-            $table->foreign('entry_uuid')
-                ->references('uuid')
-                ->on('telescope_entries')
-                ->cascadeOnDelete();
+            $table->foreign('entry_uuid')->references('uuid')->on('telescope_entries')->cascadeOnDelete();
         });
 
         $schema->create('telescope_monitoring', function (Blueprint $table) {
