@@ -6,12 +6,13 @@
         <x-lareon::links.nav :href="route('admin.visual.gadgets.trash.index')" :content="$trashCount" color="trash" can="admin.gadget.delete"/>
     @endsection
     @section('list')
-        <ul>
+        <ul class="grid gap-6 grid-cols-2 md:grid-cols-3 xl:grid-cols-6">
             @foreach($gadgets as $gadget)
-                <li class="y-box">
+                <li class="y-box group">
                     <h3 class="mb-3 text-center">{{$gadget->title}}</h3>
                     <h4 class="mb-3 text-center text-gray-600">{{$gadget->label}}</h4>
-                    <x-lareon::action-box class="action">
+
+                    <x-lareon::action-box class="invisible group-hover:visible text-center">
                         <x-lareon::links.action type="edit" :href="route('admin.visual.gadgets.edit' , $gadget)" can="admin.gadget.edit"/>
                         <x-lareon::links.action type="delete" method="delete" :href="route('admin.visual.gadgets.destroy' , $gadget)" can="admin.gadget.delete"/>
                     </x-lareon::action-box>
