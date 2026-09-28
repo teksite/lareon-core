@@ -11,8 +11,8 @@
 
     @can('admin.menu.edit')
         @section('form')
-            <x-lareon::editor.input :label="__('title')" name="title" id="newTitle" :placeholder="__('enter a :title' ,['title'=>__('title')])"/>
-            <x-lareon::editor.input :label="__('url')" name="url" id="newUrl" :placeholder="__('enter a :title' ,['title'=>__('url')])"/>
+            <x-lareon::editor.input :label="__('title')" name="title" id="newTitle"  :placeholder="__('lareon::global.placeholders.write.one',['attribute'=>__('title')])" />
+            <x-lareon::editor.input dir="ltr" :label="__('url')" name="url" id="newUrl" :placeholder="__('lareon::global.placeholders.write.one',['attribute'=>__('url')])" />
         @endsection
     @endcan
 
