@@ -13,7 +13,11 @@ return new class extends Migration
     {
         Schema::create('fences', function (Blueprint $table) {
             $table->id();
+            $table->ipAddress();
+            $table->tinyInteger('type');
             $table->timestamps();
+
+            $table->index(['ip_address' ,'type']);
         });
     }
 
