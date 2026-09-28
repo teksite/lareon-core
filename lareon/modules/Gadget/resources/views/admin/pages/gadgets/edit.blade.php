@@ -10,13 +10,11 @@
     @endsection
 
     @section('form')
-        <x-lareon::editor.tabs.item :title="__('content')">
-            <div class="space-y-6 y-box">
-                <x-lareon::editor.input :required="true" :label="__('title')" name="title" :value="$gadget->title" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('title') , 'item'=>__('gadget')])"/>
-                <x-lareon::editor.section.template :required="false" path="gadgets" wrapperMode="y-box" :value="old('template' , $gadget->template ?? null)"/>
-                <x-lareon::editor.input-textarea :required="false" :label="__('body')" name="body">{!! $gadget->body !!}</x-lareon::editor.input-textarea>
-            </div>
-        </x-lareon::editor.tabs.item>
+        <x-lareon::editor.tabs.section>
+            <x-lareon::editor.input :required="true" :label="__('title')" name="title" :value="$gadget->title" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('title') , 'item'=>__('gadget')])"/>
+            <x-lareon::editor.section.template :required="false" path="gadgets" :value="old('template' , $gadget->template ?? null)"/>
+            <x-lareon::editor.input-textarea :required="false" :label="__('body')" name="body">{!! $gadget->body !!}</x-lareon::editor.input-textarea>
+        </x-lareon::editor.tabs.section>
     @endsection
 
 </x-lareon::admin-editor>

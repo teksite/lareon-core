@@ -5,8 +5,8 @@
     @endsection
     @section('form')
         <x-lareon::editor.tabs.section>
-            <x-lareon::editor.input :required="true"  :label="__('title')" name="title" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('title') , 'item'=>__('gadget')])"/>
-        <x-lareon::editor.section.template :value="old('template')" path="gadgets"/>
+            <x-lareon::editor.input :required="true" :label="__('title')" name="title" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('title') , 'item'=>__('gadget')])"/>
+            <x-lareon::editor.section.template :value="old('template')" path="gadgets"/>
             <x-lareon::editor.input-textarea :required="false" :label="__('body')" name="body"></x-lareon::editor.input-textarea>
         </x-lareon::editor.tabs.section>
     @endsection
