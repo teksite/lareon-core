@@ -92,8 +92,8 @@ class GadgetsController extends Controller implements HasMiddleware
         $res = $this->logic->update($gadget, $request->validated());
 
         return Responder::fromResult($res,
-            trans('lareon::global.crud.success.updated', ['attribute' => __('page')]),
-            trans('lareon::global.crud.error.updated', ['attribute' => __('page')]),
+            trans('lareon::global.crud.success.updated', ['attribute' => __('gadget')]),
+            trans('lareon::global.crud.error.updated', ['attribute' => __('gadget')]),
         )->go();
 
     }
@@ -103,13 +103,13 @@ class GadgetsController extends Controller implements HasMiddleware
      *
      * @throws \Throwable
      */
-    public function destroy(Gadget $page)
+    public function destroy(Gadget $gadget)
     {
-        $res = $this->logic->delete($page);
+        $res = $this->logic->delete($gadget);
 
         return Responder::fromResult($res,
-            trans('lareon::global.crud.success.deleted', ['attribute' => __('page')]),
-            trans('lareon::global.crud.error.deleted', ['attribute' => __('page')]),
+            trans('lareon::global.crud.success.deleted', ['attribute' => __('gadget')]),
+            trans('lareon::global.crud.error.deleted', ['attribute' => __('gadget')]),
             route('admin.visual.gadgets.index', $res->result)
         )->go();
     }

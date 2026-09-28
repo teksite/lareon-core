@@ -14,7 +14,7 @@ class Gadget extends Model
 
     public function scopeGetGadget(Builder $query, string $label,)
     {
-        return $query->firstWhere('label', $label) ? $query->firstWhere('label', $label)->body : null;
+        return $query->firstWhere('label', $label)?->body;
     }
 
     public static function rules(): array

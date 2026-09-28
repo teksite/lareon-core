@@ -6,7 +6,7 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Lareon\Modules\Gadget\App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
-use Lareon\Modules\Questionnaire\App\Logics\FormLogic;
+use Lareon\Modules\Gadget\App\Logics\GadgetLogic;
 use Lareon\Steward\App\Traits\UseTrashController;
 
 class TrashGadgetsController extends Controller implements HasMiddleware
@@ -18,14 +18,14 @@ class TrashGadgetsController extends Controller implements HasMiddleware
     public ?string $view = null;
     public string $backTo = 'admin.visual.gadgets.index';
 
-    public string $indexRoute = 'admin.visual.gadgets.index';
-    public string $pruneRoute = 'admin.visual.gadgets.prune';
-    public string $reinstateRoute = 'admin.visual.gadgets.reinstate';
-    public string $flushRoute = 'admin.visual.gadgets.flush';
-    public string $restoreRoute = 'admin.visual.gadgets.restore';
+    public string $indexRoute = 'admin.visual.gadgets.trash.index';
+    public string $pruneRoute = 'admin.visual.gadgets.trash.prune';
+    public string $reinstateRoute = 'admin.visual.gadgets.trash.reinstate';
+    public string $flushRoute = 'admin.visual.gadgets.trash.flush';
+    public string $restoreRoute = 'admin.visual.gadgets.trash.restore';
 
 
-    public function __construct(public FormLogic $logic) {}
+    public function __construct(public GadgetLogic $logic) {}
 
     public static function middleware(): array
     {
