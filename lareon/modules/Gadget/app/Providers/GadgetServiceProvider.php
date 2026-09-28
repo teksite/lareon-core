@@ -3,6 +3,7 @@
 namespace Lareon\Modules\Gadget\App\Providers;
 
 use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Support\Facades\Blade;
 use Teksite\Module\Providers\Support\BaseModuleServiceProvider as ServiceProvider;
 
 class GadgetServiceProvider extends ServiceProvider
@@ -63,6 +64,19 @@ class GadgetServiceProvider extends ServiceProvider
     public function boot(): void
     {
         parent::boot();
+
+        Blade::precompiler(function (string $string): string {
+            return preg_replace_callback(
+                '/<gadget::([a-zA-Z0-9._-]+)\s*\/>/',
+                static function (array $matches): string {
+                    $view = str_replace('.', '.', $matches[1]);
+                    return <<<PHP
+<?php echo view('gadgets.{$view}')->render(); ?>
+PHP;
+                },
+                $string
+            );
+        });
     }
 
     /**
