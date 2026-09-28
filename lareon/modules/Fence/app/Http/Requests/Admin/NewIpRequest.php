@@ -2,12 +2,12 @@
 namespace Lareon\Modules\Fence\App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Lareon\Modules\Fence\App\Http\Requests\Admin\Helper\IpRequestHelper;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Validator;
 use Lareon\Modules\Fence\App\Models\Fence;
 
 class NewIpRequest extends FormRequest
 {
-    use IpRequestHelper;
 
     /**
      * Determine if the user is authorized to make this request.
@@ -25,5 +25,40 @@ class NewIpRequest extends FormRequest
     public function rules(): array
     {
         return Fence::rules();
+    }
+
+
+
+    public function after(): array
+    {
+        return [
+            fn(Validator $validator) =>'dsfsf'
+        ];
+    }
+
+    private function uniqueIpAddressRule(bool $isFileStorage,)
+    {
+        if ($isFileStorage) {
+            $ips = $this->loadFile();
+            return Rule::notIn($ips[$this->type]);
+        }
+
+        return Rule::unique(Fence::class, 'ip_address');
+    }
+
+    /**
+     * Load IP addresses from file storage.
+     *
+     * @return array
+     * @throws \RuntimeException
+     */
+    private function loadFile(): array
+    {
+        $filePath = storage_path('app/private/ip_address.php');
+
+        if (!file_exists($filePath)) {
+            return [];
+        }
+        return require $filePath;
     }
 }

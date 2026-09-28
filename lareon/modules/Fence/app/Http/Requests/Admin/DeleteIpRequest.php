@@ -8,7 +8,6 @@ use Lareon\Modules\Fence\App\Models\Fence;
 
 class DeleteIpRequest extends FormRequest
 {
-    use IpRequestHelper;
     /**
      * Determine if the user is authorized to make this request.
      */
