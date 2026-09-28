@@ -3,6 +3,7 @@
 namespace Lareon\Modules\Auth\App\Providers;
 
 use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Support\Facades\Config;
 use Laravel\Sanctum\Sanctum;
 use Lareon\Modules\Auth\App\Models\PersonalAccessToken;
 use Teksite\Module\Providers\Support\BaseModuleServiceProvider as ServiceProvider;
@@ -77,5 +78,43 @@ class AuthServiceProvider extends ServiceProvider
     public function register(): void
     {
         parent::register();
+        $this->setDefault();
+
+    }
+
+
+    private function setDefault(): void
+    {
+        Config::set('services.google', [
+            'client_id' => env('GOOGLE_CLIENT_ID'),
+            'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+            'redirect' =>url('auth/oauth/callback?type=google'),
+        ]);
+        Config::set('services.github', [
+            'client_id' => env('GITHUB_CLIENT_ID'),
+            'client_secret' => env('GITHUB_CLIENT_SECRET'),
+            'redirect' =>url('auth/oauth/callback?type=github'),
+        ]);
+
+        Config::set('services.gitlab', [
+            'client_id' => env('GITLAB_CLIENT_ID'),
+            'client_secret' => env('GITLAB_CLIENT_SECRET'),
+            'redirect' =>url('auth/oauth/callback?type=gitlab'),
+        ]);
+        Config::set('services.linkedin', [
+            'client_id' => env('LINKEDIN_CLIENT_ID'),
+            'client_secret' => env('LINKEDIN_CLIENT_SECRET'),
+            'redirect' =>url('auth/oauth/callback?type=linkedin'),
+        ]);
+        Config::set('services.facebook', [
+            'client_id' => env('FACEBOOK_CLIENT_ID'),
+            'client_secret' => env('FACEBOOK_CLIENT_SECRET'),
+            'redirect' =>url('auth/oauth/callback?type=facebook'),
+        ]);
+        Config::set('services.twitter', [
+            'client_id' => env('TWITTER_CLIENT_ID'),
+            'client_secret' => env('TWITTER_CLIENT_SECRET'),
+            'redirect' =>url('auth/oauth/callback?type=twitter'),
+        ]);
     }
 }

@@ -33,5 +33,7 @@
     "authenticating...": "در حال احراز هویت...",
     "passkey": "کلید عبور",
     "add passkey": "افزودن کلید عبور",
-    "no passkeys registered yet": "هنوز هیچ کلید عبوری ثبت نشده‌است"
+    "no passkeys registered yet": "هنوز هیچ کلید عبوری ثبت نشده‌است",
+    "OAuth is a secure authorization protocol that lets websites or apps access a user's information from another service without needing the user's password": "OAuth یک پروتکل احراز هویت امن است که به وب‌سایت‌ها یا برنامه‌ها اجازه می‌دهد بدون نیاز به رمز عبور کاربر، از طریق سرویس دیگری به اطلاعات او دسترسی پیدا کنند.",
+    "links to get data": "لینک‌ها برای گرفتن اطلاعات"
 }
