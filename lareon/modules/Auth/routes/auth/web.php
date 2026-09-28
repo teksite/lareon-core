@@ -3,6 +3,7 @@
 
 use Laravel\Fortify\RoutePath;
 use Lareon\Modules\Auth\App\Http\Controllers\Ajax\Auth\VerificationCodeController;
+use Lareon\Modules\Auth\App\Http\Controllers\Web\Auth\OAuths\OAuthsController;
 use Lareon\Modules\Auth\App\Http\Controllers\Web\Auth\TwoFactorAuthenticatedSessionController;
 
 Route::group(['middleware' => config('fortify.middleware', ['web'])], function () {
@@ -28,3 +29,9 @@ Route::group(['middleware' => config('fortify.middleware', ['web'])], function (
         Route::post("verify", [VerificationCodeController::class, 'verify',])->name('verify')->middleware('throttle:5,1');
     });
 });
+
+
+Route::middleware('guest')->prefix('oauth/{provider}')->whereIn('provider', array_keys(config('lareon.oauth.types')))->name('oauth.')->group(function () {
+         Route::get('/', [OAuthsController::class, 'redirect'])->name('redirect');
+         Route::get('/callback', [OAuthsController::class, 'callback'])->name('callback');
+     });
