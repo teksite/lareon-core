@@ -4,6 +4,8 @@ namespace Lareon\Modules\Fence\App\Providers;
 
 use Illuminate\Cache\DatabaseStore;
 use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Contracts\Http\Kernel;
+use Lareon\Modules\Fence\App\Http\Middleware\FenceMiddleware;
 use Lareon\Modules\Fence\App\Contracts\FenceStoreContract;
 use Lareon\Modules\Fence\App\Services\DatabaseStoreDriver;
 use Lareon\Modules\Fence\App\Services\FileStoreDriver;
@@ -67,6 +69,9 @@ class FenceServiceProvider extends ServiceProvider
     public function boot(): void
     {
         parent::boot();
+
+       if (config('fence.enabled')) $this->app->make(Kernel::class)->pushMiddleware(FenceMiddleware::class);
+
     }
 
     /**

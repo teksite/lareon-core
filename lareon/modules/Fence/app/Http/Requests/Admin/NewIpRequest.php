@@ -2,8 +2,6 @@
 namespace Lareon\Modules\Fence\App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
-use Illuminate\Validation\Validator;
 use Lareon\Modules\Fence\App\Models\Fence;
 
 class NewIpRequest extends FormRequest
