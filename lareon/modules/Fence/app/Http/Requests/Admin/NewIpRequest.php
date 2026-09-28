@@ -26,32 +26,4 @@ class NewIpRequest extends FormRequest
     {
         return Fence::rules();
     }
-
-
-
-    private function uniqueIpAddressRule(bool $isFileStorage,)
-    {
-        if ($isFileStorage) {
-            $ips = $this->loadFile();
-            return Rule::notIn($ips[$this->type]);
-        }
-
-        return Rule::unique(Fence::class, 'ip_address');
-    }
-
-    /**
-     * Load IP addresses from file storage.
-     *
-     * @return array
-     * @throws \RuntimeException
-     */
-    private function loadFile(): array
-    {
-        $filePath = storage_path('app/private/ip_address.php');
-
-        if (!file_exists($filePath)) {
-            return [];
-        }
-        return require $filePath;
-    }
 }
