@@ -26,7 +26,7 @@ class OAuthsController extends Controller implements HasMiddleware
     public function edit()
     {
         $data = $this->logic->getSettings()->result?->value ?? [];
-        return view('auth::admin.pages.settings.edit', compact('data'));
+        return view('auth::admin.pages.oauth.edit', compact('data'));
     }
 
     /**

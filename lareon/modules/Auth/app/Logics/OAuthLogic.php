@@ -12,7 +12,7 @@ class OAuthLogic
 {
     public function getSettings(mixed $fetchData = [],)
     {
-        ServiceWrapper::make(false)
+       return ServiceWrapper::make(false)
                       ->do(fn() => Setting::query()->firstWhere(['key' => 'oauth']))
                       ->run();
     }

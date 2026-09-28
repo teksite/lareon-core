@@ -22,7 +22,7 @@ class MenuProvider implements MenuRegisteringContract
         return [MenuAreaType::ADMIN, MenuAreaType::PANEL];
     }
 
-    public function register(MenuRegisteringEvent $event): void
+    public function register(MenuRegisteringEvent $event,): void
     {
         match ($event->area) {
             MenuAreaType::ADMIN => $this->admin($event),
@@ -30,7 +30,7 @@ class MenuProvider implements MenuRegisteringContract
         };
     }
 
-    protected function admin(MenuRegisteringEvent $event): void
+    protected function admin(MenuRegisteringEvent $event,): void
     {
         $event->add(
             [
@@ -38,28 +38,39 @@ class MenuProvider implements MenuRegisteringContract
                 'order'  => 100,
                 'icon'   => 'lock-closed',
                 'active' => request()->routeIs('admin.authorize.*'),
-            ],'auth'
+            ], 'auth',
         )->addManyItem(
-        [
             [
-                'title'  => 'roles',
-                'order'  => 1,
-                'route'  => 'admin.authorize.roles.index',
-                'active' => request()->routeIs('admin.authorize.roles.*'),
-            ],
+                [
+                    'title'      => 'roles',
+                    'order'      => 1,
+                    'route'      => 'admin.authorize.roles.index',
+                    'permission' => 'admin.permission.create',
+
+                    'active' => request()->routeIs('admin.authorize.roles.*'),
+                ],
+                [
+                    'title'      => 'permissions',
+                    'order'      => 2,
+                    'route'      => 'admin.authorize.permissions.index',
+                    'permission' => 'admin.role.create',
+                    'active'     => request()->routeIs('admin.authorize.permissions.*'),
+                ],
+            ], 'auth');
+
+        $event->addManyItem(
             [
-                'title'  => 'permissions',
-                'order'  => 2,
-                'route'  => 'admin.authorize.permissions.index',
-                'active' => request()->routeIs('admin.authorize.permissions.*'),
-            ],
-        ], 'auth');
+                [
+                    'title'       => 'oauth',
+                    'order'       => 1,
+                    'route'       => 'admin.settings.oauth.edit',
+                    'active'      => request()->routeIs('admin.settings.oauth.edit'),
+                    'permissions' => ['admin.setting.edit'],
+                ],
+            ], 'settings');
     }
 
-    protected function panel(MenuRegisteringEvent $event): void
-    {
-
-    }
+    protected function panel(MenuRegisteringEvent $event,): void {}
 
 
 }

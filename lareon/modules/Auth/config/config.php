@@ -5,7 +5,7 @@ return [
 
     "oauth" => [
         'enabled' => true,
-        'type'    => [
+        'types'    => [
             'google'   => [
                 'secret_key' => env('GOOGLE_SECRET_KEY'),
                 'client_id'  => env('GOOGLE_GOOGLE_CLIENT_ID'),
