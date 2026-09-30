@@ -2,35 +2,54 @@
 
 namespace Lareon\Modules\Captcha\App\Http\Controllers\Ajax\Client\Captcha;
 
-use Lareon\Modules\Captcha\App\Http\Controllers\Controller;
+use InvalidArgumentException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Lareon\Modules\Captcha\App\Services\Facade\Captcha;
+use Illuminate\Http\Response;
+use Lareon\Modules\Captcha\App\Http\Controllers\Controller;
+use Lareon\Modules\Captcha\App\Services\CaptchaService;
 
 class LocalCaptchaController extends Controller
 {
+    public function __construct(private readonly CaptchaService $captcha,) {}
+
     /**
-     * @throws \Exception
+     * Serve the image of an existing captcha (used as <img src>).
      */
-    public function getCaptcha(Captcha $captcha, string $config = 'custom')
+    public function image(string $token,): Response
     {
-        if (request()->ajax()) abort(404);
-        if (ob_get_contents()) {
-            ob_clean();
-        }
-        return Captcha::create($config);
+        $jpeg = $this->captcha->image($token);
+
+        abort_if($jpeg === null, 404);
+
+        return response($jpeg, 200, [
+            'Content-Type'           => 'image/jpeg',
+            'Content-Disposition'    => 'inline; filename="captcha.jpg"',
+            'Cache-Control'          => 'no-store, no-cache, must-revalidate, private',
+            'Pragma'                 => 'no-cache',
+            'X-Content-Type-Options' => 'nosniff',
+        ]);
     }
 
-    public function reload(Request $request, $config = 'custom')
+    /**
+     * Create a fresh captcha (the "new code" button) and drop the old one.
+     */
+    public function reload(Request $request,): JsonResponse
     {
-        if (!$request->ajax()) abort(404);
-        if (ob_get_contents()) {
-            ob_clean();
+        abort_unless($request->ajax() || $request->expectsJson(), 404);
+
+        $this->captcha->discard(is_string($request->query('old')) ? $request->query('old') : null);
+
+        try {
+            $challenge = $this->captcha->make((string)$request->query('preset', 'default'));
+        } catch (InvalidArgumentException) {
+            abort(404);
         }
 
         return response()->json([
             'message' => 'success',
-            'data' => Captcha::src($config),
-            'code' => 200
-        ])->setStatusCode(200);
+            'data'    => $challenge,
+            'code'    => 200,
+        ], 200, ['Cache-Control' => 'no-store, private']);
     }
 }

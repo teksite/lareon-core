@@ -13,8 +13,8 @@ use RuntimeException;
 class GdImageService
 {
     protected GdImage $im;
-    protected int $width;
-    protected int $height;
+    protected int     $width;
+    protected int     $height;
 
     protected function __construct(GdImage $im, int $width, int $height)
     {
@@ -28,14 +28,12 @@ class GdImageService
      */
     public static function canvas(int $width, int $height, string $fill = '#ffffff'): static
     {
-        if (!extension_loaded('gd') || !function_exists('imagettftext')) {
+        if (!extension_loaded('gd') || !function_exists('imagettftext'))
             throw new RuntimeException('GD extension with FreeType support is required.');
-        }
 
         $im = imagecreatetruecolor($width, $height);
-        if ($im === false) {
-            throw new RuntimeException('Unable to create image canvas.');
-        }
+
+        if ($im === false) throw new RuntimeException('Unable to create image canvas.');
 
         $instance = new static($im, $width, $height);
 
@@ -75,14 +73,11 @@ class GdImageService
     public function placeBackground(string $path): static
     {
         $data = @file_get_contents($path);
-        if ($data === false) {
-            throw new RuntimeException("Unable to read background image: {$path}");
-        }
+
+        if ($data === false) throw new RuntimeException("Unable to read background image: $path");
 
         $src = @imagecreatefromstring($data);
-        if ($src === false) {
-            throw new RuntimeException("Invalid background image: {$path}");
-        }
+        if ($src === false) throw new RuntimeException("Invalid background image: $path");
 
         imagecopyresampled(
             $this->im,
@@ -106,22 +101,13 @@ class GdImageService
      * @param int $sizePx Font size in pixels
      * @param int $angle  Counter-clockwise rotation in degrees
      */
-    public function text(
-        string $text,
-        int    $x,
-        int    $y,
-        string $fontFile,
-        int    $sizePx,
-        string $color,
-        int    $angle = 0
-    ): static
+    public function text(string $text, int $x, int $y, string $fontFile, int $sizePx, string $color, int $angle = 0): static
     {
         $size = $sizePx * 0.75; // GD uses points, not pixels
 
         $box = imagettfbbox($size, 0, $fontFile, $text);
-        if ($box === false) {
-            throw new RuntimeException("Unable to use font: {$fontFile}");
-        }
+        if ($box === false) throw new RuntimeException("Unable to use font: {$fontFile}");
+
 
         // imagettftext expects the baseline position, so shift down by the ascent (valign: top)
         $baseline = (int)round($y - $box[7]);
@@ -137,9 +123,7 @@ class GdImageService
             $text
         );
 
-        if ($result === false) {
-            throw new RuntimeException("Unable to draw text with font: {$fontFile}");
-        }
+        if ($result === false) throw new RuntimeException("Unable to draw text with font: {$fontFile}");
 
         return $this;
     }
@@ -152,6 +136,16 @@ class GdImageService
         imagesetthickness($this->im, max(1, $thickness));
         imageline($this->im, $x1, $y1, $x2, $y2, $this->allocate($color));
         imagesetthickness($this->im, 1);
+
+        return $this;
+    }
+
+    /**
+     * Draw a single pixel (used for noise).
+     */
+    public function dot(int $x, int $y, string $color): static
+    {
+        imagesetpixel($this->im, $x, $y, $this->allocate($color));
 
         return $this;
     }
@@ -202,7 +196,6 @@ class GdImageService
     public function invert(): static
     {
         imagefilter($this->im, IMG_FILTER_NEGATE);
-
         return $this;
     }
 
@@ -222,7 +215,7 @@ class GdImageService
      */
     public function toDataUri(int $quality = 90): string
     {
-        return 'data:image/jpeg;base64,' . base64_encode($this->toJpeg($quality));
+        return 'data:image/jpeg;base64,'.base64_encode($this->toJpeg($quality));
     }
 
     /**
@@ -239,12 +232,10 @@ class GdImageService
     {
         $hex = ltrim(trim($color), '#');
 
-        if (strlen($hex) === 3) {
-            $hex = $hex[0] . $hex[0] . $hex[1] . $hex[1] . $hex[2] . $hex[2];
-        }
+        if (strlen($hex) === 3) $hex = $hex[0].$hex[0].$hex[1].$hex[1].$hex[2].$hex[2];
 
         if (!preg_match('/^[0-9a-fA-F]{6}$/', $hex)) {
-            throw new RuntimeException("Invalid color: {$color}");
+            throw new RuntimeException("Invalid color: $color");
         }
 
         return [

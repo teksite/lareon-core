@@ -1,63 +1,73 @@
 <?php
 
-use Illuminate\Http\Response;
+use Illuminate\Support\HtmlString;
+use Lareon\Modules\Captcha\App\Services\CaptchaHtml;
+use Lareon\Modules\Captcha\App\Services\CaptchaService;
 
-if (!function_exists('captcha')) {
+if (!function_exists('captcha_make')) {
     /**
-     * @param string $config
-     * @return Response
-     * @throws Exception
+     * Create a captcha and get its token / image url (or data URI when $inline is true).
+     *
+     * @return array{token: string, src: string, expires_in: int, img?: string}
      */
-    function captcha(string $config = 'default'): Response
+    function captcha_make(string $preset = 'default', bool $inline = false): array
     {
-        return app('captcha')->create($config);
+        return app(CaptchaService::class)->make($preset, $inline);
+    }
+}
+
+if (!function_exists('captcha_field')) {
+    /**
+     * Render a complete captcha block (image, reload button, hidden token, answer input).
+     * Call it once per captcha; every call is an independent captcha.
+     *
+     * @param array $options name, id, class, img[], input[], button[], reload_label
+     */
+    function captcha_field(string $preset = 'default', array $options = []): HtmlString
+    {
+        return app(CaptchaService::class)->field($preset, $options);
+    }
+}
+
+if (!function_exists('captcha_script')) {
+    /**
+     * The tiny reload script. Safe to call several times, it is printed once per request.
+     */
+    function captcha_script(?string $nonce = null): HtmlString
+    {
+        return app(CaptchaService::class)->script($nonce);
     }
 }
 
 if (!function_exists('captcha_src')) {
     /**
-     * @param string $config
-     * @return string
+     * Image URL of an existing captcha token.
      */
-    function captcha_src(string $config = 'default'): string
+    function captcha_src(string $token): string
     {
-        return app('captcha')->src($config);
-    }
-}
-
-if (!function_exists('captcha_img')) {
-
-    /**
-     * @param string $config
-     * @param array $attrs
-     * @return string
-     */
-    function captcha_img(string $config = 'default', array $attrs = []): string
-    {
-        return app('captcha')->img($config, $attrs);
+        return app(CaptchaService::class)->src($token);
     }
 }
 
 if (!function_exists('captcha_check')) {
     /**
-     * @param string $value
-     * @return bool
+     * Validate one captcha. When $token is null it is read from the request
+     * field "captcha_token" (the default field name of captcha_field()).
      */
-    function captcha_check(string $value): bool
+    function captcha_check(?string $answer, ?string $token = null, ?string $preset = null): bool
     {
-        return app('captcha')->check($value);
+        $token ??= request('captcha' . CaptchaHtml::TOKEN_SUFFIX);
+
+        return app(CaptchaService::class)->check($answer, is_string($token) ? $token : null, $preset);
     }
 }
 
 if (!function_exists('captcha_api_check')) {
     /**
-     * @param string $value
-     * @param string $key
-     * @param string $config
-     * @return bool
+     * Validate a captcha created for an API / SPA client (same as captcha_check, token is required).
      */
-    function captcha_api_check(string $value, string $key, string $config = 'default'): bool
+    function captcha_api_check(?string $answer, ?string $token, ?string $preset = null): bool
     {
-        return app('captcha')->check_api($value, $key, $config);
+        return app(CaptchaService::class)->check($answer, $token, $preset);
     }
 }

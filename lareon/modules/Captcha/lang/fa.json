@@ -10,5 +10,6 @@
     "captcha in applications is a security mechanism designed to distinguish between human users and automated bots, usually by presenting challenges that are easy for humans but hard for machines to solve": "کپچا در برنامه‌ها یک مکانیزم امنیتی است که برای تمایز بین کاربران انسانی و ربات‌های خودکار طراحی شده است، معمولاً با ارائه چالش‌هایی که برای انسان‌ها آسان اما برای ماشین‌ها دشوار است.",
     "to enable CAPTCHA and specify its type, modify the configuration file": "برای فعال کردن کپچا و مشخص کردن نوع آن، فایل پیکربندی را تغییر دهید",
     "to display CAPTCHA in your form, include the following component": "برای نمایش کپچا در فرم خود، کامپوننت زیر را اضافه کنید",
-    "and to validate it, add the rule below": "و برای اعتبارسنجی آن، قانون زیر را اضافه کنید"
+    "and to validate it, add the rule below": "و برای اعتبارسنجی آن، قانون زیر را اضافه کنید",
+    "the captcha code is incorrect": "کد کپچا نادرست است یا منقضی شده است"
 }

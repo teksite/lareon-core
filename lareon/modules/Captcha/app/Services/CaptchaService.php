@@ -2,357 +2,311 @@
 
 namespace Lareon\Modules\Captcha\App\Services;
 
-use Exception;
-use Illuminate\Contracts\Config\Repository;
-use Illuminate\Hashing\BcryptHasher as Hasher;
-use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Str;
-use Illuminate\Session\Store as Session;
+use Illuminate\Contracts\Cache\Repository as CacheRepository;
+use Illuminate\Contracts\Config\Repository as ConfigRepository;
 use Illuminate\Support\HtmlString;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Facades\File;
-use Illuminate\Http\Response;
+use InvalidArgumentException;
+use Random\RandomException;
+use RuntimeException;
 
-
+/**
+ * Multi-instance captcha.
+ *
+ * Every captcha gets its own random token. The token (not the session) links
+ * an image to its answer, so any number of captcha can live on one page and
+ * each one is validated independently.
+ *
+ * What is stored server side (cache, with TTL):
+ *   captcha:{token}      HMAC of the answer + preset name + case flag
+ *   captcha:{token}:img  the rendered JPEG (base64)
+ * The plain answer is never stored and never sent to the client.
+ */
 class CaptchaService
 {
-    protected $files;
-    protected $config;
-    protected $session;
-    protected $hasher;
-    protected $str;
+    public const string TOKEN_PATTERN = '/^[a-f0-9]{40}$/';
 
-    protected $characters;
-    protected $text;
+    private const string PRESET_PATTERN     = '/^[A-Za-z0-9_-]{1,32}$/';
+    private const int    MAX_ANSWER_LENGTH  = 64;
+    private const array  DEFAULT_CHARACTERS = ['2', '3', '4', '6', '7', '8', '9'];
 
-    /**
-     * @var GdImageService
-     */
-    protected GdImageService $image;
+    /** @var array<string, CaptchaOptions> */
+    private array $presets = [];
 
+    private ?CaptchaHtml $html = null;
 
-    protected array  $backgrounds = [];
-    protected array  $fonts       = [];
-    protected array  $fontColors  = [];
-    protected int    $length      = 5;
-    protected int    $width       = 120;
-    protected int    $height      = 36;
-    protected int    $angle       = 15;
-    protected int    $lines       = 3;
-    protected int    $lineWidth   = 2;
-    protected string $lineColor   = 'ff00ff';
+    public function __construct(private readonly CacheRepository $cache, private readonly ConfigRepository $config, private readonly CaptchaRenderer $renderer) {}
 
-    protected int     $contrast        = 0;
-    protected int     $quality         = 90;
-    protected int     $sharpen         = 0;
-    protected int     $blur            = 0;
-    protected bool    $bgImage         = true;
-    protected string  $bgColor         = '#ffffff';
-    protected bool    $invert          = false;
-    protected bool    $sensitive       = false;
-    protected bool    $math            = false;
-    protected int     $textLeftPadding = 4;
-    protected ?string $fontsDirectory;
-    protected int     $expire          = 60;
-    protected bool    $encrypt         = true;
-    protected int     $marginTop       = 0;
-    protected string  $fill            = 'ccc';
+    /* ---------------------------------------------------------------------
+     | Creating captcha
+     | ------------------------------------------------------------------ */
 
     /**
-     * @throws Exception
+     * Create a new captcha.
+     *
+     * @param string $preset Name of a preset from config('captcha.presets')
+     * @param bool   $inline Also return the image as a data URI (useful for SPAs / mobile apps)
+     * @return array{token: string, src: string, expires_in: int, img?: string}
+     * @throws InvalidArgumentException|RandomException when the preset does not exist
      */
-    public function __construct(Filesystem $files, Repository $config, Session $session, Hasher $hasher, Str $str,)
+    public function make(string $preset = 'default', bool $inline = false): array
     {
-        $this->files = $files;
-        $this->config = $config;
-        $this->session = $session;
-        $this->hasher = $hasher;
-        $this->str = $str;
-        $this->characters = $this->cfg('characters', ['1', '2', '3', '4', '6', '7', '8', '9', '0']);
-        $this->fontsDirectory = module_path('Captcha', 'resources/assets/fonts');
+        $options = $this->preset($preset);
+
+        [$display, $answer] = $this->generateText($options);
+
+        $token = bin2hex(random_bytes(20));
+
+        $jpeg = $this->renderer->render($options, $display);
+
+        $this->cache->put($this->payloadKey($token), [
+            'hash'      => $this->hash($token, $this->normalize($answer, $options->sensitive)),
+            'sensitive' => $options->sensitive,
+            'preset'    => $preset,
+        ], $options->expire);
+
+        $this->cache->put($this->imageKey($token), base64_encode($jpeg), $options->expire);
+
+        $challenge = [
+            'token'      => $token,
+            'src'        => $this->src($token),
+            'expires_in' => $options->expire,
+        ];
+
+        if ($inline) $challenge['img'] = 'data:image/jpeg;base64,'.base64_encode($jpeg);
+
+        return $challenge;
+    }
+
+    /**
+     * JPEG bytes of an existing captcha, or null when it is unknown / expired.
+     * Reading the image does not consume the captcha, so the <img> can be reloaded.
+     *
+     * @throws \Psr\SimpleCache\InvalidArgumentException
+     */
+    public function image(string $token): ?string
+    {
+        if (!$this->isValidToken($token)) return null;
+
+        $encoded = $this->cache->get($this->imageKey($token));
+
+        return is_string($encoded) ? (base64_decode($encoded, true) ?: null) : null;
+    }
+
+    /**
+     * Forget a captcha that is no longer needed (e.g. the user asked for a new one).
+     */
+    public function discard(?string $token): void
+    {
+        if ($token !== null && $this->isValidToken($token)) {
+            $this->cache->forget($this->payloadKey($token));
+            $this->cache->forget($this->imageKey($token));
+        }
+    }
+
+    /* ---------------------------------------------------------------------
+     | Validating captcha
+     | ------------------------------------------------------------------ */
+
+    /**
+     * Validate the answer of ONE captcha.
+     *
+     * A captcha can be checked only once: it is consumed on the first attempt,
+     * right or wrong, so a single captcha can never be brute-forced.
+     *
+     * @param string|null $preset When given, the captcha must have been created with this preset.
+     *                            Use it so a client cannot pick a weaker preset for your form.
+     * @throws \Psr\SimpleCache\InvalidArgumentException
+     */
+    public function check(?string $answer, ?string $token, ?string $preset = null): bool
+    {
+        if ($this->isDisabled()) return true;
+
+        if ($answer === null || $token === null || !$this->isValidToken($token)) return false;
+
+        $answer = trim($answer);
+        if ($answer === '' || mb_strlen($answer) > self::MAX_ANSWER_LENGTH) return false;
+
+        $payload = $this->cache->get($this->payloadKey($token));
+
+        if (!is_array($payload) || !isset($payload['hash'], $payload['sensitive'], $payload['preset'])) return false;
+
+        if (!$this->cache->forget($this->payloadKey($token))) return false;
+
+        $this->cache->forget($this->imageKey($token));
+
+        if ($preset !== null && $payload['preset'] !== $preset) return false;
+
+        $expected = $this->hash($token, $this->normalize($answer, (bool)$payload['sensitive']));
+
+        return hash_equals((string)$payload['hash'], $expected);
+    }
+
+    /* ---------------------------------------------------------------------
+     | URLs & HTML
+     | ------------------------------------------------------------------ */
+
+    public function src(string $token): string
+    {
+        return url(str_replace(
+            '{token}',
+            $token,
+            (string)$this->cfg('routes.image', '/ajax/client-submitting/captcha/{token}'),
+        ));
+    }
+
+    public function reloadUrl(): string
+    {
+        return url((string)$this->cfg('routes.reload', '/ajax/client-submitting/captcha/load'));
+    }
+
+    /**
+     * Ready-to-use form block: image + reload button + hidden token + answer input.
+     *
+     * @param array $options name, id, class, img[], input[], button[], reload_label
+     * @throws RandomException
+     */
+    public function field(string $preset = 'default', array $options = []): HtmlString
+    {
+        return $this->html()->field($preset, $options);
+    }
+
+    /**
+     * The tiny JS (reload button) - printed only once per request.
+     */
+    public function script(?string $nonce = null): HtmlString
+    {
+        return $this->html()->script($nonce);
+    }
+
+    public function isDisabled(): bool
+    {
+        return (bool)$this->cfg('disable', false);
+    }
+
+    /**
+     * Options of a preset (validated and cached).
+     *
+     * @throws InvalidArgumentException
+     */
+    public function preset(string $name): CaptchaOptions
+    {
+        if (isset($this->presets[$name])) return $this->presets[$name];
+
+        if (!preg_match(self::PRESET_PATTERN, $name)) throw new InvalidArgumentException('Invalid captcha preset name.');
+
+        $values = $this->cfg('presets.'.$name);
+
+        if (!is_array($values)) throw new InvalidArgumentException("Unknown captcha preset [$name].");
+
+        return $this->presets[$name] = CaptchaOptions::fromArray($values);
+    }
+
+    /* ---------------------------------------------------------------------
+     | Internals
+     | ------------------------------------------------------------------ */
+
+    /**
+     * @return array{0: string, 1: string} [text drawn on the image, expected answer]
+     * @throws RandomException
+     */
+    private function generateText(CaptchaOptions $options): array
+    {
+        if ($options->math) {
+            $x = random_int(10, 30);
+            $y = random_int(1, 9);
+
+            return ["$x+$y=", (string)($x + $y)];
+        }
+
+        $characters = $this->characters($options);
+
+        $text = '';
+
+        for ($i = 0; $i < $options->length; $i++) {
+            $text .= $characters[random_int(0, count($characters) - 1)];
+        }
+
+        if (!$options->sensitive) $text = mb_strtolower($text);
+
+        return [$text, $text];
+    }
+
+    /**
+     * @return string[]
+     */
+    private function characters(CaptchaOptions $options): array
+    {
+        $characters = $options->characters ?? $this->cfg('characters', self::DEFAULT_CHARACTERS);
+
+        if (is_string($characters)) $characters = mb_str_split($characters);
+
+        $characters = array_values(array_filter((array)$characters, fn($c) => is_string($c) && $c !== ''));
+
+        return $characters !== [] ? $characters : self::DEFAULT_CHARACTERS;
+    }
+
+    /**
+     * Make the comparison forgiving for humans: trim, ignore case (unless the
+     * preset is case-sensitive) and accept Persian / Arabic digits.
+     */
+    private function normalize(string $value, bool $sensitive): string
+    {
+        $value = strtr(trim($value), [
+            '۰' => '0', '۱' => '1', '۲' => '2', '۳' => '3', '۴' => '4',
+            '۵' => '5', '۶' => '6', '۷' => '7', '۸' => '8', '۹' => '9',
+            '٠' => '0', '١' => '1', '٢' => '2', '٣' => '3', '٤' => '4',
+            '٥' => '5', '٦' => '6', '٧' => '7', '٨' => '8', '٩' => '9',
+        ]);
+
+        return $sensitive ? $value : mb_strtolower($value);
+    }
+
+    /**
+     * Keyed hash of the answer (fast, and useless without the app key).
+     */
+    private function hash(string $token, string $normalizedAnswer): string
+    {
+        return hash_hmac('sha256', $token.'|'.$normalizedAnswer, $this->secret());
+    }
+
+    private function secret(): string
+    {
+        $key = (string)$this->config->get('app.key');
+
+        if ($key === '') throw new RuntimeException('Captcha: APP_KEY is not set.');
+
+        return $key;
+    }
+
+    private function isValidToken(string $token): bool
+    {
+        return preg_match(self::TOKEN_PATTERN, $token) === 1;
+    }
+
+    private function payloadKey(string $token): string
+    {
+        return 'captcha:'.$token;
+    }
+
+    private function imageKey(string $token): string
+    {
+        return 'captcha:'.$token.':img';
     }
 
     /**
      * Read a config value from "modules.captcha.*" with fallback to "captcha.*".
      */
-    protected function cfg(string $key, $default = null,)
+    private function cfg(string $key, mixed $default = null): mixed
     {
-        return config("captcha.local.{$key}", $default);
-    }
-
-    /**
-     * @param string $config
-     * @return void
-     */
-    protected function configure(string $config,): void
-    {
-        $values = $this->cfg($config);
-
-        if (is_array($values)) {
-            foreach ($values as $key => $val) {
-                $this->{$key} = $val;
-            }
-        }
-    }
-
-    /**
-     * Collect file paths of a directory filtered by extension.
-     *
-     * @return string[]
-     */
-    protected function listFiles(string $directory, array $extensions,): array
-    {
-        $files = array_filter(
-            File::files($directory),
-            fn($file,) => in_array(strtolower($file->getExtension()), $extensions, true),
-        );
-        return array_values(array_map(fn($file,) => $file->getPathname(), $files));
-    }
-
-    /**
-     * Create captcha image
-     *
-     * @param string $config
-     * @param bool   $api
-     * @return Response|array
-     * @throws Exception
-     */
-    public function create(string $config = 'default', bool $api = false,): Response|array
-    {
-        $this->backgrounds = $this->listFiles(module_path('Captcha', 'resources/assets/backgrounds'), ['jpg', 'jpeg', 'png', 'gif', 'webp', 'avif']);
-
-        $this->fonts = $this->listFiles($this->fontsDirectory, ['ttf', 'otf', 'woff', 'woff2']);
-
-        if (empty($this->fonts)) throw new Exception('Captcha: no .ttf/.otf font found in '.$this->fontsDirectory);
-
-        $this->configure($config);
-
-        if ($this->bgImage && empty($this->backgrounds)) throw new Exception('Captcha: bgImage is enabled but no background image was found.');
-
-        $generator = $this->generate();
-        $this->text = $generator['value'];
-
-        $this->image = GdImageService::canvas($this->width, $this->height, $this->bgImage ? $this->fill : $this->bgColor);
-
-        if ($this->bgImage) $this->image->placeBackground($this->background());
-
-        if ($this->contrast != 0) $this->image->contrast($this->contrast);
-
-        $this->text();
-
-        $this->lines();
-
-        if ($this->sharpen) $this->image->sharpen($this->sharpen);
-
-        if ($this->invert) $this->image->invert();
-
-        if ($this->blur) $this->image->blur($this->blur);
-
-        Cache::put($this->get_cache_key($generator['key']), $generator['value'], $this->expire);
-
-        return $api
-            ? [
-                'sensitive' => $generator['sensitive'],
-                'key'       => $generator['key'],
-                'img'       => $this->image->toDataUri($this->quality),
-            ]
-            : new Response($this->image->toJpeg($this->quality), 200, [
-                'Content-Type'        => 'image/jpeg',
-                'Content-Disposition' => 'inline; filename="image.jpg"',
-            ]);
-    }
-
-    /**
-     * Image backgrounds
-     */
-    protected function background(): string
-    {
-        return $this->backgrounds[rand(0, count($this->backgrounds) - 1)];
-    }
-
-    /**
-     * Generate captcha text
-     *
-     * @throws Exception
-     */
-    protected function generate(): array
-    {
-        $characters = is_string($this->characters) ? str_split($this->characters) : $this->characters;
-
-        $bag = [];
-
-        if ($this->math) {
-            $x = rand(10, 30);
-            $y = rand(1, 9);
-            $bag = "$x + $y = ";
-            $key = $x + $y;
-            $key .= '';
-        } else {
-            for ($i = 0; $i < $this->length; $i++) {
-                $char = $characters[rand(0, count($characters) - 1)];
-                $bag[] = $this->sensitive ? $char : $this->str->lower($char);
-            }
-            $key = implode('', $bag);
+        foreach (['modules.captcha.', 'captcha.'] as $prefix) {
+            if ($this->config->has($prefix.$key)) return $this->config->get($prefix.$key);
         }
 
-        $hash = $this->hasher->make($key);
-
-        if ($this->encrypt) $hash = Crypt::encrypt($hash);
-
-        $this->session->put('captcha', [
-            'sensitive' => $this->sensitive,
-            'key'       => $hash,
-            'encrypt'   => $this->encrypt,
-        ]);
-
-        return [
-            'value'     => $bag,
-            'sensitive' => $this->sensitive,
-            'key'       => $hash,
-        ];
+        return $default;
     }
 
-    /**
-     * Writing captcha text
-     */
-    protected function text(): void
+    private function html(): CaptchaHtml
     {
-        $text = $this->text;
-        if (is_string($text)) $text = str_split($text);
-
-        $count = max(1, count($text));
-
-        $marginTop = (int)($this->image->height() / $count);
-
-        if ($this->marginTop !== 0) $marginTop = $this->marginTop;
-
-
-        foreach ($text as $key => $char) {
-            $marginLeft = (int)($this->textLeftPadding + ($key * ($this->image->width() - $this->textLeftPadding) / $count));
-
-            $this->image->text(
-                (string)$char,
-                $marginLeft,
-                $marginTop,
-                $this->font(),
-                $this->fontSize(),
-                $this->fontColor(),
-                $this->angle(),
-            );
-        }
-    }
-
-    protected function font(): string
-    {
-        return $this->fonts[rand(0, count($this->fonts) - 1)];
-    }
-
-    protected function fontSize(): int
-    {
-        return rand($this->image->height() - 10, $this->image->height());
-    }
-
-    protected function fontColor(): string
-    {
-        if (!empty($this->fontColors)) return $this->fontColors[rand(0, count($this->fontColors) - 1)];
-
-        return '#'.str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT);
-    }
-
-    protected function angle(): int
-    {
-        return rand((-1 * $this->angle), $this->angle);
-    }
-
-    /**
-     * Random image lines
-     */
-    protected function lines(): void
-    {
-        for ($i = 0; $i <= $this->lines; $i++) {
-            $this->image->line(
-                rand(0, $this->image->width()) + $i * rand(0, $this->image->height()),
-                rand(0, $this->image->height()),
-                rand(0, $this->image->width()),
-                rand(0, $this->image->height()),
-                $this->lineColor,
-                $this->lineWidth,
-            );
-        }
-    }
-
-    /**
-     * Captcha check
-     */
-    public function check(string $value,): bool
-    {
-        if (!$this->session->has('captcha')) return false;
-
-        $key = $this->session->get('captcha.key');
-        $sensitive = $this->session->get('captcha.sensitive');
-        $encrypt = $this->session->get('captcha.encrypt');
-
-        if (!Cache::pull($this->get_cache_key($key))) {
-            $this->session->remove('captcha');
-            return false;
-        }
-
-        if (!$sensitive) $value = $this->str->lower($value);
-
-        if ($encrypt) $key = Crypt::decrypt($key);
-        $check = $this->hasher->check($value, $key);
-
-        if ($check) $this->session->remove('captcha');
-
-        return $check;
-    }
-
-    /**
-     * Returns the md5 short version of the key for cache
-     */
-    protected function get_cache_key($key,): string
-    {
-        return 'captcha_'.md5($key);
-    }
-
-    /**
-     * Captcha check (API)
-     */
-    public function check_api(string $value, string $key, string $config = 'custom',): bool
-    {
-        if (!Cache::pull($this->get_cache_key($key))) {
-            return false;
-        }
-
-        $this->configure($config);
-
-        if (!$this->sensitive) $value = $this->str->lower($value);
-        if ($this->encrypt) $key = Crypt::decrypt($key);
-        return $this->hasher->check($value, $key);
-    }
-
-    /**
-     * Generate captcha image source
-     */
-    public function src(string $config = 'default',): string
-    {
-        return url('/ajax/client-submitting/captcha/'.$config).'?'.$this->str->random(8);
-    }
-
-    /**
-     * Generate captcha image HTML tag
-     */
-    public function img(string $config = 'default', array $attrs = [],): string
-    {
-        $attrs_str = '';
-        foreach ($attrs as $attr => $value) {
-            if ($attr == 'src') {
-                continue;
-            }
-
-            $attrs_str .= $attr.'="'.$value.'" ';
-        }
-        return new HtmlString('<img src="'.$this->src($config).'" '.trim($attrs_str).'>');
+        return $this->html ??= new CaptchaHtml($this);
     }
 }
