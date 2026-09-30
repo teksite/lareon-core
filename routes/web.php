@@ -1,9 +1,16 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Lareon\Modules\Captcha\App\Rules\CaptchaRule;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::post('/', function (\Illuminate\Http\Request $request) {
+    $data= $request->validate([
+        'captcha' => [new CaptchaRule('flat')],
+    ]);
 });
 
 
