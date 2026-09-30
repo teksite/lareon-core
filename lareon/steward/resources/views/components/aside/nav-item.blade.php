@@ -17,7 +17,7 @@
         {{__($menu['title'])}}
     </span>
     </button>
-    <div class="absolute overflow-y-auto -inset-e-48  top-1 bottom-0 h-[99%] w-48 bg-slate-50 rounded-e-lg bordering transition-all duration-75 ease-in -z-10" :class="{ 'translate-x-0  visible': open, 'invisible translate-x-full': !open }">
+    <div class="absolute overflow-y-auto -inset-e-48  top-1 bottom-0 h-[99%] w-48 y-box p-0 rounded-e-lg transition-all duration-75 ease-in -z-10" :class="{ 'translate-x-0  visible': open, 'invisible translate-x-full': !open }">
         <span class="block text-center font-bold text-sm py-2">
             {{__($menu['title'])}}
         </span>

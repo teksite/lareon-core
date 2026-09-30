@@ -25,8 +25,8 @@
 
 <div class="overflow-x-auto y-box !p-0">
     <table {{ $attributes->merge(['class' => 'min-w-full text-sm divide-y divide-line_light']) }}>
-        <thead class="">
-        <tr>
+        <thead class="bg-gray-50">
+        <tr class="">
             @foreach($headers as $key => $header)
                 <th scope="col" class="px-3 py-3 text-xs font-semibold uppercase text-start text-zinc-600">
                     @if($sortable && is_string($key))
@@ -41,7 +41,7 @@
             @endforeach
         </tr>
         </thead>
-        <tbody class="divide-y divide-line_light bg-slate-50 *:hover:bg-slate-100">
+        <tbody class="divide-y divide-line_light *:hover:bg-slate-100">
         @if($rows && count($rows) > 0)
             {{ $slot }}
         @else

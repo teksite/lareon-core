@@ -1,6 +1,6 @@
 @props(['template'=>null, 'wrapperClass'=>null ] )
 
-<section class="{{ $wrapperClass . ' space-y-6'}}">
+<section class="{{ $wrapperClass . ' space-y-6 y-box'}}">
     @if(count($elements))
         @foreach($elements as $element)
             <x-lareon::editor.tabs.section>

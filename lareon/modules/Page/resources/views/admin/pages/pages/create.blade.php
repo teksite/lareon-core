@@ -5,7 +5,7 @@
     @endsection
     @section('form')
         <x-lareon::editor.tabs.item :title="__('content')">
-            <div class="space-y-6">
+            <div class="grid md:grid-cols-2 gap-6 y-box">
                 <x-lareon::editor.input :required="true" labelPosition="start" :label="__('title')" name="title" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('title') , 'item'=>__('page')])"/>
                 <x-lareon::editor.input-slug :required="true" labelPosition="start" :label="__('slug')" :placeholder="__('lareon::global.placeholders.write.unique.two',['attribute'=>__('slug') , 'item'=>__('page')])"/>
             </div>

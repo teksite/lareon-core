@@ -1,0 +1,14 @@
+{
+    "captcha": "کپچا",
+    "new captcha code": "کد کپچای جدید",
+    "recaptcha validation fails, please try again": "راستی‌آزمایی ریکپچا ناموفق بود، لطفا دوباره تلاش کنید",
+    "something wrong in invalidation process": "در فرآیند اعتبارسنجی مشکلی بوجود آمده است",
+    "something goes wrong in validating google recaptcha": "در اعتبار سنجی کپچا مشکلی بوحود آمده‌است",
+    "recaptcha validation fails": "راستی آزمایی کپچا ناموفق بود",
+    "something goes wrong in loading captcha, please call the administrator of the website": "مشکلی در بارگزاری کپچا بوجود آمده‌است، لطفا با مدیریت وب‌سایت تماس بگیرید",
+    "captcha code": "کد کپچا",
+    "captcha in applications is a security mechanism designed to distinguish between human users and automated bots, usually by presenting challenges that are easy for humans but hard for machines to solve": "کپچا در برنامه‌ها یک مکانیزم امنیتی است که برای تمایز بین کاربران انسانی و ربات‌های خودکار طراحی شده است، معمولاً با ارائه چالش‌هایی که برای انسان‌ها آسان اما برای ماشین‌ها دشوار است.",
+    "to enable CAPTCHA and specify its type, modify the configuration file": "برای فعال کردن کپچا و مشخص کردن نوع آن، فایل پیکربندی را تغییر دهید",
+    "to display CAPTCHA in your form, include the following component": "برای نمایش کپچا در فرم خود، کامپوننت زیر را اضافه کنید",
+    "and to validate it, add the rule below": "و برای اعتبارسنجی آن، قانون زیر را اضافه کنید"
+}

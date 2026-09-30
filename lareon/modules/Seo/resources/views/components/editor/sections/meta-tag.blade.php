@@ -4,7 +4,7 @@
      $dottedName = str_replace(['[', ']'], ['.', ''], $finalName);
 @endphp
 <section>
-    <div class="bg-slate-50 p-6 bordering rounded-lg space-y-6">
+    <div class="space-y-6">
 
         <div class="">
             <x-lareon::editor.input :required="false" labelPosition="start" :label="__('title')" name="{{$finalName}}[title]" :value="$data['title'] ?? null" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('title') , 'item'=>__('meta')])"/>
