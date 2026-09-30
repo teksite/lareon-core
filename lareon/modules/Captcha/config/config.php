@@ -59,6 +59,8 @@ return [
         'math'       => false,
         'expire'     => 60,
         'encrypt'    => true,
+        'characters' => ['2', '3', ],
+
         'fontColors' => ['#3f0211', '#3e023f', '#02083f', '#023f13', '#6c7c00', '#5b1f04',],
     ],
 

@@ -23,38 +23,41 @@ class CaptchaService
     protected $hasher;
     protected $str;
 
+    protected $characters;
+    protected $text;
+
     /**
      * @var GdImageService
      */
-    protected $image;
+    protected GdImageService $image;
 
-    protected $backgrounds     = [];
-    protected $fonts           = [];
-    protected $fontColors      = [];
-    protected $length          = 5;
-    protected $width           = 120;
-    protected $height          = 36;
-    protected $angle           = 15;
-    protected $lines           = 3;
-    protected $lineWidth       = 2;
-    protected $lineColor       = 'ff00ff';
-    protected $characters;
-    protected $text;
-    protected $contrast        = 0;
-    protected $quality         = 90;
-    protected $sharpen         = 0;
-    protected $blur            = 0;
-    protected $bgImage         = true;
-    protected $bgColor         = '#ffffff';
-    protected $invert          = false;
-    protected $sensitive       = false;
-    protected $math            = false;
-    protected $textLeftPadding = 4;
-    protected $fontsDirectory;
-    protected $expire          = 60;
-    protected $encrypt         = true;
-    protected $marginTop       = 0;
-    protected $fill            = 'ccc';
+
+    protected array  $backgrounds = [];
+    protected array  $fonts       = [];
+    protected array  $fontColors  = [];
+    protected int    $length      = 5;
+    protected int    $width       = 120;
+    protected int    $height      = 36;
+    protected int    $angle       = 15;
+    protected int    $lines       = 3;
+    protected int    $lineWidth   = 2;
+    protected string $lineColor   = 'ff00ff';
+
+    protected int     $contrast        = 0;
+    protected int     $quality         = 90;
+    protected int     $sharpen         = 0;
+    protected int     $blur            = 0;
+    protected bool    $bgImage         = true;
+    protected string  $bgColor         = '#ffffff';
+    protected bool    $invert          = false;
+    protected bool    $sensitive       = false;
+    protected bool    $math            = false;
+    protected int     $textLeftPadding = 4;
+    protected ?string $fontsDirectory;
+    protected int     $expire          = 60;
+    protected bool    $encrypt         = true;
+    protected int     $marginTop       = 0;
+    protected string  $fill            = 'ccc';
 
     /**
      * @throws Exception
@@ -66,7 +69,7 @@ class CaptchaService
         $this->session = $session;
         $this->hasher = $hasher;
         $this->str = $str;
-        $this->characters = $this->cfg('characters', ['1', '2', '3', '4', '6', '7', '8', '9']);
+        $this->characters = $this->cfg('characters', ['1', '2', '3', '4', '6', '7', '8', '9', '0']);
         $this->fontsDirectory = module_path('Captcha', 'resources/assets/fonts');
     }
 
@@ -75,11 +78,7 @@ class CaptchaService
      */
     protected function cfg(string $key, $default = null,)
     {
-        foreach (['modules.captcha.', 'captcha.'] as $prefix) {
-            if ($this->config->has($prefix.$key)) return $this->config->get($prefix.$key);
-        }
-
-        return $default;
+        return config("captcha.{$key}", $default);
     }
 
     /**
@@ -108,7 +107,6 @@ class CaptchaService
             File::files($directory),
             fn($file,) => in_array(strtolower($file->getExtension()), $extensions, true),
         );
-
         return array_values(array_map(fn($file,) => $file->getPathname(), $files));
     }
 
@@ -122,38 +120,24 @@ class CaptchaService
      */
     public function create(string $config = 'default', bool $api = false,): Response|array
     {
-        $this->backgrounds = $this->listFiles(
-            module_path('Captcha', 'resources/assets/backgrounds'),
-            ['jpg', 'jpeg', 'png', 'gif', 'webp'],
-        );
-        $this->fonts = $this->listFiles($this->fontsDirectory, ['ttf', 'otf']);
+        $this->backgrounds = $this->listFiles(module_path('Captcha', 'resources/assets/backgrounds'), ['jpg', 'jpeg', 'png', 'gif', 'webp', 'avif']);
 
-        if (empty($this->fonts)) {
-            throw new Exception('Captcha: no .ttf/.otf font found in '.$this->fontsDirectory);
-        }
+        $this->fonts = $this->listFiles($this->fontsDirectory, ['ttf', 'otf', 'woff', 'woff2']);
+
+        if (empty($this->fonts)) throw new Exception('Captcha: no .ttf/.otf font found in '.$this->fontsDirectory);
 
         $this->configure($config);
 
-        if ($this->bgImage && empty($this->backgrounds)) {
-            throw new Exception('Captcha: bgImage is enabled but no background image was found.');
-        }
+        if ($this->bgImage && empty($this->backgrounds)) throw new Exception('Captcha: bgImage is enabled but no background image was found.');
 
         $generator = $this->generate();
         $this->text = $generator['value'];
 
-        $this->image = GdImageService::canvas(
-            $this->width,
-            $this->height,
-            $this->bgImage ? $this->fill : $this->bgColor,
-        );
+        $this->image = GdImageService::canvas($this->width, $this->height, $this->bgImage ? $this->fill : $this->bgColor);
 
-        if ($this->bgImage) {
-            $this->image->placeBackground($this->background());
-        }
+        if ($this->bgImage) $this->image->placeBackground($this->background());
 
-        if ($this->contrast != 0) {
-            $this->image->contrast($this->contrast);
-        }
+        if ($this->contrast != 0) $this->image->contrast($this->contrast);
 
         $this->text();
 
@@ -164,7 +148,6 @@ class CaptchaService
         if ($this->invert) $this->image->invert();
 
         if ($this->blur) $this->image->blur($this->blur);
-
 
         Cache::put($this->get_cache_key($generator['key']), $generator['value'], $this->expire);
 
@@ -200,8 +183,8 @@ class CaptchaService
         $bag = [];
 
         if ($this->math) {
-            $x = random_int(10, 30);
-            $y = random_int(1, 9);
+            $x = rand(10, 30);
+            $y = rand(1, 9);
             $bag = "$x + $y = ";
             $key = $x + $y;
             $key .= '';
@@ -236,11 +219,8 @@ class CaptchaService
     protected function text(): void
     {
         $text = $this->text;
-
         if (is_string($text)) $text = str_split($text);
 
-
-        // use the real number of characters (math captchas don't follow $this->length)
         $count = max(1, count($text));
 
         $marginTop = (int)($this->image->height() / $count);
@@ -307,9 +287,7 @@ class CaptchaService
      */
     public function check(string $value,): bool
     {
-        if (!$this->session->has('captcha')) {
-            return false;
-        }
+        if (!$this->session->has('captcha')) return false;
 
         $key = $this->session->get('captcha.key');
         $sensitive = $this->session->get('captcha.sensitive');
@@ -320,16 +298,12 @@ class CaptchaService
             return false;
         }
 
-        if (!$sensitive) {
-            $value = $this->str->lower($value);
-        }
+        if (!$sensitive) $value = $this->str->lower($value);
 
         if ($encrypt) $key = Crypt::decrypt($key);
         $check = $this->hasher->check($value, $key);
-        // if verify pass, remove session
-        if ($check) {
-            $this->session->remove('captcha');
-        }
+
+        if ($check) $this->session->remove('captcha');
 
         return $check;
     }

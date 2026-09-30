@@ -47,7 +47,7 @@
                 </nav>
             @endif
         </header>
-        {!! captcha_img('default', ['id' => 'captcha-img', 'alt' => 'captcha']) !!}
+        {!! captcha_img('math', ['id' => 'captcha-img', 'alt' => 'captcha']) !!}
         <gadget::gad1 />
 
         @if (Route::has('login'))
