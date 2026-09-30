@@ -1,0 +1,10 @@
+{
+    "version":"1.0.0",
+    "id": "Captcha",
+    "title": "Captcha",
+    "alias": "captcha",
+    "description": "",
+    "keywords": [],
+    "providers": "Lareon\\Modules\\Captcha\\App\\Providers\\CaptchaServiceProvider"
+}
+

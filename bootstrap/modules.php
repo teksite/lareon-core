@@ -54,4 +54,9 @@
     'active' => true,
     'type' => 'steward',
   ],
+  'Captcha' => [
+    'provider' => 'Lareon\\Modules\\Captcha\\App\\Providers\\CaptchaServiceProvider',
+    'active' => true,
+    'type' => 'steward',
+  ],
 ];

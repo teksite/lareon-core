@@ -1,0 +1,51 @@
+{
+    "name": "teksite/captcha",
+    "description": "This package is made for lareon (laravel)",
+    "keywords": ["laravel", "laravel" , "Captcha"],
+
+    "authors": [
+        {
+            "name": "Sina Zangiband",
+            "email": "sina.zangiband@gmail.com",
+            "homepage": "https://teksite.net",
+            "role":"manager"
+        },
+        {
+            "name": "Sina zb",
+            "email": "sina.zangiband@laratek.ir",
+            "homepage": "https://laratek.ir",
+            "role": "developer"
+        }
+    ],
+    "require": {
+
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Lareon\\Modules\\Captcha\\App\\Providers\\CaptchaServiceProvider"
+            ],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Lareon\\Modules\\Captcha\\App\\": "app/",
+            "Lareon\\Modules\\Captcha\\Database\\Factories\\": "database/factories/",
+            "Lareon\\Modules\\Captcha\\Database\\Seeders\\": "database/seeders/"
+        },
+         "files": [
+
+         ]
+    },
+    "require-dev": {
+
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Lareon\\Modules\\Captcha\\Tests\\": "tests/"
+        }
+    }
+}
