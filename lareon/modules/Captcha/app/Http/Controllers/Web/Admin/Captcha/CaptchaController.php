@@ -1,6 +1,6 @@
 <?php
 
-namespace Lareon\Modules\Captcha\App\Http\Controllers\Web\Admin\Captch;
+namespace Lareon\Modules\Captcha\App\Http\Controllers\Web\Admin\Captcha;
 
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
