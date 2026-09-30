@@ -78,7 +78,7 @@ class CaptchaService
      */
     protected function cfg(string $key, $default = null,)
     {
-        return config("captcha.{$key}", $default);
+        return config("captcha.local.{$key}", $default);
     }
 
     /**
