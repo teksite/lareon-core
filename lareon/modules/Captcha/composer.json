@@ -36,9 +36,9 @@
             "Lareon\\Modules\\Captcha\\Database\\Factories\\": "database/factories/",
             "Lareon\\Modules\\Captcha\\Database\\Seeders\\": "database/seeders/"
         },
-         "files": [
-
-         ]
+        "files": [
+            "helpers/functions.php"
+        ]
     },
     "require-dev": {
 

@@ -3,6 +3,13 @@
 namespace Lareon\Modules\Captcha\App\Providers;
 
 use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Contracts\Config\Repository;
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Foundation\AliasLoader;
+use Illuminate\Hashing\BcryptHasher;
+use Illuminate\Support\Str;
+use Lareon\Modules\Captcha\App\Services\CaptchaService;
+use Lareon\Modules\Captcha\App\Services\Facade\Captcha;
 use Teksite\Module\Providers\Support\BaseModuleServiceProvider as ServiceProvider;
 
 class CaptchaServiceProvider extends ServiceProvider
@@ -63,6 +70,8 @@ class CaptchaServiceProvider extends ServiceProvider
     public function boot(): void
     {
         parent::boot();
+        $this->bootCaptchaRules();
+        $this->bootDirectives();
     }
 
     /**
@@ -71,5 +80,36 @@ class CaptchaServiceProvider extends ServiceProvider
     public function register(): void
     {
         parent::register();
+        $this->registerCaptcha();
     }
+
+    public function bootCaptchaRules(): void
+    {
+        //        $validator = $this->app['validator'];
+    }
+
+    public function bootDirectives(): void
+    {
+        //        Blade::directive('captcha', function () {
+        //            return view("captcha::components.load");
+        //        });
+    }
+
+
+    protected function registerCaptcha(): void
+    {
+        // Register the facade alias: Captcha::create(), Captcha::check() ...
+        AliasLoader::getInstance()->alias('Captcha', Captcha::class);
+
+        $this->app->bind('captcha', function ($app) {
+            return new CaptchaService(
+                $app->make(Filesystem::class),
+                $app->make(Repository::class), // Illuminate\Contracts\Config\Repository
+                $app['session.store'],
+                $app->make(BcryptHasher::class),
+                $app->make(Str::class)
+            );
+        });
+    }
+
 }
