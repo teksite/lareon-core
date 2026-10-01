@@ -11,6 +11,7 @@ Route::post('/', function (\Illuminate\Http\Request $request) {
     $data= $request->validate([
         'captcha' => [new CaptchaRule('flat')],
     ]);
+    dd($data);
 });
 
 

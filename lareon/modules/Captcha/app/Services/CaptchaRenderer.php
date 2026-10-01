@@ -2,7 +2,6 @@
 
 namespace Lareon\Modules\Captcha\App\Services;
 
-use Random\RandomException;
 use RuntimeException;
 
 /**
@@ -17,11 +16,14 @@ class CaptchaRenderer
     /** @var string[]|null */
     private ?array $backgrounds = null;
 
-    public function __construct(private readonly string $fontsDirectory, private readonly string $backgroundsDirectory) {}
+    public function __construct(
+        private readonly string $fontsDirectory,
+        private readonly string $backgroundsDirectory,
+    ) {
+    }
 
     /**
      * @return string JPEG binary
-     * @throws RandomException
      */
     public function render(CaptchaOptions $options, string $text): string
     {
@@ -31,19 +33,27 @@ class CaptchaRenderer
             $options->bgImage ? $options->fill : $options->bgColor
         );
 
-        if ($options->bgImage) $image->placeBackground($this->randomItem($this->backgrounds(), 'background image'));
+        if ($options->bgImage) {
+            $image->placeBackground($this->randomItem($this->backgrounds(), 'background image'));
+        }
 
-        if ($options->contrast !== 0) $image->contrast($options->contrast);
+        if ($options->contrast !== 0) {
+            $image->contrast($options->contrast);
+        }
 
         $this->drawText($image, $options, $text);
         $this->drawNoise($image, $options);
         $this->drawLines($image, $options);
 
-        if ($options->sharpen > 0) $image->sharpen($options->sharpen);
-
-        if ($options->invert) $image->invert();
-
-        if ($options->blur > 0) $image->blur($options->blur);
+        if ($options->sharpen > 0) {
+            $image->sharpen($options->sharpen);
+        }
+        if ($options->invert) {
+            $image->invert();
+        }
+        if ($options->blur > 0) {
+            $image->blur($options->blur);
+        }
 
         return $image->toJpeg($options->quality);
     }
@@ -51,8 +61,6 @@ class CaptchaRenderer
     /**
      * Draw characters left to right. The font size is limited by the width of
      * each cell so that long codes on narrow images stay readable.
-     *
-     * @throws RandomException
      */
     private function drawText(GdImageService $image, CaptchaOptions $options, string $text): void
     {
@@ -86,9 +94,6 @@ class CaptchaRenderer
         }
     }
 
-    /**
-     * @throws RandomException
-     */
     private function drawNoise(GdImageService $image, CaptchaOptions $options): void
     {
         for ($i = 0; $i < $options->noise; $i++) {
@@ -100,9 +105,6 @@ class CaptchaRenderer
         }
     }
 
-    /**
-     * @throws RandomException
-     */
     private function drawLines(GdImageService $image, CaptchaOptions $options): void
     {
         for ($i = 0; $i < $options->lines; $i++) {
@@ -117,20 +119,17 @@ class CaptchaRenderer
         }
     }
 
-    /**
-     * @throws RandomException
-     */
     private function fontColor(CaptchaOptions $options): string
     {
-        if ($options->fontColors !== [])  return $options->fontColors[array_rand($options->fontColors)];
+        if ($options->fontColors !== []) {
+            return $options->fontColors[array_rand($options->fontColors)];
+        }
 
         return $this->darkColor();
     }
 
     /**
      * Random color that stays readable on light backgrounds.
-     *
-     * @throws RandomException
      */
     private function darkColor(): string
     {
@@ -139,11 +138,12 @@ class CaptchaRenderer
 
     /**
      * @param string[] $items
-     * @throws RandomException
      */
     private function randomItem(array $items, string $label): string
     {
-        if ($items === []) throw new RuntimeException("Captcha: no $label available.");
+        if ($items === []) {
+            throw new RuntimeException("Captcha: no {$label} available.");
+        }
 
         return $items[random_int(0, count($items) - 1)];
     }
@@ -161,7 +161,10 @@ class CaptchaRenderer
      */
     private function backgrounds(): array
     {
-        return $this->backgrounds ??= $this->listFiles($this->backgroundsDirectory, ['jpg', 'jpeg', 'png', 'gif', 'webp']);
+        return $this->backgrounds ??= $this->listFiles(
+            $this->backgroundsDirectory,
+            ['jpg', 'jpeg', 'png', 'gif', 'webp']
+        );
     }
 
     /**
@@ -175,7 +178,7 @@ class CaptchaRenderer
     {
         $files = [];
 
-        foreach (glob(rtrim($directory, '/\\').DIRECTORY_SEPARATOR.'*') ?: [] as $path) {
+        foreach (glob(rtrim($directory, '/\\') . DIRECTORY_SEPARATOR . '*') ?: [] as $path) {
             if (is_file($path) && in_array(strtolower(pathinfo($path, PATHINFO_EXTENSION)), $extensions, true)) {
                 $files[] = $path;
             }

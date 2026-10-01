@@ -5,18 +5,19 @@ namespace Lareon\Modules\Captcha\App\Services\Facade;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static array make(string $preset = 'default', bool $inline = false,)
- * @method static string|null image(string $token,)
- * @method static void discard(?string $token,)
- * @method static bool check(?string $answer, ?string $token, ?string $preset = null,)
- * @method static string src(string $token,)
- * @method static string reloadUrl()
- * @method static \Illuminate\Support\HtmlString field(string $preset = 'default', array $options = [],)
- * @method static \Illuminate\Support\HtmlString script(?string $nonce = null,)
+ * @method static \Lareon\Modules\Captcha\App\Contracts\CaptchaDriver driver(?string $name = null)
+ * @method static \Lareon\Modules\Captcha\App\Services\CaptchaService local()
+ * @method static string defaultDriver()
+ * @method static \Lareon\Modules\Captcha\App\Services\CaptchaManager extend(string $name, \Closure $creator)
+ * @method static \Illuminate\Support\HtmlString field(string $preset = 'default', array $options = [])
+ * @method static \Illuminate\Support\HtmlString script(?string $nonce = null, ?string $driver = null)
+ * @method static bool check(?string $answer, ?string $token = null, ?string $preset = null, ?string $driver = null)
+ * @method static array clientConfig(?string $driver = null)
  * @method static bool isDisabled()
- * @method static \Lareon\Modules\Captcha\App\Services\CaptchaOptions preset(string $name,)
  *
- * @see \Lareon\Modules\Captcha\App\Services\CaptchaService
+ * Image captcha only (local driver):  Captcha::local()->make('flat') / ->image($token) / ->discard($token)
+ *
+ * @see \Lareon\Modules\Captcha\App\Services\CaptchaManager
  */
 class Captcha extends Facade
 {

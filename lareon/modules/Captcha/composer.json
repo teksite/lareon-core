@@ -1,14 +1,19 @@
 {
     "name": "teksite/captcha",
     "description": "This package is made for lareon (laravel)",
-    "keywords": ["laravel", "laravel" , "Captcha"],
-
+    "keywords": [
+        "laravel",
+        "google_recaptcha",
+        "Captcha",
+        "laravel_recaptcha",
+        "laravel_captcha"
+    ],
     "authors": [
         {
             "name": "Sina Zangiband",
             "email": "sina.zangiband@gmail.com",
             "homepage": "https://teksite.net",
-            "role":"manager"
+            "role": "manager"
         },
         {
             "name": "Sina zb",
@@ -18,16 +23,16 @@
         }
     ],
     "require": {
-
+        "php": "^8.2",
+        "ext-gd": "*",
+        "ext-mbstring": "*"
     },
     "extra": {
         "laravel": {
             "providers": [
                 "Lareon\\Modules\\Captcha\\App\\Providers\\CaptchaServiceProvider"
             ],
-            "aliases": {
-
-            }
+            "aliases": {}
         }
     },
     "autoload": {
@@ -40,9 +45,7 @@
             "helpers/functions.php"
         ]
     },
-    "require-dev": {
-
-    },
+    "require-dev": {},
     "autoload-dev": {
         "psr-4": {
             "Lareon\\Modules\\Captcha\\Tests\\": "tests/"

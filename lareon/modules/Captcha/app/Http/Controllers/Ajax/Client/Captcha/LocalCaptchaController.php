@@ -8,15 +8,18 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Lareon\Modules\Captcha\App\Http\Controllers\Controller;
 use Lareon\Modules\Captcha\App\Services\CaptchaService;
+use Random\RandomException;
 
 class LocalCaptchaController extends Controller
 {
-    public function __construct(private readonly CaptchaService $captcha,) {}
+    public function __construct(private readonly CaptchaService $captcha) {}
 
     /**
      * Serve the image of an existing captcha (used as <img src>).
+     *
+     * @throws \Psr\SimpleCache\InvalidArgumentException
      */
-    public function image(string $token,): Response
+    public function image(string $token): Response
     {
         $jpeg = $this->captcha->image($token);
 
@@ -34,7 +37,7 @@ class LocalCaptchaController extends Controller
     /**
      * Create a fresh captcha (the "new code" button) and drop the old one.
      */
-    public function reload(Request $request,): JsonResponse
+    public function reload(Request $request): JsonResponse
     {
         abort_unless($request->ajax() || $request->expectsJson(), 404);
 
@@ -44,6 +47,9 @@ class LocalCaptchaController extends Controller
             $challenge = $this->captcha->make((string)$request->query('preset', 'default'));
         } catch (InvalidArgumentException) {
             abort(404);
+        } catch (RandomException $e) {
+            abort(500);
+
         }
 
         return response()->json([
