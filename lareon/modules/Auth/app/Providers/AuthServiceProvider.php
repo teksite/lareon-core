@@ -33,6 +33,7 @@ class AuthServiceProvider extends ServiceProvider
     protected string $type = "steward";
 
 
+    public const array OauthType = ['google', 'github', 'gitlab', 'linkedin', 'facebook', 'twitter'];
     /**
      * Command classes to register.
      *
@@ -85,36 +86,13 @@ class AuthServiceProvider extends ServiceProvider
 
     private function setDefault(): void
     {
-        Config::set('services.google', [
-            'client_id' => env('GOOGLE_CLIENT_ID'),
-            'client_secret' => env('GOOGLE_CLIENT_SECRET_KEY'),
-            'redirect' =>env('GOOGLE_CALLBACK_URL'),
-        ]);
-        Config::set('services.github', [
-            'client_id' => env('GITHUB_CLIENT_ID'),
-            'client_secret' => env('GITHUB_CLIENT_SECRET'),
-            'redirect' =>url('auth/oauth/callback?type=github'),
-        ]);
-
-        Config::set('services.gitlab', [
-            'client_id' => env('GITLAB_CLIENT_ID'),
-            'client_secret' => env('GITLAB_CLIENT_SECRET'),
-            'redirect' =>url('auth/oauth/callback?type=gitlab'),
-        ]);
-        Config::set('services.linkedin', [
-            'client_id' => env('LINKEDIN_CLIENT_ID'),
-            'client_secret' => env('LINKEDIN_CLIENT_SECRET'),
-            'redirect' =>url('auth/oauth/callback?type=linkedin'),
-        ]);
-        Config::set('services.facebook', [
-            'client_id' => env('FACEBOOK_CLIENT_ID'),
-            'client_secret' => env('FACEBOOK_CLIENT_SECRET'),
-            'redirect' =>url('auth/oauth/callback?type=facebook'),
-        ]);
-        Config::set('services.twitter', [
-            'client_id' => env('TWITTER_CLIENT_ID'),
-            'client_secret' => env('TWITTER_CLIENT_SECRET'),
-            'redirect' =>url('auth/oauth/callback?type=twitter'),
-        ]);
+        foreach (self::OauthType as $type) {
+            $upperCaseType = strtoupper($type);
+            Config::set("services.{$type}", [
+                'client_id' => env("{$upperCaseType}_CLIENT_ID"),
+                'client_secret' => env("{$upperCaseType}_CLIENT_SECRET_KEY"),
+                'redirect' =>env("{$upperCaseType}_CALLBACK_URL"),
+            ]);
+        }
     }
 }

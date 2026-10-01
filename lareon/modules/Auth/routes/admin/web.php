@@ -13,6 +13,5 @@ Route::prefix('authorize')->name('authorize.')->group(function () {
 
 
 Route::prefix('settings/oauth')->name('settings.oauth.')->group(function(){
-    Route::get('/', [OAuthsController::class, 'edit'])->name('edit');
-    Route::patch('/', [OAuthsController::class, 'update'])->name('update');
+    Route::get('/', [OAuthsController::class, 'index'])->name('index');
 });

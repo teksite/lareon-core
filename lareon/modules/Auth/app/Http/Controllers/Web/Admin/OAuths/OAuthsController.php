@@ -8,6 +8,7 @@ use Lareon\Modules\Auth\App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Lareon\Modules\Auth\App\Http\Requests\Admin\UpdateOAuthRequest;
 use Lareon\Modules\Auth\App\Logics\OAuthLogic;
+use Lareon\Modules\Auth\App\Providers\AuthServiceProvider;
 use Teksite\Handler\Facade\Responder;
 
 class OAuthsController extends Controller implements HasMiddleware
@@ -23,20 +24,12 @@ class OAuthsController extends Controller implements HasMiddleware
         ];
     }
 
-    public function edit()
+    public function index()
     {
-        $data = $this->logic->getSettings()->result?->value ?? [];
-        return view('auth::admin.pages.oauth.edit', compact('data'));
+
+        $data = AuthServiceProvider::OauthType;
+
+        return view('auth::admin.pages.oauth.index', compact('data'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @throws \Throwable
-     */
-    public function update(UpdateOAuthRequest $request)
-    {
-        $result = $this->logic->updateSetting($request->validated());
-        return Responder::fromResult($result)->go();
-    }
 }

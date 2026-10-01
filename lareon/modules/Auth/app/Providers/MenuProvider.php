@@ -63,8 +63,8 @@ class MenuProvider implements MenuRegisteringContract
                 [
                     'title'       => 'oauth',
                     'order'       => 1,
-                    'route'       => 'admin.settings.oauth.edit',
-                    'active'      => request()->routeIs('admin.settings.oauth.edit'),
+                    'route'       => 'admin.settings.oauth.index',
+                    'active'      => request()->routeIs('admin.settings.oauth.index'),
                     'permissions' => ['admin.setting.edit'],
                 ],
             ], 'settings');
