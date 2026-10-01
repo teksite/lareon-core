@@ -87,8 +87,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         Config::set('services.google', [
             'client_id' => env('GOOGLE_CLIENT_ID'),
-            'client_secret' => env('GOOGLE_CLIENT_SECRET'),
-            'redirect' =>url('auth/oauth/callback?type=google'),
+            'client_secret' => env('GOOGLE_CLIENT_SECRET_KEY'),
+            'redirect' =>env('GOOGLE_CALLBACK_URL'),
         ]);
         Config::set('services.github', [
             'client_id' => env('GITHUB_CLIENT_ID'),

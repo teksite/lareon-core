@@ -14,18 +14,20 @@ use Teksite\Handler\Services\ServiceWrapper;
 
 class OAuthsController extends Controller
 {
-    public function redirect(string $provider,): RedirectResponse
+    public function redirect(string $provider): RedirectResponse
     {
         return Socialite::driver($provider)->redirect();
     }
 
-    public function callback(string $provider,)
+    /**
+     * @throws \Throwable
+     */
+    public function callback(string $provider)
     {
         return ServiceWrapper::make(true)->do(function () use ($provider) {
+
             $social = Socialite::driver($provider)->user();
-
             if (!$social->getEmail()) return redirect()->route('login')->withErrors(['oauth' => trans('validation.email', ['attribute' => 'email'])]);
-
             $user = User::query()->firstWhere('email', $social->getEmail()) ?? $this->createUser($social);
 
             if (!$user->hasVerifiedEmail()) $user->markEmailAsVerified();
@@ -35,17 +37,20 @@ class OAuthsController extends Controller
             request()->session()->regenerate();
 
             return Responder::fromResult(new ServiceResult(true, $user), success_url: route('panel.dashboard'))->go();
-        });
+        })->ifFailed(function () {
+            return redirect()->route('login')->withErrors(['oauth' => trans('validation.failed', ['attribute' => 'email'])]);
+        })->run()->result;
     }
 
     /**
      * @throws \Throwable
      */
-    private function createUser($social,): User
+    private function createUser($social): User
     {
         return (new UserLogic())->create([
             'name'     => $social->getName() ?: $social->getNickname(),
             'email'    => $social->getEmail(),
+            'phone'    => 989126037212,
             'password' => Str::random(32),
         ])->result;
     }

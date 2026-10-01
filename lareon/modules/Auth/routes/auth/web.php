@@ -1,6 +1,5 @@
 <?php
 
-
 use Laravel\Fortify\RoutePath;
 use Lareon\Modules\Auth\App\Http\Controllers\Ajax\Auth\VerificationCodeController;
 use Lareon\Modules\Auth\App\Http\Controllers\Web\Auth\OAuths\OAuthsController;
