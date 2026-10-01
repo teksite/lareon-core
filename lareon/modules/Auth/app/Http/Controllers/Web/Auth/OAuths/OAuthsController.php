@@ -3,14 +3,13 @@
 namespace Lareon\Modules\Auth\App\Http\Controllers\Web\Auth\OAuths;
 
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
 use Lareon\Modules\Auth\App\Http\Controllers\Controller;
 use Lareon\Modules\User\App\Logics\UserLogic;
 use Lareon\Modules\User\App\Models\User;
-use Teksite\Handler\Data\ServiceResult;
-use Teksite\Handler\Facade\Responder;
-use Teksite\Handler\Services\ServiceWrapper;
+use Teksite\Handler\Enums\ResponseType;
 
 class OAuthsController extends Controller
 {
@@ -24,8 +23,7 @@ class OAuthsController extends Controller
      */
     public function callback(string $provider)
     {
-        return ServiceWrapper::make(true)->do(function () use ($provider) {
-
+        try {
             $social = Socialite::driver($provider)->user();
             if (!$social->getEmail()) return redirect()->route('login')->withErrors(['oauth' => trans('validation.email', ['attribute' => 'email'])]);
             $user = User::query()->firstWhere('email', $social->getEmail()) ?? $this->createUser($social);
@@ -36,10 +34,22 @@ class OAuthsController extends Controller
 
             request()->session()->regenerate();
 
-            return Responder::fromResult(new ServiceResult(true, $user), success_url: route('panel.dashboard'))->go();
-        })->ifFailed(function () {
-            return redirect()->route('login')->withErrors(['oauth' => trans('validation.failed', ['attribute' => 'email'])]);
-        })->run()->result;
+            return $this->redirecting(
+                route('panel.dashboard'),
+                __('successfully done'),
+                ResponseType::SUCCESS,
+                200,
+            );
+        } catch (\Exception $exception) {
+            Log::error($exception->getMessage());
+
+            return $this->redirecting(
+                route('login'),
+                __('something went wrong'),
+                ResponseType::FAILED,
+                500,
+            );
+        }
     }
 
     /**
@@ -53,5 +63,20 @@ class OAuthsController extends Controller
             'phone'    => 989126037212,
             'password' => Str::random(32),
         ])->result;
+    }
+
+
+    private function redirecting(string $url, string $message, ResponseType $responseType, int $statusCode, mixed $error = null)
+    {
+        return redirect()
+            ->to($url)
+            ->with(['reply' =>
+                        [
+                            'message'    => $message,
+                            'statusCode' => $statusCode,
+                            'type'       => $responseType->value,
+                            'error'      => $error,
+                        ],
+            ]);
     }
 }
