@@ -3,6 +3,7 @@
 namespace Lareon\Steward\App\Providers;
 
 use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Support\Facades\Config;
 use Lareon\Steward\App\Console\Commands\AppReset;
 use Lareon\Steward\App\Console\Commands\MenuProviderMakeCommand;
 use Teksite\Module\Providers\Support\StewardServiceProvider as ServiceProvider;
@@ -69,6 +70,17 @@ class StewardServiceProvider extends ServiceProvider
     public function register(): void
     {
         parent::register();
+        $this->setConfigs();
+    }
+
+    private function setConfigs(): void{
+
+        Config::set('logging.channels.slow_query', [
+            'driver' => 'daily',
+            'path' => storage_path('logs/slow-query.log'),
+            'level' => 'warning',
+            'days' => 365,
+        ]);
     }
 
 
