@@ -2,85 +2,84 @@
 
 namespace Lareon\Steward\App\Service;
 
-
 use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Support\Facades\Log;
 use Throwable;
 
 class SlowQueryLogger
 {
-    private ?string $currentMonth = null;
+    private ?string $month = null;
+
+    private mixed $detailLogger = null;
+
+    private mixed $statisticsLogger = null;
 
     public function log(QueryExecuted $query): void
     {
-        if (!config('lareon.slow_query.enabled', true)) return;
+        if (!config('lareon.slow-query.enabled', true)) return;
 
-        $threshold = (int)config('lareon.slow_query.threshold', 500);
+        $threshold = (int)config('lareon.slow-query.threshold', 500);
 
         if ($query->time < $threshold) return;
 
         try {
-            $this->write($query);
-        } catch (\Throwable $exception) {
+            $this->ensureLoggers();
+
+            $data = $this->buildData($query);
+
+            $this->detailLogger->warning('Slow query detected.', $data);
+
+            $this->statisticsLogger->info('Slow query statistics.', [
+                    'time_ms'    => $query->time,
+                    'connection' => $query->connectionName,
+                    'route'      => request()->route()?->getName(),
+                    'controller' => request()->route()?->getActionName(),
+                ]
+            );
+        } catch (Throwable $exception) {
             Log::warning('Unable to write slow query log.', ['exception' => $exception->getMessage(),]);
         }
     }
 
-    private function write(QueryExecuted $query): void
+    private function ensureLoggers(): void
     {
         $month = now()->format('Y-m');
 
-        $data = [
-            'time_ms'    => $query->time,
-            'connection' => $query->connectionName,
-            'sql'        => $query->toRawSql(),
-            'method'     => request()->method(),
-            'url'        => request()->fullUrl(),
-            'route'      => request()->route()?->getName(),
-            'controller' => request()->route()?->getActionName(),
-        ];
+        if ($this->month === $month) return;
 
-        if (config('lareon.slow_query.log_bindings', false)) $data['bindings'] = $query->bindings;
-
-        $this->writeDetailedLog($month, $data);
-        $this->writeStatisticsLog($month, $data);
-
-        $this->currentMonth = $month;
-    }
-
-    private function writeDetailedLog(string $month, array $data): void
-    {
-        $path = $this->logPath("slow-query-{$month}.log");
-
-        Log::build([
-            'driver' => 'single',
-            'path'   => $path,
-            'level'  => 'warning',
-        ])->warning('Slow query detected.', $data);
-    }
-
-    private function writeStatisticsLog(string $month, array $data): void
-    {
-        $path = $this->logPath("slow-query-statistics-{$month}.log");
-
-        Log::build([
-            'driver' => 'single',
-            'path'   => $path,
-            'level'  => 'info',
-        ])->info('Slow query statistics.', [
-            'time_ms'    => $data['time_ms'],
-            'connection' => $data['connection'],
-            'route'      => $data['route'],
-            'controller' => $data['controller'],
-        ]);
-    }
-
-    private function logPath(string $filename): string
-    {
         $path = config('lareon.slow-query.path', storage_path('logs'));
 
         if (!is_dir($path)) mkdir($path, 0755, true);
-        
-        return "{$path}/{$filename}";
+
+        $this->detailLogger = Log::build([
+            'driver' => 'single',
+            'path'   => "{$path}/slow-query-{$month}.log",
+            'level'  => 'warning',
+        ]);
+
+        $this->statisticsLogger = Log::build([
+            'driver' => 'single',
+            'path'   => "{$path}/slow-query-statistics-{$month}.log",
+            'level'  => 'info',
+        ]);
+
+        $this->month = $month;
+    }
+
+    private function buildData(QueryExecuted $query,): array
+    {
+        $data = [
+            'time_ms' => $query->time,
+            'connection' => $query->connectionName,
+            'sql' => $query->toRawSql(),
+            'method' => request()->method(),
+            'url' => request()->fullUrl(),
+            'route' => request()->route()?->getName(),
+            'controller' => request()->route()?->getActionName(),
+        ];
+        if (config('lareon.slow-query.log_bindings', false))$data['bindings'] = $query->bindings;
+
+        return $data;
     }
 }
+
