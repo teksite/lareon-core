@@ -53,6 +53,7 @@ class StewardServiceProvider extends ServiceProvider
         EventServiceProvider::class,
         RoutesHeadquarterServiceProvider::class,
         ModulesHeadquarterServiceProvider::class,
+        SlowQueryServiceProvider::class
     ];
 
     /**
@@ -61,6 +62,7 @@ class StewardServiceProvider extends ServiceProvider
     public function boot(): void
     {
         parent::boot();
+
     }
 
     /**
