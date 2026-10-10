@@ -52,7 +52,6 @@
     48 => 'Teksite\\Module\\ModuleServiceProvider',
     49 => 'Teksite\\SystemInfo\\SystemInformationProvider',
     50 => 'App\\Providers\\AppServiceProvider',
-    51 => 'App\\Providers\\TelescopeServiceProvider',
   ),
   'eager' => 
   array (
@@ -90,7 +89,6 @@
     31 => 'Teksite\\Module\\ModuleServiceProvider',
     32 => 'Teksite\\SystemInfo\\SystemInformationProvider',
     33 => 'App\\Providers\\AppServiceProvider',
-    34 => 'App\\Providers\\TelescopeServiceProvider',
   ),
   'deferred' => 
   array (
