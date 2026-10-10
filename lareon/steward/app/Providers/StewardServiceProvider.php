@@ -53,7 +53,8 @@ class StewardServiceProvider extends ServiceProvider
         EventServiceProvider::class,
         RoutesHeadquarterServiceProvider::class,
         ModulesHeadquarterServiceProvider::class,
-        SlowQueryServiceProvider::class
+        SlowQueryServiceProvider::class,
+        TelescopeServiceProvider::class,
     ];
 
     /**
