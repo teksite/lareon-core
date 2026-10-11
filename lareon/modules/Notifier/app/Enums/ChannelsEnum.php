@@ -8,4 +8,5 @@ enum ChannelsEnum: string
     case mail = 'mail';
     case sms = 'sms';
     case Telegram = 'telegram';
+    case Broadcast = 'broadcast';
 }

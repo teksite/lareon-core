@@ -13,13 +13,7 @@ class PrepareAwarenessNotificationJob implements ShouldQueue
 
     public int $tries = 5;
 
-    public function __construct(
-        public string $title,
-        public string $message,
-        public array  $channels,
-        public array  $roleIds = [],
-        public array  $userIds = [],
-    ) {}
+    public function __construct(public string $title, public string $message, public array $channels, public array $roleIds = [], public array $userIds = []) {}
 
     public function handle(): void
     {
@@ -35,25 +29,14 @@ class PrepareAwarenessNotificationJob implements ShouldQueue
                     $query->whereIn('id', $roleIds);
                 });
             }
+            if ($userIds) $query->orWhereIn('id', $userIds);
 
-            if ($userIds) {
-                $query->orWhereIn('id', $userIds);
-            }
         });
 
         $usersQuery->chunkById(1000, function ($users) {
-
             foreach ($users as $user) {
-
-                $user->notify(new AwarenessNotification(
-                        title: $this->title,
-                        message: $this->message,
-                        channels: $this->channels,
-                    )
-                );
-
+                $user->notify(new AwarenessNotification(title: $this->title, message: $this->message, channels: $this->channels,));
             }
-
         });
     }
 }

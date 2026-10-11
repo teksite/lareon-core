@@ -23,12 +23,10 @@ class AwarenessNotification extends Notification implements ShouldQueue
         //
     }
 
-
     public function backoff(): int
     {
         return 5;
     }
-
 
     /**
      * Get the notification's delivery channels.
@@ -37,9 +35,7 @@ class AwarenessNotification extends Notification implements ShouldQueue
      */
     public function via(object $notifiable): array
     {
-
-        $via = [];
-//        $via = ['broadcast'];
+        $via = ['database'];
         foreach ($this->channels as $channel) {
             if (ChannelsEnum::tryFrom($channel)) $via[] = $channel;
         }
@@ -67,6 +63,9 @@ class AwarenessNotification extends Notification implements ShouldQueue
         return [
             'title'   => $this->title,
             'message' => $this->message,
+            'meta' =>[
+                'channels' => $this->channels,
+            ],
         ];
     }
 
