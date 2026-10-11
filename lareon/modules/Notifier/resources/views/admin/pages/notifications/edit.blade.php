@@ -1,29 +1,63 @@
-<x-lareon::admin-editor :action="route('admin.pages.update' , $page)" method="update" :instance="$page" >
-    @section('title', __('lareon::global.crud.titles.edit',['attribute'=>__('page') . " ($page->title)"]))
+@php
+    $data= $notification->data;
+    $title=$data['message']['title']?? '';
+    $body=$data['message']['body']?? '';
+    $creator=$data['meta']['creator']?? '';
+    $channels=$data['meta']['channels']?? [];
+
+@endphp
+<x-lareon::admin-editor :action="route('admin.notifications.update' , $notification)" method="update" :instance="$notification" :hasTab="false">
+    @section('title', __('lareon::global.crud.titles.edit',['attribute'=>__('notification') . " ($title) ($notification->notifiable_id)"]))
     @section('header.start')
-        <x-lareon::links.nav :href="route('admin.pages.index')" :content="__('lareon::global.buttons.all_attribute' ,['attribute'=>__('pages')])" color="index"/>
-        <x-lareon::links.nav :href="route('admin.pages.create')" :content="__('lareon::global.buttons.new_one')" color="create" can="admin.page.create"/>
+        <x-lareon::links.nav :href="route('admin.notifications.index')" :content="__('lareon::global.buttons.all_attribute' ,['attribute'=>__('notifications')])" color="index"/>
+        <x-lareon::links.nav :href="route('admin.notifications.create')" :content="__('lareon::global.buttons.new_one')" color="create" can="admin.notification.create"/>
     @endsection
     @section('header.end')
-        <x-lareon::links.action type="delete" :href="route('admin.pages.destroy', $page)" method="delete"  :label="trans('lareon::global.buttons.delete')" can="admin.page.delete"/>
-
+        <x-lareon::links.action type="delete" :href="route('admin.notifications.destroy', $notification)" method="delete" :label="trans('lareon::global.buttons.delete')" can="admin.notification.delete"/>
     @endsection
 
     @section('form')
         <x-lareon::editor.tabs.item :title="__('content')">
-            <div class="space-y-6">
-                <x-lareon::editor.input :required="true" labelPosition="start" :label="__('title')" name="title" :value="$page->title" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('title') , 'item'=>__('page')])"/>
-                <x-lareon::editor.input-slug :required="true" labelPosition="start" :label="__('slug')" :value="$page->slug" :placeholder="__('lareon::global.placeholders.write.unique.two',['attribute'=>__('slug') , 'item'=>__('page')])"/>
-            </div>
-
             <div class="space-y-6 y-box">
-                <x-lareon::editor.input-textarea :required="false" :label="__('excerpt')" name="excerpt" :placeholder="__('lareon::global.placeholders.write.one',['attribute'=>__('excerpt')])">{!! $page->excerpt !!}</x-lareon::editor.input-textarea>
-                <x-lareon::editor.section.input-editor rows="9" :required="false" :label="__('body')" name="body" :placeholder="__('lareon::global.placeholders.write.one',['attribute'=>__('body')])">{!! $page->body!!}</x-lareon::editor.section.input-editor>
+                <x-lareon::editor.input :required="true" labelPosition="start" :label="__('title')" name="title" :value="$title" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('title') , 'item'=>__('notification')])"/>
+                <x-lareon::editor.input-textarea :required="false" :label="__('message')" rows="9" name="message" :placeholder="__('lareon::global.placeholders.write.one',['attribute'=>__('message')])">{!! $body !!}</x-lareon::editor.input-textarea>
             </div>
 
             <x-slot:aside>
-                <x-lareon::editor.input-image :required="false" wrapperMode="y-box" :value="$page->primaryMedia?->id" name="primary_media_id"/>
-                <x-meta::editor.section.template type="page" :required="false" wrapperMode="y-box" :value="old('template' , $page->template_id ?? null)"/>
+                <x-lareon::editor.tabs.section>
+                    <div class="flex items-center justify-between gap-3">
+                        <h3>{{__('user')}}</h3>
+                        <p class="font-bold text-sm">
+                            {{$notification->notifiable_id}}
+                        </p>
+                    </div>
+                </x-lareon::editor.tabs.section>
+
+                <x-lareon::editor.tabs.section>
+                    <div class="flex items-center justify-between gap-3">
+                        <h3>{{__('creator')}}</h3>
+                        <div class="group relative">
+                            <x-tkicon icon="exclamation-circle" class="fill-none stroke-1 stroke-cyan-600 size-5"/>
+                            <div class="y-box hidden group-hover:block absolute z-10 w-64 min-w-fit left-0">
+                                <p>>0: admins</p>
+                                <p>=0: system</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="font-bold text-sm">
+                        {{$creator}}
+                    </p>
+                </x-lareon::editor.tabs.section>
+
+                <x-lareon::editor.tabs.section>
+                    <h3>{{__('via')}}</h3>
+                    <ul class="list-inside list-disc">
+                        @foreach($channels as $channel)
+                            <li>{{$channel}}</li>
+                        @endforeach
+                    </ul>
+                </x-lareon::editor.tabs.section>
             </x-slot:aside>
 
         </x-lareon::editor.tabs.item>

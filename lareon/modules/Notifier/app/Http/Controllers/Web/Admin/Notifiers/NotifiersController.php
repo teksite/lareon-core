@@ -2,6 +2,7 @@
 
 namespace Lareon\Modules\Notifier\App\Http\Controllers\Web\Admin\Notifiers;
 
+use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Lareon\Modules\Notifier\App\Http\Controllers\Controller;
@@ -76,7 +77,10 @@ class NotifiersController extends Controller implements HasMiddleware
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit() {}
+    public function edit(DatabaseNotification $notification) {
+        return view('notifier::admin.pages.notifications.edit', compact('notification'));
+
+    }
 
     /**
      * Update the specified resource in storage.
