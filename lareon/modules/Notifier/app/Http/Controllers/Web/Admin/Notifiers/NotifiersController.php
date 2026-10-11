@@ -55,11 +55,12 @@ class NotifiersController extends Controller implements HasMiddleware
     {
         $data = $request->validated();
         PrepareAwarenessNotificationJob::dispatch(
-            title: $data['title'],
-            message: $data['message'],
-            roleIds: $data['roles'] ?? [],
-            userIds: $data['users'] ?? [],
+            title   : $data['title'],
+            message : $data['message'],
+            roleIds : $data['roles'] ?? [],
+            userIds : $data['users'] ?? [],
             channels: $data['channels'],
+            creator : auth('admin')->id(),
         );
 
         return Responder::success()

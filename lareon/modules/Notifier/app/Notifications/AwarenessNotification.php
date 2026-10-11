@@ -18,7 +18,7 @@ class AwarenessNotification extends Notification implements ShouldQueue
     /**
      * Create a new notification instance.
      */
-    public function __construct(public string $title, public string $message, public array $channels)
+    public function __construct(public string $title, public string $message, public array $channels, public array $meta)
     {
         //
     }
@@ -60,11 +60,14 @@ class AwarenessNotification extends Notification implements ShouldQueue
      */
     public function toArray(object $notifiable): array
     {
+
         return [
-            'title'   => $this->title,
-            'message' => $this->message,
-            'meta' =>[
-                'channels' => $this->channels,
+            'message' => [
+                'title' => $this->title,
+                'body'  => $this->message,
+            ],
+            'meta'    => [
+                'channels' => $this->channels, ...$this->meta,
             ],
         ];
     }
