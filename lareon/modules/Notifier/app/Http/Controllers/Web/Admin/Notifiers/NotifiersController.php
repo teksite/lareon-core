@@ -8,6 +8,7 @@ use Illuminate\Routing\Controllers\Middleware;
 use Lareon\Modules\Notifier\App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Lareon\Modules\Notifier\App\Http\Requests\Admin\NewNotificationRequest;
+use Lareon\Modules\Notifier\App\Http\Requests\Admin\UpdateNotificationRequest;
 use Lareon\Modules\Notifier\App\Jobs\PrepareAwarenessNotificationJob;
 use Lareon\Modules\Notifier\App\Logics\NotificationLogic;
 use Teksite\Handler\Facade\Responder;
@@ -79,7 +80,6 @@ class NotifiersController extends Controller implements HasMiddleware
      */
     public function edit(DatabaseNotification $notification) {
         return view('notifier::admin.pages.notifications.edit', compact('notification'));
-
     }
 
     /**
@@ -87,12 +87,30 @@ class NotifiersController extends Controller implements HasMiddleware
      *
      * @throws \Throwable
      */
-    public function update() {}
+    public function update(UpdateNotificationRequest $request, DatabaseNotification $notification) {
+
+        $res= $this->logic->update($notification, $request->validated());
+
+        return Responder::fromResult($res,
+            trans('lareon::global.crud.success.updated', ['attribute' => __('page')]),
+            trans('lareon::global.crud.error.updated', ['attribute' => __('page')]),
+        )->go();
+
+    }
 
     /**
      * Remove the specified resource from storage.
      *
      * @throws \Throwable
      */
-    public function destroy() {}
+    public function destroy(DatabaseNotification $notification) {
+
+        $res = $this->logic->delete($notification);
+
+        return Responder::fromResult($res,
+            trans('lareon::global.crud.success.deleted', ['attribute' => __('notification')]),
+            trans('lareon::global.crud.error.deleted', ['attribute' => __('notification')]),
+            route('admin.notifications.index', $res->result)
+        )->go();
+    }
 }
