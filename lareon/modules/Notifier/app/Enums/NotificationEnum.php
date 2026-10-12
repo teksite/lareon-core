@@ -10,7 +10,7 @@ enum NotificationEnum: string
     case alert   = 'alert';
     case Success = 'success';
     case Failure = 'failure';
-    case general = 'general';
+    case General = 'general';
 
 
     public function icon(): string
