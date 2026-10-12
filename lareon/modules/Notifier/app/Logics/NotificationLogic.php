@@ -45,7 +45,13 @@ class NotificationLogic
         })->run();
     }
 
-    public function first(array $inputs = []) {}
+    public function markAsRead(DatabaseNotification $notification)
+    {
+        return ServiceWrapper::make(true)->do(function () use ($notification) {
+            $notification->markAsRead();
+            return true;
+        })->run();
+    }
 
 
     /**
