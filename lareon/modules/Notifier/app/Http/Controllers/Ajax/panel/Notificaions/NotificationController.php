@@ -22,9 +22,16 @@ class NotificationController extends Controller implements HasMiddleware
         ];
     }
 
-    public function markAsRead(DatabaseNotification $notification)
+    public function markAsRead(Request $request)
     {
-        $res=$this->logic->markAsRead($notification);
-        return Responder::fromResult($res)->reply();
+        $validated = $request->validate([
+            'notification' => ['required', 'string'],
+        ]);
+
+        $notification = $request->user()->unreadNotifications()->whereKey($validated['notification'])->firstOrFail();
+
+        $result = $this->logic->markAsRead($notification);
+
+        return Responder::fromResult($result)->reply();
     }
 }
