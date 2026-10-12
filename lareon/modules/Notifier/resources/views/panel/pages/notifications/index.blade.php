@@ -12,5 +12,37 @@
         {!! $notifications->appends(request()->query())->links() !!}
     </div>
 
+    @once
+        @push('footerScripts')
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    document.querySelector('.notifications-list')?.addEventListener('click', e => {
+                        const btnEl = e.currentTarget;
+                        if (!btnEl) return;
+
+                        console.log(btnEl);
+
+                        return;
+                        const boxEl = btnEl.closest('[data-notification-box]')
+                        if (boxEl) boxEl.style.display = 'none';
+                        try {
+                            const res = fetch('/panel/ajax/client-submit/notification/read', {
+                                method: 'POST',
+                                headers: {
+                                    'content-type': 'application/json',
+                                    'accept': 'application/json',
+                                },
+                                body: JSON.stringify({'notification': btn.getAttribute('data-id')}),
+                            });
+                            if (res.status === 200) boxEl.remove();
+                        } catch (e) {
+                            console.error(e);
+                            boxEl.style.display = 'block';
+                        }
+                    });
+                })
+            </script>
+        @endpush
+    @endonce
 
 </x-lareon::panel-layout>
