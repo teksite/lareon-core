@@ -28,10 +28,9 @@ class NotifiersController extends Controller implements HasMiddleware
      * @throws \Throwable
      * @throws BindingResolutionException
      */
-    public function index()
+    public function index(Request $request)
     {
-        $notifications = $this->logic->allByUser()->result;
-
+        $notifications = $this->logic->allByUser($request->integer('read' , -1))->result;
         return view('notifier::panel.pages.notifications.index', compact('notifications'));
     }
 

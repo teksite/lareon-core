@@ -31,11 +31,17 @@ class NotificationLogic
      * @throws \Throwable
      * @throws BindingResolutionException
      */
-    public function allByUser(mixed $fetchData = [], Authenticatable|User $user = null)
+    public function allByUser(int $read = -1, Authenticatable|User $user = null)
     {
         $user ??= auth()->user();
-        return ServiceWrapper::make(false)->do(function () use ($user) {
-            return FetchData::get($user->notifications(), ['title']);
+        return ServiceWrapper::make(false)->do(function () use ($user, $read) {
+            return FetchData::get($user->notifications()->where(function ($query) use ($read) {
+                if ($read === 0) {
+                    $query->whereNull('read_at');
+                } elseif ($read === 1) {
+                    $query->whereNotNull('read_at');
+                }
+            }), ['title']);
         })->run();
     }
 
