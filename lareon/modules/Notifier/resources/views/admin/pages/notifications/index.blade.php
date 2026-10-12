@@ -5,11 +5,12 @@
         <x-lareon::links.nav :href="route('admin.notifications.create')" :content="__('lareon::global.buttons.new_one')" color="create" can="admin.notification.create"/>
     @endsection
     @section('list')
-        <x-lareon::table :rows="$notifications" :headers="['id'=>'#','title'=>__('title') ,'created_at'=>__('created at') ,__('read at') , __('via') , __('creator'),'']">
+        <x-lareon::table :rows="$notifications" :headers="['id'=>'#','title'=>__('title'), __('user id') ,'created_at'=>__('created at') ,__('read at') , __('via') , __('creator'),'']">
             @foreach($notifications as $key=>$notification)
                 <tr>
                     <td class="p-3">{{$notifications->firstItem() + $key}}</td>
                     <td>{{$notification->data['message']['title'] ?? ''}}</td>
+                    <td>{{$notification->notifiable_id }}</td>
                     <td>
                         <x-lareon::date :date="$notification->created_at"/>
                     </td>
