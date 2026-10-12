@@ -8,18 +8,18 @@
     },
     "devDependencies": {
         "@tailwindcss/vite": "^4.3.3",
-        "apexcharts": "^7.6.0",
-        "concurrently": "^9.2.4",
-        "laravel-echo": "^2.4.0",
+        "apexcharts": "^7.9.1",
+        "concurrently": "^9.2.5",
+        "laravel-echo": "^2.6.1",
         "laravel-vite-plugin": "^3.2.0",
         "pusher-js": "^8.6.0",
         "tailwindcss": "^4.3.3",
-        "vite": "^8.2.2"
+        "vite": "^8.3.4"
     },
     "dependencies": {
-        "@alpinejs/collapse": "^3.17.1",
+        "@alpinejs/collapse": "^3.17.4",
         "@laravel/passkeys": "^0.2.0",
-        "alpinejs": "^3.17.1",
+        "alpinejs": "^3.17.4",
         "glob": "^13.0.6",
         "sortablejs": "^1.15.7",
         "tom-select": "^2.6.2"

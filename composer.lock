@@ -9390,16 +9390,16 @@
         },
         {
             "name": "teksite/icon-laravel",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/teksite/laravel-icon.git",
-                "reference": "989b9514dc4cc1ebc8858da669044dc8797a1947"
+                "reference": "ab64df13c7e5f7b84203a5a75c00248631747c7d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/teksite/laravel-icon/zipball/989b9514dc4cc1ebc8858da669044dc8797a1947",
-                "reference": "989b9514dc4cc1ebc8858da669044dc8797a1947",
+                "url": "https://api.github.com/repos/teksite/laravel-icon/zipball/ab64df13c7e5f7b84203a5a75c00248631747c7d",
+                "reference": "ab64df13c7e5f7b84203a5a75c00248631747c7d",
                 "shasum": ""
             },
             "require": {
@@ -9434,11 +9434,20 @@
                 }
             ],
             "description": "This package is a simple and tiny SVG icons font laravel",
+            "keywords": [
+                "blade",
+                "blade-components",
+                "icon-library",
+                "icons",
+                "laravel",
+                "svg",
+                "svg-icons"
+            ],
             "support": {
                 "issues": "https://github.com/teksite/laravel-icon/issues",
-                "source": "https://github.com/teksite/laravel-icon/tree/1.0.0"
+                "source": "https://github.com/teksite/laravel-icon/tree/1.0.1"
             },
-            "time": "2026-08-29T12:11:30+00:00"
+            "time": "2026-10-12T07:14:17+00:00"
         },
         {
             "name": "teksite/laravel-filemanager",
