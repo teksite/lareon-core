@@ -2,7 +2,7 @@
     $data= $notification->data;
     $title=$data['message']['title']?? '';
     $body=$data['message']['body']?? '';
-    $type=$data['message']['type'] ?? null;
+    $type=$data['meta']['type'] ?? null;
     $creator=$data['meta']['creator']?? '';
     $channels=$data['meta']['channels']?? [];
 

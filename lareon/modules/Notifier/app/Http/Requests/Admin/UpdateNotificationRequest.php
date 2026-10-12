@@ -2,6 +2,8 @@
 namespace Lareon\Modules\Notifier\App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use Lareon\Modules\Notifier\App\Enums\NotificationEnum;
 
 class UpdateNotificationRequest extends FormRequest
 {
@@ -23,6 +25,7 @@ class UpdateNotificationRequest extends FormRequest
         return [
             'message' => 'required|string',
             'title' => 'required|string',
+            'type'       => ['required', Rule::enum(NotificationEnum::class)],
         ];
     }
 }

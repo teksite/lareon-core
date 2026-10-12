@@ -67,7 +67,6 @@ class NotificationLogic
                 ],
             ];
 
-            $data=
 
             $notification->update([
                 'data' => $data,
