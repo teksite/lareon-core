@@ -5,6 +5,7 @@ namespace Lareon\Modules\Notifier\App\Http\Requests\Admin;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Lareon\Modules\Notifier\App\Enums\ChannelsEnum;
+use Lareon\Modules\Notifier\App\Enums\NotificationEnum;
 
 class NewNotificationRequest extends FormRequest
 {
@@ -24,14 +25,15 @@ class NewNotificationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title'    => 'required|string|max:100',
-            'message'  => 'required|string|max:500',
-            'channels' => ['required', 'array'],
+            'title'      => 'required|string|max:100',
+            'message'    => 'required|string|max:500',
+            'channels'   => ['required', 'array'],
+            'type'       => ['required', Rule::enum(NotificationEnum::class)],
             'channels.*' => ['required', Rule::enum(ChannelsEnum::class)],
-            'pinned'   => 'sometimes|boolean',
-            'roles'    => 'sometimes|array',
-            'roles.*'  => 'exists:auth_roles,id',
-            'users.*'  => 'exists:users,id',
+            'pinned'     => 'sometimes|boolean',
+            'roles'      => 'sometimes|array',
+            'roles.*'    => 'exists:auth_roles,id',
+            'users.*'    => 'exists:users,id',
         ];
     }
 }

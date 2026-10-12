@@ -5,6 +5,7 @@ namespace Lareon\Modules\Notifier\App\Http\Controllers\Web\Admin\Notifiers;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Lareon\Modules\Notifier\App\Enums\NotificationEnum;
 use Lareon\Modules\Notifier\App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Lareon\Modules\Notifier\App\Http\Requests\Admin\NewNotificationRequest;
@@ -59,6 +60,7 @@ class NotifiersController extends Controller implements HasMiddleware
         PrepareAwarenessNotificationJob::dispatch(
             title   : $data['title'],
             message : $data['message'],
+            type    : NotificationEnum::tryFrom($data['type'] ?? 'general'),
             roleIds : $data['roles'] ?? [],
             userIds : $data['users'] ?? [],
             channels: $data['channels'],
@@ -78,7 +80,8 @@ class NotifiersController extends Controller implements HasMiddleware
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(DatabaseNotification $notification) {
+    public function edit(DatabaseNotification $notification)
+    {
         return view('notifier::admin.pages.notifications.edit', compact('notification'));
     }
 
@@ -87,9 +90,10 @@ class NotifiersController extends Controller implements HasMiddleware
      *
      * @throws \Throwable
      */
-    public function update(UpdateNotificationRequest $request, DatabaseNotification $notification) {
+    public function update(UpdateNotificationRequest $request, DatabaseNotification $notification)
+    {
 
-        $res= $this->logic->update($notification, $request->validated());
+        $res = $this->logic->update($notification, $request->validated());
 
         return Responder::fromResult($res,
             trans('lareon::global.crud.success.updated', ['attribute' => __('page')]),
@@ -103,7 +107,8 @@ class NotifiersController extends Controller implements HasMiddleware
      *
      * @throws \Throwable
      */
-    public function destroy(DatabaseNotification $notification) {
+    public function destroy(DatabaseNotification $notification)
+    {
 
         $res = $this->logic->delete($notification);
 

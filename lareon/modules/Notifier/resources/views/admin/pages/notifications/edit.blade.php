@@ -2,6 +2,7 @@
     $data= $notification->data;
     $title=$data['message']['title']?? '';
     $body=$data['message']['body']?? '';
+    $type=$data['message']['type'] ?? null;
     $creator=$data['meta']['creator']?? '';
     $channels=$data['meta']['channels']?? [];
 
@@ -21,6 +22,11 @@
             <div class="space-y-6 y-box">
                 <x-lareon::editor.input :required="true" labelPosition="start" :label="__('title')" name="title" :value="$title" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('title') , 'item'=>__('notification')])"/>
                 <x-lareon::editor.input-textarea :required="false" :label="__('message')" rows="9" name="message" :placeholder="__('lareon::global.placeholders.write.one',['attribute'=>__('message')])">{!! $body !!}</x-lareon::editor.input-textarea>
+                <x-lareon::editor.input-select :required="true" :label="__('type')" name="type" :value="$type">
+                    @foreach(\Lareon\Modules\Notifier\App\Enums\NotificationEnum::cases() as $case)
+                        <option value="{{$case->value}}">{{$case->value}}</option>
+                    @endforeach
+                </x-lareon::editor.input-select>
             </div>
 
             <x-slot:aside>

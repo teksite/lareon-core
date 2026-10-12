@@ -7,7 +7,12 @@
 
         <x-lareon::editor.tabs.section>
             <x-lareon::editor.input :required="true" labelPosition="top" :label="__('title')" name="title" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('title') , 'item'=>__('notification')])"/>
-            <x-lareon::editor.input-textarea :required="false" :label="__('message')" name="message" :placeholder="__('lareon::global.placeholders.write.one',['attribute'=>__('message')])"></x-lareon::editor.input-textarea>
+            <x-lareon::editor.input-textarea :required="true" :label="__('message')" name="message" :placeholder="__('lareon::global.placeholders.write.one',['attribute'=>__('message')])"></x-lareon::editor.input-textarea>
+            <x-lareon::editor.input-select :required="true" :label="__('type')" name="type">
+                @foreach(\Lareon\Modules\Notifier\App\Enums\NotificationEnum::cases() as $case)
+                    <option value="{{$case->value}}">{{$case->value}}</option>
+                @endforeach
+            </x-lareon::editor.input-select>
         </x-lareon::editor.tabs.section>
 
     @endsection

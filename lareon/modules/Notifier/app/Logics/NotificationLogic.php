@@ -53,6 +53,7 @@ class NotificationLogic
 
             $data['message']['title'] = $inputs['title'];
             $data['message']['body'] = $inputs['message'];
+            $data['meta']['type'] = $inputs['type'] ?? null;
             $data['meta']['edits'][][$editorId] = [
                 'edit_at' => now()->toDateTimeString(),
                 'old'     => [
@@ -65,6 +66,8 @@ class NotificationLogic
                     'body'  => $inputs['message'] ?? '',
                 ],
             ];
+
+            $data=
 
             $notification->update([
                 'data' => $data,

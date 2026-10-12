@@ -8,6 +8,7 @@ use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Lareon\Modules\Notifier\App\Enums\ChannelsEnum;
+use Lareon\Modules\Notifier\App\Enums\NotificationEnum;
 use Lareon\Modules\Notifier\App\Notifications\Channels\SmsChannel;
 use Lareon\Modules\Notifier\App\Notifications\Channels\TelegramChannel;
 
@@ -18,7 +19,7 @@ class AwarenessNotification extends Notification implements ShouldQueue
     /**
      * Create a new notification instance.
      */
-    public function __construct(public string $title, public string $message, public array $channels, public array $meta)
+    public function __construct(public string $title, public string $message ,public  NotificationEnum $type, public array $channels, public array $meta)
     {
         //
     }
@@ -67,6 +68,7 @@ class AwarenessNotification extends Notification implements ShouldQueue
                 'body'  => $this->message,
             ],
             'meta'    => [
+                'type'  => $this->type,
                 'channels' => $this->channels, ...$this->meta,
             ],
         ];
@@ -80,6 +82,7 @@ class AwarenessNotification extends Notification implements ShouldQueue
         return new BroadcastMessage([
             'title'   => $this->title,
             'message' => $this->message,
+            'type' => $this->type->value,
         ]);
     }
 }
