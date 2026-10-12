@@ -8,6 +8,7 @@ use Illuminate\Routing\Controllers\Middleware;
 use Lareon\Modules\Notifier\App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Lareon\Modules\Notifier\App\Logics\NotificationLogic;
+use Teksite\Handler\Facade\Responder;
 
 class NotifiersController extends Controller implements HasMiddleware
 {
@@ -35,8 +36,16 @@ class NotifiersController extends Controller implements HasMiddleware
     }
 
 
-    public function show()
+    public function markAsRead(Request $request)
     {
+        $validated = $request->validate([
+            'notification' => ['required', 'string'],
+        ]);
 
+        $notification = $request->user()->unreadNotifications()->whereKey($validated['notification'])->firstOrFail();
+
+        $result = $this->logic->markAsRead($notification);
+
+        return Responder::fromResult($result)->go();
     }
 }
