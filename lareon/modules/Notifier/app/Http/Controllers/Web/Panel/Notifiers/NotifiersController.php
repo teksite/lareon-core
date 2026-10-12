@@ -2,6 +2,7 @@
 
 namespace Lareon\Modules\Notifier\App\Http\Controllers\Web\Panel\Notifiers;
 
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Lareon\Modules\Notifier\App\Http\Controllers\Controller;
@@ -23,6 +24,10 @@ class NotifiersController extends Controller implements HasMiddleware
         ];
     }
 
+    /**
+     * @throws \Throwable
+     * @throws BindingResolutionException
+     */
     public function index()
     {
         $notifications = $this->logic->allByUser()->result;
