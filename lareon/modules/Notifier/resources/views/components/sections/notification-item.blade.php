@@ -21,12 +21,14 @@
     <div class="flex items-center gap-3">
         <x-tkicon :icon="$type->icon()" class="size-5 fill-none    {{ $readAt ? 'stroke-gray-300' : $iconClass }}"/>
         <h3>{{ $title }}</h3>
-        @unless($readAt)
-            <button type="button" data-type="markAsRead" data-id="{{ $notification->id }}" class="text-sm text-blue-600 hover:text-blue-800 disabled:opacity-50">
-                {{ __('mark as read') }}
-            </button>
-        @endunless
+
     </div>
 
     <p class="text-sm">{{ $message }}</p>
+    <hr class="bordering my-3">
+    @unless($readAt)
+        <button type="button" data-type="markAsRead" data-id="{{ $notification->id }}" class="text-xs text-blue-600 hover:text-blue-800 disabled:opacity-50">
+            {{ __('mark as read') }}
+        </button>
+    @endunless
 </div>
