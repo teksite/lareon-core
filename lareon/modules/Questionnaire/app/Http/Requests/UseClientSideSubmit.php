@@ -5,6 +5,7 @@ namespace Lareon\Modules\Questionnaire\App\Http\Requests;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Support\Facades\Crypt;
+use Lareon\Modules\Captcha\App\Rules\CaptchaRule;
 use Lareon\Modules\Questionnaire\App\Models\Form;
 use Lareon\Modules\Questionnaire\App\Models\FormInbox;
 
@@ -24,15 +25,14 @@ trait UseClientSideSubmit
         return array_merge(
             FormInbox::rulesForModels(),
             $this->rulesOfTheForm($this->form->validationRules->rules ?? []),
-
-        //TODO add recaptcha ['g-recaptcha-response' => new CaptchaRule()]
+            ['captcha' => [new CaptchaRule()]],
         );
     }
 
     /**
      * Get the validated data and append server-side data.
      */
-    public function validated($key = null, $default = null,): mixed
+    public function validated($key = null, $default = null): mixed
     {
         $validated = parent::validated();
 
@@ -73,10 +73,10 @@ trait UseClientSideSubmit
      * @param array<int, array<string, mixed>> $formRuleArray
      * @return array<string, ValidationRule|array|string>
      */
-    protected function rulesOfTheForm(array $formRuleArray,): array
+    protected function rulesOfTheForm(array $formRuleArray): array
     {
         return collect($formRuleArray)
-            ->mapWithKeys(fn($item,) => [$item['field'] => $item['rules']])
+            ->mapWithKeys(fn($item) => [$item['field'] => $item['rules']])
             ->toArray();
     }
 }
