@@ -57,19 +57,21 @@ class NotifiersController extends Controller implements HasMiddleware
     public function store(NewNotificationRequest $request)
     {
         $data = $request->validated();
+
         PrepareAwarenessNotificationJob::dispatch(
-            title   : $data['title'],
-            message : $data['message'],
-            type    : NotificationEnum::tryFrom($data['type'] ?? 'general'),
-            roleIds : $data['roles'] ?? [],
-            userIds : $data['users'] ?? [],
-            channels: $data['channels'],
-            creator : auth('admin')->id(),
+            title:    $data['title'],
+            message:  $data['message'],
+            type:     NotificationEnum::tryFrom($data['type']) ?? NotificationEnum::General,
+            creator:  auth('admin')->id(),
+            channels: $data['channels'] ?? [],
+            roleIds:  $data['roles'] ?? [],
+            userIds:  $data['users'] ?? [],
         );
 
         return Responder::success()
                         ->title(trans('lareon::global.crud.success.created', ['attribute' => __('notification')]))
-                        ->route('admin.notifications.index')->go();
+                        ->route('admin.notifications.index')
+                        ->go();
     }
 
     /**

@@ -16,73 +16,67 @@ class AwarenessNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    /**
-     * Create a new notification instance.
-     */
-    public function __construct(public string $title, public string $message ,public  NotificationEnum $type, public array $channels, public array $meta)
+    public int $tries = 3;
+
+    private const array EXTRA_CHANNELS = [
+        'sms'      => SmsChannel::class,
+        'telegram' => TelegramChannel::class,
+    ];
+
+    public function __construct(public string $title, public string $message, public NotificationEnum $type, public array $channels = [], public array $meta = [],) {}
+
+    public function backoff(): array
     {
-        //
+        return [5, 30, 60];
     }
 
-    public function backoff(): int
-    {
-        return 5;
-    }
-
-    /**
-     * Get the notification's delivery channels.
-     *
-     * @return array<int, string>
-     */
     public function via(object $notifiable): array
     {
         $via = ['database'];
+
         foreach ($this->channels as $channel) {
-            if (ChannelsEnum::tryFrom($channel)) $via[] = $channel;
+            if ($channel === 'database' || ! ChannelsEnum::tryFrom($channel))  continue;
+            $via[] = self::EXTRA_CHANNELS[$channel] ?? $channel;
         }
-        return $via;
+
+        return array_values(array_unique($via));
     }
 
-    /**
-     * Get the mail representation of the notification.
-     */
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->line('The introduction to the notification.')
-            ->action('Notification Action', url('/'))
-            ->line('Thank you for using our application!');
+            ->subject($this->title)
+            ->view(['notifier::emails.awareness', 'notifier::emails.awareness-text'],
+                [
+                    'title' => $this->title,
+                    'body'  => $this->message,
+                    'type'  => $this->type,
+                    'name'  => data_get($notifiable, 'name'),
+                ],
+            );
     }
 
-    /**
-     * Get the array representation of the notification.
-     *
-     * @return array<string, mixed>
-     */
     public function toArray(object $notifiable): array
     {
-
         return [
             'message' => [
                 'title' => $this->title,
                 'body'  => $this->message,
             ],
-            'meta'    => [
-                'type'  => $this->type,
-                'channels' => $this->channels, ...$this->meta,
+            'meta' => [
+                ...$this->meta,
+                'type'     => $this->type->value,
+                'channels' => $this->channels,
             ],
         ];
     }
 
-    /**
-     * Broadcast notification.
-     */
     public function toBroadcast(object $notifiable): BroadcastMessage
     {
         return new BroadcastMessage([
             'title'   => $this->title,
             'message' => $this->message,
-            'type' => $this->type->value,
+            'type'    => $this->type->value,
         ]);
     }
 }
