@@ -69,4 +69,10 @@ return [
 
 
     ],
+
+    'restore' => [
+        'path'       => env('STEWARD_RESTORE_PATH', storage_path('app/backups')),
+        'extensions' => ['sql', 'gz', 'zip', 'dump', 'backup', 'bak'],
+        'recursive'  => false,
+    ],
 ];
