@@ -15,19 +15,12 @@
     @endif
 </head>
 <body class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] flex p-6 lg:p-8 items-center lg:justify-center min-h-screen flex-col">
-<form action="/" method="POST">
-    @csrf
-    @captchaField('flat')
-    <input type="text" name="fname">
-    <button type="submit">submot</button>
-</form>
 
-<form action="/" method="POST">
-    @csrf
-    @captchaField('flat')
-    <input type="text" name="tname">
-    <button type="submit">submot</button>
-</form>
+
+
+<x-questionnaire::form-layout form="1" :ajax="false">
+
+</x-Questionnaire::form-layout>
 
 @captchaScript
 </body>

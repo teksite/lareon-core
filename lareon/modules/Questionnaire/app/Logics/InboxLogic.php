@@ -6,6 +6,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Model;
 use Lareon\Modules\Questionnaire\App\Models\Form;
 use Lareon\Modules\Questionnaire\App\Models\FormInbox;
+use Lareon\Modules\Questionnaire\App\Service\FormFileUploader;
 use Lareon\Steward\App\Traits\HasTrashLogic;
 use Teksite\Handler\Contracts\ServiceResultContract;
 use Teksite\Handler\Facade\FetchData;
@@ -16,23 +17,25 @@ class InboxLogic
 {
     use HasTrashLogic;
 
+    public function __construct(protected FormFileUploader $uploader) {}
+
     /**
      * @throws \Throwable
      */
-    public function all(mixed $fetchData = [],)
+    public function all(mixed $fetchData = [])
     {
         return ServiceWrapper::make(false)->do(
-            fn() => FetchData::get(FormInbox::class, ['form.title','url','ip'], withCount: ['form','readBy']),
+            fn() => FetchData::get(FormInbox::class, ['form.title', 'url', 'ip'], withCount: ['form', 'readBy']),
         )->run();
     }
 
     /**
      * @throws \Throwable
      */
-    public function allByForm(Form|int $form, mixed $fetchData = [],)
+    public function allByForm(Form|int $form, mixed $fetchData = [])
     {
         return ServiceWrapper::make(false)->do(
-            fn() => FetchData::get($form->inbox(), ['id','url','ip'] , withCount: ['form','readBy']),
+            fn() => FetchData::get($form->inbox(), ['id', 'url', 'ip'], withCount: ['form', 'readBy']),
         )->run();
     }
 
@@ -40,7 +43,7 @@ class InboxLogic
     /**
      * @throws \Throwable
      */
-    public function first(array $inputs = [], bool $any = true,): ServiceResultContract
+    public function first(array $inputs = [], bool $any = true): ServiceResultContract
     {
         return ServiceWrapper::make(false)->do(function () use ($inputs) {
             $query = FormInbox::query();
@@ -54,16 +57,17 @@ class InboxLogic
     /**
      * @throws \Throwable
      */
-    public function create(Form $form, array $inputs = [],)
+    public function create(Form $form, array $inputs = [])
     {
-        return ServiceWrapper::make(true)->do(function () use ($form, $inputs) {
-
-            //Todo add Upload file if ($form->has_file && isset($inputs['file']))
-
+        return ServiceWrapper::make(false)->do(function () use ($form, $inputs) {
             $honeypotField = config('extralaravel.honeypot.field_name', 'honeypot');
-            $data = Arr::except($inputs, ['data_info', $honeypotField, 'g-recaptcha-response']);
+            $data = Arr::except($inputs, ['data_info', $honeypotField, 'g-recaptcha-response', 'captcha']);
+
+
             $ip = $inputs['data_info']['ip_address'] ?? request()->ip();
             $pageUrl = $inputs['data_info']['url'] ?? request()->fullUrl();
+            $data = $this->uploader->handle($form, $data);
+
 
             $inbox = $form->inbox()->create([
                 'data'       => $data,
@@ -72,13 +76,17 @@ class InboxLogic
             ]);
 
             return ['form' => $form, 'inbox' => $inbox];
-        })->run();
+        })->ifFailed(
+            function () {
+                $this->uploader->rollback();
+            }
+        )->run();
     }
 
     /**
      * @throws \Throwable
      */
-    public function update(FormInbox $inbox, array $inputs = [],)
+    public function update(FormInbox $inbox, array $inputs = [])
     {
         return ServiceWrapper::make(true)->do(function () use ($inbox, $inputs) {
             $note = $inbox->note ?? [];
@@ -87,7 +95,7 @@ class InboxLogic
                 'note'   => $inputs['note'],
             ];
             $note[] = $newNote;
-            $inbox->note=$note;
+            $inbox->note = $note;
             $inbox->save();
 
             return $inbox;
@@ -97,7 +105,7 @@ class InboxLogic
     /**
      * @throws \Throwable
      */
-    public function delete(FormInbox $inbox,)
+    public function delete(FormInbox $inbox)
     {
         return ServiceWrapper::make(true)->do(function () use ($inbox) {
             return $inbox->delete();

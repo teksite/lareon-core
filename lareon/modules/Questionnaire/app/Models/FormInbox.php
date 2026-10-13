@@ -16,13 +16,6 @@ class FormInbox extends Model
 
     protected $table = 'questionnaire_inboxes';
 
-    protected static function boot(): void
-    {
-        parent::boot();
-//        static::created(function (FormInbox $inbox,): void {
-//            event(new NewInboxEvent($inbox));
-//        });
-    }
 
     protected function casts(): array
     {

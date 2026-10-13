@@ -4,6 +4,7 @@ namespace Lareon\Modules\Questionnaire\App\Logics;
 
 use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Model;
+use Lareon\Modules\Page\App\Models\Page;
 use Lareon\Modules\Questionnaire\App\Models\Form;
 use Lareon\Steward\App\Service\ContentSaverService;
 use Lareon\Steward\App\Traits\HasTrashLogic;
@@ -19,17 +20,18 @@ class FormLogic
     /**
      * @throws \Throwable
      */
-    public function all(mixed $fetchData = [],)
+    public function all(mixed $fetchData = [])
     {
+
         return ServiceWrapper::make(false)
-                             ->do(fn() => FetchData::get(Form::class, ['title', 'active'], withCount: ['inbox', 'unreadInbox']),
-                             )->run();
+                             ->do(fn() => FetchData::get(Form::class, ['title', 'active'], withCount: ['inbox', 'unreadInbox']))
+                             ->run();
     }
 
     /**
      * @throws \Throwable
      */
-    public function first(array $inputs = [], bool $any = true,): ServiceResultContract
+    public function first(array $inputs = [], bool $any = true): ServiceResultContract
     {
         return ServiceWrapper::make(false)->do(function () use ($inputs) {
             $query = Form::query();
@@ -43,7 +45,7 @@ class FormLogic
     /**
      * @throws \Throwable
      */
-    public function create(array $inputs = [],)
+    public function create(array $inputs = [])
     {
         return ServiceWrapper::make(true)->do(function () use ($inputs) {
 
@@ -59,7 +61,7 @@ class FormLogic
     /**
      * @throws \Throwable
      */
-    public function update(Form $form, array $inputs = [],)
+    public function update(Form $form, array $inputs = [])
     {
         return ServiceWrapper::make(true)->do(function () use ($form, $inputs) {
             $inputs = $this->CheckArr($inputs);
@@ -79,7 +81,7 @@ class FormLogic
     /**
      * @throws \Throwable
      */
-    public function delete(Form $form,)
+    public function delete(Form $form)
     {
         return ServiceWrapper::make(true)->do(function () use ($form) {
             return $form->delete();
@@ -95,7 +97,7 @@ class FormLogic
      * @param array $inputs
      * @return array
      */
-    private function CheckArr(array $inputs,): array
+    private function CheckArr(array $inputs): array
     {
         $inputs['active'] = isset($inputs['active']) && $inputs['active'] == 1;
         $inputs['has_file'] = isset($inputs['has_file']) && $inputs['has_file'] == 1;
@@ -106,7 +108,7 @@ class FormLogic
     /**
      * @throws \Throwable
      */
-    public function getFormInboxes(Form $form, mixed $fetchData = [],)
+    public function getFormInboxes(Form $form, mixed $fetchData = [])
     {
         return ServiceWrapper::make(false)->do(
             fn() => FetchData::get($form->inbox()),

@@ -9,7 +9,7 @@ Route::get('/', function () {
 
 Route::post('/', function (\Illuminate\Http\Request $request) {
     $data= $request->validate([
-        'captcha' => [new CaptchaRule('flat')],
+        'captcha' => [new CaptchaRule()],
     ]);
     dd($data);
 });

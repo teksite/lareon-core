@@ -2,7 +2,7 @@
 @php
     $classed=isset($ajax) && $ajax ? 'formMode' : '';
 @endphp
-<form id="form-{{$form->id}}" {{$attributes->merge(['class'=>"$classed"])}} action="{{route('client.submitting.form')}}" method="POST" id="{{uuid_create().rand(10,100)}}" {{$form->has_file ? 'enctype="multipart/form-data"' : ''}}>
+<form id="form-{{$form->id}}" {{$attributes->merge(['class'=>"$classed"])}} action="{{route('client.submitting.form')}}" method="POST" id="{{uuid_create().rand(10,100)}}" {{$form->has_file ? 'enctype=multipart/form-data' : ''}}>
     @csrf
     <input type="hidden" value="{{encrypt($form->id)}}" name="data_info[identify]" readonly>
     <input type="hidden" class="hidden" name="data_info[url]" value="{{url()->current()}}" readonly>
@@ -10,7 +10,6 @@
     @if(config('extralaravel.honeypot.enabled' , true))
         <input type="text" class="hidden" name="{{config('extralaravel.honeypot.field_name', 'honeypot')}}">
     @endif
-    
     @if($form->template)
         <div>
             @include("questionnaire.forms.$form->template")
@@ -24,7 +23,7 @@
             {!! $slot !!}
         </div>
     @endif
-    {{--    <x-captcha::load />--}}
+    @captchaField()
     @if(isset($button))
         {!! $button !!}
     @else

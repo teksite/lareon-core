@@ -17,7 +17,6 @@ class Form extends Model
 
     protected $table = 'questionnaire_forms';
 
-
     protected function casts(): array
     {
         return [

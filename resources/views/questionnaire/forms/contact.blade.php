@@ -103,3 +103,20 @@
         class="w-full resize-none rounded-xl border border-zinc-200 bg-white px-4 py-3.5 text-sm text-zinc-900 outline-none transition placeholder:text-zinc-400 hover:border-zinc-300 focus:border-zinc-900 focus:ring-4 focus:ring-zinc-900/5"
     ></textarea>
 </div>
+
+
+{{-- File --}}
+<div>
+    <label for="fileid"
+           class="mb-2 block text-sm font-medium text-zinc-800">
+        file
+    </label>
+
+    <input
+        id="fileid"
+        name="file"
+        type="file"
+        placeholder="upload file"
+        class="w-full resize-none rounded-xl border border-zinc-200 bg-white px-4 py-3.5 text-sm text-zinc-900 outline-none transition placeholder:text-zinc-400 hover:border-zinc-300 focus:border-zinc-900 focus:ring-4 focus:ring-zinc-900/5"
+    >
+</div>

@@ -14,6 +14,9 @@ class SubmitController extends Controller
     {
     }
 
+    /**
+     * @throws \Throwable
+     */
     public function store(NewSubmitRequest $request)
     {
         $res = $this->logic->create($request->form, $request->validated());
