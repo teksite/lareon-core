@@ -49,6 +49,7 @@ class AuthServiceProvider extends ServiceProvider
     protected array $providers = [
         EventServiceProvider::class,
 //        RouteServiceProvider::class,
+        RateLimiterServiceProvider::class,
         FortifyServiceProvider::class,
     ];
 
