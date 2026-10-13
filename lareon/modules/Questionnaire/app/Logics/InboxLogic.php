@@ -4,6 +4,7 @@ namespace Lareon\Modules\Questionnaire\App\Logics;
 
 use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Model;
+use Lareon\Modules\Questionnaire\App\Events\NewInboxEvent;
 use Lareon\Modules\Questionnaire\App\Models\Form;
 use Lareon\Modules\Questionnaire\App\Models\FormInbox;
 use Lareon\Modules\Questionnaire\App\Service\FormFileUploader;
@@ -63,11 +64,9 @@ class InboxLogic
             $honeypotField = config('extralaravel.honeypot.field_name', 'honeypot');
             $data = Arr::except($inputs, ['data_info', $honeypotField, 'g-recaptcha-response', 'captcha']);
 
-
             $ip = $inputs['data_info']['ip_address'] ?? request()->ip();
             $pageUrl = $inputs['data_info']['url'] ?? request()->fullUrl();
             $data = $this->uploader->handle($form, $data);
-
 
             $inbox = $form->inbox()->create([
                 'data'       => $data,
@@ -75,6 +74,7 @@ class InboxLogic
                 'url'        => $pageUrl,
             ]);
 
+            event(new NewInboxEvent($inbox));
             return ['form' => $form, 'inbox' => $inbox];
         })->ifFailed(
             function () {

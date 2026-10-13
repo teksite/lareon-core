@@ -38,5 +38,8 @@
     "current year": "سال جاری",
     "last year": "سال گذشته",
     "total": "مجموع",
-    "above data are collected :date": "اطلاعات فوق از :date جمع‌آوری شده‌اند"
+    "above data are collected :date": "اطلاعات فوق از :date جمع‌آوری شده‌اند",
+    "thank you for contacting :site and filling out the form": "ممنون که با :site ارتباط گرفتید و فرم را پر کردید",
+    "our colleagues will review the information you submitted and take the next steps, and if needed, they will contact you": "همکاران ما اطلاعات وارد شده شما را بررسی می‌کنند و اقدامات بعدی را انجام می‌دهند و اگر لازم شد با شما تماس خواهند گرفت",
+    "thanks": "با تشکر"
 }

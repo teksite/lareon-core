@@ -1,7 +1,6 @@
 <?php
 
 namespace Lareon\Modules\Questionnaire\App\Mail;
-
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -14,45 +13,32 @@ class ReceivedAnnouncementMail extends Mailable implements ShouldQueue
     use Queueable, SerializesModels;
 
     /**
-     * Create a new message instance.
+     * @param array{
+     *     subject: string,
+     *     heading?: string,
+     *     explanation?: string
+     * } $content
      */
-    public function __construct(public array $content =[] , array|null $attachments=[])
+    public function __construct(public array $content)
     {
-        $this->queue = 'emails';
     }
 
-    /**
-     * Get the message envelope.
-     */
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: 'no-reply@barsasof.com',
-            subject: $this->content['subject'] ?? __('new form has been submitted in :site' ,['site'=>__(config('app.name'))]),
-
+            subject: $this->content['subject'],
         );
     }
 
-    /**
-     * Get the message content definition.
-     */
     public function content(): Content
     {
         return new Content(
-            view: 'mails.formAnnouncement',
+            view: 'questionnaire::emails.received-announcement',
             with: [
-                'content' => $this->content,
-            ]
+                'appName'     => __(config('app.name')),
+                'heading'     => $this->content['heading'] ?? __('hi'),
+                'explanation' => $this->content['explanation'] ?? '',
+            ],
         );
-    }
-
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
-     */
-    public function attachments(): array
-    {
-        return is_array($this->attachments) ? $this->attachments : [$this->attachments];
     }
 }

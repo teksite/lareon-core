@@ -6,49 +6,55 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\HtmlString;
 
 class AdminNewFormSubmitNotification extends Notification
 {
     use Queueable;
 
     /**
-     * Create a new notification instance.
+     * @param array{
+     *     subject: string,
+     *     heading: string,
+     *     introduction: array<int, string>,
+     *     action: array{title: string, url: string},
+     *     explanation: string
+     * } $content
      */
-    public function __construct()
+    public function __construct(protected array $content)
     {
-        //
     }
 
-    /**
-     * Get the notification's delivery channels.
-     *
-     * @return array<int, string>
-     */
     public function via(object $notifiable): array
     {
         return ['mail'];
     }
 
-    /**
-     * Get the mail representation of the notification.
-     */
     public function toMail(object $notifiable): MailMessage
     {
-        return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+        $mail = (new MailMessage)
+            ->subject($this->content['subject'])
+            ->greeting($this->content['heading']);
+
+        foreach ($this->content['introduction'] ?? [] as $line) {
+            $mail->line($line);
+        }
+
+        if (!empty($this->content['explanation'])) {
+            $mail->line(new HtmlString($this->content['explanation']));
+        }
+
+        if (!empty($this->content['action'])) {
+            $mail->action($this->content['action']['title'], $this->content['action']['url']);
+        }
+
+        return $mail;
     }
 
-    /**
-     * Get the array representation of the notification.
-     *
-     * @return array<string, mixed>
-     */
     public function toArray(object $notifiable): array
     {
         return [
-            //
+            'subject' => $this->content['subject'],
         ];
     }
 }
