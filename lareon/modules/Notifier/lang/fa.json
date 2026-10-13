@@ -4,5 +4,16 @@
     "not read yet": "هنوز خوانده‌نشده",
     "read before": "قبلاً خوانده‌شده",
     "mark as read": "علامت‌گذاری به‌عنوان خوانده‌شده",
-    "notifications are messages displayed on th app to inform users about important updates, events, system alerts, or other relevant information": "وتیفیکیشن‌ها پیام‌هایی هستند که در اپلیکیشن برای اطلاع‌رسانی درباره به‌روزرسانی‌های مهم، رویدادها، هشدارهای سیستمی یا سایر اطلاعات مرتبط به کاربران نمایش داده می‌شوند"
+    "notifications are messages displayed on th app to inform users about important updates, events, system alerts, or other relevant information": "وتیفیکیشن‌ها پیام‌هایی هستند که در اپلیکیشن برای اطلاع‌رسانی درباره به‌روزرسانی‌های مهم، رویدادها، هشدارهای سیستمی یا سایر اطلاعات مرتبط به کاربران نمایش داده می‌شوند",
+    ":name, hello": ":name عزیز، سلام",
+    "This message was automatically sent by :app_name.": "این پیام به‌صورت خودکار از طرف :app_name ارسال شده است.",
+    "Information": "اطلاع‌رسانی",
+    "Warning": "هشدار",
+    "Danger": "خطر",
+    "Urgent Attention": "توجه فوری",
+    "Success": "موفقیت",
+    "Failure": "شکست",
+    "General": "عمومی",
+    "Hello :name,": "سلام :name عزیز،",
+    "This email was sent automatically by :app. Please do not reply to this email.": "این پیام به‌صورت خودکار از طرف :app ارسال شده است. لطفاً به این ایمیل پاسخ ندهید."
 }

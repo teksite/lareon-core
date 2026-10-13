@@ -1,4 +1,5 @@
-@if ($name){!! $name !!} عزیز، سلام
+@if ($name)
+    {{ __(':name, hello', ['name' => $name]) }}
 @endif
 
 {!! $title !!}
@@ -6,4 +7,5 @@
 {!! $body !!}
 
 --
-این پیام به‌صورت خودکار از طرف {!! config('app.name') !!} ارسال شده است.
+
+{{ __('This message was automatically sent by :app_name.', ['app_name' => config('app.name')]) }}
