@@ -59,4 +59,9 @@
     'active' => true,
     'type' => 'steward',
   ],
+  'Ticketing' => [
+    'provider' => 'Lareon\\Modules\\Ticketing\\App\\Providers\\TicketingServiceProvider',
+    'active' => true,
+    'type' => 'steward',
+  ],
 ];
