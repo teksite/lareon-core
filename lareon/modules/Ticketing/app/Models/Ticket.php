@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Lareon\Modules\Ticketing\App\Enums\PriorityType;
 use Lareon\Modules\Ticketing\App\Enums\TicketStatusType;
@@ -34,22 +35,6 @@ class Ticket extends Model
             'closed_at'          => 'datetime',
             'last_activity_at'   => 'datetime',
         ];
-    }
-
-
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'user_id');
-    }
-
-    public function holderAdmin(): BelongsTo
-    {
-        return $this->belongsTo(Admin::class, 'holder_admin_id');
-    }
-
-    public function pendingAdmin(): BelongsTo
-    {
-        return $this->belongsTo(Admin::class, 'pending_admin_id');
     }
 
 
@@ -104,8 +89,35 @@ class Ticket extends Model
         return $query->where('status', '!=', TicketStatusType::Closed->value);
     }
 
+
     // ---------------------------------------------------------------------
-    // Helperها
+    // Relations
+    // ---------------------------------------------------------------------
+
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function holderAdmin(): BelongsTo
+    {
+        return $this->belongsTo(Admin::class, 'holder_admin_id');
+    }
+
+    public function pendingAdmin(): BelongsTo
+    {
+        return $this->belongsTo(Admin::class, 'pending_admin_id');
+    }
+
+
+    public function messages(): HasMany
+    {
+        return $this->hasMany(TicketMessage::class, 'ticket_id')->orderBy('created_at');
+    }
+
+    // ---------------------------------------------------------------------
+    // Helper
     // ---------------------------------------------------------------------
 
     public function isClosed(): bool

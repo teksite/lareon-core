@@ -16,5 +16,4 @@ enum TicketStatusType: int
         };
     }
 
-
 }

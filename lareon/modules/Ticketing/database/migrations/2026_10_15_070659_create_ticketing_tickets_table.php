@@ -18,24 +18,17 @@ return new class extends Migration {
             $table->string('subject', 190);
             $table->tinyInteger('priority');
             $table->tinyInteger('status')->default(TicketStatusType::Opened->value);
-
             $table->foreignId('holder_admin_id')->nullable()->constrained('admins')->nullOnDelete();
             $table->foreignId('pending_admin_id')->nullable()->constrained('admins')->nullOnDelete();
-
             $table->string('source', 20)->default('web');
-
             $table->boolean('ai_handled')->default(false);
             $table->float('ai_last_confidence')->nullable();
-
             $table->tinyInteger('closed_by_type')->nullable();
             $table->unsignedBigInteger('closed_by_id')->nullable();
             $table->timestamp('closed_at')->nullable();
-
             $table->timestamp('last_activity_at')->nullable();
-
             $table->timestamps();
             $table->softDeletes();
-
             $table->index('user_id');
             $table->index('holder_admin_id');
             $table->index('pending_admin_id');
