@@ -43,7 +43,7 @@ class MenuProvider implements MenuRegisteringContract
               ->addManyItem([
                   [
                       'title'      => trans('template and elements'),
-                      'order'      => 5,
+                      'order'      => 3,
                       'route'      => 'admin.visual.meta.templates.index',
                       'active'     => request()->routeIs('admin.visual.meta.*'),
                       'permission' => 'admin.meta.template.read',

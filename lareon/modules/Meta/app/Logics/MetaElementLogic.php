@@ -141,6 +141,10 @@ class MetaElementLogic
     }
 
 
+    /**
+     * @throws BindingResolutionException
+     * @throws \Throwable
+     */
     public function getUnregistered(?string $path = null,): array
     {
         $files = $this->getFiles($path)->result ?? [];
