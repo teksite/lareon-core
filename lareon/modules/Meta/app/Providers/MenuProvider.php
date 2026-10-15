@@ -33,20 +33,24 @@ class MenuProvider implements MenuRegisteringContract
     protected function admin(MenuRegisteringEvent $event): void
     {
 
-        $event->addManyItem([
+        $event->add(
             [
-                'title'      => trans('template and elements'),
-                'order'      => 5,
-                'route'      => 'admin.settings.meta.templates.index',
-                'active'     => request()->routeIs('admin.settings.meta.*'),
-                'permission' => 'admin.meta.template.read',
-            ],
-        ], 'settings');
+                'title'  => trans('visual'),
+                'order'  => 102,
+                'icon'   => 'eye',
+                'active' => request()->routeIs('admin.visual.*'),
+            ], 'visual')
+              ->addManyItem([
+                  [
+                      'title'      => trans('template and elements'),
+                      'order'      => 5,
+                      'route'      => 'admin.visual.meta.templates.index',
+                      'active'     => request()->routeIs('admin.visual.meta.*'),
+                      'permission' => 'admin.meta.template.read',
+                  ],
+              ], 'visual');
 
     }
 
-    protected function panel(MenuRegisteringEvent $event): void
-    {
-
-    }
+    protected function panel(MenuRegisteringEvent $event): void {}
 }

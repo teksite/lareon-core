@@ -4,13 +4,13 @@
     @endpushonce
     @section('title', __('lareon::global.crud.titles.edit_current',['attribute'=>__('template') , 'item'=>($template->title)]))
     @section('header.start')
-        <x-lareon::links.nav :href="route('admin.settings.meta.templates.index')" :content="__('lareon::global.buttons.all_attribute' ,['attribute'=>__('templates')])" color="index" can="admin.meta.template.read"/>
+        <x-lareon::links.nav :href="route('admin.visual.meta.templates.index')" :content="__('lareon::global.buttons.all_attribute' ,['attribute'=>__('templates')])" color="index" can="admin.meta.template.read"/>
     @endsection
     @section('header.end')
-        <x-lareon::links.action type="delete" :href="route('admin.settings.meta.templates.destroy', $template)" method="delete" :label="trans('lareon::global.buttons.delete')" can="admin.meta.template.delete"/>
+        <x-lareon::links.action type="delete" :href="route('admin.visual.meta.templates.destroy', $template)" method="delete" :label="trans('lareon::global.buttons.delete')" can="admin.meta.template.delete"/>
     @endsection
 
-    <form method="POST" action="{{route('admin.settings.meta.templates.update', $template)}}" class="space-y-6">
+    <form method="POST" action="{{route('admin.visual.meta.templates.update', $template)}}" class="space-y-6">
         @method('PATCH')
         @csrf
         <x-lareon::editor.tabs.section>

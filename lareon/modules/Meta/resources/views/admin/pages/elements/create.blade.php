@@ -1,7 +1,7 @@
-<x-lareon::admin-editor method="create" :action="route('admin.settings.meta.elements.store')" :hasTab="false">
+<x-lareon::admin-editor method="create" :action="route('admin.visual.meta.elements.store')" :hasTab="false">
     @section('title', __('lareon::global.crud.titles.create',['attribute'=>__('element')]))
     @section('header.start')
-        <x-lareon::links.nav :href="route('admin.settings.meta.elements.index')" :content="__('lareon::global.buttons.all_attribute' ,['attribute'=>__('elements')])" color="index"/>
+        <x-lareon::links.nav :href="route('admin.visual.meta.elements.index')" :content="__('lareon::global.buttons.all_attribute' ,['attribute'=>__('elements')])" color="index"/>
     @endsection
     @section('form')
         <x-lareon::editor.tabs.item :title="__('basic data')">

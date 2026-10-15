@@ -61,7 +61,7 @@ class TemplatesController extends Controller implements HasMiddleware
         return Responder::fromResult($res,
             trans('lareon::global.crud.success.created', ['attribute' => __('template')]),
             trans('lareon::global.crud.error.created', ['attribute' => __('template')]),
-            route('admin.settings.meta.templates.index')
+            route('admin.visual.meta.templates.index')
         )->go();
     }
 
@@ -96,7 +96,7 @@ class TemplatesController extends Controller implements HasMiddleware
         return Responder::fromResult($res,
             trans('lareon::global.crud.success.updated', ['attribute' => __('template')]),
             trans('lareon::global.crud.error.updated', ['attribute' => __('template')]),
-            route('admin.settings.meta.templates.edit', $res->result)
+            route('admin.visual.meta.templates.edit', $res->result)
         )->go();
     }
 
@@ -112,7 +112,7 @@ class TemplatesController extends Controller implements HasMiddleware
         return Responder::fromResult($res,
             trans('lareon::global.crud.success.deleted', ['attribute' => __('template')]),
             trans('lareon::global.crud.error.deleted', ['attribute' => __('template')]),
-            route('admin.settings.meta.templates.index')
+            route('admin.visual.meta.templates.index')
         )->go();
     }
 }

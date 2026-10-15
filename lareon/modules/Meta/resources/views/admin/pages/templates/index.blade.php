@@ -1,9 +1,9 @@
-<x-lareon::admin-list-creator :href="route('admin.settings.meta.templates.store')">
+<x-lareon::admin-list-creator :href="route('admin.visual.meta.templates.store')">
     @section('title', __('lareon::global.crud.titles.list',['attribute'=>__('templates')]))
     @section('description', __('templates are custom views that can contain additional fields and a different layout. They can be assigned to pages, allowing them to store extra data and display content with a layout different from the default page template'))
 
     @section('header.start')
-        <x-lareon::links.nav :href="route('admin.settings.meta.elements.index')" :content="__('lareon::global.buttons.all_attribute' ,['attribute'=>__('elements')])" color="index" can="admin.meta.element.read"/>
+        <x-lareon::links.nav :href="route('admin.visual.meta.elements.index')" :content="__('lareon::global.buttons.all_attribute' ,['attribute'=>__('elements')])" color="index" can="admin.meta.element.read"/>
     @endsection
 
     @section('form')
@@ -33,8 +33,8 @@
                     </td>
                     <td>
                         <x-lareon::action-box class="action">
-                            <x-lareon::links.action type="edit" :href="route('admin.settings.meta.templates.edit' , $template)" can="admin.meta.template.edit"/>
-                            <x-lareon::links.action type="delete" method="delete" :href="route('admin.settings.meta.templates.destroy' , $template)" can="admin.meta.template.delete"/>
+                            <x-lareon::links.action type="edit" :href="route('admin.visual.meta.templates.edit' , $template)" can="admin.meta.template.edit"/>
+                            <x-lareon::links.action type="delete" method="delete" :href="route('admin.visual.meta.templates.destroy' , $template)" can="admin.meta.template.delete"/>
                         </x-lareon::action-box>
                     </td>
                 </tr>

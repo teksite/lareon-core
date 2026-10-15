@@ -1,11 +1,11 @@
-<x-lareon::admin-editor method="update" :instance="$element" :action="route('admin.settings.meta.elements.update', $element)" :hasTab="false">
+<x-lareon::admin-editor method="update" :instance="$element" :action="route('admin.visual.meta.elements.update', $element)" :hasTab="false">
     @section('title', __('lareon::global.crud.titles.edit_current',['attribute'=>__('element') , 'item'=>($element->title)]))
     @section('header.start')
-        <x-lareon::links.nav :href="route('admin.settings.meta.elements.index')" :content="__('lareon::global.buttons.all_attribute' ,['attribute'=>__('elements')])" color="index" can="admin.meta.element.read"/>
-        <x-lareon::links.nav :href="route('admin.settings.meta.elements.create')" :content="__('lareon::global.buttons.new_attribute' ,['attribute'=>__('element')])" color="create" can="admin.meta.element.create"/>
+        <x-lareon::links.nav :href="route('admin.visual.meta.elements.index')" :content="__('lareon::global.buttons.all_attribute' ,['attribute'=>__('elements')])" color="index" can="admin.meta.element.read"/>
+        <x-lareon::links.nav :href="route('admin.visual.meta.elements.create')" :content="__('lareon::global.buttons.new_attribute' ,['attribute'=>__('element')])" color="create" can="admin.meta.element.create"/>
     @endsection
     @section('header.end')
-        <x-lareon::links.action type="delete" :href="route('admin.settings.meta.elements.destroy', $element)" method="delete" :label="trans('lareon::global.buttons.delete')" can="admin.meta.element.delete"/>
+        <x-lareon::links.action type="delete" :href="route('admin.visual.meta.elements.destroy', $element)" method="delete" :label="trans('lareon::global.buttons.delete')" can="admin.meta.element.delete"/>
     @endsection
 
     @section('form')
