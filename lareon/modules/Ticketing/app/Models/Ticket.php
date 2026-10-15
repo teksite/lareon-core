@@ -116,6 +116,12 @@ class Ticket extends Model
         return $this->hasMany(TicketMessage::class, 'ticket_id')->orderBy('created_at');
     }
 
+
+    public function attachments(): HasMany
+    {
+        return $this->hasMany(TicketAttachment::class, 'ticket_id');
+    }
+
     // ---------------------------------------------------------------------
     // Helper
     // ---------------------------------------------------------------------

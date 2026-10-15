@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Lareon\Modules\Ticketing\App\Enums\SenderType;
 use Lareon\Modules\Ticketing\Database\Factory\TicketMessageFactory;
 use Lareon\Steward\App\Models\Admin;
@@ -45,7 +46,12 @@ class TicketMessage extends Model
     private function admin(): mixed
     {
         if ($this->sender_id === null) return null;
-
         return Admin::find($this->sender_id);
     }
+
+    public function attachments(): HasMany
+    {
+        return $this->hasMany(TicketAttachment::class, 'message_id');
+    }
+
 }
