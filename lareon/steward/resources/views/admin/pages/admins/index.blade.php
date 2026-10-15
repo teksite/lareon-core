@@ -1,6 +1,6 @@
 <x-lareon::admin-list>
     @section('title', __('lareon::global.crud.titles.list',['attribute'=>__('admins')]))
-    @section('description', __('Manage all registered admins, view their details and control account status'))
+    @section('description', __('manage all registered admins, view their details and control account status'))
     @section('header.start')
         <x-lareon::links.nav :href="route('admin.admins.create')" :content="__('lareon::global.buttons.new_one')" color="create" can="admin.admin.create"/>
     @endsection
