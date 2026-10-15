@@ -37,7 +37,7 @@ class MenuProvider implements MenuRegisteringContract
                 'title'  => trans('questionnaires'),
                 'order'  => 102,
                 'icon'   => 'paper-board',
-                'active' => request()->routeIs('admin.questionnaires.*'),
+                'active' => request()->routeIs('admin.questionnaire.*'),
             ], 'questionnaire')
               ->addManyItem([
                   [
