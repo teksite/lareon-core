@@ -4,11 +4,11 @@ namespace Lareon\Modules\Ticketing\App\Enums;
 
 enum TicketStatusType: int
 {
-    case Closed        = 0;
     case Opened        = 1;
     case WaitingAdmin = 2;
     case InProgress   = 3;
     case Answered      = 4;
+    case Closed        = 0;
 
 
     public function label(): string
@@ -16,7 +16,7 @@ enum TicketStatusType: int
         return match ($this) {
             self::Closed => __('close'),
             self::Opened => __('open'),
-            self::WaitingAdmin => __('waiting admin'),
+            self::WaitingAdmin => __('waiting'),
             self::InProgress => __('in progress'),
             self::Answered => __('answered'),
         };

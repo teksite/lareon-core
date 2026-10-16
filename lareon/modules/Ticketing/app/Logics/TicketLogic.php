@@ -1,0 +1,90 @@
+<?php
+
+namespace Lareon\Modules\Ticketing\App\Logics;
+
+use Illuminate\Support\Arr;
+use Illuminate\Database\Eloquent\Model;
+use Lareon\Modules\Ticketing\App\Enums\SenderType;
+use Lareon\Modules\Ticketing\App\Enums\TicketStatusType;
+use Lareon\Modules\Ticketing\App\Models\Ticket;
+use Lareon\Modules\Ticketing\App\Models\TicketMessage;
+use Lareon\Modules\User\App\Models\User;
+use Teksite\Handler\Facade\FetchData;
+use Teksite\Handler\Services\ServiceWrapper;
+
+
+class TicketLogic
+{
+    /**
+     * @throws \Throwable
+     */
+    public function all(mixed $fetchData = [])
+    {
+        return ServiceWrapper::make(false)->do(function () {
+            return FetchData::get(Ticket::class);
+        })->run();
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    public function allByUser(User|null $user = null, null|TicketStatusType $status = null): mixed
+    {
+        $user ??= auth()->user();
+        return ServiceWrapper::make(false)->do(function () use ($user, $status) {
+            return FetchData::get(function () use ($user, $status) {
+                return $user->tickets()->when($status instanceof TicketStatusType, function ($query) use ($status) {
+                    $query->where('status', $status->value);
+                });
+            });
+        })->run();
+    }
+
+    public function first(array $inputs = []) {}
+
+    /**
+     * @throws \Throwable
+     */
+    public function create(array $inputs = [])
+    {
+        return ServiceWrapper::make(true)->do(function () use ($inputs) {
+
+            $userId=$inputs['userId'] ?? auth()->id();
+            $body= $inputs['body'];
+            $files= $inputs['files'] ?? [];
+
+            $ticket = Ticket::query()->create(Arr::only($inputs, ['ticket_number', 'user_id', 'subject', 'priority', 'source', 'last_activity_at']));
+
+            $message = $this->appendMessage($ticket, SenderType::User, $userId, $body);
+
+            if ($inputs['files'] !== []) $this->attachments->storeMany($ticket, $message, 'user', $userId, $files);
+
+//            $this->statusLogger->log($ticket, null, TicketStatusType::Opened, 'user', $userId, 'create ticket');
+
+
+            return $ticket->fresh(['messages', 'attachments']);
+        })->run();
+
+    }
+
+    public function update(Model $model, array $inputs = []) {}
+
+    public function delete(Model $model) {}
+
+
+    private function appendMessage(Ticket $ticket, SenderType $senderType, ?int $senderId, string $body, bool $internalNote = false): TicketMessage
+    {
+        $message = $ticket->messages()->create([
+            'sender_type'      => $senderType,
+            'sender_id'        => $senderId,
+            'body'             => $body,
+            'is_internal_note' => $internalNote,
+        ]);
+
+        $ticket->update(['last_activity_at' => now()]);
+
+        return $message;
+    }
+
+}
+

@@ -3,6 +3,8 @@
 namespace Lareon\Modules\Ticketing\App\Providers;
 
 use Illuminate\Console\Scheduling\Schedule;
+use Lareon\Modules\Ticketing\App\Models\Ticket;
+use Lareon\Modules\User\App\Models\User;
 use Teksite\Module\Providers\Support\BaseModuleServiceProvider as ServiceProvider;
 
 class TicketingServiceProvider extends ServiceProvider
@@ -63,6 +65,7 @@ class TicketingServiceProvider extends ServiceProvider
     public function boot(): void
     {
         parent::boot();
+        $this->loadDynamicRelations();
     }
 
     /**
@@ -71,5 +74,10 @@ class TicketingServiceProvider extends ServiceProvider
     public function register(): void
     {
         parent::register();
+    }
+
+    public function loadDynamicRelations(): void
+    {
+        User::resolveRelationUsing('tickets', fn(User $user) => $user->hasMany(Ticket::class));
     }
 }
