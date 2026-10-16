@@ -32,11 +32,10 @@ class TicketLogic
     {
         $user ??= auth()->user();
         return ServiceWrapper::make(false)->do(function () use ($user, $status) {
-            return FetchData::get(function () use ($user, $status) {
-                return $user->tickets()->when($status instanceof TicketStatusType, function ($query) use ($status) {
-                    $query->where('status', $status->value);
-                });
-            });
+            return FetchData::get(model: fn() => $user->tickets()->when(
+                $status instanceof TicketStatusType,
+                fn($query) => $query->where('status', $status->value))
+            );
         })->run();
     }
 
@@ -49,9 +48,9 @@ class TicketLogic
     {
         return ServiceWrapper::make(true)->do(function () use ($inputs) {
 
-            $userId=$inputs['userId'] ?? auth()->id();
-            $body= $inputs['body'];
-            $files= $inputs['files'] ?? [];
+            $userId = $inputs['userId'] ?? auth()->id();
+            $body = $inputs['body'];
+            $files = $inputs['files'] ?? [];
 
             $ticket = Ticket::query()->create(Arr::only($inputs, ['ticket_number', 'user_id', 'subject', 'priority', 'source', 'last_activity_at']));
 
@@ -59,7 +58,7 @@ class TicketLogic
 
             if ($inputs['files'] !== []) $this->attachments->storeMany($ticket, $message, 'user', $userId, $files);
 
-//            $this->statusLogger->log($ticket, null, TicketStatusType::Opened, 'user', $userId, 'create ticket');
+            //            $this->statusLogger->log($ticket, null, TicketStatusType::Opened, 'user', $userId, 'create ticket');
 
 
             return $ticket->fresh(['messages', 'attachments']);

@@ -47,7 +47,7 @@
                     </div>
                     <div class="flex gap-3">
                         <div class="flex flex-col gap-1 w-full">
-                            <label class="input_label" :for="`opening_horse_opens-${index}`" x-text="`{{ __('opens') }} #${index + 1}`"></label>
+                            <label class="input_label" :for="`opening_horse_opens-${index}`" x-text="`{{ __('open at') }} #${index + 1}`"></label>
                             <input type="time" dir="ltr" @required($required) class="input block w-full"
                                    :class="{'input-error':hasError('{{ $dottedName }}.' + index + '.opens')}"
                                    :name="`{{ $finalName }}[${index}][opens]`"
@@ -56,7 +56,7 @@
                             <p class="message-error" x-show="hasError('{{ $dottedName }}.' + index + '.opens')" x-text="getError('{{ $dottedName }}.' + index + '.opens')"></p>
                         </div>
                         <div class="flex flex-col gap-1 w-full">
-                            <label class="input_label" :for="`opening_horse_closes-${index}`" x-text="`{{ __('closes') }} #${index + 1}`"></label>
+                            <label class="input_label" :for="`opening_horse_closes-${index}`" x-text="`{{ __('close at') }} #${index + 1}`"></label>
                             <input type="time" dir="ltr" @required($required) class="input block w-full"
                                    :class="{'input-error':hasError('{{ $dottedName }}.' + index + '.closes')}"
                                    :name="`{{ $finalName }}[${index}][closes]`"

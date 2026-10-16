@@ -35,11 +35,12 @@ class TicketsController extends Controller implements HasMiddleware
      */
     public function index(): View {
 
-        $statusInput= request()->get('status' , null);
-        $status=TicketStatusType::tryFrom($statusInput) ?? null;
+        $statusInput= request()->input('status' );
+        $status= $statusInput ? TicketStatusType::tryFrom($statusInput) : null;
         $options= TicketStatusType::options();
 
         $tickets = $this->logic->allByUser(auth()->user() , $status )->result;
+
         return view('ticketing::panel.pages.tickets.index', compact('tickets' ,'options'));
 
     }
