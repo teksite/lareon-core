@@ -46,7 +46,7 @@ class PermissionsSeeder extends Seeder
             ],
             [
                 'title'       => 'admin.ticket.message.edit',
-                'description' => 'have access to remove message of the ticket (in the admin panel)',
+                'description' => 'have access to edit message of the ticket (in the admin panel)',
             ],
             [
                 'title'       => 'admin.ticket.message.delete',

@@ -18,8 +18,8 @@ return new class extends Migration {
             $table->string('subject', 190);
             $table->tinyInteger('priority');
             $table->tinyInteger('status')->default(TicketStatusType::Opened->value);
-            $table->foreignId('holder_admin_id')->nullable()->constrained('admins')->nullOnDelete();
-            $table->foreignId('pending_admin_id')->nullable()->constrained('admins')->nullOnDelete();
+            $table->foreignId('holder_admin_id')->nullable()->constrained('users_admins')->nullOnDelete();
+            $table->foreignId('pending_admin_id')->nullable()->constrained('users_admins')->nullOnDelete();
             $table->string('source', 20)->default('web');
             $table->boolean('ai_handled')->default(false);
             $table->float('ai_last_confidence')->nullable();
