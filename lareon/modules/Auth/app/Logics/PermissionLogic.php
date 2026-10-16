@@ -34,7 +34,6 @@ class PermissionLogic
 
         return ServiceWrapper::make(false)->do(function () use ($inputs) {
             $permission = Permission::create($inputs);
-            $this->renewAllPermissions();
             return $permission;
         })->run();
     }
@@ -57,7 +56,6 @@ class PermissionLogic
     {
         return ServiceWrapper::make(false)->do(function () use ($permission) {
             $permission->delete();
-            $this->renewAllPermissions();
         })->
         run();
     }

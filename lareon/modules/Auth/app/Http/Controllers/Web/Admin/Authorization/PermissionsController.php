@@ -46,7 +46,7 @@ class PermissionsController extends Controller implements HasMiddleware
      */
     public function create()
     {
-        return redirect()->action([self::class , 'index']);
+        return redirect()->action([self::class, 'index']);
     }
 
     /**
@@ -59,6 +59,8 @@ class PermissionsController extends Controller implements HasMiddleware
         $res = $this->logic->create($request->validated());
 
         if ($res->success) {
+            $this->logic->renewAllPermissions();
+
             event(new PermissionCrudEvent($res->result, CrudTypeEnum::CREATE, $request->validated()));
             return Responder::success(trans('lareon::global.created_successfully', ['attribute' => __('permission')]))->go();
         }
@@ -92,6 +94,8 @@ class PermissionsController extends Controller implements HasMiddleware
         $res = $this->logic->update($permission, $request->validated());
 
         if ($res->success) {
+            $this->logic->renewAllPermissions();
+
             event(new PermissionCrudEvent($permission, CrudTypeEnum::UPDATE, $request->validated()));
             return Responder::success(trans('lareon::global.updated_successfully', ['attribute' => __('permission')]))->go();
         }
@@ -109,6 +113,8 @@ class PermissionsController extends Controller implements HasMiddleware
         $res = $this->logic->delete($permission);
 
         if ($res->success) {
+            $this->logic->renewAllPermissions();
+
             event(new PermissionCrudEvent($permission, CrudTypeEnum::DELETE));
             return Responder::success(trans('lareon::global.delete_successfully', ['attribute' => __('permission')]))->route('admin.authorize.permissions.index')->go();
         }
