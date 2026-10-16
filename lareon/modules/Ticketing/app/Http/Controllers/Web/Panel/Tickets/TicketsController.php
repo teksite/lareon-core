@@ -7,11 +7,13 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Routing\Redirector;
+use Lareon\Modules\Ticketing\App\Enums\PriorityType;
 use Lareon\Modules\Ticketing\App\Enums\TicketStatusType;
 use Lareon\Modules\Ticketing\App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Lareon\Modules\Ticketing\App\Http\Requests\Panel\NewTicketRequest;
 use Lareon\Modules\Ticketing\App\Logics\TicketLogic;
+use Lareon\Modules\Ticketing\App\Models\Ticket;
 use Teksite\Handler\Facade\Responder;
 
 class TicketsController extends Controller implements HasMiddleware
@@ -45,7 +47,13 @@ class TicketsController extends Controller implements HasMiddleware
 
     }
 
-    public function create(): View {}
+    public function create(): View {
+
+        $ticket=new Ticket();
+        $priorities= PriorityType::cases();
+        return view('ticketing::panel.pages.tickets.create', compact( 'priorities' ,'ticket'));
+
+    }
 
     /**
      * @throws \Throwable

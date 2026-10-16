@@ -1,23 +1,19 @@
-<x-lareon::panel-editor type="update" method="patch" :instance="$user" :action="route('panel.profile.update')" :hasTab="false">
-    @section('title', __('lareon::global.crud.titles.edit',['attribute'=>__('profile')]) . "($user->name)")
-    @section('nav' ,view('user::panel.pages.profile.partials.nav'))
+<x-lareon::panel-editor type="create" method="post" :instance="$ticket" :action="route('panel.tickets.store')" :hasTab="false">
+    @section('title', __('lareon::global.crud.titles.create',['attribute'=>__('ticket')]) )
     @section('form')
-        <section class="grid gap-6 md:grid-cols-2 xl:grid-cols-5">
-            <x-lareon::box type="y" class="space-y-3 xl:col-span-3">
-                <div class="grid gap-6 lg:grid-cols-2">
-                    <x-lareon::editor.input :required="true" labelPosition="start" :label="__('first name')" name="name" :value="$user->name" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('name') , 'item'=>__('user')])"/>
+        <x-lareon::box type="y" class="space-y-3 w-full mx-auto max-w-3xl">
+            <div class="grid gap-6 lg:grid-cols-2">
+                <x-lareon::editor.input :required="true" labelPosition="top" :label="__('title')" name="subject" :placeholder="__('lareon::global.placeholders.write.two',['attribute'=>__('title') , 'item'=>__('issue')])"/>
+                <x-lareon::editor.input-select :required="true" labelPosition="top" :label="__('priority')" name="priority">
+                    @foreach($priorities as $priority)
+                        <option value="{{$priority->value}}">{{__($priority->label())}}</option>
+                    @endforeach
+                    </x-lareon::editor.input-select>
                 </div>
-                <div class="space-y-6">
-                    <x-lareon::editor.input :required="true" type="tel" dir="ltr" :value="$user->phone" :label="__('phone')" name="phone" :placeholder="__('lareon::global.placeholders.write.unique.two',['attribute'=>__('phone') , 'item'=>__('user')])"/>
-                    <x-lareon::editor.input :required="true" type="email" dir="ltr" :value="$user->email" :label="__('email')" name="email" :placeholder="__('lareon::global.placeholders.write.unique.two',['attribute'=>__('email') , 'item'=>__('user') ])"/>
-                </div>
-                <div>
-                    <x-lareon::editor.input-slug :disabled="true" :readonly="true" :value="$user->slug" :label="__('slug')" name="slug" :placeholder="__('lareon::global.placeholders.write.unique.two',['attribute'=>__('slug') , 'item'=>__('user') ])" :showUrl="!!($user->path())"/>
-                </div>
+            <div>
+                <x-lareon::editor.input-textarea :required="true" labelPosition="top" :label="__('message')" name="body" rows="16" min="5" max="10000"></x-lareon::editor.input-textarea>
+
+            </div>
             </x-lareon::box>
-            <aside class="xl:col-span-2 y-box">
-                <x-lareon::editor.section.publish-info :instance="$user"/>
-            </aside>
-        </section>
     @endsection
 </x-lareon::panel-editor>

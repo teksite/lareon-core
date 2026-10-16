@@ -2,6 +2,8 @@
 namespace Lareon\Modules\Ticketing\App\Http\Requests\Panel;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Enum;
+use Lareon\Modules\Ticketing\App\Enums\PriorityType;
 
 class NewTicketRequest extends FormRequest
 {
@@ -10,7 +12,7 @@ class NewTicketRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return userCan('panel.ticket.create' ,'web');
     }
 
     /**
@@ -21,7 +23,10 @@ class NewTicketRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'subject' => 'required|string|max:190',
+            'priority' => ['required', new Enum(PriorityType::class)],
+            'body' => 'required|string|min:5|max:10000',
         ];
     }
+
 }

@@ -1,11 +1,10 @@
 <x-lareon::panel-layout>
-    @section('title', __('lareon::global.crud.titles.list', [ 'attribute' => __('tickets'), ]))
+    @section('title', __('lareon::global.crud.titles.list', [ 'attribute' => __('my tickets'), ]))
 
     <div class="flex items-center justify-between mb-6">
-        <h1 class="text-xl font-bold">تیکت‌های من</h1>
         <a href="{{ route('panel.tickets.create') }}"
            class="inline-flex items-center gap-1 rounded-lg bg-teal-700 text-white text-sm px-4 py-2 hover:bg-teal-800">
-            ثبت تیکت جدید
+            {{__('new ticket')}}
         </a>
     </div>
 
