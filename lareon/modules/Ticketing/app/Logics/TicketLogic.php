@@ -49,7 +49,7 @@ class TicketLogic
      */
     public function create(array $inputs = [], string $source = 'web', SenderType $senderType = SenderType::User ,$senderId = null)
     {
-        return ServiceWrapper::make(true, withHandler: false)->do(function () use ($senderId, $senderType, $source, $inputs) {
+        return ServiceWrapper::make(true)->do(function () use ($senderId, $senderType, $source, $inputs) {
 
 
             $ticket = Ticket::query()->create([

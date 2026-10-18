@@ -8,7 +8,9 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Routing\Redirector;
 use Lareon\Modules\Ticketing\App\Enums\PriorityType;
+use Lareon\Modules\Ticketing\App\Enums\SenderType;
 use Lareon\Modules\Ticketing\App\Enums\TicketStatusType;
+use Lareon\Modules\Ticketing\App\Events\TicketCreated;
 use Lareon\Modules\Ticketing\App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Lareon\Modules\Ticketing\App\Http\Requests\Panel\NewTicketRequest;
@@ -60,11 +62,11 @@ class TicketsController extends Controller implements HasMiddleware
      */
     public function store(NewTicketRequest $request): RedirectResponse|Redirector
     {
-        $res = $this->logic->create($request->validated());
+        $res = $this->logic->create($request->validated() , 'web' , SenderType::User , auth()->id());
 
         if (!$res->success) return Responder::failed(trans('lareon::global.crud.error.created', ['attribute' => __('ticket')]))->go();
 
-        //Todo Add event event(new TicketCreated($ticket->result));
+        event(new TicketCreated($res->result));
 
         return Responder::success(trans('lareon::global.crud.success.created', ['attribute' => __('ticket')]))->route('admin.tickets.index')->go();
     }
