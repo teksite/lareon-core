@@ -19,7 +19,7 @@
 
     <div class="rounded-xl border border-stone-200 bg-white divide-y divide-stone-100 overflow-hidden">
         @foreach ($tickets as $ticket)
-            <a href="{{ route('ticketing.user.tickets.show', $ticket) }}"
+            <a href="{{ route('panel.tickets.show', $ticket) }}"
                class="flex items-center justify-between gap-4 px-4 py-4 hover:bg-stone-50">
                 <div class="min-w-0">
                     <div class="flex items-center gap-2 text-xs text-stone-400 mb-1">
@@ -30,14 +30,12 @@
                     <div class="font-medium text-stone-800 truncate">{{ $ticket->subject }}</div>
                 </div>
                 <div class="flex items-center gap-2 shrink-0">
-                        <span class="text-xs px-2 py-1 rounded-full text-white"
-                              style="background-color: {{ $ticket->priority->color() }}">
-                            {{ $ticket->priority->label() }}
-                        </span>
-                    <span class="text-xs px-2 py-1 rounded-full text-white"
-                          style="background-color: {{ $ticket->status->color() }}">
-                            {{ $ticket->status->label() }}
-                        </span>
+                     <span class="text-xs px-2 py-1 rounded-full text-white" style="background-color: {{ $ticket->priority->color() }}">
+                         {{ $ticket->priority->label() }}
+                     </span>
+                    <span class="text-xs px-2 py-1 rounded-full text-white" style="background-color: {{ $ticket->status->color() }}">
+                           {{ $ticket->status->label() }}
+                     </span>
                 </div>
             </a>
         @endforeach

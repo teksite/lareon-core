@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Gate;
 use Lareon\Modules\Ticketing\App\Enums\PriorityType;
 use Lareon\Modules\Ticketing\App\Enums\SenderType;
 use Lareon\Modules\Ticketing\App\Enums\TicketStatusType;
@@ -68,10 +69,17 @@ class TicketsController extends Controller implements HasMiddleware
 
         event(new TicketCreated($res->result));
 
-        return Responder::success(trans('lareon::global.crud.success.created', ['attribute' => __('ticket')]))->route('admin.tickets.index')->go();
+        return Responder::success(trans('lareon::global.crud.success.created', ['attribute' => __('ticket')]))->route('panel.tickets.show' ,['ticket'=>$res->result])->go();
     }
 
-    public function show(Ticket $ticket): View {}
+    public function show(Ticket $ticket): View {
+
+        Gate::denyIf($ticket->user_id !== auth()->id());
+
+        $ticket->load(['messages.attachments', 'attachments']);
+        $user= auth('web')->user();
+        return view('ticketing::panel.pages.tickets.show', compact('ticket' ,'user'));
+    }
 
     public function reply(StoreUserReplyRequest $request, Ticket $ticket): RedirectResponse {}
 

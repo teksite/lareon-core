@@ -8,7 +8,7 @@ Route::prefix('tickets')->name('tickets.')
          Route::get('/', [TicketsController::class, 'index'])->name('index');
          Route::get('/create', [TicketsController::class, 'create'])->name('create');
          Route::post('/', [TicketsController::class, 'store'])->name('store');
-         Route::get('/{ticket}', [TicketsController::class, 'show'])->name('show');
-         Route::post('/{ticket}/reply', [TicketsController::class, 'reply'])->name('reply');
-         Route::post('/{ticket}/close', [TicketsController::class, 'close'])->name('close');
+         Route::get('/{ticket:ticket_number}', [TicketsController::class, 'show'])->name('show');
+         Route::post('/{ticket:ticket_number}/reply', [TicketsController::class, 'reply'])->name('reply');
+         Route::post('/{ticket:ticket_number}/close', [TicketsController::class, 'close'])->name('close');
      });

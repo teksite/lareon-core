@@ -6,6 +6,7 @@
     "low": "کم",
     "normal": "نرمال",
     "high": "زیاد",
-    "urgent": "حاد"
+    "urgent": "حاد",
+    "are you sure you want to close this ticket? You will not be able to send any further replies after closing it.": "آیا از بستن این تیکت مطمئن هستید؟ پس از بستن امکان ارسال پاسخ جدید نخواهید داشت."
 
 }
