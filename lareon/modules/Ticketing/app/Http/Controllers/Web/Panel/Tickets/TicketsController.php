@@ -83,5 +83,12 @@ class TicketsController extends Controller implements HasMiddleware
 
     public function reply(StoreUserReplyRequest $request, Ticket $ticket): RedirectResponse {}
 
-    public function close(CloseTicketRequest $request, Ticket $ticket): RedirectResponse {}
+    /**
+     * @throws \Throwable
+     */
+    public function close(Ticket $ticket) {
+        $res =$this->logic->closeByUser($ticket , auth()->id());
+        return Responder::fromResult($res ,trans('the ticket #:number is closed' ,['number'=>$ticket->ticket_number]))->go();
+
+    }
 }

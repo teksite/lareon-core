@@ -12,7 +12,7 @@
             </span>
         </div>
         <hr class="bordering my-6 ">
-        <ul class="space-y-6 max-w-5xl mx-auto">
+        <ul class="space-y-6 max-w-5xl mx-auto overflow-y-auto max-h-svh">
             @foreach($ticket->messages  ?? [] as $message)
                 @php
                     $isOwner = $user->id === $message->sender_id && $message->sender_type === \Lareon\Modules\Ticketing\App\Enums\SenderType::User;
@@ -30,30 +30,29 @@
     </section>
 
     @if ($ticket->isClosed())
-        <div class="rounded-lg border border-stone-200 bg-stone-100 text-stone-500 text-sm px-4 py-3 text-center">
+        <div class="mt-12 max-w-5xl mx-auto rounded-lg bordering bg-stone-100 text-gray-500 text-sm px-4 py-3 text-center">
             {{__('the ticket is closed.')}}
         </div>
     @else
         <section class="y-box mt-12 max-w-5xl mx-auto">
             <form action="{{route('panel.tickets.reply' ,$ticket)}}" method="POST" class="space-y-6">
                 @csrf
-                <x-lareon::editor.input-textarea :required="true" labelPosition="top" :label="__('message')" name="body" rows="16" min="5" max="10000"></x-lareon::editor.input-textarea>
+                <x-lareon::editor.input-textarea :required="true" labelPosition="top" :label="__('message')" name="body" rows="8" min="5" max="10000"></x-lareon::editor.input-textarea>
                 @if (config('ticketing.attachments.enabled'))
                     <div>
-                        <input type="file" name="attachments[]" multiple
-                               class="w-full text-sm text-gray-600 file:ms-3 file:rounded-lg file:border-0 file:bg-gray-100 file:px-3 file:py-2">
+                        <input type="file" name="attachments[]" multipleclass="w-full text-sm text-gray-600 file:ms-3 file:rounded-lg file:border-0 file:bg-gray-100 file:px-3 file:py-2">
                     </div>
                 @endif
                 <div class="flex items-center justify-between gap-5">
                     <x-lareon::buttons.nav class="min-w-36 mt-6" :fullWidth="false" type="submit" color="update" size="xs">
                         {{ __('send') }}
                     </x-lareon::buttons.nav>
-                    <x-lareon::buttons.nav class="min-w-36 mt-6 js-confirm-close" :fullWidth="false" type="button" color="delete" variant="outline" size="xs">
+                    <x-lareon::buttons.nav data-confirm-target="close-ticket-form" class="min-w-36 mt-6 js-confirm-close" :fullWidth="false" type="button" color="delete" variant="outline" size="xs">
                         {{ __('close') }}
                     </x-lareon::buttons.nav>
                 </div>
             </form>
-            <form id="close-ticket-form" data-confirm-target method="POST" action="{{ route('panel.tickets.close', $ticket) }}" class="hidden">
+            <form id="close-ticket-form"  method="POST" action="{{ route('panel.tickets.close', $ticket) }}" class="hidden">
                 @csrf
             </form>
         </section>
@@ -62,7 +61,6 @@
         <script>
             document.querySelectorAll('.js-confirm-close').forEach(function (button) {
                 button.addEventListener('click', function () {
-                    console.log('dssssssssssssssssssssssssssssssss');
                     if (confirm('{{__('are you sure you want to close this ticket? You will not be able to send any further replies after closing it.')}}' )) {
                         document.getElementById(button.dataset.confirmTarget)?.submit();
                     }

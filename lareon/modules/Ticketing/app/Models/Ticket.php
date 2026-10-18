@@ -10,8 +10,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 use Lareon\Modules\Ticketing\App\Enums\PriorityType;
+use Lareon\Modules\Ticketing\App\Enums\SenderType;
 use Lareon\Modules\Ticketing\App\Enums\TicketStatusType;
+use Lareon\Modules\Ticketing\App\Events\TicketClosed;
 use Lareon\Modules\Ticketing\Database\Factory\TicketFactory;
 use Lareon\Modules\User\App\Models\User;
 use Lareon\Steward\App\Models\Admin;
@@ -150,5 +153,7 @@ class Ticket extends Model
     {
         return $this->user_id === $userId;
     }
+
+
 
 }
