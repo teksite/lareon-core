@@ -1,20 +1,19 @@
 <x-lareon::panel-layout>
     @section('title', __('lareon::global.crud.titles.list', [ 'attribute' => __('my tickets'), ]))
 
-    <div class="flex items-center justify-between mb-6">
+    <div class="p-3  bordering rounded-xl my-12 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="flex items-center justify-between gap-3 overflow-x-auto">
+            @foreach($options as $key=>$option)
+                <a href="?status={{$key}}" class="bg-white rounded-lg w-24 min-w-fit py-1 px-3 text-xs shadow text-center    {{ request()->has('read') && request()->integer('read') === 0        ? 'text-blue-600 font-bold'        : 'text-gray-600' }}">
+                    {{ __(\Illuminate\Support\Str::plural($option)) }}
+                </a>
+            @endforeach
+        </div>
+
         <a href="{{ route('panel.tickets.create') }}"
            class="inline-flex items-center gap-1 rounded-lg bg-teal-700 text-white text-sm px-4 py-2 hover:bg-teal-800">
             {{__('new ticket')}}
         </a>
-    </div>
-
-
-    <div class="p-3 bordering rounded-xl my-12 flex items-center justify-start gap-3">
-        @foreach($options as $key=>$option)
-            <a href="?status={{$key}}" class="bg-white rounded-lg w-24 min-w-fit py-1 px-3 text-xs shadow text-center    {{ request()->has('read') && request()->integer('read') === 0        ? 'text-blue-600 font-bold'        : 'text-gray-600' }}">
-                {{ __(\Illuminate\Support\Str::plural($option)) }}
-            </a>
-        @endforeach
     </div>
 
 

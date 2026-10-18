@@ -47,18 +47,22 @@ class TicketLogic
     /**
      * @throws Throwable
      */
-    public function create(array $inputs = [], string $source = 'web' ,SenderType $senderType = SenderType::User)
+    public function create(array $inputs = [], string $source = 'web', SenderType $senderType = SenderType::User ,$senderId = null)
     {
-        return ServiceWrapper::make(true)->do(function () use ($senderType, $source, $inputs) {
+        return ServiceWrapper::make(true, withHandler: false)->do(function () use ($senderId, $senderType, $source, $inputs) {
 
-            $inputs['ticket_number'] = (new TicketNumberService())->generateTicketNumber();
-            $inputs['last_activity_at'] ??= now();
-            $inputs['source'] = $source;
-            $ticket = Ticket::query()->create(Arr::only($inputs, ['ticket_number', 'user_id', 'last_activity_at', 'subject', 'priority', 'source',]));
 
-            $userId = $inputs['userId'] ?? auth()->id();
-            $body = $inputs['body'];
-            $message = $this->appendMessage($ticket, $senderType, $userId, $body);
+            $ticket = Ticket::query()->create([
+                'ticket_number'    => (new TicketNumberService())->generateTicketNumber(),
+                'user_id'          => $senderId,
+                'last_activity_at' => now(),
+                'subject'          => $inputs['subject'],
+                'priority'         => $inputs['priority'],
+                'source'           => $source,
+            ]);
+
+
+            $message = $this->appendMessage($ticket, $senderType, $senderId, $inputs['body']);
 
 
             $files = $inputs['files'] ?? [];

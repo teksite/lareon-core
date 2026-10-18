@@ -64,7 +64,6 @@ class TicketsController extends Controller implements HasMiddleware
 
         if (!$res->success) return Responder::failed(trans('lareon::global.crud.error.created', ['attribute' => __('ticket')]))->go();
 
-        dd($res->result);
         //Todo Add event event(new TicketCreated($ticket->result));
 
         return Responder::success(trans('lareon::global.crud.success.created', ['attribute' => __('ticket')]))->route('admin.tickets.index')->go();
