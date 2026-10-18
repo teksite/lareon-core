@@ -8,6 +8,7 @@
     "high": "زیاد",
     "urgent": "حاد",
     "are you sure you want to close this ticket? You will not be able to send any further replies after closing it.": "آیا از بستن این تیکت مطمئن هستید؟ پس از بستن امکان ارسال پاسخ جدید نخواهید داشت.",
-    "the ticket #:number is closed": "تیکیت #:number بسته شد"
+    "the ticket #:number is closed": "تیکیت #:number بسته شد",
+    "your message is submitted": "پیغام شما ثبت شد"
 
 }

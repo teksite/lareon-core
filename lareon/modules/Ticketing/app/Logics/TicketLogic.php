@@ -2,6 +2,7 @@
 
 namespace Lareon\Modules\Ticketing\App\Logics;
 
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -9,10 +10,12 @@ use Lareon\Modules\Ticketing\App\Enums\CloseByType;
 use Lareon\Modules\Ticketing\App\Enums\SenderType;
 use Lareon\Modules\Ticketing\App\Enums\TicketStatusType;
 use Lareon\Modules\Ticketing\App\Events\TicketClosed;
+use Lareon\Modules\Ticketing\App\Events\TicketReplyEvent;
 use Lareon\Modules\Ticketing\App\Models\Ticket;
 use Lareon\Modules\Ticketing\App\Models\TicketMessage;
 use Lareon\Modules\Ticketing\App\Services\TicketNumberService;
 use Lareon\Modules\User\App\Models\User;
+use Modules\Ticketing\Events\TicketMessageSent;
 use Teksite\Handler\Facade\FetchData;
 use Teksite\Handler\Services\ServiceWrapper;
 use Throwable;
@@ -125,6 +128,37 @@ class TicketLogic
     }
 
 
+    public function replyAsUser(Ticket $ticket, int $userId, string $body, array $files = [])
+    {
+        return ServiceWrapper::make(true)->do(function () use ($ticket, $userId, $body, $files) {
+            $message = $this->appendMessage($ticket, SenderType::User, $userId, $body);
+
+           //Todo if ($files !== []) $this->attachments->storeMany($ticket, $message, 'user', $userId, $files);
+
+            $this->transitionStatus($ticket, TicketStatusType::WaitingAdmin, 'user', $userId);
+
+            event(new TicketReplyEvent($ticket, $message));
+            return $message;
+        })->run();
+    }
+
+
+    public function replyAsAdmin(Ticket $ticket, int $adminId, string $body, array $files = [], bool $internalNote = false)
+    {
+        return ServiceWrapper::make(true)->do(function () use ($adminId, $ticket, $internalNote, $body, $files) {
+            $message = $this->appendMessage($ticket, SenderType::Admin, $adminId, $body, $internalNote);
+
+           //Todo if ($files !== []) $this->attachments->storeMany($ticket, $message, 'admin', $adminId, $files);
+
+            if (!$internalNote) $this->transitionStatus($ticket, TicketStatusType::Answered, 'admin', $adminId);
+
+            event(new TicketReplyEvent($ticket, $message));
+
+            return $message;
+        })->run();
+    }
+
+
     private function appendMessage(Ticket $ticket, SenderType $senderType, ?int $senderId, string $body, bool $internalNote = false): TicketMessage
     {
         $message = $ticket->messages()->create([
@@ -137,6 +171,13 @@ class TicketLogic
         $ticket->update(['last_activity_at' => now()]);
 
         return $message;
+    }
+
+    private function transitionStatus(Ticket $ticket, TicketStatusType $to, string $byType, ?int $byId): void
+    {
+        $from = $ticket->status;
+        $ticket->update(['status' => $to]);
+        //Todo        $this->statusLogger->log($ticket, $from, $to, $byType, $byId);
     }
 
 

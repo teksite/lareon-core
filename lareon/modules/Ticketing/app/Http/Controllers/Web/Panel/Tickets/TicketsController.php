@@ -13,8 +13,8 @@ use Lareon\Modules\Ticketing\App\Enums\SenderType;
 use Lareon\Modules\Ticketing\App\Enums\TicketStatusType;
 use Lareon\Modules\Ticketing\App\Events\TicketCreated;
 use Lareon\Modules\Ticketing\App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Lareon\Modules\Ticketing\App\Http\Requests\Panel\NewTicketRequest;
+use Lareon\Modules\Ticketing\App\Http\Requests\Panel\ReplyTicketMessageRequest;
 use Lareon\Modules\Ticketing\App\Logics\TicketLogic;
 use Lareon\Modules\Ticketing\App\Models\Ticket;
 use Teksite\Handler\Facade\Responder;
@@ -81,7 +81,12 @@ class TicketsController extends Controller implements HasMiddleware
         return view('ticketing::panel.pages.tickets.show', compact('ticket' ,'user'));
     }
 
-    public function reply(StoreUserReplyRequest $request, Ticket $ticket): RedirectResponse {}
+    public function reply(ReplyTicketMessageRequest $request, Ticket $ticket): RedirectResponse {
+
+        $data=$request->validated();
+        $res= $this->logic->replyAsUser($ticket, auth()->id() , $data['body'],$data['file'] ?? [],);
+        return Responder::fromResult($res ,trans('your message is submitted' ))->go();
+    }
 
     /**
      * @throws \Throwable
