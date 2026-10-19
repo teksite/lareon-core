@@ -1,20 +1,24 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Lareon\Modules\Ticketing\App\Http\Controllers\Web\Admin\Tickets\AdminTicketsController;
 use Lareon\Modules\Ticketing\App\Http\Controllers\Web\Admin\Tickets\TicketAssignmentController;
 use Lareon\Modules\Ticketing\App\Http\Controllers\Web\Admin\Tickets\TicketsController;
 use Lareon\Modules\Ticketing\App\Http\Middleware\EnsureAdminCanViewTicket;
 use Lareon\Modules\Ticketing\App\Http\Middleware\EnsureAdminOwnsTicket;
 
 
+
+Route::prefix('ticketing')->name('ticketing.tickets.')->group(function (): void {
+    Route::get('/', [AdminTicketsController::class, 'index'])->name('index');
+    Route::get('/{ticket}', [AdminTicketsController::class, 'show'])->name('show');
+    Route::get('/create', [AdminTicketsController::class, 'create'])->name('create');
+    Route::post('/create', [AdminTicketsController::class, 'store'])->name('store');
+    Route::delete('/{ticket}', [AdminTicketsController::class, 'destroy'])->name('destroy');
+});
+
 Route::prefix('tickets')->name('tickets.')->group(function (): void {
     Route::get('/', [TicketsController::class, 'index'])->name('index');
-    Route::get('/{ticket}/read', [TicketsController::class, 'read'])->name('read');
-
-    Route::get('/create', [TicketsController::class, 'create'])->name('create');
-    Route::post('/create', [TicketsController::class, 'store'])->name('store');
-    Route::delete('/{ticket}', [TicketsController::class, 'destroy'])->name('destroy');
-
 
     Route::get('/{ticket}', [TicketsController::class, 'show'])->middleware(EnsureAdminCanViewTicket::class)->name('show');
 
@@ -24,6 +28,7 @@ Route::prefix('tickets')->name('tickets.')->group(function (): void {
     Route::get('/{ticket}/refer', [TicketAssignmentController::class, 'create'])->middleware(EnsureAdminOwnsTicket::class)->name('refer.create');
     Route::post('/{ticket}/refer', [TicketAssignmentController::class, 'store'])->middleware(EnsureAdminOwnsTicket::class)->name('refer.store');
 });
+
 
 Route::prefix('tickets/referrals')->name('tickets.referrals.')->group(function (): void {})->group(function (): void {
     Route::get('/', [TicketAssignmentController::class, 'inbox'])->name('inbox');

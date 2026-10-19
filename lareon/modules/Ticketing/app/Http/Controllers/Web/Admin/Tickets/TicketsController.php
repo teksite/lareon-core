@@ -35,16 +35,17 @@ class TicketsController extends Controller implements HasMiddleware
     public function index()
     {
         $tickets = $this->logic->all()->result;
-        return view('ticketing::admin.pages.tickets.index', compact('tickets'));
+        return view('ticketing::admin.pages.tickets.list', compact('tickets'));
     }
+
 
     /**
      * @throws \Throwable
      */
-    public function read(Ticket $ticket): View
+    public function show(Ticket $ticket): View
     {
 
-        $adminId = $this->adminId();
+        $adminId = auth('admin')->id();
 
         if ($ticket->isUnassigned()) {
             $this->assign->claim($ticket, $adminId);
@@ -53,32 +54,9 @@ class TicketsController extends Controller implements HasMiddleware
 
         $ticket->load(['user', 'messages', 'holderAdmin', 'messages.attachments', 'attachments', 'assignments.fromAdmin', 'assignments.toAdmin']);
 
-        return view('ticketing::admin.pages.tickets.read', compact('ticket'));
-    }
-
-    public function show(Ticket $ticket): View
-    {
-        $ticket = $ticket->load(['user', 'messages', 'holderAdmin']);
         return view('ticketing::admin.pages.tickets.show', compact('ticket'));
-
     }
 
-    public function create(): View
-    {
-        //        return view('ticketing::admin.pages.tickets.index');
-    }
-
-    public function store() {}
-
-    /**
-     * @throws \Throwable
-     */
-    public function destroy(Ticket $ticket)
-    {
-
-        $res = $this->logic->delete($ticket);
-        return Responder::fromResult($res, success_url: route('admin.tickets.index'));
-    }
 
     public function reply(StoreAdminReplyRequest $request, Ticket $ticket): RedirectResponse {}
 

@@ -2,7 +2,7 @@
     @section('title', __('lareon::global.crud.titles.list',['attribute'=>__('tickets')]))
     @section('description', __('tickets are fixed content on a website that rarely changes and displays the same information to visitors'))
     @section('header.start')
-        <x-lareon::links.nav :href="route('admin.tickets.create')" :content="__('lareon::global.buttons.new_one')" color="create" can="admin.ticket.create"/>
+        <x-lareon::links.nav :href="route('admin.ticketing.tickets.create')" :content="__('lareon::global.buttons.new_one')" color="create" can="admin.ticket.create"/>
     @endsection
     @section('list')
         <x-lareon::table :rows="$tickets" :headers="['id'=>'#','ticket_number'=>__('ticket number') ,__('subject') ,'created_at'=>__('created at') ,__('status'),__('priority'),'']">
@@ -28,11 +28,8 @@
 
                     <td>
                         <x-lareon::action-box class="action">
-
-                            <x-lareon::links.action type="show" :href="route('admin.tickets.show', $ticket)" can="admin.ticket.reply"/>
-                            <x-lareon::links.action type="delete" method="delete" :href="route('admin.tickets.destroy' , $ticket)" can="admin.ticket.delete"/>
-                            <x-lareon::links.action type="show" :href="route('admin.tickets.read', $ticket)" can="admin.ticket.read.all"/>
-
+                            <x-lareon::links.action type="show" :href="route('admin.ticketing.tickets.show', $ticket)" can="admin.ticket.read"/>
+                            <x-lareon::links.action type="delete" method="delete" :href="route('admin.ticketing.tickets.destroy' , $ticket)" can="admin.ticket.delete"/>
                         </x-lareon::action-box>
                     </td>
                 </tr>

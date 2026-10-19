@@ -37,10 +37,33 @@ class MenuProvider implements MenuRegisteringContract
                 'title'      => trans('tickets'),
                 'order'      => 120,
                 'icon'       => 'gear',
-                'route'      => 'admin.tickets.index',
-                'active'     => request()->routeIs('admin.tickets.*'),
+                'active'     => request()->routeIs('admin.tickets.*') || request()->routeIs('admin.ticketing.tickets.*'),
                 'permission' => 'admin.ticket.read',
-            ], 'tickets');
+            ], 'tickets')
+              ->addManyItem([
+                  [
+                      'title'      => trans('lareon::global.crud.titles.all', ['attribute' => trans('tickets')]),
+                      'order'      => 1,
+                      'route'      => 'admin.tickets.index',
+                      'active'     => request()->routeIs('admin.tickets.*'),
+                      'permission' => 'admin.ticket.read',
+
+                  ],
+                  [
+                      'title'      => trans('lareon::global.crud.titles.list', ['attribute' => trans('tickets')]),
+                      'order'      => 2,
+                      'route'      => 'admin.ticketing.tickets.index',
+                      'active'     => request()->routeIs('admin.ticketing.tickets.index'),
+                      'permission' => 'admin.ticket.read.all',
+                  ],
+                  [
+                      'title'      => trans('lareon::global.crud.titles.create', ['attribute' => trans('ticket')]),
+                      'order'      => 3,
+                      'route'      => 'admin.ticketing.tickets.create',
+                      'active'     => request()->routeIs('admin.ticketing.tickets.create'),
+                      'permission' => 'admin.ticket.create',
+                  ],
+              ], 'tickets');
     }
 
     protected function panel(MenuRegisteringEvent $event): void
