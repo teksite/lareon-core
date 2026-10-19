@@ -6,6 +6,7 @@ use Lareon\Modules\Ticketing\App\Http\Controllers\Web\Admin\Tickets\TicketsContr
 
 Route::prefix('tickets')->name('tickets.')->group(function (): void {
     Route::get('/', [TicketsController::class, 'index'])->name('index');
+    Route::get('/{ticket}/read', [TicketsController::class, 'read'])->name('read');
 
     Route::get('/create', [TicketsController::class, 'create'])->name('create');
     Route::post('/create', [TicketsController::class, 'store'])->name('store');
@@ -13,7 +14,6 @@ Route::prefix('tickets')->name('tickets.')->group(function (): void {
 
 
     Route::get('/{ticket}', [TicketsController::class, 'show'])->middleware(EnsureAdminCanViewTicket::class)->name('show');
-    Route::get('/{ticket}/read', [TicketsController::class, 'read'])->middleware(EnsureAdminCanViewTicket::class)->name('read');
 
     Route::post('/{ticket}/reply', [TicketsController::class, 'reply'])->middleware(EnsureAdminOwnsTicket::class)->name('reply');
     Route::post('/{ticket}/close', [TicketsController::class, 'close'])->middleware(EnsureAdminOwnsTicket::class)->name('close');

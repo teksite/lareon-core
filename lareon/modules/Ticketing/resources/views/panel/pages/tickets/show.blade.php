@@ -1,6 +1,4 @@
 <x-lareon::panel-layout>
-
-    {{--    type="update" method="post" :instance="$ticket" :action="route('panel.tickets.reply')" :hasTab="false" --}}
     @section('title', __('ticket').' | '. $ticket->ticket_number )
 
     <section class="max-w-5xl mx-auto y-box">

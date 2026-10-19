@@ -7,7 +7,7 @@
     @section('list')
         <x-lareon::table :rows="$tickets" :headers="['id'=>'#','ticket_number'=>__('ticket number') ,__('subject') ,'created_at'=>__('created at') ,__('status'),__('priority'),'']">
             @foreach($tickets as $key=>$ticket)
-                <tr>
+                <tr class="{{$ticket->status === \Lareon\Modules\Ticketing\App\Enums\TicketStatusType::Closed ?: 'font-bold'}}">
                     <td class="p-3">{{$tickets->firstItem() + $key}}</td>
                     <td class="p-3">{{$ticket->ticket_number}}</td>
 

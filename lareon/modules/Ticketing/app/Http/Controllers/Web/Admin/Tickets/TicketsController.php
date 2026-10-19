@@ -20,7 +20,7 @@ class TicketsController extends Controller implements HasMiddleware
     {
         return [
             new Middleware('can:admin.ticket.read'),
-            new Middleware('can:admin.ticket.read.all', only: ['all' ,'read']),
+            new Middleware('can:admin.ticket.read.all', only: ['all', 'read']),
             new Middleware('can:admin.ticket.create', only: ['create', 'store']),
             new Middleware('can:admin.ticket.edit', only: ['edit', 'update']),
             new Middleware('can:admin.ticket.delete', only: ['destroy']),
@@ -36,18 +36,21 @@ class TicketsController extends Controller implements HasMiddleware
         return view('ticketing::admin.pages.tickets.index', compact('tickets'));
     }
 
-    public function read(Ticket $ticket): View {
-        return view('ticketing::admin.pages.tickets.read', compact('ticket'));;
+    public function read(Ticket $ticket): View
+    {
+        return view('ticketing::admin.pages.tickets.read', compact('ticket'));
     }
 
-    public function show(Ticket $ticket): View {
+    public function show(Ticket $ticket): View
+    {
+        $ticket=$ticket->load(['user' ,'messages','holderAdmin']);
         return view('ticketing::admin.pages.tickets.show', compact('ticket'));;
 
     }
 
     public function create(): View
     {
-//        return view('ticketing::admin.pages.tickets.index');
+        //        return view('ticketing::admin.pages.tickets.index');
     }
 
     public function store() {}
