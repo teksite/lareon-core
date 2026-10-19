@@ -38,13 +38,23 @@ class TicketsController extends Controller implements HasMiddleware
 
     public function read(Ticket $ticket): View
     {
+
+        $adminId = $this->adminId();
+
+        if ($ticket->isUnassigned()) {
+            $this->assignments->claim($ticket, $adminId);
+            $ticket->refresh();
+        }
+
+        $ticket->load(['user' ,'messages','holderAdmin','messages.attachments', 'attachments', 'assignments.fromAdmin', 'assignments.toAdmin']);
+
         return view('ticketing::admin.pages.tickets.read', compact('ticket'));
     }
 
     public function show(Ticket $ticket): View
     {
         $ticket=$ticket->load(['user' ,'messages','holderAdmin']);
-        return view('ticketing::admin.pages.tickets.show', compact('ticket'));;
+        return view('ticketing::admin.pages.tickets.show', compact('ticket'));
 
     }
 
