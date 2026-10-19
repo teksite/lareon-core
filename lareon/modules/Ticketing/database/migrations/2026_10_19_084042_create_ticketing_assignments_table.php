@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('from_admin_id')->nullable();
             $table->unsignedBigInteger('to_admin_id')->nullable();
             $table->text('reason')->nullable();
-            $table->tinyInteger('status', )->default('accepted');
+            $table->tinyInteger('status');
             $table->text('decision_reason')->nullable();
             $table->timestamp('decided_at')->nullable();
             $table->timestamps();

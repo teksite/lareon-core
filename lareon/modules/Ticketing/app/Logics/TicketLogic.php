@@ -6,7 +6,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-use Lareon\Modules\Ticketing\App\Enums\CloseByType;
+use Lareon\Modules\Ticketing\App\Enums\ChangedByType;
 use Lareon\Modules\Ticketing\App\Enums\SenderType;
 use Lareon\Modules\Ticketing\App\Enums\TicketStatusType;
 use Lareon\Modules\Ticketing\App\Events\TicketClosed;
@@ -22,6 +22,8 @@ use Throwable;
 
 class TicketLogic
 {
+
+    public function __construct(public StatusLogLogic $statusLogger) {}
 
     /**
      * @throws Throwable
@@ -68,11 +70,10 @@ class TicketLogic
 
             $message = $this->appendMessage($ticket, $senderType, $senderId, $inputs['body']);
 
-
             $files = $inputs['files'] ?? [];
-            //TODO add attachment and Logger
-            //  if ($inputs['files'] !== []) $this->attachments->storeMany($ticket, $message, 'user', $userId, $files);
-            //  $this->statusLogger->log($ticket, null, TicketStatusType::Opened, 'user', $userId, 'create ticket');
+            //TODO add attachment: if ($inputs['files'] !== []) $this->attachments->storeMany($ticket, $message, 'user', $userId, $files);
+
+            $ticket->statusLogger->log($ticket, null, TicketStatusType::Opened, 'user', $senderId, 'create ticket');
 
 
             return $ticket->fresh(['messages', 'attachments']);
@@ -89,7 +90,7 @@ class TicketLogic
      */
     public function closeByUser(Ticket $ticket, int $userId, ?string $note = null)
     {
-        return $this->close($ticket, CloseByType::User, $userId, $note);
+        return $this->close($ticket, ChangedByType::User, $userId, $note);
     }
 
     /**
@@ -97,15 +98,17 @@ class TicketLogic
      */
     public function closeByAdmin(Ticket $ticket, int $adminId, ?string $note = null)
     {
-        return $this->close($ticket, CloseByType::Admin, $adminId, $note);
+        return $this->close($ticket, ChangedByType::Admin, $adminId, $note);
     }
 
     /**
      * @throws Throwable
      */
-    private function close(Ticket $ticket, CloseByType $closedByType, int $closedById, ?string $note)
+    private function close(Ticket $ticket, ChangedByType $closedByType, int $closedById, ?string $note)
     {
         return ServiceWrapper::make(true)->do(function () use ($ticket, $closedByType, $closedById, $note) {
+            $preStatus= $ticket->status;
+
             $ticket->update([
                 'status'           => TicketStatusType::Closed,
                 'closed_by_type'   => $closedByType,
@@ -113,7 +116,8 @@ class TicketLogic
                 'closed_at'        => now(),
                 'last_activity_at' => now(),
             ]);
-            //TODO Add Logger $this->statusLogger->log($ticket, null, TicketStatusType::Closed, $closedByType, $closedById, $note ?? 'بسته شدن تیکت');
+
+            $this->statusLogger->log($ticket, $preStatus, TicketStatusType::Closed, $closedByType, $closedById, $note ?? 'ticket is closed');
 
             if ($note !== null && $note !== '') {
                 $senderType = $closedByType === 'user' ? SenderType::User : SenderType::Admin;
@@ -134,7 +138,7 @@ class TicketLogic
 
            //Todo if ($files !== []) $this->attachments->storeMany($ticket, $message, 'user', $userId, $files);
 
-            $this->transitionStatus($ticket, TicketStatusType::WaitingAdmin, 'user', $userId);
+            $this->transitionStatus($ticket, TicketStatusType::WaitingAdmin, ChangedByType::User, $userId);
 
             event(new TicketReplyEvent($ticket, $message));
             return $message;
@@ -149,7 +153,7 @@ class TicketLogic
 
            //Todo if ($files !== []) $this->attachments->storeMany($ticket, $message, 'admin', $adminId, $files);
 
-            if (!$internalNote) $this->transitionStatus($ticket, TicketStatusType::Answered, 'admin', $adminId);
+            if (!$internalNote) $this->transitionStatus($ticket, TicketStatusType::Answered, ChangedByType::Admin, $adminId);
 
             event(new TicketReplyEvent($ticket, $message));
 
@@ -172,11 +176,11 @@ class TicketLogic
         return $message;
     }
 
-    private function transitionStatus(Ticket $ticket, TicketStatusType $to, string $byType, ?int $byId): void
+    private function transitionStatus(Ticket $ticket, TicketStatusType $to, ChangedByType $byType, ?int $byId): void
     {
         $from = $ticket->status;
         $ticket->update(['status' => $to]);
-        //Todo        $this->statusLogger->log($ticket, $from, $to, $byType, $byId);
+        $this->statusLogger->log($ticket, $from, $to, $byType, $byId);
     }
 
 
