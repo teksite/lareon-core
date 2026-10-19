@@ -25,7 +25,7 @@
                     <div class="flex items-center gap-2 text-xs text-stone-400 mb-1">
                         <span>{{ $ticket->ticket_number }}</span>
                         <span>·</span>
-                        <span>{{ $ticket->created_at->format('Y/m/d H:i') }}</span>
+                        <span> <x-lareon::date :date="$ticket->created_at"/></span>
                     </div>
                     <div class="font-medium text-stone-800 truncate">{{ $ticket->subject }}</div>
                 </div>

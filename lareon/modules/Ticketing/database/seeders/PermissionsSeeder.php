@@ -56,6 +56,10 @@ class PermissionsSeeder extends Seeder
                 'title'       => 'admin.ticket.reply',
                 'description' => 'have access to reply the ticket (in the admin panel)',
             ],
+            [
+                'title'       => 'admin.ticket.read.all',
+                'description' => 'have access to read all tickets (in the admin panel)',
+            ],
 
 
             // Panel
