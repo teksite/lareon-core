@@ -7,14 +7,16 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Lareon\Modules\Ticketing\App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Lareon\Modules\Ticketing\App\Logics\AssignLogic;
 use Lareon\Modules\Ticketing\App\Logics\TicketLogic;
 use Lareon\Modules\Ticketing\App\Models\Ticket;
+use Teksite\Handler\Facade\Responder;
 
 class TicketsController extends Controller implements HasMiddleware
 {
 
 
-    public function __construct(public readonly TicketLogic $logic) {}
+    public function __construct(public readonly TicketLogic $logic, public readonly AssignLogic $assign) {}
 
     public static function middleware(): array
     {
@@ -36,24 +38,27 @@ class TicketsController extends Controller implements HasMiddleware
         return view('ticketing::admin.pages.tickets.index', compact('tickets'));
     }
 
+    /**
+     * @throws \Throwable
+     */
     public function read(Ticket $ticket): View
     {
 
         $adminId = $this->adminId();
 
         if ($ticket->isUnassigned()) {
-            $this->assignments->claim($ticket, $adminId);
+            $this->assign->claim($ticket, $adminId);
             $ticket->refresh();
         }
 
-        $ticket->load(['user' ,'messages','holderAdmin','messages.attachments', 'attachments', 'assignments.fromAdmin', 'assignments.toAdmin']);
+        $ticket->load(['user', 'messages', 'holderAdmin', 'messages.attachments', 'attachments', 'assignments.fromAdmin', 'assignments.toAdmin']);
 
         return view('ticketing::admin.pages.tickets.read', compact('ticket'));
     }
 
     public function show(Ticket $ticket): View
     {
-        $ticket=$ticket->load(['user' ,'messages','holderAdmin']);
+        $ticket = $ticket->load(['user', 'messages', 'holderAdmin']);
         return view('ticketing::admin.pages.tickets.show', compact('ticket'));
 
     }
@@ -65,7 +70,15 @@ class TicketsController extends Controller implements HasMiddleware
 
     public function store() {}
 
-    public function destroy(Ticket $ticket): View {}
+    /**
+     * @throws \Throwable
+     */
+    public function destroy(Ticket $ticket)
+    {
+
+        $res = $this->logic->delete($ticket);
+        return Responder::fromResult($res, success_url: route('admin.tickets.index'));
+    }
 
     public function reply(StoreAdminReplyRequest $request, Ticket $ticket): RedirectResponse {}
 

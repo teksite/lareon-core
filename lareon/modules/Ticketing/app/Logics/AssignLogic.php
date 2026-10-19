@@ -2,8 +2,6 @@
 
 namespace Lareon\Modules\Ticketing\App\Logics;
 
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\DB;
 use Lareon\Modules\Ticketing\App\Enums\AssignmentStatus;
 use Lareon\Modules\Ticketing\App\Enums\AssignmentType;
 use Lareon\Modules\Ticketing\App\Enums\TicketStatusType;
@@ -12,14 +10,11 @@ use Lareon\Modules\Ticketing\App\Events\TicketAssignmentResponded;
 use Lareon\Modules\Ticketing\App\Exceptions\TicketAssignmentException;
 use Lareon\Modules\Ticketing\App\Models\Ticket;
 use Lareon\Modules\Ticketing\App\Models\TicketAssignment;
-use Teksite\Handler\Facade\FetchData;
 use Teksite\Handler\Services\ServiceWrapper;
 use Throwable;
 
-
 class AssignLogic
 {
-
     public function __construct(public StatusLogLogic $statusLogger) {}
 
     /**
@@ -54,7 +49,6 @@ class AssignLogic
             return $assignment;
         })->run();
     }
-
 
     /**
      * @throws Throwable

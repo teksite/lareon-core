@@ -83,7 +83,15 @@ class TicketLogic
 
     public function update(Ticket $ticket, array $inputs = []) {}
 
-    public function delete(Ticket $ticket) {}
+    /**
+     * @throws Throwable
+     */
+    public function delete(Ticket $ticket)
+    {
+        return ServiceWrapper::make(true)->do(function () use ($ticket) {
+            return $ticket->delete();
+        })->run();
+    }
 
     /**
      * @throws Throwable
@@ -107,7 +115,7 @@ class TicketLogic
     private function close(Ticket $ticket, ChangedByType $closedByType, int $closedById, ?string $note)
     {
         return ServiceWrapper::make(true)->do(function () use ($ticket, $closedByType, $closedById, $note) {
-            $preStatus= $ticket->status;
+            $preStatus = $ticket->status;
 
             $ticket->update([
                 'status'           => TicketStatusType::Closed,
@@ -139,7 +147,7 @@ class TicketLogic
         return ServiceWrapper::make(true)->do(function () use ($ticket, $userId, $body, $files) {
             $message = $this->appendMessage($ticket, SenderType::User, $userId, $body);
 
-           //Todo if ($files !== []) $this->attachments->storeMany($ticket, $message, 'user', $userId, $files);
+            //Todo if ($files !== []) $this->attachments->storeMany($ticket, $message, 'user', $userId, $files);
 
             $this->transitionStatus($ticket, TicketStatusType::WaitingAdmin, ChangedByType::User, $userId);
 
@@ -157,7 +165,7 @@ class TicketLogic
         return ServiceWrapper::make(true)->do(function () use ($adminId, $ticket, $internalNote, $body, $files) {
             $message = $this->appendMessage($ticket, SenderType::Admin, $adminId, $body, $internalNote);
 
-           //Todo if ($files !== []) $this->attachments->storeMany($ticket, $message, 'admin', $adminId, $files);
+            //Todo if ($files !== []) $this->attachments->storeMany($ticket, $message, 'admin', $adminId, $files);
 
             if (!$internalNote) $this->transitionStatus($ticket, TicketStatusType::Answered, ChangedByType::Admin, $adminId);
 
