@@ -131,6 +131,9 @@ class TicketLogic
     }
 
 
+    /**
+     * @throws Throwable
+     */
     public function replyAsUser(Ticket $ticket, int $userId, string $body, array $files = [])
     {
         return ServiceWrapper::make(true)->do(function () use ($ticket, $userId, $body, $files) {
@@ -146,6 +149,9 @@ class TicketLogic
     }
 
 
+    /**
+     * @throws Throwable
+     */
     public function replyAsAdmin(Ticket $ticket, int $adminId, string $body, array $files = [], bool $internalNote = false)
     {
         return ServiceWrapper::make(true)->do(function () use ($adminId, $ticket, $internalNote, $body, $files) {
