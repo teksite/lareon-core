@@ -20,6 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('changed_by_id')->nullable();
             $table->text('note')->nullable();
             $table->timestamp('created_at')->nullable();
+
             $table->index(['ticket_id', 'created_at']);
         });
     }

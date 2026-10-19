@@ -15,17 +15,12 @@ return new class extends Migration
             $table->id();
             $table->foreignId('ticket_id')->constrained('ticketing_tickets')->cascadeOnDelete();
             $table->string('type', 20);
-
             $table->unsignedBigInteger('from_admin_id')->nullable();
             $table->unsignedBigInteger('to_admin_id')->nullable();
-
             $table->text('reason')->nullable();
-
             $table->tinyInteger('status', )->default('accepted');
-
             $table->text('decision_reason')->nullable();
             $table->timestamp('decided_at')->nullable();
-
             $table->timestamps();
 
             $table->index(['ticket_id', 'created_at']);
