@@ -15,7 +15,6 @@ use Lareon\Modules\Ticketing\App\Models\Ticket;
 use Lareon\Modules\Ticketing\App\Models\TicketMessage;
 use Lareon\Modules\Ticketing\App\Services\TicketNumberService;
 use Lareon\Modules\User\App\Models\User;
-use Modules\Ticketing\Events\TicketMessageSent;
 use Teksite\Handler\Facade\FetchData;
 use Teksite\Handler\Services\ServiceWrapper;
 use Throwable;

@@ -1,7 +1,7 @@
 <x-lareon::admin-layout>
     @section('title', __('ticket').' | '. $ticket->ticket_number )
-    <div class="flex flex-col lg:flex-row items-start gap-6 my-12">
-        <aside class="x-box w-full lg:max-w-96 space-y-6">
+    <div class="flex flex-col lg:flex-row items-start gap-3 my-12">
+        <aside class="y-box w-full lg:max-w-96 space-y-6">
             <div>
                <span class="font-bold"> {{ $ticket->ticket_number}}</span>
             </div>
@@ -25,8 +25,8 @@
                 {{__('owner')}}: {{$ticket->holderAdmin?->name ?? __('unassigned')}}
             </div>
         </aside>
-        <div class="y-box w-full">
-            <ul class="space-y-6 max-w-5xl mx-auto overflow-y-auto max-h-svh">
+        <div class="w-full p-6 bordering rounded-lg">
+            <ul class="space-y-6 max-w-5xl mx-auto overflow-y-auto max-h-svh ">
                 @foreach($ticket->messages  ?? [] as $message)
                     @php
                         $isUser = $message->sender_type === \Lareon\Modules\Ticketing\App\Enums\SenderType::User;
