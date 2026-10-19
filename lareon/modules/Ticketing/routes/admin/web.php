@@ -6,12 +6,20 @@ use Lareon\Modules\Ticketing\App\Http\Controllers\Web\Admin\Tickets\TicketsContr
 
 Route::prefix('tickets')->name('tickets.')->group(function (): void {
     Route::get('/', [TicketsController::class, 'index'])->name('index');
-    Route::get('/', [TicketsController::class, 'create'])->name('create');
+
+    Route::get('/create', [TicketsController::class, 'create'])->name('create');
+    Route::post('/create', [TicketsController::class, 'store'])->name('store');
+    Route::delete('/{ticket}', [TicketsController::class, 'destroy'])->name('destroy');
+
+
     Route::get('/{ticket}', [TicketsController::class, 'show'])->middleware(EnsureAdminCanViewTicket::class)->name('show');
+    Route::get('/{ticket}/read', [TicketsController::class, 'read'])->middleware(EnsureAdminCanViewTicket::class)->name('read');
+
     Route::post('/{ticket}/reply', [TicketsController::class, 'reply'])->middleware(EnsureAdminOwnsTicket::class)->name('reply');
     Route::post('/{ticket}/close', [TicketsController::class, 'close'])->middleware(EnsureAdminOwnsTicket::class)->name('close');
-//    Route::get('/{ticket}/refer', [TicketsController::class, 'create'])->middleware(EnsureAdminOwnsTicket::class)->name('refer.create');
-//    Route::post('/{ticket}/refer', [TicketsController::class, 'store'])->middleware(EnsureAdminOwnsTicket::class)->name('refer.store');
+
+    //    Route::get('/{ticket}/refer', [TicketsController::class, 'create'])->middleware(EnsureAdminOwnsTicket::class)->name('refer.create');
+    //    Route::post('/{ticket}/refer', [TicketsController::class, 'store'])->middleware(EnsureAdminOwnsTicket::class)->name('refer.store');
 });
 //
 //Route::prefix('admin/ticket-referrals')

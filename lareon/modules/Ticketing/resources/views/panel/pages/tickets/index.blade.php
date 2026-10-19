@@ -5,7 +5,7 @@
         <div class="flex items-center justify-between gap-3 overflow-x-auto">
             @foreach($options as $key=>$option)
                 <a href="?status={{$key}}" class="bg-white rounded-lg w-24 min-w-fit py-1 px-3 text-xs shadow text-center    {{ request()->has('read') && request()->integer('read') === 0        ? 'text-blue-600 font-bold'        : 'text-gray-600' }}">
-                    {{ __(\Illuminate\Support\Str::plural($option)) }}
+                    {{ __($option) }}
                 </a>
             @endforeach
         </div>

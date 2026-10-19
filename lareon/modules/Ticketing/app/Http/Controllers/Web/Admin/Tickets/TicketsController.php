@@ -47,10 +47,12 @@ class TicketsController extends Controller implements HasMiddleware
 
     public function create(): View
     {
-        return view('ticketing::admin.pages.tickets.index');
+//        return view('ticketing::admin.pages.tickets.index');
     }
 
     public function store() {}
+
+    public function destroy(Ticket $ticket): View {}
 
     public function reply(StoreAdminReplyRequest $request, Ticket $ticket): RedirectResponse {}
 

@@ -3,7 +3,6 @@
     @section('description', __('tickets are fixed content on a website that rarely changes and displays the same information to visitors'))
     @section('header.start')
         <x-lareon::links.nav :href="route('admin.tickets.create')" :content="__('lareon::global.buttons.new_one')" color="create" can="admin.ticket.create"/>
-        <x-lareon::links.nav :href="route('admin.tickets.trash.index')" :content="$trashCount" color="trash" can="admin.ticket.delete"/>
     @endsection
     @section('list')
         <x-lareon::table :rows="$tickets" :headers="['id'=>'#','ticket_number'=>__('ticket number') ,__('subject') ,'created_at'=>__('created at') ,__('status'),__('priority'),'']">
@@ -17,29 +16,23 @@
                         <x-lareon::date :date="$ticket->created_at"/>
                     </td>
                     <td>
-                        <div class="flex items-center gap-2 shrink-0">
-                            <span class="text-xs px-2 py-1 rounded-full text-white" style="background-color: {{ $ticket->priority->color() }}">
-                                {{ $ticket->priority->label() }}
-                            </span>
-                            <span class="text-xs px-2 py-1 rounded-full text-white" style="background-color: {{ $ticket->status->color() }}">
-                                  {{ $ticket->status->label() }}
-                            </span>
-                        </div>
+                       <span class="text-xs" style="color: {{ $ticket->status->color() }}">
+                             {{ $ticket->status->label() }}
+                       </span>
+                    </td>
+                    <td>
+                        <span class="font-bold" style="color: {{ $ticket->priority->color() }}">
+                            {{ $ticket->priority->label() }}
+                        </span>
                     </td>
 
                     <td>
                         <x-lareon::action-box class="action">
-                            @if(\Illuminate\Support\Facades\Route::has('admin.tickets.meta.edit'))
-                                <x-lareon::links.action type="sub" :href="route('admin.tickets.meta.edit' , $ticket)"/>
-                            @endif
-                            @if($ticket->path())
-                                <x-lareon::links.action type="show" :href="$ticket->path()"/>
-                            @endif
-                            @if(\Illuminate\Support\Facades\Route::has('admin.tickets.acl.edit'))
-                                <x-lareon::links.action type="setting" :href="route('admin.tickets.acl.edit' , $ticket)" can="admin.ticket.acl.edit"/>
-                            @endif
-                            <x-lareon::links.action type="edit" :href="route('admin.tickets.edit' , $ticket)" can="admin.ticket.edit"/>
+
+                            <x-lareon::links.action type="show" :href="route('admin.tickets.show', $ticket)" can="admin.ticket.reply"/>
                             <x-lareon::links.action type="delete" method="delete" :href="route('admin.tickets.destroy' , $ticket)" can="admin.ticket.delete"/>
+                            <x-lareon::links.action type="show" :href="route('admin.tickets.read', $ticket)" can="admin.ticket.read.all"/>
+
                         </x-lareon::action-box>
                     </td>
                 </tr>

@@ -36,11 +36,11 @@ class MenuProvider implements MenuRegisteringContract
             [
                 'title'      => trans('tickets'),
                 'order'      => 120,
-                'icon'       => 'megaphone',
-                'route'  => 'admin.tickets.index',
+                'icon'       => 'gear',
+                'route'      => 'admin.tickets.index',
                 'active'     => request()->routeIs('admin.tickets.*'),
                 'permission' => 'admin.ticket.read',
-            ], 'tickets' );
+            ], 'tickets');
     }
 
     protected function panel(MenuRegisteringEvent $event): void
@@ -49,7 +49,7 @@ class MenuProvider implements MenuRegisteringContract
             [
                 'title'      => trans('tickets'),
                 'order'      => 120,
-                'icon'       => 'megaphone',
+                'icon'       => 'gear',
                 'active'     => request()->routeIs('panel.tickets.*'),
                 'route'      => 'panel.tickets.index',
                 'permission' => 'panel.ticket.read',
