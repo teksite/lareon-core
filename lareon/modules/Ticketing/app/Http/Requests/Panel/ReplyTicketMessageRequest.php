@@ -13,7 +13,7 @@ class ReplyTicketMessageRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return userCan('panel.ticket.create', 'web');
+        return userCan('panel.ticket.reply', 'web');
     }
 
     /**

@@ -30,7 +30,8 @@ class TicketsController extends Controller implements HasMiddleware
         return [
             new Middleware('can:panel.ticket.read'),
             new Middleware('can:panel.ticket.create', only: ['create', 'store']),
-            new Middleware('can:panel.ticket.edit', only: ['edit', 'update']),
+            new Middleware('can:panel.ticket.reply', only: ['reply']),
+            new Middleware('can:panel.ticket.close', only: ['close']),
             new Middleware('can:panel.ticket.delete', only: ['destroy']),
         ];
     }

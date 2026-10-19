@@ -73,6 +73,10 @@ class PermissionsSeeder extends Seeder
                 'description' => 'have access to edit ticket (in the panel panel)',
             ],
             [
+                'title'       => 'panel.ticket.reply',
+                'description' => 'have access to reply ticket (in the panel panel)',
+            ],
+            [
                 'title'       => 'panel.ticket.close',
                 'description' => 'have access to close the ticket (in the panel panel)',
             ],
