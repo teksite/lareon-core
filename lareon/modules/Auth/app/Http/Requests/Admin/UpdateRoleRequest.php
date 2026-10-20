@@ -11,7 +11,7 @@ class UpdateRoleRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return userCan('admin.role.edit');
+        return userCan('admin.role.edit' ,'admin');
 
     }
 
