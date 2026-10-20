@@ -43,7 +43,7 @@
             </div>
         @elseif ($isHolder)
             <form method="POST" action="{{ route('admin.tickets.reply', $ticket) }}"
-                  enctype="multipart/form-data" class="bg-white border border-stone-200 rounded-xl p-5 space-y-4">
+                  enctype="multipart/form-data" class="x-box bordering mt-6 rounded-xl  space-y-4">
                 @csrf
 
                 <div>
@@ -57,7 +57,7 @@
 
                 <label class="flex items-center gap-2 text-sm text-stone-600">
                     <input type="checkbox" name="is_internal_note" value="1" class="rounded border-stone-300">
-                    یادداشت داخلی (فقط برای ادمین‌ها قابل مشاهده است، برای کاربر ارسال نمی‌شود)
+                    {{__('internal note (visible only to admins; not sent to the user)')}}
                 </label>
 
                 <div class="flex items-center justify-between gap-5">

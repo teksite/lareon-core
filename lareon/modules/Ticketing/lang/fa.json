@@ -25,5 +25,6 @@
     "reference history": "تاریخچه ارجاعات",
     "no referral event has been recorded for this ticket yet": "هنوز رخداد ارجاعی برای این تیکت ثبت نشده‌است",
     "admins general queue": "صف عمومی مدیریت ها",
-    "reason for the decision": "دلیل تصمیم"
+    "reason for the decision": "دلیل تصمیم",
+    "internal note (visible only to admins; not sent to the user)": "یادداشت داخلی (فقط برای ادمین‌ها قابل مشاهده است، برای کاربر ارسال نمی‌شود)"
 }
