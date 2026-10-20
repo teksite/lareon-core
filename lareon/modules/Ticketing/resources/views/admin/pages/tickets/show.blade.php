@@ -87,43 +87,9 @@
 
         @endif
 
-        <section class="mt-10">
-            <h2 class="text-sm font-semibold text-stone-500 mb-3">تاریخچه‌ی ارجاعات</h2>
-
-            @if ($ticket->assignments->isEmpty())
-                <p class="text-sm text-stone-400">هنوز رخداد ارجاعی برای این تیکت ثبت نشده است.</p>
-            @else
-                <ol class="relative border-r-2 border-stone-200 pr-4 space-y-4">
-                    @foreach ($ticket->assignments as $assignment)
-                        <li>
-                            <div class="text-sm text-stone-700">
-                                <span class="font-medium">{{ $assignment->type->label() }}</span>
-                                —
-                                {{ $assignment->fromAdmin?->name ?? 'سیستم' }}
-                                ⬅
-                                {{ $assignment->toAdmin?->name ?? 'صف عمومی ادمین‌ها' }}
-                            </div>
-
-                            @if ($assignment->reason)
-                                <div class="text-xs text-stone-500 mt-0.5">دلیل: {{ $assignment->reason }}</div>
-                            @endif
-
-                            <div class="text-xs mt-0.5">
-                                وضعیت:
-                                <span class="font-medium">{{ $assignment->status->label() }}</span>
-                                @if ($assignment->decision_reason)
-                                    — دلیل تصمیم: {{ $assignment->decision_reason }}
-                                @endif
-                            </div>
-
-                            <div class="text-[11px] text-stone-400 mt-0.5">
-                                {{ $assignment->created_at->format('Y/m/d H:i') }}
-                            </div>
-                        </li>
-                    @endforeach
-                </ol>
-            @endif
-        </section>
+      <section class="mt-6">
+          <x-ticketing::editor.messages-history :ticket="$ticket" />
+      </section>
     </div>
 
 </x-lareon::admin-layout>

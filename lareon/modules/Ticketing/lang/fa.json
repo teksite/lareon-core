@@ -21,5 +21,9 @@
     "subjects": "عنوان‌ها",
     "issues": "مشکل‌ها",
     "unassigned": "اختصاص‌نیافته",
-    "assign this ticket to another admin": "ارجاع این تیکت به ادمین دیگر"
+    "assign this ticket to another admin": "ارجاع این تیکت به ادمین دیگر",
+    "reference history": "تاریخچه ارجاعات",
+    "no referral event has been recorded for this ticket yet": "هنوز رخداد ارجاعی برای این تیکت ثبت نشده‌است",
+    "admins general queue": "صف عمومی مدیریت ها",
+    "reason for the decision": "دلیل تصمیم"
 }
