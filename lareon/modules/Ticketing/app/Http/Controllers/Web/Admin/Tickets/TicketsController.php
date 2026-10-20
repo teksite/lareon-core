@@ -5,6 +5,7 @@ namespace Lareon\Modules\Ticketing\App\Http\Controllers\Web\Admin\Tickets;
 use Illuminate\Contracts\View\View;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Lareon\Modules\Ticketing\App\Enums\TicketStatusType;
 use Lareon\Modules\Ticketing\App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Lareon\Modules\Ticketing\App\Logics\AssignLogic;
@@ -22,7 +23,6 @@ class TicketsController extends Controller implements HasMiddleware
     {
         return [
             new Middleware('can:admin.ticket.read'),
-            new Middleware('can:admin.ticket.read.all', only: ['all', 'read']),
             new Middleware('can:admin.ticket.create', only: ['create', 'store']),
             new Middleware('can:admin.ticket.edit', only: ['edit', 'update']),
             new Middleware('can:admin.ticket.delete', only: ['destroy']),
@@ -34,8 +34,24 @@ class TicketsController extends Controller implements HasMiddleware
      */
     public function index()
     {
-        $tickets = $this->logic->all()->result;
-        return view('ticketing::admin.pages.tickets.list', compact('tickets'));
+        $filters = [
+            'all'        => 'all',
+            'unassigned' => 'unassigned',
+            'open'       => 'open',
+            'own'        => 'own',
+        ];
+
+        $admin = auth()->guard('admin')->user();
+        $filterQuery = request()->input('type');
+
+        $tickets = match ($filterQuery) {
+            'unassigned' => $this->logic->unassigns()->result,
+            'own' => $this->logic->heldBy($admin)->result,
+            'open' => $this->logic->openAndHeldByAdmin($admin)->result,
+            default => $this->logic->visibleToAdmin($admin)->result,
+        };
+
+        return view('ticketing::admin.pages.tickets.list', compact('tickets' ,'filters' ,'filterQuery'));
     }
 
 
@@ -44,7 +60,6 @@ class TicketsController extends Controller implements HasMiddleware
      */
     public function show(Ticket $ticket): View
     {
-
         $adminId = auth('admin')->id();
 
         if ($ticket->isUnassigned()) {

@@ -15,6 +15,7 @@ use Lareon\Modules\Ticketing\App\Models\Ticket;
 use Lareon\Modules\Ticketing\App\Models\TicketMessage;
 use Lareon\Modules\Ticketing\App\Services\TicketNumberService;
 use Lareon\Modules\User\App\Models\User;
+use Lareon\Steward\App\Models\Admin;
 use Teksite\Handler\Facade\FetchData;
 use Teksite\Handler\Services\ServiceWrapper;
 use Throwable;
@@ -38,6 +39,43 @@ class TicketLogic
     /**
      * @throws Throwable
      */
+    public function unassigns(mixed $fetchData = [])
+    {
+        return ServiceWrapper::make(false)->do(function () {
+            return FetchData::get(Ticket::query()->unassigned()->openOnly());
+        })->run();
+    }
+
+    public function heldBy(null|Admin $admin = null, mixed $fetchData = [])
+    {
+        $admin ??= auth()->guard('admin')->user();
+        $adminId = $admin->id;
+        return ServiceWrapper::make(false)->do(function () use ($adminId) {
+            return FetchData::get(Ticket::query()->heldBy($adminId)->latest('last_activity_at'));
+        })->run();
+    }
+
+    public function visibleToAdmin(null|Admin $admin = null, mixed $fetchData = [])
+    {
+        $admin ??= auth()->guard('admin')->user();
+        $adminId = $admin->id;
+        return ServiceWrapper::make(false)->do(function () use ($adminId) {
+            return FetchData::get(Ticket::query()->visibleToAdmin($adminId));
+        })->run();
+    }
+
+    public function openAndHeldByAdmin(null|Admin $admin = null, mixed $fetchData = [])
+    {
+        $admin ??= auth()->guard('admin')->user();
+        $adminId = $admin->id;
+        return ServiceWrapper::make(false)->do(function () use ($adminId) {
+            return FetchData::get(Ticket::query()->heldBy($adminId)->openOnly()->latest('last_activity_at'));
+        })->run();
+    }
+
+    /**
+     * @throws Throwable
+     */
     public function allByUser(User|null $user = null, null|TicketStatusType $status = null): mixed
     {
         $user ??= auth()->user();
@@ -49,7 +87,6 @@ class TicketLogic
         })->run();
     }
 
-    public function first(array $inputs = []) {}
 
     /**
      * @throws Throwable
@@ -81,7 +118,6 @@ class TicketLogic
 
     }
 
-    public function update(Ticket $ticket, array $inputs = []) {}
 
     /**
      * @throws Throwable

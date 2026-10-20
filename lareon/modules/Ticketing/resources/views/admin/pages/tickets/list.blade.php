@@ -5,6 +5,16 @@
         <x-lareon::links.nav :href="route('admin.ticketing.tickets.create')" :content="__('lareon::global.buttons.new_one')" color="create" can="admin.ticket.create"/>
     @endsection
     @section('list')
+        <nav class="rounded-xl bordering p-3 my-6 flex items-center justify-start overflow-x-auto gap-6">
+            <span class="min-w-fit w-fit">{{__('filter')}}</span>
+            <ul class="w-full flex items-center justify-start overflow-x-auto gap-3">
+                @foreach($filters as $queryString=>$label)
+                    <li>
+                        <a href="{{ request()->fullUrlWithQuery(['type' => $queryString]) }}" class="y-box py-1 px-2 inline-block min-w-16 font-bold text-center {{$queryString !== $filterQuery ?: 'text-blue-600'}}">{{$label}}</a>
+                    </li>
+                @endforeach
+            </ul>
+        </nav>
         <x-lareon::table :rows="$tickets" :headers="['id'=>'#','ticket_number'=>__('ticket number') ,__('subject') ,'created_at'=>__('created at') ,__('status'),__('priority'),'']">
             @foreach($tickets as $key=>$ticket)
                 <tr class="{{$ticket->status === \Lareon\Modules\Ticketing\App\Enums\TicketStatusType::Closed ?: 'font-bold'}}">

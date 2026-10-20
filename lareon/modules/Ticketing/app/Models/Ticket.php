@@ -74,7 +74,8 @@ class Ticket extends Model
     public function scopeVisibleToAdmin(Builder $query, int $adminId): Builder
     {
         return $query->where(function (Builder $q) use ($adminId): void {
-            $q->whereNull('holder_admin_id')->whereNull('pending_admin_id')
+            $q->whereNull('holder_admin_id')
+              ->whereNull('pending_admin_id')
               ->orWhere('holder_admin_id', $adminId)
               ->orWhere('pending_admin_id', $adminId);
         });
@@ -163,7 +164,6 @@ class Ticket extends Model
     {
         return $this->user_id === $userId;
     }
-
 
 
 }
