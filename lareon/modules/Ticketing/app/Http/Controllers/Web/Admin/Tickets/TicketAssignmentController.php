@@ -16,6 +16,7 @@ use Lareon\Modules\Ticketing\App\Http\Requests\Admin\RejectReferTicketRequest;
 use Lareon\Modules\Ticketing\App\Logics\AssignLogic;
 use Lareon\Modules\Ticketing\App\Models\Ticket;
 use Lareon\Modules\Ticketing\App\Models\TicketAssignment;
+use Lareon\Steward\App\Models\Admin;
 use Teksite\Handler\Facade\Responder;
 use Throwable;
 
@@ -29,7 +30,7 @@ class TicketAssignmentController extends Controller implements HasMiddleware
     {
         return [
             new Middleware('can:admin.ticket.read'),
-            new Middleware('can:admin.ticket.assign'),
+            new Middleware('can:admin.ticket.assign.call'),
             new Middleware('can:admin.ticket.read.all', only: ['all', 'read']),
             new Middleware('can:admin.ticket.create', only: ['create', 'store']),
             new Middleware('can:admin.ticket.edit', only: ['edit', 'update']),
@@ -62,31 +63,34 @@ class TicketAssignmentController extends Controller implements HasMiddleware
     {
         $adminId = auth('admin')->id();
 
-        $adminModel = config('ticketing.admin_model');
-        $admins = $adminModel::query()
-                             ->where('id', '!=', $adminId)
-                             ->orderBy('name')
-                             ->get(['id', 'name']);
+        $admins = Admin::query()
+                       ->where('id', '!=', $adminId)
+                       ->orderBy('name')
+                       ->get(['id', 'name']);
 
         return view('ticketing::admin.referrals.create', compact('ticket', 'admins'));
     }
 
+    /**
+     * @throws Throwable
+     * @throws TicketAssignmentException
+     */
     public function store(NewReferTicketRequest $request, Ticket $ticket): RedirectResponse
     {
-        try {
-            $this->assignments->refer(
-                ticket     : $ticket,
-                fromAdminId: $this->adminId(),
-                toAdminId  : $request->integer('to_admin_id'),
-                reason     : $request->string('reason')->toString(),
-            );
-        } catch (TicketAssignmentException $e) {
-            return back()->withErrors(['to_admin_id' => $e->getMessage()]);
-        }
+        $res = $this->assign->refer(
+            ticket     : $ticket,
+            fromAdminId: auth('admin')->id(),
+            toAdminId  : $request->integer('to_admin_id'),
+            reason     : $request->string('reason')->toString(),
+        );
 
-        return redirect()
-            ->route('ticketing.admin.tickets.index')
-            ->with('status', 'تیکت با موفقیت ارجاع داده شد.');
+        return Responder::fromResult(
+            $res,
+            __('ticket successfully assigned'),
+            __('failed to assign ticket. Please try again or notify the support team'),
+            success_url: route('admin.tickets.index')
+        );
+
     }
 
     /**

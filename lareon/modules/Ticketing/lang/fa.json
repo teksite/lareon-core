@@ -14,9 +14,9 @@
     "subject": "عنوان",
     "issue": "مشکل",
     "closed": "بسته‌شده",
-    "opened":"باز‌شده",
+    "opened": "باز‌شده",
     "waiting": "در انتظار",
-    "in progress":"در حال انجام",
+    "in progress": "در حال انجام",
     "answered": "پاسخ داده‌شده",
     "subjects": "عنوان‌ها",
     "issues": "مشکل‌ها",
@@ -30,5 +30,8 @@
     "the referral has been accepted, and the ticket is now assigned to you": "ارجاع پذیرفته شد و تیکت اکنون در اختیار شماست",
     "the referral was rejected, and the ticket was assigned to another admin": "ارجاع رد شد و تیکت به ادمین دیگری ارجاع داده شد",
     "decision reason": "دلیل تصمیم",
-    "next admin id":"آی‌دی ادمین بعدی"
+    "next admin id": "آی‌دی ادمین بعدی",
+    "ticket successfully assigned": "تیکت با موفقیت ارجاع داده شد",
+    "referred admin": "امدیر ارجاع‌شده",
+    "failed to assign ticket. Please try again or notify the support team": "ارجاع تیکت ناموفق بود. لطفاً دوباره تلاش کنید یا به گروه پشتیبانی اطلاع دهید."
 }

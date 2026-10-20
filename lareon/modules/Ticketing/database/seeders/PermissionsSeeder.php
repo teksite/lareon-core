@@ -41,7 +41,7 @@ class PermissionsSeeder extends Seeder
             ],
 
             [
-                'title'       => 'admin.ticket.assign',
+                'title'       => 'admin.ticket.assign.call',
                 'description' => 'have access to assign ticket (in the admin panel)',
             ],
             [
