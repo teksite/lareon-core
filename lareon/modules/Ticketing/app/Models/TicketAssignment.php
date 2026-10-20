@@ -30,7 +30,7 @@ class TicketAssignment extends Model
 
     public function fromAdmin(): BelongsTo
     {
-        return $this->belongsTo(config('ticketing.admin_model'), 'from_admin_id');
+        return $this->belongsTo(Admin::class, 'from_admin_id');
     }
 
     public function toAdmin(): BelongsTo

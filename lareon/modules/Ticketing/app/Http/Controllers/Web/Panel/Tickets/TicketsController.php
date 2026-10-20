@@ -39,23 +39,25 @@ class TicketsController extends Controller implements HasMiddleware
     /**
      * @throws \Throwable
      */
-    public function index(): View {
+    public function index(): View
+    {
 
-        $statusInput= request()->input('status' );
-        $status= $statusInput ? TicketStatusType::tryFrom($statusInput) : null;
-        $options= TicketStatusType::options();
+        $statusInput = request()->input('status');
+        $status = $statusInput ? TicketStatusType::tryFrom($statusInput) : null;
+        $options = TicketStatusType::options();
 
-        $tickets = $this->logic->allByUser(auth()->user() , $status )->result;
+        $tickets = $this->logic->allByUser(auth()->user(), $status)->result;
 
-        return view('ticketing::panel.pages.tickets.index', compact('tickets' ,'options'));
+        return view('ticketing::panel.pages.tickets.index', compact('tickets', 'options'));
 
     }
 
-    public function create(): View {
+    public function create(): View
+    {
 
-        $ticket=new Ticket();
-        $priorities= PriorityType::cases();
-        return view('ticketing::panel.pages.tickets.create', compact( 'priorities' ,'ticket'));
+        $ticket = new Ticket();
+        $priorities = PriorityType::cases();
+        return view('ticketing::panel.pages.tickets.create', compact('priorities', 'ticket'));
 
     }
 
@@ -64,37 +66,40 @@ class TicketsController extends Controller implements HasMiddleware
      */
     public function store(NewTicketRequest $request): RedirectResponse|Redirector
     {
-        $res = $this->logic->create($request->validated() , 'web' , SenderType::User , auth()->id());
+        $res = $this->logic->create($request->validated(), 'web', SenderType::User, auth()->id());
 
         if (!$res->success) return Responder::failed(trans('lareon::global.crud.error.created', ['attribute' => __('ticket')]))->go();
 
         event(new TicketCreated($res->result));
 
-        return Responder::success(trans('lareon::global.crud.success.created', ['attribute' => __('ticket')]))->route('panel.tickets.show' ,['ticket'=>$res->result])->go();
+        return Responder::success(trans('lareon::global.crud.success.created', ['attribute' => __('ticket')]))->route('panel.tickets.show', ['ticket' => $res->result])->go();
     }
 
-    public function show(Ticket $ticket): View {
+    public function show(Ticket $ticket): View
+    {
 
         Gate::denyIf($ticket->user_id !== auth()->id());
+        $user = auth('web')->user();
 
-        $ticket->load(['messages.attachments', 'attachments']);
-        $user= auth('web')->user();
-        return view('ticketing::panel.pages.tickets.show', compact('ticket' ,'user'));
+        $ticket->load(['user', 'messages', 'messages.attachments', 'attachments']);
+        return view('ticketing::panel.pages.tickets.show', compact('ticket', 'user'));
     }
 
-    public function reply(ReplyTicketMessageRequest $request, Ticket $ticket): RedirectResponse {
+    public function reply(ReplyTicketMessageRequest $request, Ticket $ticket): RedirectResponse
+    {
 
-        $data=$request->validated();
-        $res= $this->logic->replyAsUser($ticket, auth()->id() , $data['body'],$data['file'] ?? [],);
-        return Responder::fromResult($res ,trans('your message is submitted' ))->go();
+        $data = $request->validated();
+        $res = $this->logic->replyAsUser($ticket, auth()->id(), $data['body'], $data['file'] ?? []);
+        return Responder::fromResult($res, trans('your message is submitted'))->go();
     }
 
     /**
      * @throws \Throwable
      */
-    public function close(Ticket $ticket) {
-        $res =$this->logic->closeByUser($ticket , auth()->id());
-        return Responder::fromResult($res ,trans('the ticket #:number is closed' ,['number'=>$ticket->ticket_number]))->go();
+    public function close(Ticket $ticket)
+    {
+        $res = $this->logic->closeByUser($ticket, auth()->id());
+        return Responder::fromResult($res, trans('the ticket #:number is closed', ['number' => $ticket->ticket_number]))->go();
 
     }
 }

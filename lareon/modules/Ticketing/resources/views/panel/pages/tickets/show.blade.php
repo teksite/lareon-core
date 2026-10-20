@@ -10,21 +10,7 @@
             </span>
         </div>
         <hr class="bordering my-6 ">
-        <ul class="space-y-6 max-w-5xl mx-auto overflow-y-auto max-h-svh">
-            @foreach($ticket->messages  ?? [] as $message)
-                @php
-                    $isOwner = $user->id === $message->sender_id && $message->sender_type === \Lareon\Modules\Ticketing\App\Enums\SenderType::User;
-                @endphp
-                <li>
-                    <div class="flex gap-3 items-center {{$isOwner ?:'flex-row-reverse'}}">
-                        <span class="{{$isOwner ? 'bg-green-600' : 'bg-blue-600'}} flex items-center justify-center rounded-full p-1 h-9 w-9 text-white  font-bold text-sm">{{\Illuminate\Support\Str::initials($user->name)}}</span>
-                        <div class="shadow p-6 rounded-lg w-full max-w-5xl {{$isOwner ? 'bg-green-50' : 'bg-blue-50'}}">
-                            {{$message->body}}
-                        </div>
-                    </div>
-                </li>
-            @endforeach
-        </ul>
+        <x-ticketing::editor.messages-list :ticket="$ticket"/>
     </section>
 
     @if ($ticket->isClosed())

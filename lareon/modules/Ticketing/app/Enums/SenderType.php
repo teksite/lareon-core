@@ -22,5 +22,17 @@ enum SenderType: int
     }
 
 
+    public function senderName(): string
+    {
+        return match ($this) {
+            self::User   => __('user'),
+            self::Admin  => __('admin'),
+            self::System => __('system'),
+            self::Ai     => __('ai'),
+            default      => __('unknown')
+        };
+    }
+
+
 
 }

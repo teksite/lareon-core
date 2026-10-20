@@ -5,7 +5,6 @@ namespace Lareon\Modules\Ticketing\App\Http\Controllers\Web\Admin\Tickets;
 use Illuminate\Contracts\View\View;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
-use Lareon\Modules\Ticketing\App\Enums\TicketStatusType;
 use Lareon\Modules\Ticketing\App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Lareon\Modules\Ticketing\App\Logics\AssignLogic;
@@ -69,7 +68,11 @@ class TicketsController extends Controller implements HasMiddleware
 
         $ticket->load(['user', 'messages', 'holderAdmin', 'messages.attachments', 'attachments', 'assignments.fromAdmin', 'assignments.toAdmin']);
 
-        return view('ticketing::admin.pages.tickets.show', compact('ticket'));
+        return view('ticketing::admin.pages.tickets.show', [
+            'ticket' => $ticket,
+            'isHolder' => $ticket->isHeldBy($adminId),
+            'isPendingDecision' => $ticket->isPendingFor($adminId),
+        ]);
     }
 
 
