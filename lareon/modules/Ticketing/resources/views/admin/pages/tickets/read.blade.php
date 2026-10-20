@@ -27,7 +27,7 @@
             </div>
         </aside>
         <div class="mx-auto w-full">
-            <x-ticketing::editor.messages-list :ticket="$ticket"/>
+            <x-ticketing::editor.messages-list :ticket="$ticket"  :showInternal="true"/>
         </div>
     </div>
 

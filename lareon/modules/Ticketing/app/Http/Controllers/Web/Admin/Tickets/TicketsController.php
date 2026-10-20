@@ -3,10 +3,13 @@
 namespace Lareon\Modules\Ticketing\App\Http\Controllers\Web\Admin\Tickets;
 
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Lareon\Modules\Ticketing\App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Lareon\Modules\Ticketing\App\Http\Requests\Admin\CloseTicketRequest;
+use Lareon\Modules\Ticketing\App\Http\Requests\Admin\ReplyTicketRequest;
 use Lareon\Modules\Ticketing\App\Logics\AssignLogic;
 use Lareon\Modules\Ticketing\App\Logics\TicketLogic;
 use Lareon\Modules\Ticketing\App\Models\Ticket;
@@ -45,12 +48,12 @@ class TicketsController extends Controller implements HasMiddleware
 
         $tickets = match ($filterQuery) {
             'unassigned' => $this->logic->unassigns()->result,
-            'own' => $this->logic->heldBy($admin)->result,
-            'open' => $this->logic->openAndHeldByAdmin($admin)->result,
-            default => $this->logic->visibleToAdmin($admin)->result,
+            'own'        => $this->logic->heldBy($admin)->result,
+            'open'       => $this->logic->openAndHeldByAdmin($admin)->result,
+            default      => $this->logic->visibleToAdmin($admin)->result,
         };
 
-        return view('ticketing::admin.pages.tickets.list', compact('tickets' ,'filters' ,'filterQuery'));
+        return view('ticketing::admin.pages.tickets.list', compact('tickets', 'filters', 'filterQuery'));
     }
 
 
@@ -69,16 +72,28 @@ class TicketsController extends Controller implements HasMiddleware
         $ticket->load(['user', 'messages', 'holderAdmin', 'messages.attachments', 'attachments', 'assignments.fromAdmin', 'assignments.toAdmin']);
 
         return view('ticketing::admin.pages.tickets.show', [
-            'ticket' => $ticket,
-            'isHolder' => $ticket->isHeldBy($adminId),
+            'ticket'            => $ticket,
+            'isHolder'          => $ticket->isHeldBy($adminId),
             'isPendingDecision' => $ticket->isPendingFor($adminId),
         ]);
     }
 
 
-    public function reply(StoreAdminReplyRequest $request, Ticket $ticket): RedirectResponse {}
+    public function reply(ReplyTicketRequest $request, Ticket $ticket): RedirectResponse
+    {
+        $this->logic->closeByAdmin($ticket, $request->string('note')->toString() ?: null);
 
-    public function close(CloseTicketRequest $request, Ticket $ticket): RedirectResponse {}
+        return back()->with('status', 'تیکت بسته شد.');
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    public function close(CloseTicketRequest $request, Ticket $ticket): RedirectResponse
+    {
+        $res = $this->logic->closeByAdmin($ticket, auth('admin')->id(), $request->string('note', 'close by admin')->toString());
+        return Responder::fromResult($res, trans('the ticket #:number is closed', ['number' => $ticket->ticket_number]))->go();
+    }
 
 
 }

@@ -32,7 +32,7 @@ class TicketLogic
     public function all(mixed $fetchData = [])
     {
         return ServiceWrapper::make(false)->do(function () {
-            return FetchData::get(Ticket::class);
+            return FetchData::get(Ticket::class ,['id' ,'subject' ,'ticket_number']);
         })->run();
     }
 
@@ -42,7 +42,7 @@ class TicketLogic
     public function unassigns(mixed $fetchData = [])
     {
         return ServiceWrapper::make(false)->do(function () {
-            return FetchData::get(Ticket::query()->unassigned()->openOnly());
+            return FetchData::get(Ticket::query()->unassigned()->openOnly(),['id' ,'subject' ,'ticket_number']);
         })->run();
     }
 
@@ -51,7 +51,7 @@ class TicketLogic
         $admin ??= auth()->guard('admin')->user();
         $adminId = $admin->id;
         return ServiceWrapper::make(false)->do(function () use ($adminId) {
-            return FetchData::get(Ticket::query()->heldBy($adminId)->latest('last_activity_at'));
+            return FetchData::get(Ticket::query()->heldBy($adminId)->latest('last_activity_at'),['id' ,'subject' ,'ticket_number']);
         })->run();
     }
 
@@ -60,7 +60,7 @@ class TicketLogic
         $admin ??= auth()->guard('admin')->user();
         $adminId = $admin->id;
         return ServiceWrapper::make(false)->do(function () use ($adminId) {
-            return FetchData::get(Ticket::query()->visibleToAdmin($adminId));
+            return FetchData::get(Ticket::query()->visibleToAdmin($adminId),['id' ,'subject' ,'ticket_number']);
         })->run();
     }
 
@@ -69,7 +69,7 @@ class TicketLogic
         $admin ??= auth()->guard('admin')->user();
         $adminId = $admin->id;
         return ServiceWrapper::make(false)->do(function () use ($adminId) {
-            return FetchData::get(Ticket::query()->heldBy($adminId)->openOnly()->latest('last_activity_at'));
+            return FetchData::get(Ticket::query()->heldBy($adminId)->openOnly()->latest('last_activity_at') ,['id' ,'subject' ,'ticket_number']);
         })->run();
     }
 

@@ -20,7 +20,7 @@ class AssignLogic
     /**
      * @throws Throwable
      */
-    public function claim(Ticket $ticket, int $adminId): TicketAssignment
+    public function claim(Ticket $ticket, int $adminId)
     {
         return ServiceWrapper::make(true)->do(function () use ($ticket, $adminId) {
             $ticket = Ticket::query()->whereKey($ticket->id)->lockForUpdate()->firstOrFail();

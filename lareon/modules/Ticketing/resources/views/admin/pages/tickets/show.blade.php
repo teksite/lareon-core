@@ -14,7 +14,6 @@
     @endsection
 
     <div class="max-w-5xl mx-auto ">
-
         <h2 class="text-center">{{$ticket->subject}}</h2>
         <div class="flex items-start justify-between gap-3 mb-3 bordering p-2 rounded-lg my-3">
             <div>
@@ -31,10 +30,7 @@
             </span>
             </div>
         </div>
-
-
-            <x-ticketing::editor.messages-list :ticket="$ticket"/>
-
+        <x-ticketing::editor.messages-list :ticket="$ticket" :showInternal="true"/>
         @if ($isPendingDecision)
             <div class="bg-amber-50 border border-amber-200 rounded-xl p-5 text-sm text-amber-900">
                 این تیکت به شما ارجاع داده شده و در انتظار تصمیم شماست. برای پذیرفتن یا رد آن،
@@ -64,22 +60,31 @@
                     یادداشت داخلی (فقط برای ادمین‌ها قابل مشاهده است، برای کاربر ارسال نمی‌شود)
                 </label>
 
-                <div class="flex items-center justify-between">
-                    <button type="submit"
-                            class="rounded-lg bg-teal-700 text-white text-sm font-medium px-5 py-2.5 hover:bg-teal-800">
-                        ارسال
-                    </button>
-
-                    <button type="button" class="text-sm text-rose-600 hover:text-rose-800 js-confirm-close"
-                            data-confirm-target="close-ticket-form">
-                        بستن تیکت
-                    </button>
+                <div class="flex items-center justify-between gap-5">
+                    <x-lareon::buttons.nav class="min-w-36 mt-6" :fullWidth="false" type="submit" color="update" size="xs">
+                        {{ __('send') }}
+                    </x-lareon::buttons.nav>
+                    <x-lareon::buttons.nav commandfor="closeDialog" command="show-modal" data-confirm-target="close-ticket-form" class="min-w-36 mt-6 js-confirm-close" :fullWidth="false" type="button" color="delete" variant="outline" size="xs">
+                        {{ __('close') }}
+                    </x-lareon::buttons.nav>
                 </div>
             </form>
 
-            <form id="close-ticket-form" method="POST" action="{{ route('admin.tickets.close', $ticket) }}" class="hidden">
-                @csrf
-            </form>
+            <dialog id="closeDialog" class="y-box translate-x-1/2 top-1/2 inset-x-1/2 w-full max-w-100">
+               <div class="relative">
+                   <form id="close-ticket-form" method="POST" action="{{ route('admin.tickets.close', $ticket) }}">
+                       @csrf
+                       <x-lareon::editor.input-textarea :required="true" placeholder="why?" labelPosition="top" :label="__('note')" name="note" rows="8" min="5" max="10000"></x-lareon::editor.input-textarea>
+                       <x-lareon::buttons.nav class="min-w-36 mt-6" :fullWidth="false" type="submit" color="update" size="xs">
+                           {{ __('submit') }}
+                       </x-lareon::buttons.nav>
+                   </form>
+                   <button commandfor="closeDialog" command="close" class="absolute top-0 left-0 text-red-600 font-bold">
+                       X
+                   </button>
+               </div>
+            </dialog>
+
         @endif
 
         <section class="mt-10">
@@ -120,16 +125,5 @@
             @endif
         </section>
     </div>
-    @push('footerScripts')
-        <script>
-            document.querySelectorAll('.js-confirm-close').forEach(function (button) {
-                button.addEventListener('click', function () {
-                    if (confirm('آیا از بستن این تیکت مطمئن هستید؟')) {
-                        document.getElementById(button.dataset.confirmTarget)?.submit();
-                    }
-                });
-            });
-        </script>
-    @endpush
 
 </x-lareon::admin-layout>

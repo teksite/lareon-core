@@ -13,6 +13,7 @@ use Lareon\Modules\Ticketing\App\Enums\SenderType;
 use Lareon\Modules\Ticketing\App\Enums\TicketStatusType;
 use Lareon\Modules\Ticketing\App\Events\TicketCreated;
 use Lareon\Modules\Ticketing\App\Http\Controllers\Controller;
+use Lareon\Modules\Ticketing\App\Http\Requests\Admin\CloseTicketRequest;
 use Lareon\Modules\Ticketing\App\Http\Requests\Panel\NewTicketRequest;
 use Lareon\Modules\Ticketing\App\Http\Requests\Panel\ReplyTicketMessageRequest;
 use Lareon\Modules\Ticketing\App\Logics\TicketLogic;
@@ -96,9 +97,10 @@ class TicketsController extends Controller implements HasMiddleware
     /**
      * @throws \Throwable
      */
-    public function close(Ticket $ticket)
+    public function close( CloseTicketRequest $request ,Ticket $ticket)
     {
-        $res = $this->logic->closeByUser($ticket, auth()->id());
+        dd($request->toArray());
+        $res = $this->logic->closeByUser($ticket, auth()->id() ,'close by user');
         return Responder::fromResult($res, trans('the ticket #:number is closed', ['number' => $ticket->ticket_number]))->go();
 
     }
