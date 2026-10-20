@@ -20,54 +20,39 @@ use Lareon\Steward\App\Models\Admin;
 use Teksite\Handler\Facade\Responder;
 use Throwable;
 
-class TicketAssignmentController extends Controller implements HasMiddleware
+class TicketAssignmentController extends Controller/* implements HasMiddleware*/
 {
 
 
     public function __construct(public readonly AssignLogic $assign) {}
 
-    public static function middleware(): array
+   /* public static function middleware(): array
     {
         return [
-            new Middleware('can:admin.ticket.read'),
-            new Middleware('can:admin.ticket.assign.call'),
-            new Middleware('can:admin.ticket.read.all', only: ['all', 'read']),
-            new Middleware('can:admin.ticket.create', only: ['create', 'store']),
-            new Middleware('can:admin.ticket.edit', only: ['edit', 'update']),
-            new Middleware('can:admin.ticket.delete', only: ['destroy']),
+            new Middleware('can:admin.ticket.assign'),
+            new Middleware('can:admin.ticket.assign.call' ,only: ['create' ,'store']),
+            new Middleware('can:admin.ticket.assign.reject' ,only: ['reject']),
+            new Middleware('can:admin.ticket.assign.accept' ,only: ['accept']),
         ];
-    }
+    }*/
 
 
+    /**
+     * @throws Throwable
+     */
     public function inbox(): View
     {
         $adminId = auth('admin')->id();
-        $pending = TicketAssignment::query()
-                                   ->with('ticket', 'fromAdmin')
-                                   ->where('to_admin_id', $adminId)
-                                   ->where('status', AssignmentStatus::Pending)
-                                   ->latest('created_at')
-                                   ->paginate((int)config('ticketing.pagination.tickets_per_page', 15));
+        $tickets = $this->assign->pendings($adminId)->result;
 
-        $adminModel = config('ticketing.admin_model');
-        $admins = $adminModel::query()
-                             ->where('id', '!=', $adminId)
-                             ->orderBy('name')
-                             ->get(['id', 'name']);
-
-        return view('ticketing::admin.referrals.inbox', compact('pending', 'admins'));
+        return view('ticketing::admin.referrals.inbox', compact('tickets'));
     }
 
 
     public function create(Ticket $ticket): View
     {
         $adminId = auth('admin')->id();
-
-        $admins = Admin::query()
-                       ->where('id', '!=', $adminId)
-                       ->orderBy('name')
-                       ->get(['id', 'name']);
-
+        $admins = Admin::query()->where('id', '!=', $adminId)->orderBy('name')->get(['id', 'name']);
         return view('ticketing::admin.referrals.create', compact('ticket', 'admins'));
     }
 

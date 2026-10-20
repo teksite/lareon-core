@@ -10,12 +10,39 @@ use Lareon\Modules\Ticketing\App\Events\TicketAssignmentResponded;
 use Lareon\Modules\Ticketing\App\Exceptions\TicketAssignmentException;
 use Lareon\Modules\Ticketing\App\Models\Ticket;
 use Lareon\Modules\Ticketing\App\Models\TicketAssignment;
+use Teksite\Handler\Facade\FetchData;
 use Teksite\Handler\Services\ServiceWrapper;
 use Throwable;
 
 class AssignLogic
 {
     public function __construct(public StatusLogLogic $statusLogger) {}
+
+
+    /**
+     * @throws Throwable
+     */
+    public function all(mixed $fetchData = [])
+    {
+        return ServiceWrapper::make(false)->do(function () {
+            return FetchData::get(TicketAssignment::class, ['id', 'subject', 'ticket_number']);
+        })->run();
+    }
+
+    /**
+     * @throws Throwable
+     */
+    public function pendings($adminId, mixed $fetchData = [])
+    {
+        return ServiceWrapper::make(false)->do(function () use ($adminId) {
+            return FetchData::get(TicketAssignment::query()
+                                                  ->with('ticket', 'fromAdmin')
+                                                  ->where('to_admin_id', $adminId)
+                                                  ->where('status', AssignmentStatus::Pending));
+        })->run();
+    }
+
+
 
     /**
      * @throws Throwable
@@ -113,7 +140,6 @@ class AssignLogic
             return $assignment;
         })->run();
     }
-
 
     /**
      * @throws Throwable
