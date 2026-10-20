@@ -61,7 +61,7 @@ class TicketsController extends Controller implements HasMiddleware
     {
         $adminId = auth('admin')->id();
 
-        if ($ticket->isUnassigned()) {
+        if ($ticket->isUnassigned() && !$ticket->isClosed()) {
             $this->assign->claim($ticket, $adminId);
             $ticket->refresh();
         }
