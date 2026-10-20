@@ -10,6 +10,7 @@ use Lareon\Steward\App\Events\AdminCrudEvent;
 use Lareon\Steward\App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Lareon\Steward\App\Http\Requests\Admin\NewAdminRequest;
+use Lareon\Steward\App\Http\Requests\Admin\UpdateAdminAclRequest;
 use Lareon\Steward\App\Http\Requests\Admin\UpdateAdminRequest;
 use Lareon\Steward\App\Logics\AdminLogic;
 use Lareon\Steward\App\Models\Admin;
@@ -43,9 +44,9 @@ class AdminsAclController extends Controller implements HasMiddleware
      *
      * @throws \Throwable
      */
-    public function update(UpdateAdminRequest $request, Admin $admin)
+    public function update(UpdateAdminAclRequest $request, Admin $admin)
     {
-        $res = $this->logic->update($admin, $request->validated());
+        $res = $this->logic->updateACL($admin, $request->validated());
 
         if ($res->success) {
             event(new AdminCrudEvent($admin, CrudTypeEnum::UPDATE, $request->validated()));
