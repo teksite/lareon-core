@@ -54,7 +54,7 @@ class AssignLogic
      * @throws Throwable
      * @throws TicketAssignmentException
      */
-    public function refer(Ticket $ticket, int $fromAdminId, int $toAdminId, string $reason): TicketAssignment
+    public function refer(Ticket $ticket, int $fromAdminId, int $toAdminId, string $reason)
     {
         if ($fromAdminId === $toAdminId) throw TicketAssignmentException::cannotReferToSelf();
 
@@ -87,7 +87,7 @@ class AssignLogic
     /**
      * @throws Throwable
      */
-    public function accept(TicketAssignment $assignment, int $adminId): TicketAssignment
+    public function accept(TicketAssignment $assignment, int $adminId)
     {
         return ServiceWrapper::make(true)->do(function () use ($assignment, $adminId) {
 
@@ -119,7 +119,7 @@ class AssignLogic
      * @throws Throwable
      * @throws TicketAssignmentException
      */
-    public function reject(TicketAssignment $assignment, int $adminId, string $decisionReason, int $nextAdminId): TicketAssignment
+    public function reject(TicketAssignment $assignment, int $adminId, string $decisionReason, int $nextAdminId)
     {
         if ($nextAdminId === $adminId) throw TicketAssignmentException::cannotReferToSelf();
 

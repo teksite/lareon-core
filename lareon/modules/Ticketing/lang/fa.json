@@ -26,5 +26,9 @@
     "no referral event has been recorded for this ticket yet": "هنوز رخداد ارجاعی برای این تیکت ثبت نشده‌است",
     "admins general queue": "صف عمومی مدیریت ها",
     "reason for the decision": "دلیل تصمیم",
-    "internal note (visible only to admins; not sent to the user)": "یادداشت داخلی (فقط برای ادمین‌ها قابل مشاهده است، برای کاربر ارسال نمی‌شود)"
+    "internal note (visible only to admins; not sent to the user)": "یادداشت داخلی (فقط برای ادمین‌ها قابل مشاهده است، برای کاربر ارسال نمی‌شود)",
+    "the referral has been accepted, and the ticket is now assigned to you": "ارجاع پذیرفته شد و تیکت اکنون در اختیار شماست",
+    "the referral was rejected, and the ticket was assigned to another admin": "ارجاع رد شد و تیکت به ادمین دیگری ارجاع داده شد",
+    "decision reason": "دلیل تصمیم",
+    "next admin id":"آی‌دی ادمین بعدی"
 }

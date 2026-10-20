@@ -45,6 +45,14 @@ class PermissionsSeeder extends Seeder
                 'description' => 'have access to assign ticket (in the admin panel)',
             ],
             [
+                'title'       => 'admin.ticket.assign.reject',
+                'description' => 'have access to reject assign ticket (in the admin panel)',
+            ],
+            [
+                'title'       => 'admin.ticket.assign.accept',
+                'description' => 'have access to accept assign ticket (in the admin panel)',
+            ],
+            [
                 'title'       => 'admin.ticket.message.edit',
                 'description' => 'have access to edit message of the ticket (in the admin panel)',
             ],
