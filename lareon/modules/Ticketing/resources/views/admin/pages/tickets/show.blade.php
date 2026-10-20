@@ -1,38 +1,39 @@
 <x-lareon::admin-layout>
-
     @section('title', $ticket->ticket_number)
 
-    <a href="{{ route('admin.tickets.index') }}" class="hover:text-teal-700">داشبورد</a>
-    <a href="{{ route('admin.tickets.referrals.inbox') }}" class="hover:text-teal-700">ارجاعات من</a>
+    @section('header.start')
+        <x-lareon::links.nav :href="route('admin.tickets.index')" :content="__('lareon::global.buttons.all_attribute' ,['attribute'=>__('tickets')])" color="index" can="admin.ticket.read"/>
+    @endsection
 
-    <div class="flex items-start justify-between gap-4 mb-2">
-        <div>
-            <div class="text-xs text-stone-400 mb-1">
-                {{ $ticket->ticket_number }} · کاربر: {{ $ticket->user?->name ?? 'کاربر حذف‌شده' }}
+    @section('header.end')
+        @if ($isHolder)
+            <div class="flex justify-end">
+                <x-lareon::links.nav :href="route('admin.tickets.refer.create', $ticket)" :content="__('assign this ticket to another admin')" variant="simple" color="show" can="admin.ticket.read"/>
             </div>
-            <h1 class="text-xl font-bold">{{ $ticket->subject }}</h1>
+        @endif
+    @endsection
+
+
+    <div class="flex items-start justify-between gap-3 mb-3 bordering p-2 rounded-lg">
+        <div>
+            <div class="text-gray-600 mb-1">
+                {{ $ticket->ticket_number }} | {{__('user')}}: {{ $ticket->user?->name ?? __('removed user') }}
+            </div>
         </div>
         <div class="flex items-center gap-2 shrink-0">
-            <span class="text-xs px-2 py-1 rounded-full text-white" style="background-color: {{ $ticket->priority->color() }}">
+            <span class="text-xs px-2 py-1 rounded-full text-white font-bold" style="background-color: {{ $ticket->priority->color() }}">
                 {{ $ticket->priority->label() }}
             </span>
-            <span class="text-xs px-2 py-1 rounded-full text-white" style="background-color: {{ $ticket->status->color() }}">
+            <span class="text-xs px-2 py-1 rounded-full text-white font-bold" style="background-color: {{ $ticket->status->color() }}">
                 {{ $ticket->status->label() }}
             </span>
         </div>
     </div>
 
-    @if ($isHolder)
-        <div class="flex justify-end mb-6">
-            <a href="{{ route('admin.tickets.refer.create', $ticket) }}"
-               class="text-sm text-teal-700 hover:text-teal-900 underline">
-                ارجاع این تیکت به ادمین دیگر
-            </a>
-        </div>
-    @endif
 
-    <x-ticketing::editor.messages-list :ticket="$ticket"/>
-
+    <div class="max-w-5xl mx-auto ">
+        <x-ticketing::editor.messages-list :ticket="$ticket"/>
+    </div>
 
     @if ($isPendingDecision)
         <div class="bg-amber-50 border border-amber-200 rounded-xl p-5 text-sm text-amber-900">

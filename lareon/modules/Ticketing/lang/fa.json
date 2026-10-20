@@ -20,5 +20,6 @@
     "answered": "پاسخ داده‌شده",
     "subjects": "عنوان‌ها",
     "issues": "مشکل‌ها",
-    "unassigned": "اختصاص‌نیافته"
+    "unassigned": "اختصاص‌نیافته",
+    "assign this ticket to another admin": "ارجاع این تیکت به ادمین دیگر"
 }

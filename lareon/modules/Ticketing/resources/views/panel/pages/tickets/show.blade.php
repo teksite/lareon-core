@@ -10,7 +10,9 @@
             </span>
         </div>
         <hr class="bordering my-6 ">
-        <x-ticketing::editor.messages-list :ticket="$ticket"/>
+        <div class="max-w-5xl mx-auto ">
+            <x-ticketing::editor.messages-list :ticket="$ticket"/>
+        </div>
     </section>
 
     @if ($ticket->isClosed())
@@ -36,7 +38,7 @@
                     </x-lareon::buttons.nav>
                 </div>
             </form>
-            <form id="close-ticket-form"  method="POST" action="{{ route('panel.tickets.close', $ticket) }}" class="hidden">
+            <form id="close-ticket-form" method="POST" action="{{ route('panel.tickets.close', $ticket) }}" class="hidden">
                 @csrf
             </form>
         </section>
@@ -45,7 +47,7 @@
         <script>
             document.querySelectorAll('.js-confirm-close').forEach(function (button) {
                 button.addEventListener('click', function () {
-                    if (confirm('{{__('are you sure you want to close this ticket? You will not be able to send any further replies after closing it.')}}' )) {
+                    if (confirm('{{__('are you sure you want to close this ticket? You will not be able to send any further replies after closing it.')}}')) {
                         document.getElementById(button.dataset.confirmTarget)?.submit();
                     }
                 });

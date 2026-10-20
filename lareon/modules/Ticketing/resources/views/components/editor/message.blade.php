@@ -1,6 +1,7 @@
 @php
 
-    use Lareon\Modules\Ticketing\App\Enums\SenderType;$isMine = $message->sender_type === $viewerType;
+    use Lareon\Modules\Ticketing\App\Enums\SenderType;
+    $isMine = $message->sender_type === $viewerType;
     $isAi = $message->sender_type === SenderType::Ai;
     $isSystem = $message->sender_type === SenderType::System;
 @endphp

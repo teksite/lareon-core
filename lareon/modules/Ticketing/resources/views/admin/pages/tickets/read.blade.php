@@ -3,16 +3,17 @@
     <div class="flex flex-col lg:flex-row items-start gap-3 my-12">
         <aside class="y-box w-full lg:max-w-96 space-y-6">
             <div>
-               <span class="font-bold"> {{ $ticket->ticket_number}}</span>
+                <span class="font-bold"> {{ $ticket->ticket_number}}</span>
             </div>
             <div>
-               {{__('subject')}}: {{$ticket->subject}}
+                {{__('subject')}}: {{$ticket->subject}}
             </div>
             <div class="">
                 {{__('user')}}: {{$ticket->user->name}}
             </div>
             <div>
-                {{__('priority')}}: <x-ticketing::priority-pulse :priority="$ticket->priority"/>
+                {{__('priority')}}:
+                <x-ticketing::priority-pulse :priority="$ticket->priority"/>
             </div>
             <div>
                 {{__('status')}}:
@@ -25,7 +26,9 @@
                 {{__('owner')}}: {{$ticket->holderAdmin?->name ?? __('unassigned')}}
             </div>
         </aside>
-       <x-ticketing::editor.messages-list :ticket="$ticket"/>
+        <div class="mx-auto w-full">
+            <x-ticketing::editor.messages-list :ticket="$ticket"/>
+        </div>
     </div>
 
 
