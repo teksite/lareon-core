@@ -16,8 +16,9 @@
       'trash'=>  'trash-opened',
       default =>null
     };
-    $variantType = match ($color){
-      'trash'=>  'outline',
+    $variantType = match ($variant){
+      'trash','outline'=>  'outline',
+      'simple'=>  'simple',
       default =>'solid'
     };
 
