@@ -32,6 +32,6 @@ Route::prefix('tickets')->name('tickets.')->group(function (): void {
 
 Route::prefix('tickets/referrals')->name('tickets.referrals.')->group(function (): void {})->group(function (): void {
     Route::get('/', [TicketAssignmentController::class, 'inbox'])->name('inbox');
-    Route::post('/{assignment}/accept', [TicketAssignmentController::class, 'accept'])->name('accept');
-    Route::post('/{assignment}/reject', [TicketAssignmentController::class, 'reject'])->name('reject');
+    Route::post('/{$ticket}/accept', [TicketAssignmentController::class, 'accept'])->name('accept');
+    Route::post('/{$ticket}/reject', [TicketAssignmentController::class, 'reject'])->name('reject');
 });

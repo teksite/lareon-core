@@ -32,6 +32,7 @@
         </div>
         <x-ticketing::editor.messages-list :ticket="$ticket" :showInternal="true"/>
         @if ($isPendingDecision)
+            {{--//TODO english--}}
             <div class="bg-amber-50 border border-amber-200 rounded-xl p-5 text-sm text-amber-900">
                 این تیکت به شما ارجاع داده شده و در انتظار تصمیم شماست. برای پذیرفتن یا رد آن،
                 به

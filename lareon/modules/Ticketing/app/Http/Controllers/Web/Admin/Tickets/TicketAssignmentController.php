@@ -53,7 +53,7 @@ class TicketAssignmentController extends Controller/* implements HasMiddleware*/
     {
         $adminId = auth('admin')->id();
         $admins = Admin::query()->where('id', '!=', $adminId)->orderBy('name')->get(['id', 'name']);
-        return view('ticketing::admin.referrals.create', compact('ticket', 'admins'));
+        return view('ticketing::admin.pages.referrals.create', compact('ticket', 'admins'));
     }
 
     /**

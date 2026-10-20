@@ -33,5 +33,7 @@
     "next admin id": "آی‌دی ادمین بعدی",
     "ticket successfully assigned": "تیکت با موفقیت ارجاع داده شد",
     "referred admin": "امدیر ارجاع‌شده",
+    "referral":"ارجاع",
+    "referrals":"ارجاع‌ها",
     "failed to assign ticket. Please try again or notify the support team": "ارجاع تیکت ناموفق بود. لطفاً دوباره تلاش کنید یا به گروه پشتیبانی اطلاع دهید."
 }
