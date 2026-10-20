@@ -79,11 +79,15 @@ class TicketsController extends Controller implements HasMiddleware
     }
 
 
+    /**
+     * @throws \Throwable
+     */
     public function reply(ReplyTicketRequest $request, Ticket $ticket): RedirectResponse
     {
-        $this->logic->closeByAdmin($ticket, $request->string('note')->toString() ?: null);
+        $data = $request->validated();
+        $res = $this->logic->replyAsAdmin($ticket, auth('admin')->id(), $data['body'], $data['files'] ?? [], isset($data['is_internal_note']));
+        return Responder::fromResult($res, trans('your reply is submitted'))->go();
 
-        return back()->with('status', 'تیکت بسته شد.');
     }
 
     /**

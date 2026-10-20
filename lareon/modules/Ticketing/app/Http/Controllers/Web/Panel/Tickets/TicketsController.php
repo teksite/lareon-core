@@ -99,7 +99,6 @@ class TicketsController extends Controller implements HasMiddleware
      */
     public function close( CloseTicketRequest $request ,Ticket $ticket)
     {
-        dd($request->toArray());
         $res = $this->logic->closeByUser($ticket, auth()->id() ,'close by user');
         return Responder::fromResult($res, trans('the ticket #:number is closed', ['number' => $ticket->ticket_number]))->go();
 

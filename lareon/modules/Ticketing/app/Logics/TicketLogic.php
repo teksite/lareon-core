@@ -199,6 +199,7 @@ class TicketLogic
     public function replyAsAdmin(Ticket $ticket, int $adminId, string $body, array $files = [], bool $internalNote = false)
     {
         return ServiceWrapper::make(true)->do(function () use ($adminId, $ticket, $internalNote, $body, $files) {
+
             $message = $this->appendMessage($ticket, SenderType::Admin, $adminId, $body, $internalNote);
 
             //Todo if ($files !== []) $this->attachments->storeMany($ticket, $message, 'admin', $adminId, $files);
