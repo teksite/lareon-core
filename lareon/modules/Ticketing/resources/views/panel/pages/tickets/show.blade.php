@@ -38,9 +38,7 @@
                     </x-lareon::buttons.nav>
                 </div>
             </form>
-            <form id="close-ticket-form" method="POST" action="{{ route('panel.tickets.close', $ticket) }}" class="hidden">
-                @csrf
-            </form>
+
         </section>
     @endif
     @push('footerScripts')

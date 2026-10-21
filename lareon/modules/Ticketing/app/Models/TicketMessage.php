@@ -58,7 +58,6 @@ class TicketMessage extends Model
 
     public function authorName(): mixed
     {
-        if ($this->sender_id === null) return null;
 
         return match ($this->sender_type) {
             SenderType::Admin  => $this->admin()->name,

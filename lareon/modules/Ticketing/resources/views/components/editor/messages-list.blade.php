@@ -7,7 +7,6 @@
                 $isInternal =$message->is_internal_note;
 
                 if ($isInternal && !$showInternal) continue;
-
                 $isUser = $message->sender_type === SenderType::User;
                 $author=$message->authorName();
             @endphp
