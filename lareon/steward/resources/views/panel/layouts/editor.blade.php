@@ -27,27 +27,24 @@
         @endisset
         <div class="grid grid-cols-1 gap-6 {{$styleClass}} ">
             <div class="md:col-span-2 lg:col-span-2 xl:col-span-5">
+                @yield('form.start')
                 <div class="space-y-6">
-                    @yield('form.start')
-                    <div class="space-y-6">
-                        @hasSection('form')
-                            @if($hasTab)
-                                <x-lareon::editor.tabs.layout>
-                                    @yield('form')
-                                    @if($publishStatus && !$isDeleteMode && $instance)
-                                        <x-lareon::editor.tabs.item :title="__('publish data')">
-                                            <x-lareon::editor.section.publish-info :instance="$instance"/>
-                                        </x-lareon::editor.tabs.item>
-                                    @endif
-                                </x-lareon::editor.tabs.layout>
-                            @else
+                    @hasSection('form')
+                        @if($hasTab)
+                            <x-lareon::editor.tabs.layout>
                                 @yield('form')
-                            @endif
+                                @if($publishStatus && !$isDeleteMode && $instance)
+                                    <x-lareon::editor.tabs.item :title="__('publish data')">
+                                        <x-lareon::editor.section.publish-info :instance="$instance"/>
+                                    </x-lareon::editor.tabs.item>
+                                @endif
+                            </x-lareon::editor.tabs.layout>
+                        @else
+                            @yield('form')
                         @endif
-                    </div>
-                    @yield('form.end')
+                    @endif
                 </div>
-
+                @yield('form.end')
                 <div id="form-error-summary" class="hidden mb-6 p-4 rounded-xl border border-red-300 bg-red-50">
                     <p class="font-semibold text-red-700 mb-2">{{ __('لطفاً موارد زیر را بررسی کنید') }}:</p>
                     <ul id="form-error-list" class="list-disc list-inside space-y-1 text-red-600 text-sm"></ul>
