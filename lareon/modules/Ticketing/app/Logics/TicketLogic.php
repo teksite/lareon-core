@@ -152,6 +152,8 @@ class TicketLogic
         return ServiceWrapper::make(true)->do(function () use ($ticket, $closedByType, $closedById, $note) {
             $preStatus = $ticket->status;
 
+            $this->appendMessage($ticket, SenderType::System, null, $note);
+
             $ticket->update([
                 'status'           => TicketStatusType::Closed,
                 'closed_by_type'   => $closedByType,
@@ -162,10 +164,7 @@ class TicketLogic
 
             $this->statusLogger->log($ticket, $preStatus, TicketStatusType::Closed, $closedByType, $closedById, $note ?? 'ticket is closed');
 
-            if ($note !== null && $note !== '') {
-                $senderType = $closedByType === 'user' ? SenderType::User : SenderType::Admin;
-                $this->appendMessage($ticket, $senderType, $closedById, $note);
-            }
+
 
             event(new TicketClosed($ticket));
 
