@@ -110,8 +110,7 @@ class TicketLogic
             $files = $inputs['files'] ?? [];
             //TODO add attachment: if ($inputs['files'] !== []) $this->attachments->storeMany($ticket, $message, 'user', $userId, $files);
 
-            $ticket->statusLogger->log($ticket, null, TicketStatusType::Opened, 'user', $senderId, 'create ticket');
-
+            $this->statusLogger->log($ticket, null, TicketStatusType::Opened, ChangedByType::User, $senderId, 'create ticket');
 
             return $ticket->fresh(['messages', 'attachments']);
         })->run();

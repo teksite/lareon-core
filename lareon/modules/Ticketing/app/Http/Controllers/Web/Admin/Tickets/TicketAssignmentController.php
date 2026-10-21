@@ -6,7 +6,6 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
-use Lareon\Modules\Ticketing\App\Enums\AssignmentStatus;
 use Lareon\Modules\Ticketing\App\Exceptions\TicketAssignmentException;
 use Lareon\Modules\Ticketing\App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -20,7 +19,7 @@ use Lareon\Steward\App\Models\Admin;
 use Teksite\Handler\Facade\Responder;
 use Throwable;
 
-class TicketAssignmentController extends Controller/* implements HasMiddleware*/
+class TicketAssignmentController extends Controller implements HasMiddleware
 {
 
 
