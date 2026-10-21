@@ -54,15 +54,11 @@
                 </div>
             </div>
 
-            <aside class="xl:col-span-2">
-                <div class="sticky top-6 space-y-6">
-                    <div class="mt-6">
-                        <x-lareon::buttons.nav class="min-w-36" :fullWidth="false" type="submit" :color="$buttonColor" :icon="$buttonIcon">
-                            {{ $buttonTextKey }}
-                        </x-lareon::buttons.nav>
-                    </div>
-                </div>
-            </aside>
+            <div class="xl:col-span-2 mt-6">
+                <x-lareon::buttons.nav class="min-w-36" :fullWidth="false" type="submit" :color="$buttonColor" :icon="$buttonIcon">
+                    {{ $buttonTextKey }}
+                </x-lareon::buttons.nav>
+            </div>
         </div>
     </form>
     @yield('form.after')
