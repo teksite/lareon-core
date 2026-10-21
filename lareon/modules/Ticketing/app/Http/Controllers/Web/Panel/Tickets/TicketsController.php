@@ -44,7 +44,7 @@ class TicketsController extends Controller implements HasMiddleware
     {
 
         $statusInput = request()->input('status');
-        $status = $statusInput ? TicketStatusType::tryFrom($statusInput) : null;
+        $status = $statusInput !== null ? TicketStatusType::tryFrom((int)$statusInput) : null;
         $options = TicketStatusType::options();
 
         $tickets = $this->logic->allByUser(auth()->user(), $status)->result;
@@ -55,7 +55,6 @@ class TicketsController extends Controller implements HasMiddleware
 
     public function create(): View
     {
-
         $ticket = new Ticket();
         $priorities = PriorityType::cases();
         return view('ticketing::panel.pages.tickets.create', compact('priorities', 'ticket'));
@@ -86,6 +85,9 @@ class TicketsController extends Controller implements HasMiddleware
         return view('ticketing::panel.pages.tickets.show', compact('ticket', 'user'));
     }
 
+    /**
+     * @throws \Throwable
+     */
     public function reply(ReplyTicketMessageRequest $request, Ticket $ticket): RedirectResponse
     {
 
@@ -97,9 +99,9 @@ class TicketsController extends Controller implements HasMiddleware
     /**
      * @throws \Throwable
      */
-    public function close(CloseTicketRequest $request ,Ticket $ticket)
+    public function close(CloseTicketRequest $request, Ticket $ticket)
     {
-        $res = $this->logic->closeByUser($ticket, auth('web')->id() ,trans('ticketing::ticket.close_by.user'));
+        $res = $this->logic->closeByUser($ticket, auth('web')->id(), trans('ticketing::ticket.close_by.user'));
         return Responder::fromResult($res, trans('the ticket #:number is closed', ['number' => $ticket->ticket_number]))->go();
 
     }
