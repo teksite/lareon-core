@@ -101,7 +101,7 @@ class TicketAssignmentController extends Controller implements HasMiddleware
             $res,
             __('the referral has been accepted, and the ticket is now assigned to you'),
             success_url: route('admin.tickets.show', $assignment->ticket_id)
-        );
+        )->go();
     }
 
     /**

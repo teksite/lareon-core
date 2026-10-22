@@ -5,7 +5,6 @@
     @section('list')
         <div class="space-y-6">
             @foreach ($pending as $assignment)
-                @dd($assignment)
                 <div class="y-box" id="ticket_{{$assignment->ticket->id}}">
                     <div class="flex items-start justify-between gap-3 mb-2">
                         <div class="text-xs text-gray-600 mb-1">
