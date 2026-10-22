@@ -12,8 +12,8 @@
             @endphp
             <li>
                 <div class="flex gap-3 items-center p-1 {{$isUser ?:'flex-row-reverse'}}">
-                    <span class="{{$isUser ? 'bg-green-600' : ($isInternal ? 'bg-blue-600' : 'bg-orange-600')}} flex items-center justify-center rounded-full p-1 h-9 w-9 text-white  font-bold text-sm" title="{{$author}}">{{\Illuminate\Support\Str::initials($author)}}</span>
-                    <div class="shadow p-3 rounded-lg w-full max-w-5xl bg-white">
+                    <span class="{{$isUser ? 'bg-green-600' : ($isInternal ? 'bg-gray-300' : 'bg-orange-600')}} flex items-center justify-center rounded-full p-1 h-9 w-9 text-white  font-bold text-sm" title="{{$author}}">{{\Illuminate\Support\Str::initials($author)}}</span>
+                    <div class="shadow p-3 rounded-lg w-full max-w-5xl {{$isInternal ? 'bordering':'bg-white'}}">
                         {{$message->body}}
                         <hr class="my-2 border-line_light">
                         <div class="text-gray-600 text-xs flex items-center justify-between gap-6">

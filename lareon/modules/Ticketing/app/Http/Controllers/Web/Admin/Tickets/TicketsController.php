@@ -62,6 +62,7 @@ class TicketsController extends Controller implements HasMiddleware
      */
     public function show(Ticket $ticket): View
     {
+
         $adminId = auth('admin')->id();
 
         if ($ticket->isUnassigned() && !$ticket->isClosed()) {
