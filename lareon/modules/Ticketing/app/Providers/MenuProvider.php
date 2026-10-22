@@ -46,7 +46,7 @@ class MenuProvider implements MenuRegisteringContract
                       'order'      => 1,
                       'route'      => 'admin.ticketing.tickets.index',
                       'active'     => request()->routeIs('admin.ticketing.tickets.*'),
-                      'permission' => 'admin.ticket.read',
+                      'permission' => 'admin.ticket.read.all',
 
                   ],
                   [
@@ -54,13 +54,13 @@ class MenuProvider implements MenuRegisteringContract
                       'order'      => 2,
                       'route'      => 'admin.tickets.index',
                       'active'     => request()->routeIs('admin.tickets.index'),
-                      'permission' => 'admin.ticket.read.all',
+                      'permission' => 'admin.ticket.read',
                   ],
                   [
                       'title'      => trans('lareon::global.crud.titles.create', ['attribute' => trans('ticket')]),
                       'order'      => 3,
-                      'route'      => 'admin.ticketing.tickets.create',
-                      'active'     => request()->routeIs('admin.ticketing.tickets.create'),
+                      'route'      => 'admin.tickets.create',
+                      'active'     => request()->routeIs('admin.tickets.create'),
                       'permission' => 'admin.ticket.create',
                   ],
               ], 'tickets');

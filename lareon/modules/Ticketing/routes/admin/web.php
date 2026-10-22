@@ -8,12 +8,9 @@ use Lareon\Modules\Ticketing\App\Http\Middleware\EnsureAdminCanViewTicket;
 use Lareon\Modules\Ticketing\App\Http\Middleware\EnsureAdminOwnsTicket;
 
 
-
 Route::prefix('ticketing')->name('ticketing.tickets.')->group(function (): void {
     Route::get('/', [AdminTicketsController::class, 'index'])->name('index');
     Route::get('/{ticket}', [AdminTicketsController::class, 'show'])->name('show');
-    Route::get('/create', [AdminTicketsController::class, 'create'])->name('create');
-    Route::post('/create', [AdminTicketsController::class, 'store'])->name('store');
     Route::delete('/{ticket}', [AdminTicketsController::class, 'destroy'])->name('destroy');
 });
 
@@ -21,6 +18,11 @@ Route::prefix('tickets')->name('tickets.')->group(function (): void {
     Route::get('/', [TicketsController::class, 'index'])->name('index');
 
     Route::get('/{ticket}', [TicketsController::class, 'show'])->middleware(EnsureAdminCanViewTicket::class)->name('show');
+
+
+    Route::get('/create', [TicketsController::class, 'create'])->middleware(EnsureAdminOwnsTicket::class)->name('create');
+    Route::post('/', [TicketsController::class, 'store'])->middleware(EnsureAdminOwnsTicket::class)->name('store');
+
 
     Route::post('/{ticket}/reply', [TicketsController::class, 'reply'])->middleware(EnsureAdminOwnsTicket::class)->name('reply');
     Route::post('/{ticket}/close', [TicketsController::class, 'close'])->middleware(EnsureAdminOwnsTicket::class)->name('close');
@@ -30,8 +32,9 @@ Route::prefix('tickets')->name('tickets.')->group(function (): void {
 });
 
 
-Route::prefix('tickets/referrals')->name('tickets.referrals.')->group(function (): void {})->group(function (): void {
-    Route::get('/', [TicketAssignmentController::class, 'inbox'])->name('inbox');
+Route::prefix('tickets/referrals')->name('tickets.referrals.')->group(function (): void {
     Route::post('/{$ticket}/accept', [TicketAssignmentController::class, 'accept'])->name('accept');
     Route::post('/{$ticket}/reject', [TicketAssignmentController::class, 'reject'])->name('reject');
+    Route::get('/{$ticket}', [TicketAssignmentController::class, 'show'])->name('show');
+    Route::get('/inbox', [TicketAssignmentController::class, 'inbox'])->name('index');
 });
