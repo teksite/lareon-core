@@ -4,6 +4,7 @@ namespace Lareon\Modules\Ticketing\App\Logics;
 
 use Lareon\Modules\Ticketing\App\Enums\AssignmentStatus;
 use Lareon\Modules\Ticketing\App\Enums\AssignmentType;
+use Lareon\Modules\Ticketing\App\Enums\ChangedByType;
 use Lareon\Modules\Ticketing\App\Enums\TicketStatusType;
 use Lareon\Modules\Ticketing\App\Events\TicketAssigned;
 use Lareon\Modules\Ticketing\App\Events\TicketAssignmentResponded;
@@ -68,7 +69,7 @@ class AssignLogic
             if ($ticket->status === TicketStatusType::Opened) {
                 $from = $ticket->status;
                 $ticket->update(['status' => TicketStatusType::InProgress]);
-                $this->statusLogger->log($ticket, $from, TicketStatusType::InProgress, 'admin', $adminId, 'در اختیار گرفتن تیکت');
+                $this->statusLogger->log($ticket, $from, TicketStatusType::InProgress, ChangedByType::Admin, $adminId, __('getting the ticket'));
             }
 
             event(new TicketAssigned($ticket, $assignment));
