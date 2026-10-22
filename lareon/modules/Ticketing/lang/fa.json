@@ -42,6 +42,7 @@
     "rejection and re-referral": "رد و ارجاع مجدد",
     "getting the ticket": "در اختیار گرفتن تیکت",
     "reason for the decision": "دلیل تصمیم",
+    "the ticket is closed": "تیکت بسته شده‌است",
     "internal note (visible only to admins; not sent to the user)": "یادداشت داخلی (فقط برای مدیر‌ها قابل مشاهده است، برای کاربر ارسال نمی‌شود)",
     "the referral has been accepted, and the ticket is now assigned to you": "ارجاع پذیرفته شد و تیکت اکنون در اختیار شماست",
     "the referral was rejected, and the ticket was assigned to another admin": "ارجاع رد شد و تیکت به مدیر دیگری ارجاع داده شد",
@@ -51,5 +52,6 @@
     "referred admin": "امدیر ارجاع‌شده",
     "referral":"ارجاع",
     "referrals":"ارجاع‌ها",
-    "failed to assign ticket. Please try again or notify the support team": "ارجاع تیکت ناموفق بود. لطفاً دوباره تلاش کنید یا به گروه پشتیبانی اطلاع دهید."
+    "failed to assign ticket. Please try again or notify the support team": "ارجاع تیکت ناموفق بود. لطفاً دوباره تلاش کنید یا به گروه پشتیبانی اطلاع دهید.",
+    "this ticket has been assigned to you and is awaiting your decision. please go to the assignments page to accept or reject it": "این تیکت به شما ارجاع داده شده و در انتظار تصمیم شماست. برای پذیرفتن یا رد آن به صفحه ارجاعات بروید"
 }

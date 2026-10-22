@@ -31,16 +31,15 @@
             </div>
         </div>
         <x-ticketing::editor.messages-list :ticket="$ticket" :showInternal="true"/>
+
         @if ($isPendingDecision)
-            {{--//TODO english--}}
             <div class="bg-amber-50 border border-amber-200 rounded-xl p-5 text-sm text-amber-900">
-                این تیکت به شما ارجاع داده شده و در انتظار تصمیم شماست. برای پذیرفتن یا رد آن،
-                به
-                <a href="{{ route('admin.tickets.referrals.inbox') }}" class="underline font-medium">صندوق ارجاعات من</a> بروید.
+                {{__('this ticket has been assigned to you and is awaiting your decision. please go to the assignments page to accept or reject it')}}.
+                <a href="{{ route('admin.tickets.referrals.index') }}#ticket_{{$ticket->id}}" class="underline font-medium">{{__('refers')}}</a>
             </div>
         @elseif ($ticket->isClosed())
             <div class="rounded-lg border border-stone-200 bg-stone-100 text-stone-500 text-sm px-4 py-3 text-center">
-                این تیکت بسته شده است.
+                {{__('the ticket is closed')}}.
             </div>
         @elseif ($isHolder)
             <form method="POST" action="{{ route('admin.tickets.reply', $ticket) }}"
@@ -72,25 +71,25 @@
             </form>
 
             <dialog id="closeDialog" class="y-box translate-x-1/2 top-1/2 inset-x-1/2 w-full max-w-100">
-               <div class="relative">
-                   <form id="close-ticket-form" method="POST" action="{{ route('admin.tickets.close', $ticket) }}">
-                       @csrf
-                       <x-lareon::editor.input-textarea :required="true" placeholder="why?" labelPosition="top" :label="__('note')" name="note" rows="8" min="5" max="10000"></x-lareon::editor.input-textarea>
-                       <x-lareon::buttons.nav class="min-w-36 mt-6" :fullWidth="false" type="submit" color="update" size="xs">
-                           {{ __('submit') }}
-                       </x-lareon::buttons.nav>
-                   </form>
-                   <button commandfor="closeDialog" command="close" class="absolute top-0 left-0 text-red-600 font-bold">
-                       X
-                   </button>
-               </div>
+                <div class="relative">
+                    <form id="close-ticket-form" method="POST" action="{{ route('admin.tickets.close', $ticket) }}">
+                        @csrf
+                        <x-lareon::editor.input-textarea :required="true" placeholder="why?" labelPosition="top" :label="__('note')" name="note" rows="8" min="5" max="10000"></x-lareon::editor.input-textarea>
+                        <x-lareon::buttons.nav class="min-w-36 mt-6" :fullWidth="false" type="submit" color="update" size="xs">
+                            {{ __('submit') }}
+                        </x-lareon::buttons.nav>
+                    </form>
+                    <button commandfor="closeDialog" command="close" class="absolute top-0 left-0 text-red-600 font-bold">
+                        X
+                    </button>
+                </div>
             </dialog>
 
         @endif
 
-      <section class="mt-6">
-          <x-ticketing::editor.messages-history :ticket="$ticket" />
-      </section>
+        <section class="mt-6">
+            <x-ticketing::editor.messages-history :ticket="$ticket"/>
+        </section>
     </div>
 
 </x-lareon::admin-layout>

@@ -39,10 +39,9 @@ class AssignLogic
             return FetchData::get(TicketAssignment::query()
                                                   ->with('ticket', 'fromAdmin')
                                                   ->where('to_admin_id', $adminId)
-                                                  ->where('status', AssignmentStatus::Pending));
+                                                  ->where('status', AssignmentStatus::Pending) ,['ticket']);
         })->run();
     }
-
 
 
     /**
@@ -146,15 +145,16 @@ class AssignLogic
      * @throws Throwable
      * @throws TicketAssignmentException
      */
-    public function reject(TicketAssignment $assignment, int $adminId, string $decisionReason, int $nextAdminId)
+    public function reject(TicketAssignment $assignment, int $currentAdminId, string $decisionReason, int $nextAdminId)
     {
-        if ($nextAdminId === $adminId) throw TicketAssignmentException::cannotReferToSelf();
+        if ($nextAdminId === $currentAdminId) throw TicketAssignmentException::cannotReferToSelf();
 
-        return ServiceWrapper::make(true)->do(function () use ($assignment, $adminId, $decisionReason, $nextAdminId) {
+        return ServiceWrapper::make(true)->do(function () use ($assignment, $currentAdminId, $decisionReason, $nextAdminId) {
 
-            $assignment = TicketAssignment::whereKey($assignment->id)->lockForUpdate()->firstOrFail();
+            $assignment = TicketAssignment::query()->whereKey($assignment->id)->lockForUpdate()->firstOrFail();
+            $preAdminId = $assignment->from_admin_id;
 
-            $this->guardPendingAssignment($assignment, $adminId);
+            $this->guardPendingAssignment($assignment, $currentAdminId);
 
             $assignment->update([
                 'status'          => AssignmentStatus::Rejected,
@@ -164,18 +164,29 @@ class AssignLogic
 
             $ticket = $assignment->ticket()->lockForUpdate()->first();
 
+            $isReferredToPreAdmin = $nextAdminId === $preAdminId;
+
             $nextAssignment = $ticket->assignments()->create([
                 'type'          => AssignmentType::Referral,
-                'from_admin_id' => $adminId,
+                'from_admin_id' => $currentAdminId,
                 'to_admin_id'   => $nextAdminId,
                 'reason'        => $decisionReason,
-                'status'        => AssignmentStatus::Pending,
+                'status'        => $isReferredToPreAdmin ? AssignmentStatus::Accepted : AssignmentStatus::Pending,
+                'decided_at'    => now(),
+
             ]);
 
-            $ticket->update([
-                'holder_admin_id'  => null,
-                'pending_admin_id' => $nextAdminId,
-            ]);
+            if ($isReferredToPreAdmin) {
+                $ticket->update([
+                    'holder_admin_id'  => $preAdminId,
+                    'pending_admin_id' => null,
+                ]);
+            } else {
+                $ticket->update([
+                    'holder_admin_id'  => null,
+                    'pending_admin_id' => $nextAdminId,
+                ]);
+            }
 
             event(new TicketAssignmentResponded($ticket, $assignment));
             event(new TicketAssigned($ticket, $nextAssignment));

@@ -42,7 +42,6 @@
                     <td>
                         <x-lareon::action-box class="action">
                             <x-lareon::links.action type="show" :href="route('admin.tickets.show', $ticket)" can="admin.ticket.reply"/>
-                            <x-lareon::links.action type="delete" method="delete" :href="route('admin.ticketing.tickets.destroy' , $ticket)" can="admin.ticket.delete"/>
                         </x-lareon::action-box>
                     </td>
                 </tr>

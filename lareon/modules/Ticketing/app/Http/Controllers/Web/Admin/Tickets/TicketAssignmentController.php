@@ -44,9 +44,9 @@ class TicketAssignmentController extends Controller implements HasMiddleware
         $adminId = auth('admin')->id();
         $admins  = Admin::query()->where('id', '!=', $adminId)->orderBy('name')->get(['id', 'name']);
 
-        $tickets = $this->assign->pendings($adminId)->result;
+        $pending = $this->assign->pendings($adminId)->result;
 
-        return view('ticketing::admin.pages.referrals.index', compact('tickets' ,'admins'));
+        return view('ticketing::admin.pages.referrals.index', compact('pending' ,'admins'));
     }
 
     /**
@@ -116,8 +116,8 @@ class TicketAssignmentController extends Controller implements HasMiddleware
         return Responder::fromResult(
             $res,
             __('the referral was rejected, and the ticket was assigned to another admin'),
-            success_url: route('tickets.referrals.inbox', $assignment->ticket_id)
-        );
+            success_url: route('admin.tickets.referrals.index', $assignment->ticket_id)
+        )->go();
     }
 
 

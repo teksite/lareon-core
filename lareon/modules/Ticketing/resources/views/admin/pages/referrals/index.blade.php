@@ -4,8 +4,9 @@
 
     @section('list')
         <div class="space-y-6">
-            @foreach ($tickets as $assignment)
-                <div class="y-box">
+            @foreach ($pending as $assignment)
+                @dd($assignment)
+                <div class="y-box" id="ticket_{{$assignment->ticket->id}}">
                     <div class="flex items-start justify-between gap-3 mb-2">
                         <div class="text-xs text-gray-600 mb-1">
                             <span> {{ $assignment->ticket->ticket_number }} </span> |
@@ -15,7 +16,7 @@
                             </span>
                         </div>
                         <div class="flex items-center justify-end gap-3">
-                            <x-lareon::links.action type="show" :href="route('admin.tickets.referrals.show', $assignment)" can="admin.ticket.read"/>
+                            <x-lareon::links.action type="show" :href="route('admin.tickets.referrals.show', $assignment->ticket)" can="admin.ticket.read"/>
                             <x-ticketing::priority-pulse :priority="$assignment->ticket->priority"/>
                         </div>
                     </div>
@@ -41,9 +42,7 @@
                             <summary class="cursor-pointer text-sm text-red-600 hover:text-red-900 select-none text-end">
                                 {{__('reject')}}
                             </summary>
-
-                            <form method="POST" action="{{ route('admin.tickets.referrals.reject', $assignment) }}"
-                                  class="mt-3 space-y-3 bg-red-50 border border-red-600 rounded-lg p-3">
+                            <form method="POST" action="{{ route('admin.tickets.referrals.reject', $assignment) }}" class="mt-3 space-y-3 bg-red-50/50 border border-red-600 rounded-lg p-3">
                                 @csrf
                                     <x-lareon::editor.input-textarea  rows="2" :required="true" :label="__('reason for reject')" name="decision_reason" :placeholder="__('lareon::global.placeholders.write.one',['attribute'=>__('reason for refer')])"  required minlength="5" maxlength="2000"></x-lareon::editor.input-textarea>
                                 <div>
@@ -60,7 +59,7 @@
                                     </x-lareon::editor.input-select>
                                 </div>
 
-                                <x-lareon::buttons.nav :fullWidth="false" type="button" color="delete" variant="outline" size="xs">
+                                <x-lareon::buttons.nav :fullWidth="false" color="delete" variant="outline" size="xs">
                                     {{ __('rejection and re-referral') }}
                                 </x-lareon::buttons.nav>
                             </form>
