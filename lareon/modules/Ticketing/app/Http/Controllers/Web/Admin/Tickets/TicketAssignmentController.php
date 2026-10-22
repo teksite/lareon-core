@@ -28,7 +28,7 @@ class TicketAssignmentController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            new Middleware('can:admin.ticket.assign'),
+            new Middleware('can:admin.ticket.assign.call'),
             new Middleware('can:admin.ticket.assign.call', only: ['create', 'store']),
             new Middleware('can:admin.ticket.assign.reject', only: ['reject']),
             new Middleware('can:admin.ticket.assign.accept', only: ['accept']),
@@ -42,9 +42,20 @@ class TicketAssignmentController extends Controller implements HasMiddleware
     public function inbox(): View
     {
         $adminId = auth('admin')->id();
+        $admins  = Admin::query()->where('id', '!=', $adminId)->orderBy('name')->get(['id', 'name']);
+
         $tickets = $this->assign->pendings($adminId)->result;
 
-        return view('ticketing::admin.referrals.inbox', compact('tickets'));
+        return view('ticketing::admin.pages.referrals.index', compact('tickets' ,'admins'));
+    }
+
+    /**
+     * @throws Throwable
+     */
+    public function show(Ticket $ticket): View
+    {
+        $ticket->load(['user', 'messages', 'holderAdmin', 'messages.attachments', 'attachments', 'assignments.fromAdmin', 'assignments.toAdmin']);
+        return  view('ticketing::admin.pages.admin-tickets.show', compact('ticket'));
     }
 
 
