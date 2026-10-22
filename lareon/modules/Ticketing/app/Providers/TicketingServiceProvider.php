@@ -3,7 +3,10 @@
 namespace Lareon\Modules\Ticketing\App\Providers;
 
 use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Gate;
 use Lareon\Modules\Ticketing\App\Models\Ticket;
+use Lareon\Modules\Ticketing\App\Policy\TicketPolicy;
 use Lareon\Modules\User\App\Models\User;
 use Teksite\Module\Providers\Support\BaseModuleServiceProvider as ServiceProvider;
 
@@ -65,7 +68,12 @@ class TicketingServiceProvider extends ServiceProvider
     public function boot(): void
     {
         parent::boot();
+        Gate::policy(Ticket::class, TicketPolicy::class);
+
+
         $this->loadDynamicRelations();
+        $this->registerAttachmentDisk();
+
     }
 
     /**
@@ -79,5 +87,21 @@ class TicketingServiceProvider extends ServiceProvider
     public function loadDynamicRelations(): void
     {
         User::resolveRelationUsing('tickets', fn(User $user) => $user->hasMany(Ticket::class));
+    }
+
+
+    private function registerAttachmentDisk(): void
+    {
+        $diskName = config('ticketing.attachments.disk', 'ticketing');
+
+        if (config("filesystems.disks.{$diskName}") !== null) return;
+
+        Config::set("filesystems.disks.{$diskName}", [
+            'driver' => 'local',
+            'root' => storage_path('app/private/ticketing'),
+            'url' => env('APP_URL').'/storage/ticketing',
+            'visibility' => 'private',
+            'throw' => false,
+        ]);
     }
 }
