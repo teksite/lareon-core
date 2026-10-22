@@ -1,6 +1,6 @@
 <x-lareon::admin-list>
     @section('title', __('lareon::global.crud.titles.list',['attribute'=>__('tickets')]))
-    @section('description', __('tickets are fixed content on a website that rarely changes and displays the same information to visitors'))
+    @section('description', __("available tickets are tickets submitted by users to report their issues. you can help them resolve these issues by providing the necessary guidance"))
     @section('header.start')
         <x-lareon::links.nav :href="route('admin.tickets.create')" :content="__('lareon::global.buttons.new_one')" color="create" can="admin.ticket.create"/>
     @endsection

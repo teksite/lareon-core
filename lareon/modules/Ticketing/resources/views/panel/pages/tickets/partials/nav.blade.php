@@ -10,7 +10,7 @@
         <ul class="space-y-6">
             @foreach($items as $label=>$url)
                 <li>
-                    <a href="{{$url}}">{{$label}}</a>
+                    <a href="{{$url}}" class="bordering rounded-xl min-w-36 px-3 py-2 block">{{$label}}</a>
                 </li>
             @endforeach
         </ul>

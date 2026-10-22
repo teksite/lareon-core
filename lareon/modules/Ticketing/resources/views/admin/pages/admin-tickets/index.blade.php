@@ -1,6 +1,6 @@
 <x-lareon::admin-list>
     @section('title', __('lareon::global.crud.titles.list',['attribute'=>__('tickets')]))
-    @section('description', __('tickets are fixed content on a website that rarely changes and displays the same information to visitors'))
+    @section('description', __("tickets provide a way for users to communicate with an application's support team and report their issues and requests"))
 
     @section('list')
         <x-lareon::table :rows="$tickets" :headers="['id'=>'#','ticket_number'=>__('ticket number') ,__('subject') ,'created_at'=>__('created at') ,__('status'),__('priority'),'']">

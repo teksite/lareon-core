@@ -5,12 +5,14 @@ namespace Lareon\Modules\Ticketing\App\Logics;
 use Lareon\Modules\Ticketing\App\Enums\AssignmentStatus;
 use Lareon\Modules\Ticketing\App\Enums\AssignmentType;
 use Lareon\Modules\Ticketing\App\Enums\ChangedByType;
+use Lareon\Modules\Ticketing\App\Enums\SenderType;
 use Lareon\Modules\Ticketing\App\Enums\TicketStatusType;
 use Lareon\Modules\Ticketing\App\Events\TicketAssigned;
 use Lareon\Modules\Ticketing\App\Events\TicketAssignmentResponded;
 use Lareon\Modules\Ticketing\App\Exceptions\TicketAssignmentException;
 use Lareon\Modules\Ticketing\App\Models\Ticket;
 use Lareon\Modules\Ticketing\App\Models\TicketAssignment;
+use Lareon\Steward\App\Models\Admin;
 use Teksite\Handler\Facade\FetchData;
 use Teksite\Handler\Services\ServiceWrapper;
 use Throwable;
@@ -39,7 +41,7 @@ class AssignLogic
             return FetchData::get(TicketAssignment::query()
                                                   ->with('ticket', 'fromAdmin')
                                                   ->where('to_admin_id', $adminId)
-                                                  ->where('status', AssignmentStatus::Pending) ,['ticket']);
+                                                  ->where('status', AssignmentStatus::Pending), ['ticket']);
         })->run();
     }
 
@@ -88,6 +90,7 @@ class AssignLogic
         return ServiceWrapper::make(true)->do(function () use ($ticket, $fromAdminId, $toAdminId, $reason) {
 
             $ticket = Ticket::query()->whereKey($ticket->id)->lockForUpdate()->firstOrFail();
+            $nextAdminId = Admin::query()->whereKey($toAdminId)->firstOrFail();
 
             if (!$ticket->isHeldBy($fromAdminId)) throw TicketAssignmentException::notHolder();
 
@@ -99,10 +102,19 @@ class AssignLogic
                 'status'        => AssignmentStatus::Pending,
             ]);
 
+
+            $ticket->update(['last_activity_at' => now()]);
             $ticket->update([
                 'holder_admin_id'  => null,
                 'pending_admin_id' => $toAdminId,
             ]);
+
+            $message = $ticket->appendMessage(
+                SenderType::System,
+                null,
+                "the ticket has been forwarded to {$nextAdminId->name}({$toAdminId}): {$reason}",
+                true,
+            );
 
             event(new TicketAssigned($ticket, $assignment));
 
@@ -119,6 +131,7 @@ class AssignLogic
         return ServiceWrapper::make(true)->do(function () use ($assignment, $adminId) {
 
             $assignment = TicketAssignment::query()->whereKey($assignment->id)->lockForUpdate()->firstOrFail();
+            $admin = Admin::query()->whereKey($adminId)->firstOrFail();
 
             $this->guardPendingAssignment($assignment, $adminId);
 
@@ -134,6 +147,13 @@ class AssignLogic
             ]);
 
             if ($ticket->status === TicketStatusType::Opened) $ticket->update(['status' => TicketStatusType::InProgress]);
+
+            $message = $ticket->appendMessage(
+                SenderType::System,
+                null,
+                "the ticket is accepted by {$admin->name} ({$adminId})",
+                true,
+            );
 
             event(new TicketAssignmentResponded($ticket, $assignment));
 
@@ -153,6 +173,7 @@ class AssignLogic
 
             $assignment = TicketAssignment::query()->whereKey($assignment->id)->lockForUpdate()->firstOrFail();
             $preAdminId = $assignment->from_admin_id;
+            $nextAdmin = Admin::query()->whereKey($nextAdminId)->firstOrFail();
 
             $this->guardPendingAssignment($assignment, $currentAdminId);
 
@@ -176,6 +197,9 @@ class AssignLogic
 
             ]);
 
+
+
+
             if ($isReferredToPreAdmin) {
                 $ticket->update([
                     'holder_admin_id'  => $preAdminId,
@@ -187,6 +211,13 @@ class AssignLogic
                     'pending_admin_id' => $nextAdminId,
                 ]);
             }
+
+            $message = $ticket->appendMessage(
+                SenderType::System,
+                null,
+                "the ticket is rejected and has been forwarded to {$nextAdmin->name} ({$nextAdminId}): {$decisionReason}",
+                true,
+            );
 
             event(new TicketAssignmentResponded($ticket, $assignment));
             event(new TicketAssigned($ticket, $nextAssignment));

@@ -54,5 +54,7 @@
     "referral":"ارجاع",
     "referrals":"ارجاع‌ها",
     "failed to assign ticket. Please try again or notify the support team": "ارجاع تیکت ناموفق بود. لطفاً دوباره تلاش کنید یا به گروه پشتیبانی اطلاع دهید.",
-    "this ticket has been assigned to you and is awaiting your decision. please go to the assignments page to accept or reject it": "این تیکت به شما ارجاع داده شده و در انتظار تصمیم شماست. برای پذیرفتن یا رد آن به صفحه ارجاعات بروید"
+    "this ticket has been assigned to you and is awaiting your decision. please go to the assignments page to accept or reject it": "این تیکت به شما ارجاع داده شده و در انتظار تصمیم شماست. برای پذیرفتن یا رد آن به صفحه ارجاعات بروید",
+    "tickets provide a way for users to communicate with an application's support team and report their issues and requests": "تیکت\u200Cها راهی برای ارتباط کاربران با تیم پشتیبانی اپلیکیشن هستند که از طریق آن می\u200Cتوانند مشکلات و درخواست\u200Cهای خود را مطرح کنند",
+    "available tickets are tickets submitted by users to report their issues. you can help them resolve these issues by providing the necessary guidance": "تیکت\u200Cهای در دسترس شامل مواردی هستند که کاربران برای بیان مشکلات خود ثبت کرده\u200Cاند و شما می\u200Cتوانید با ارائه راهنمایی\u200Cهای لازم، به آن\u200Cها در حل مشکلاتشان کمک کنید"
 }

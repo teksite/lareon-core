@@ -165,5 +165,18 @@ class Ticket extends Model
         return $this->user_id === $userId;
     }
 
+    public function appendMessage(SenderType $senderType, ?int $senderId, string $body, bool $internalNote = false): TicketMessage
+    {
+        $message = $this->messages()->create([
+            'sender_type'      => $senderType->value,
+            'sender_id'        => $senderId,
+            'body'             => $body,
+            'is_internal_note' => $internalNote,
+        ]);
+
+        $this->update(['last_activity_at' => now()]);
+
+        return $message;
+    }
 
 }

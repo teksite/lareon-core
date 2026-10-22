@@ -6,7 +6,7 @@
     @endsection
 
     @section('header.end')
-        @if ($isHolder)
+        @if ($isHolder && !$ticket->isClosed())
             <div class="flex justify-end">
                 <x-lareon::links.nav x-data @click="$dispatch('open-modal', 'page-content')"  :content="__('assign this ticket to another admin')" variant="simple" color="show" can="admin.ticket.read"/>
             </div>
