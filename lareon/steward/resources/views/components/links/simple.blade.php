@@ -67,7 +67,7 @@
         'xl' => 'rounded-xl',
         'full' => 'rounded-full',
     ];
-    $baseClasses = 'inline-flex items-center justify-center font-medium transition-all duration-200 ease-in-out focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none';
+    $baseClasses = 'cursor-pointer inline-flex items-center justify-center font-medium transition-all duration-200 ease-in-out focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none';
     $sizeClass = $sizes[$size] ?? $sizes['sm'];
     $colorClass = $colors[$color][$variant] ?? $colors['blue']['solid'];
     $roundedClass = $roundedClasses[$rounded] ?? $roundedClasses['lg'];
@@ -78,7 +78,7 @@
     $content =$content ?? ($slot->isNotEmpty() ? $slot : '');
 @endphp
 @canany((array)$can)
-    <a href="{{ $href }}" target="{{ $target }}" class="{{ $classes }}" {{ $attributes->except('href') }}>
+    <a {{$href ? 'href='.$href : ''}} target="{{ $target }}" class="{{ $classes }}" {{ $attributes->except('href') }}>
         {!! $content !!}
 </a>
 @endcanany
