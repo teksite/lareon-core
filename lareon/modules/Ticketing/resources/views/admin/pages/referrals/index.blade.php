@@ -1,6 +1,6 @@
 <x-lareon::admin-list>
     @section('title', __('lareon::global.crud.titles.list',['attribute'=>__('tickets')]))
-    @section('description', __('referrals are fixed content on a website that rarely changes and displays the same information to visitors'))
+    @section('description', __('referrals are tickets that other administrators have assigned to you for review and follow-up based on the reasons specified in each ticket'))
 
     @section('list')
         <div class="space-y-6">

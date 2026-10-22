@@ -46,6 +46,9 @@ class TicketLogic
         })->run();
     }
 
+    /**
+     * @throws Throwable
+     */
     public function heldBy(null|Admin $admin = null, mixed $fetchData = [])
     {
         $admin ??= auth()->guard('admin')->user();
@@ -55,6 +58,9 @@ class TicketLogic
         })->run();
     }
 
+    /**
+     * @throws Throwable
+     */
     public function visibleToAdmin(null|Admin $admin = null, mixed $fetchData = [])
     {
         $admin ??= auth()->guard('admin')->user();
@@ -64,6 +70,9 @@ class TicketLogic
         })->run();
     }
 
+    /**
+     * @throws Throwable
+     */
     public function openAndHeldByAdmin(null|Admin $admin = null, mixed $fetchData = [])
     {
         $admin ??= auth()->guard('admin')->user();

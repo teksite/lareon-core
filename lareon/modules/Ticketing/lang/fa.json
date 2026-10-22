@@ -53,8 +53,10 @@
     "referred admin": "امدیر ارجاع‌شده",
     "referral":"ارجاع",
     "referrals":"ارجاع‌ها",
+    "your reply is submitted": "پاسخ شما ثبت شد",
     "failed to assign ticket. Please try again or notify the support team": "ارجاع تیکت ناموفق بود. لطفاً دوباره تلاش کنید یا به گروه پشتیبانی اطلاع دهید.",
     "this ticket has been assigned to you and is awaiting your decision. please go to the assignments page to accept or reject it": "این تیکت به شما ارجاع داده شده و در انتظار تصمیم شماست. برای پذیرفتن یا رد آن به صفحه ارجاعات بروید",
-    "tickets provide a way for users to communicate with an application's support team and report their issues and requests": "تیکت\u200Cها راهی برای ارتباط کاربران با تیم پشتیبانی اپلیکیشن هستند که از طریق آن می\u200Cتوانند مشکلات و درخواست\u200Cهای خود را مطرح کنند",
-    "available tickets are tickets submitted by users to report their issues. you can help them resolve these issues by providing the necessary guidance": "تیکت\u200Cهای در دسترس شامل مواردی هستند که کاربران برای بیان مشکلات خود ثبت کرده\u200Cاند و شما می\u200Cتوانید با ارائه راهنمایی\u200Cهای لازم، به آن\u200Cها در حل مشکلاتشان کمک کنید"
+    "tickets provide a way for users to communicate with an application's support team and report their issues and requests": "تیکت‌ها راهی برای ارتباط کاربران با تیم پشتیبانی اپلیکیشن هستند که از طریق آن می‌توانند مشکلات و درخواست‌های خود را مطرح کنند",
+    "available tickets are tickets submitted by users to report their issues. you can help them resolve these issues by providing the necessary guidance": "تیکت‌های در دسترس شامل مواردی هستند که کاربران برای بیان مشکلات خود ثبت کرده‌اند و شما می‌توانید با ارائه راهنمایی‌های لازم، به آن‌ها در حل مشکلاتشان کمک کنید",
+    "referrals are tickets that other administrators have assigned to you for review and follow-up based on the reasons specified in each ticket": "ارجاعات شامل تیکت‌هایی هستند که سایر مدیران، بر اساس دلایل ذکرشده در هر تیکت، برای بررسی و پیگیری به شما ارجاع داده‌اند."
 }
