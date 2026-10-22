@@ -13,6 +13,7 @@ use Lareon\Modules\Ticketing\App\Http\Requests\Admin\ReplyTicketRequest;
 use Lareon\Modules\Ticketing\App\Logics\AssignLogic;
 use Lareon\Modules\Ticketing\App\Logics\TicketLogic;
 use Lareon\Modules\Ticketing\App\Models\Ticket;
+use Lareon\Steward\App\Models\Admin;
 use Teksite\Handler\Facade\Responder;
 
 class TicketsController extends Controller implements HasMiddleware
@@ -57,7 +58,6 @@ class TicketsController extends Controller implements HasMiddleware
      */
     public function show(Ticket $ticket): View
     {
-
         $adminId = auth('admin')->id();
 
         if ($ticket->isUnassigned() && !$ticket->isClosed()) {

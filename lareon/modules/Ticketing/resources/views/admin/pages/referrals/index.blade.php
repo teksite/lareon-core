@@ -67,6 +67,9 @@
                 </div>
             @endforeach
         </div>
+
+        {!! $pending->appends(request()->query())->links() !!}
+
     @endsection
 </x-lareon::admin-list>
 

@@ -43,6 +43,7 @@
     "getting the ticket": "در اختیار گرفتن تیکت",
     "reason for the decision": "دلیل تصمیم",
     "the ticket is closed": "تیکت بسته شده‌است",
+    "referring the ticket": "ارجاع تیکیت",
     "internal note (visible only to admins; not sent to the user)": "یادداشت داخلی (فقط برای مدیر‌ها قابل مشاهده است، برای کاربر ارسال نمی‌شود)",
     "the referral has been accepted, and the ticket is now assigned to you": "ارجاع پذیرفته شد و تیکت اکنون در اختیار شماست",
     "the referral was rejected, and the ticket was assigned to another admin": "ارجاع رد شد و تیکت به مدیر دیگری ارجاع داده شد",

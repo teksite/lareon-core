@@ -8,10 +8,22 @@
     @section('header.end')
         @if ($isHolder)
             <div class="flex justify-end">
-                <x-lareon::links.nav :href="route('admin.tickets.refer.create', $ticket)" :content="__('assign this ticket to another admin')" variant="simple" color="show" can="admin.ticket.read"/>
+                <x-lareon::links.nav x-data @click="$dispatch('open-modal', 'page-content')"  :content="__('assign this ticket to another admin')" variant="simple" color="show" can="admin.ticket.read"/>
             </div>
         @endif
     @endsection
+    <x-lareon::modal name="page-content" maxWidth="5xl">
+        <h3 class="text-center mb-3">{{__('referring the ticket')}}</h3>
+        <form action="{{route('admin.tickets.refer.store' ,$ticket)}}" method="post">
+            @csrf
+            <x-ticketing::editor.create-refer :ticket="$ticket" />
+            <div class="mt-6">
+                <x-lareon::buttons.nav class="min-w-36" :fullWidth="false" type="submit" color="blue">
+                    {{ __('refer') }}
+                </x-lareon::buttons.nav>
+            </div>
+        </form>
+    </x-lareon::modal>
 
     <div class="max-w-5xl mx-auto ">
         <h2 class="text-center">{{$ticket->subject}}</h2>
