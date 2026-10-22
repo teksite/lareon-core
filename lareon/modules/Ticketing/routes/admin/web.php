@@ -19,10 +19,8 @@ Route::prefix('tickets')->name('tickets.')->group(function (): void {
 
     Route::get('/{ticket}', [TicketsController::class, 'show'])->middleware(EnsureAdminCanViewTicket::class)->name('show');
 
-
     Route::get('/create', [TicketsController::class, 'create'])->middleware(EnsureAdminOwnsTicket::class)->name('create');
     Route::post('/', [TicketsController::class, 'store'])->middleware(EnsureAdminOwnsTicket::class)->name('store');
-
 
     Route::post('/{ticket}/reply', [TicketsController::class, 'reply'])->middleware(EnsureAdminOwnsTicket::class)->name('reply');
     Route::post('/{ticket}/close', [TicketsController::class, 'close'])->middleware(EnsureAdminOwnsTicket::class)->name('close');
@@ -33,8 +31,8 @@ Route::prefix('tickets')->name('tickets.')->group(function (): void {
 
 
 Route::prefix('tickets/referrals')->name('tickets.referrals.')->group(function (): void {
-    Route::post('/{$ticket}/accept', [TicketAssignmentController::class, 'accept'])->name('accept');
-    Route::post('/{$ticket}/reject', [TicketAssignmentController::class, 'reject'])->name('reject');
-    Route::get('/{$ticket}', [TicketAssignmentController::class, 'show'])->name('show');
     Route::get('/inbox', [TicketAssignmentController::class, 'inbox'])->name('index');
+    Route::get('/inbox/{ticket}', [TicketAssignmentController::class, 'show'])->name('show');
+    Route::post('/{ticket}/accept', [TicketAssignmentController::class, 'accept'])->name('accept');
+    Route::post('/{ticket}/reject', [TicketAssignmentController::class, 'reject'])->name('reject');
 });

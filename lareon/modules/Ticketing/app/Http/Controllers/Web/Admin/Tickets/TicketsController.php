@@ -36,12 +36,7 @@ class TicketsController extends Controller implements HasMiddleware
      */
     public function index()
     {
-        $filters = [
-            'all'        => 'all',
-            'unassigned' => 'unassigned',
-            'open'       => 'open',
-            'own'        => 'own',
-        ];
+        $filters = ['all' => 'all', 'unassigned' => 'unassigned', 'open' => 'opened', 'own' => 'owned',];
 
         $admin = auth()->guard('admin')->user();
         $filterQuery = request()->input('type');
@@ -53,7 +48,7 @@ class TicketsController extends Controller implements HasMiddleware
             default      => $this->logic->visibleToAdmin($admin)->result,
         };
 
-        return view('ticketing::admin.pages.tickets.list', compact('tickets', 'filters', 'filterQuery'));
+        return view('ticketing::admin.pages.tickets.index', compact('tickets', 'filters', 'filterQuery'));
     }
 
 
@@ -80,6 +75,15 @@ class TicketsController extends Controller implements HasMiddleware
     }
 
 
+    public function store()
+    {
+
+    }
+
+    public function create()
+    {
+
+    }
     /**
      * @throws \Throwable
      */
