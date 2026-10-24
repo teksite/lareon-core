@@ -24,7 +24,8 @@
                                 @if ($message->attachments->isNotEmpty())
                                     <div class="flex flex-wrap gap-3">
                                         @foreach ($message->attachments as $attachment)
-                                            <a title="{{ $attachment->original_name }}" data-size="{{ $attachment->humanSize() }}" href="{{ $attachment->url() }}" target="_blank" class="text-2xl font-bold">
+                                           <span class="text-xs font-bold">{{__('attachments')}}:</span>
+                                            <a target="_blank" class="text-2xl font-bold" rel="nofollow" title="{{$attachment->original_name}}" data-size="{{ $attachment->humanSize() }}" href="{{URL::temporarySignedRoute('attachment.files.show',now()->addMinutes(10),['path' => $attachment->path,'disk'=>$attachment->disk ,'filename'=>$attachment->original_name])}}" >
                                                 📎
                                             </a>
                                         @endforeach
