@@ -1,0 +1,2 @@
+@props(['value'=>null , "disabled"=>false ,'required'=>false , 'readonly' =>false, 'accept'=>null])
+<input type="file" @disabled($disabled) @readonly($readonly) @required($required) {{$attributes->merge(['class'=>"w-full text-sm text-slate-600 file:me-3 file:rounded-lg file:border-0 file:bg-slate-100 file:px-3 file:py-2"])}} value="{{$value}}" {{$accept ? 'accept='.$accept : ''}}>
