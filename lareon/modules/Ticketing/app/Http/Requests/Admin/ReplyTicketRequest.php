@@ -2,9 +2,12 @@
 namespace Lareon\Modules\Ticketing\App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Lareon\Modules\Ticketing\App\Http\Requests\Concerns\ValidatesAttachments;
 
 class ReplyTicketRequest extends FormRequest
 {
+    use ValidatesAttachments;
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -23,6 +26,8 @@ class ReplyTicketRequest extends FormRequest
         return [
             'body'=>'required|min:3|max:10000',
             'is_internal_note'=>'sometimes|boolean',
+            ...$this->attachmentRules()
+
         ];
     }
 }

@@ -5,9 +5,12 @@ namespace Lareon\Modules\Ticketing\App\Http\Requests\Panel;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Enum;
 use Lareon\Modules\Ticketing\App\Enums\PriorityType;
+use Lareon\Modules\Ticketing\App\Http\Requests\Concerns\ValidatesAttachments;
 
 class ReplyTicketMessageRequest extends FormRequest
 {
+    use ValidatesAttachments;
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -25,9 +28,7 @@ class ReplyTicketMessageRequest extends FormRequest
     {
         return [
             'body'     => 'required|string|min:5|max:10000',
-            // ُTODO atachement
-            // 'attachments' => $this->attachmentRules(),
-            // 'attachments.*' => $this->attachmentFileRules(),
+            ...$this->attachmentRules()
         ];
     }
 }
