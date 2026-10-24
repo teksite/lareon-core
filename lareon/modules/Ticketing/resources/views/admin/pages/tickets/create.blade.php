@@ -20,6 +20,8 @@
                 <x-meta::editor.section.template type="page" :required="false" wrapperMode="y-box" :value="old('template')"/>
             </x-slot:aside>
         </x-lareon::editor.tabs.item>
+
+
     @endsection
 
 </x-lareon::admin-editor>

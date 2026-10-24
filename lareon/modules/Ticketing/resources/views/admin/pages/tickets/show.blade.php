@@ -54,8 +54,7 @@
                 {{__('the ticket is closed')}}.
             </div>
         @elseif ($isHolder)
-            <form method="POST" action="{{ route('admin.tickets.reply', $ticket) }}"
-                  enctype="multipart/form-data" class="x-box bordering mt-6 rounded-xl  space-y-4">
+            <form method="POST" action="{{ route('admin.tickets.reply', $ticket) }}" enctype="multipart/form-data" class="x-box bordering mt-6 rounded-xl  space-y-4">
                 @csrf
 
                 <div>
@@ -63,8 +62,7 @@
                 </div>
 
                 @if (config('ticketing.attachments.enabled'))
-                    <input type="file" name="attachments[]" multiple
-                           class="w-full text-sm text-stone-600 file:ml-3 file:rounded-lg file:border-0 file:bg-stone-100 file:px-3 file:py-2">
+                    <x-lareon::editor.input-file :required="false" labelPosition="top" :label="__('attachment')" name="attachment" :accept="config('ticketing.attachments.allowed_extensions')"/>
                 @endif
 
                 <label class="flex items-center gap-2 text-sm text-stone-600">

@@ -15,7 +15,12 @@
                     </x-lareon::editor.input-select>
                 </div>
                 <x-lareon::editor.input-textarea :required="true" labelPosition="top" :label="__('message')" name="body" rows="16" min="5" max="10000"></x-lareon::editor.input-textarea>
+
+                @if (config('ticketing.attachments.enabled'))
+                    <x-lareon::editor.input-file :required="false" labelPosition="top" :label="__('attachment')" name="attachment" :accept="config('ticketing.attachments.allowed_extensions')"/>
+                @endif
             </x-lareon::box>
         </div>
+
     @endsection
 </x-lareon::panel-editor>

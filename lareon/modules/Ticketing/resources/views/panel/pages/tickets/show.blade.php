@@ -31,10 +31,9 @@
                         @csrf
                         <x-lareon::editor.input-textarea :required="true" labelPosition="top" :label="__('message')" name="body" rows="8" min="5" max="10000"></x-lareon::editor.input-textarea>
                         @if (config('ticketing.attachments.enabled'))
-                            <div>
-                                <input type="file" name="attachments[]" multipleclass="w-full text-sm text-gray-600 file:ms-3 file:rounded-lg file:border-0 file:bg-gray-100 file:px-3 file:py-2">
-                            </div>
+                            <x-lareon::editor.input-file :required="false" labelPosition="top" :label="__('attachment')" name="attachment" :accept="config('ticketing.attachments.allowed_extensions')"/>
                         @endif
+
                         <div class="flex items-center justify-between gap-5">
                             <x-lareon::buttons.nav class="min-w-36 mt-6" :fullWidth="false" type="submit" color="update" size="xs">
                                 {{ __('send') }}
