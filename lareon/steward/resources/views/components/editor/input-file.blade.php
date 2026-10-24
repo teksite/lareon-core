@@ -13,6 +13,7 @@
     'wrapperClass' => null,
     'follow'=>null,
     'accept'=>[],
+    'multiple'=>false,
 ])
 
 @php
@@ -36,7 +37,7 @@
             <x-lareon::inputs.label :title="$label" for="{{$finalId}}" class="w-fit min-w-fit" :markAsRequire="$required"/>
         @endif
 
-        <x-lareon::inputs.file name="{{$name}}" id="{{$finalId}}" type="file" :value="$consideredValue" :disabled="$disabled" :required="$required" :readonly="$readonly" class="{{$inputClasses .' ' . $errorStyle}}" {{$attributes}} :accept="$accepted"/>
+        <x-lareon::inputs.file name="{{$name}}" id="{{$finalId}}" type="file" :value="$consideredValue" :disabled="$disabled" :required="$required" :readonly="$readonly" class="{{$inputClasses .' ' . $errorStyle}}" {{$attributes}} :accept="$accepted" :multiple="$multiple"/>
 
         @if($label && $labelPosition === 'end')
             <x-lareon::inputs.label :title="$label" for="{{$finalId}}" class="w-fit min-w-fit" :markAsRequire="$required"/>
