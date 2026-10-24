@@ -24,7 +24,7 @@ use Throwable;
 class TicketLogic
 {
 
-    public function __construct(public StatusLogLogic $statusLogger) {}
+    public function __construct(public StatusLogLogic $statusLogger , public AttachmentLogic $attachments) {}
 
     /**
      * @throws Throwable
@@ -116,8 +116,8 @@ class TicketLogic
 
             $message = $this->appendMessage($ticket, $senderType, $senderId, $inputs['body']);
 
-            $files = $inputs['files'] ?? [];
-            //TODO add attachment: if ($inputs['files'] !== []) $this->attachments->storeMany($ticket, $message, 'user', $userId, $files);
+            $files = $inputs['attachment'] ?? [];
+             if ($inputs['files'] !== []) $this->attachments->storeMany($ticket, $message, $senderType, $senderId, $files);
 
             $this->statusLogger->log($ticket, null, TicketStatusType::Opened, ChangedByType::User, $senderId, 'create ticket');
 
@@ -173,8 +173,6 @@ class TicketLogic
 
             $this->statusLogger->log($ticket, $preStatus, TicketStatusType::Closed, $closedByType, $closedById, $note ?? 'ticket is closed');
 
-
-
             event(new TicketClosed($ticket));
 
             return $ticket->fresh();
@@ -190,7 +188,7 @@ class TicketLogic
         return ServiceWrapper::make(true)->do(function () use ($ticket, $userId, $body, $files) {
             $message = $this->appendMessage($ticket, SenderType::User, $userId, $body);
 
-            //Todo if ($files !== []) $this->attachments->storeMany($ticket, $message, 'user', $userId, $files);
+           if ($files !== []) $this->attachments->storeMany($ticket, $message, SenderType::User, $userId, $files);
 
             $this->transitionStatus($ticket, TicketStatusType::WaitingAdmin, ChangedByType::User, $userId);
 
@@ -209,7 +207,7 @@ class TicketLogic
 
             $message = $this->appendMessage($ticket, SenderType::Admin, $adminId, $body, $internalNote);
 
-            //Todo if ($files !== []) $this->attachments->storeMany($ticket, $message, 'admin', $adminId, $files);
+            if ($files !== []) $this->attachments->storeMany($ticket, $message, SenderType::Admin, $adminId, $files);
 
             if (!$internalNote) $this->transitionStatus($ticket, TicketStatusType::Answered, ChangedByType::Admin, $adminId);
 

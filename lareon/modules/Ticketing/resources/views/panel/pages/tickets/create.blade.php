@@ -1,4 +1,4 @@
-<x-lareon::panel-editor type="create" method="post" :instance="$ticket" :action="route('panel.tickets.store')" :hasTab="false">
+<x-lareon::panel-editor type="create" method="post" :instance="$ticket" :action="route('panel.tickets.store')" :hasTab="false" hasFile="true">
     @section('title', __('lareon::global.crud.titles.create',['attribute'=>__('ticket')]) )
     @section('form')
         <div class="flex flex-col items-start gap-6 md:flex-row">
@@ -17,7 +17,7 @@
                 <x-lareon::editor.input-textarea :required="true" labelPosition="top" :label="__('message')" name="body" rows="16" min="5" max="10000"></x-lareon::editor.input-textarea>
 
                 @if (config('ticketing.attachments.enabled'))
-                    <x-lareon::editor.input-file :required="false" labelPosition="top" :label="__('attachment')" name="attachment" :accept="config('ticketing.attachments.allowed_extensions')"/>
+                    <x-lareon::editor.input-file :required="false" :multiple="true" labelPosition="top" :label="__('attachment')" name="attachment[]" :accept="config('ticketing.attachments.allowed_extensions')"/>
                 @endif
             </x-lareon::box>
         </div>

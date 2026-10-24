@@ -7,8 +7,8 @@ trait ValidatesAttachments
     public function attachmentRules(): array
     {
         return [
-            'attachments'   => $this->overallAttachmentFileRule(),
-            'attachments.*' => $this->attachmentFileRules(),
+            'attachment'   => $this->overallAttachmentFileRule(),
+            'attachment.*' => $this->attachmentFileRules(),
         ];
     }
 

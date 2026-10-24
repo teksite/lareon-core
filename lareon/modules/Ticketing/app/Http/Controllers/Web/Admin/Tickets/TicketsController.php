@@ -90,7 +90,7 @@ class TicketsController extends Controller implements HasMiddleware
     public function reply(ReplyTicketRequest $request, Ticket $ticket): RedirectResponse
     {
         $data = $request->validated();
-        $res = $this->logic->replyAsAdmin($ticket, auth('admin')->id(), $data['body'], $data['files'] ?? [], isset($data['is_internal_note']));
+        $res = $this->logic->replyAsAdmin($ticket, auth('admin')->id(), $data['body'], $data['attachment'] ?? [], isset($data['is_internal_note']));
         return Responder::fromResult($res, trans('your reply is submitted'))->go();
 
     }

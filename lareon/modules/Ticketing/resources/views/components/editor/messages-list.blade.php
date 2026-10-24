@@ -22,11 +22,10 @@
                                     <span class="text-xs text-orange-600">{{__('internal')}}</span>
                                 @endif
                                 @if ($message->attachments->isNotEmpty())
-                                    <div class="flex flex-wrap gap-2">
+                                    <div class="flex flex-wrap gap-3">
                                         @foreach ($message->attachments as $attachment)
-                                            <a href="{{ $attachment->url() }}" target="_blank"
-                                               class="text-xs underline opacity-90 hover:opacity-100">
-                                                📎 {{ $attachment->original_name }} ({{ $attachment->humanSize() }})
+                                            <a title="{{ $attachment->original_name }}" data-size="{{ $attachment->humanSize() }}" href="{{ $attachment->url() }}" target="_blank" class="text-2xl font-bold">
+                                                📎
                                             </a>
                                         @endforeach
                                     </div>

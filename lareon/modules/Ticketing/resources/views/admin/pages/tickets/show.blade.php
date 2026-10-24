@@ -56,13 +56,12 @@
         @elseif ($isHolder)
             <form method="POST" action="{{ route('admin.tickets.reply', $ticket) }}" enctype="multipart/form-data" class="x-box bordering mt-6 rounded-xl  space-y-4">
                 @csrf
-
                 <div>
                     <x-lareon::editor.input-textarea :required="true" labelPosition="top" :label="__('reply')" name="body" rows="8" min="5" max="10000"></x-lareon::editor.input-textarea>
                 </div>
 
                 @if (config('ticketing.attachments.enabled'))
-                    <x-lareon::editor.input-file :required="false" labelPosition="top" :label="__('attachment')" name="attachment" :accept="config('ticketing.attachments.allowed_extensions')"/>
+                    <x-lareon::editor.input-file :required="false" :multiple="true" labelPosition="top" :label="__('attachment')" name="attachment[]" :accept="config('ticketing.attachments.allowed_extensions')"/>
                 @endif
 
                 <label class="flex items-center gap-2 text-sm text-stone-600">

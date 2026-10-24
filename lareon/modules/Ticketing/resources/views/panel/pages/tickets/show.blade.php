@@ -27,11 +27,11 @@
                 </div>
             @else
                 <section class="y-box mt-12 max-w-5xl mx-auto">
-                    <form action="{{route('panel.tickets.reply' ,$ticket)}}" method="POST" class="space-y-6">
+                    <form action="{{route('panel.tickets.reply' ,$ticket)}}" method="POST" class="space-y-6" enctype="multipart/form-data">
                         @csrf
                         <x-lareon::editor.input-textarea :required="true" labelPosition="top" :label="__('message')" name="body" rows="8" min="5" max="10000"></x-lareon::editor.input-textarea>
                         @if (config('ticketing.attachments.enabled'))
-                            <x-lareon::editor.input-file :required="false" labelPosition="top" :label="__('attachment')" name="attachment" :accept="config('ticketing.attachments.allowed_extensions')"/>
+                            <x-lareon::editor.input-file :required="false" :multiple="true" labelPosition="top" :label="__('attachment')" name="attachment[]" :accept="config('ticketing.attachments.allowed_extensions')"/>
                         @endif
 
                         <div class="flex items-center justify-between gap-5">

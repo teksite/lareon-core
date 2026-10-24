@@ -70,10 +70,8 @@ class TicketingServiceProvider extends ServiceProvider
         parent::boot();
         Gate::policy(Ticket::class, TicketPolicy::class);
 
-
         $this->loadDynamicRelations();
         $this->registerAttachmentDisk();
-
     }
 
     /**
@@ -93,7 +91,6 @@ class TicketingServiceProvider extends ServiceProvider
     private function registerAttachmentDisk(): void
     {
         $diskName = config('ticketing.attachments.disk', 'ticketing');
-
         if (config("filesystems.disks.{$diskName}") !== null) return;
 
         Config::set("filesystems.disks.{$diskName}", [

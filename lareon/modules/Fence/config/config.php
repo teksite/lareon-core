@@ -76,5 +76,5 @@ return [
     |
     */
 
-    'store_file' => storage_path('app/private/fence.json'),
+    'store_file' => storage_path('app/private/fence/fence.json'),
 ];
