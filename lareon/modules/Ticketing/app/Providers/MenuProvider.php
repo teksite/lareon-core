@@ -36,7 +36,7 @@ class MenuProvider implements MenuRegisteringContract
             [
                 'title'      => trans('tickets'),
                 'order'      => 120,
-                'icon'       => 'gear',
+                'icon'       => 'chat-gear',
                 'active'     => request()->routeIs('admin.tickets.*') || request()->routeIs('admin.ticketing.tickets.*'),
                 'permission' => 'admin.ticket.read',
             ], 'tickets')
@@ -72,7 +72,7 @@ class MenuProvider implements MenuRegisteringContract
             [
                 'title'      => trans('tickets'),
                 'order'      => 120,
-                'icon'       => 'gear',
+                'icon'       => 'chat-gear',
                 'active'     => request()->routeIs('panel.tickets.*'),
                 'route'      => 'panel.tickets.index',
                 'permission' => 'panel.ticket.read',
