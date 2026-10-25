@@ -93,6 +93,19 @@ class Ticket extends Model
         return $query->where('status', '!=', TicketStatusType::Closed->value);
     }
 
+    /*
+    * Tickets that genuinely require human intervention.
+    * Tickets answered by AI and awaiting the user's response should not clutter
+    * the admins' queue. If the user replies, the status changes back to
+    * waiting_admin, and the ticket becomes visible in the queue again.
+    */
+    public function scopeNeedsHuman(Builder $query): Builder
+    {
+        return $query->where(function (Builder $q): void {
+            $q->where('ai_handled', false)->orWhere('status', '!=', TicketStatus::Answered->value);
+        });
+    }
+
 
     // ---------------------------------------------------------------------
     // Relations

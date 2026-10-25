@@ -20,6 +20,7 @@ return new class extends Migration
             $table->boolean('is_internal_note')->default(false);
             $table->json('meta')->nullable();
             $table->timestamps();
+
             $table->index(['ticket_id', 'created_at']);
         });
     }

@@ -24,7 +24,6 @@ return new class extends Migration
             $table->string('original_name', 255);
             $table->string('mime_type', 100)->nullable();
             $table->unsignedBigInteger('size_bytes')->default(0);
-
             $table->timestamps();
 
             $table->index('ticket_id');

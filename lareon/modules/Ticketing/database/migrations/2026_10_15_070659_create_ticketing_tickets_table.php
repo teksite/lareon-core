@@ -29,6 +29,7 @@ return new class extends Migration {
             $table->timestamp('last_activity_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
+
             $table->index('user_id');
             $table->index('holder_admin_id');
             $table->index('pending_admin_id');

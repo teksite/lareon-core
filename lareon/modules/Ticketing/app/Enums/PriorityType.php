@@ -33,4 +33,14 @@ enum PriorityType: int
         };
     }
 
+    /**
+     * @return array<string, string>
+     */
+    public static function options(): array
+    {
+        return collect(self::cases())
+            ->mapWithKeys(fn (self $priority) => [$priority->value => $priority->label()])
+            ->all();
+    }
+
 }
