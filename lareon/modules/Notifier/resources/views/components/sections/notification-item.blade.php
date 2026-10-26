@@ -25,9 +25,9 @@
     </div>
 
     <p class="text-sm">{{ $message }}</p>
-    <hr class="bordering my-3">
+    <hr class="bordering my-1">
     @unless($readAt)
-        <button type="button" data-type="markAsRead" data-id="{{ $notification->id }}" class="text-xs text-blue-600 hover:text-blue-800 disabled:opacity-50">
+        <button type="button" data-type="markAsRead" data-id="{{ $notification->id }}" class="text-xs font-semibold hover:text-second_color disabled:opacity-50 cursor-pointer">
             {{ __('mark as read') }}
         </button>
     @endunless

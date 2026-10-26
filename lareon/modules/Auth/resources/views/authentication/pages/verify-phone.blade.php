@@ -30,7 +30,7 @@
             </div>
 
             @if (Route::has('login'))
-                <a href="{{route('register')}}" class="px-3 py-2 bg-blue-300/25 text-blue-600 block text-center mt-12 rounded-2xl font-bold">
+                <a href="{{route('register')}}" class="px-3 py-2 bg-second_color_light text-second_color_dark block text-center mt-12 rounded-2xl font-bold">
                     {{__('lareon::global.auth.sign_in')}}
                 </a>
             @endif

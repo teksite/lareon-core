@@ -1,7 +1,9 @@
 <x-lareon::admin-list>
     @section('title', __('lareon::global.crud.titles.list',['attribute'=>__('tickets')]))
     @section('description', __('referrals are tickets that other administrators have assigned to you for review and follow-up based on the reasons specified in each ticket'))
-
+    @section('header.start')
+        <x-lareon::links.nav :href="route('admin.tickets.index')" :content="__('lareon::global.buttons.all_attribute' ,['attribute'=>__('tickets')])" color="index" can="admin.ticket.read"/>
+    @endsection
     @section('list')
         <div class="space-y-6">
             @foreach ($pending as $assignment)

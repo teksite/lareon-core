@@ -41,7 +41,7 @@
             @endforeach
         </tr>
         </thead>
-        <tbody class="divide-y divide-line_light bg-slate-50 *:hover:bg-blue-50">
+        <tbody class="divide-y divide-line_light bg-slate-50 *:hover:bg-stone-100">
         @if($rows && count($rows) > 0)
             {{ $slot }}
         @else

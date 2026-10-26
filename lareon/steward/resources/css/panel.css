@@ -1,14 +1,7 @@
 @import "tailwindcss";
+@import "general.css";
 
 @source "../views";
-@theme {
-    --color-main_color: #ff4c28;
-    --color-main_color_alt: #88220f;
-    --color-second_color: #51a2ff;
-    --color-second_color_alt: #0d3b71;
-
-    --color-line_light: #d4d4d8
-}
 
 @layer components {
     .bg-wavy {

@@ -37,7 +37,7 @@
                                         <x-tkicon icon="arrow-move" class="size-4 stroke-2"/>
                                         {{ $element->title }}
                                     </div>
-                                    <button class="text-blue-600 text-xs font-semibold outline-none hover:bg-blue-50 rounded p-0.5"
+                                    <button class="text-second_color_dark text-xs font-semibold outline-none hover:bg-second_color rounded p-0.5"
                                             type="button" role="button" data-add-element>
                                         {{__('add')}} ->
                                     </button>

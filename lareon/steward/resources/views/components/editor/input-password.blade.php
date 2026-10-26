@@ -59,10 +59,10 @@
                         </div>
                         <div class="flex justify-between items-center mt-1">
                             <span class="text-xs font-medium" :class="strengthTextColor" x-text="strengthText"></span>
-                            <span class="text-xs text-gray-400" x-text="password.length + ' characters'"></span>
+                            <span class="text-xs text-gray-400" x-text="'{{__('characters')}}: '+ password.length"></span>
                         </div>
                     </div>
-                @endif
+               @endif
             </div>
 
             <button type="button" @click="toggleShow()" class="p-1 flex-shrink-0">
@@ -152,7 +152,6 @@
 
                 let score = 0;
 
-                // طول
                 if (pass.length >= 8) score++;
                 if (pass.length >= 12) score++;
 
@@ -166,7 +165,7 @@
             },
 
             get strengthColor() {
-                const colors = ['bg-red-500', 'bg-orange-500', 'bg-yellow-500', 'bg-blue-500', 'bg-green-500'];
+                const colors = ['bg-red-600', 'bg-orange-600', 'bg-yellow-600', 'bg-blue-600', 'bg-green-600'];
                 return colors[this.strength];
             },
 
@@ -176,7 +175,7 @@
             },
 
             get strengthText() {
-                const texts = ['very Weak', 'weak', 'medium', 'strong', 'very strong'];
+                const texts = ['very weak', 'weak', 'medium', 'strong', 'very strong'];
                 return texts[this.strength];
             },
 

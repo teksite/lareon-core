@@ -4,7 +4,7 @@
     <div class="p-3  bordering rounded-xl my-12 flex flex-col md:flex-row items-center justify-between gap-6">
         <div class="flex items-center justify-between gap-3 overflow-x-auto">
             @foreach($options as $key=>$option)
-                <a href="?status={{$key}}" class="bg-white rounded-lg w-24 min-w-fit py-1 px-3 text-xs shadow text-center    {{ request()->has('read') && request()->integer('read') === 0        ? 'text-blue-600 font-bold'        : 'text-gray-600' }}">
+                <a href="?status={{$key}}" class="bg-white rounded-lg w-24 min-w-fit py-1 px-3 text-xs shadow text-center {{ request()->has('read') && request()->integer('read') === 0  ? 'text-second_color_dark font-bold'        : 'text-gray-600' }}">
                     {{ __($option) }}
                 </a>
             @endforeach

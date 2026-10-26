@@ -121,7 +121,7 @@ function iconButton(action, glyph, title, extraClass = '') {
         'aria-label': title,
         class:
             'inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-md text-slate-500 ' +
-            'hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500 ' +
+            'hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-second_color_dark ' +
             'disabled:opacity-30 disabled:pointer-events-none ' + extraClass,
         text: glyph,
     });
@@ -169,7 +169,7 @@ function createItem(data = {}) {
             'data-action': 'toggle',
             'aria-expanded': 'false',
             'aria-controls': panelId,
-            class: 'flex min-w-0 flex-1 items-center gap-2 py-2 text-start focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded',
+            class: 'flex min-w-0 flex-1 items-center gap-2 py-2 text-start focus:outline-none focus-visible:ring-2 focus-visible:ring-second_color_dark rounded',
         },
         label,
         chevron,

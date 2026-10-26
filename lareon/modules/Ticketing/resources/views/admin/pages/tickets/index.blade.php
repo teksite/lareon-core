@@ -11,12 +11,12 @@
                 <ul class="w-full flex items-center justify-start overflow-x-auto gap-3">
                     @foreach($filters as $queryString=>$label)
                         <li>
-                            <a href="{{ request()->fullUrlWithQuery(['type' => $queryString]) }}" class="y-box py-1 px-2 inline-block min-w-16 font-bold text-center {{$queryString !== $filterQuery ?: 'text-blue-600'}}">{{__($label)}}</a>
+                            <a href="{{ request()->fullUrlWithQuery(['type' => $queryString]) }}" class="bg-white border rounded-lg py-1 px-2 inline-block min-w-16 font-bold text-center {{$queryString !== $filterQuery ? 'border-line_light': 'text-second_color_dark border-second_color_dark'}}">{{__($label)}}</a>
                         </li>
                     @endforeach
                 </ul>
             </nav>
-            <a href="{{ route('admin.tickets.referrals.index') }}" class="y-box py-1 px-2 inline-block min-w-16 font-bold text-center">{{__('referrals')}}</a>
+            <a href="{{ route('admin.tickets.referrals.index') }}" class="bg-white bordering rounded-lg py-1 px-2 inline-block min-w-16 font-bold text-center">{{__('referrals')}}</a>
         </div>
         <x-lareon::table :rows="$tickets" :headers="['id'=>'#','ticket_number'=>__('ticket number') ,__('subject') ,'created_at'=>__('created at') ,__('status'),__('priority'),'']">
             @foreach($tickets as $key=>$ticket)
