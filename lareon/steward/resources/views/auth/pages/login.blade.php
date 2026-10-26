@@ -25,8 +25,9 @@
             </label>
         </div>
 
-        <div class="">
+        <div>
             @captchaField()
+            <x-lareon::inputs.error :messages="$errors->first('captcha') ?? null"/>
         </div>
 
         <div class="flex items-center justify-end">

@@ -23,8 +23,12 @@
             {!! $slot !!}
         </div>
     @endif
-    @captchaField()
-    @if(isset($button))
+   <div>
+       @captchaField()
+       <x-lareon::inputs.error :messages="$errors->first('captcha') ?? null"/>
+   </div>
+
+@if(isset($button))
         {!! $button !!}
     @else
         <div class="mt-6">

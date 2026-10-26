@@ -103,5 +103,8 @@
     .warning-msg {
         @apply text-yellow-600  text-sm font-bold inline-block px-1
     }
+    .message-error {
+        @apply text-sm text-red-600;
+    }
 
 }

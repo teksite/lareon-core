@@ -18,9 +18,11 @@
 
                 </div>
             </div>
-            <div class="mb-3">
+            <div>
                 @captchaField()
+                <x-lareon::inputs.error :messages="$errors->first('captcha') ?? null"/>
             </div>
+
             <div class="">
                 <x-lareon::buttons.simple type="submit" role="submit" :fullWidth="true">
                     {{__('lareon::global.buttons.register')}}

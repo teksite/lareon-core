@@ -32,9 +32,9 @@
             </footer>
         </div>
     </div>
-    <div class="absolute top-5 inset-e-5 ">
+    <div class="absolute top-5 inset-e-5">
         @foreach($errors?->all() as $error)
-            <div class="bg-white text-red-600 font-bold text-sm">
+            <div class="bg-white text-red-600 font-bold text-sm p-3 shadow shadow-sla600/50">
                 {{$error}}
             </div>
         @endforeach
