@@ -9,9 +9,9 @@
 
         <x-auth::passkey/>
 
-        <form method="POST" action="{{ route('login.store') }}" class="formAction space-y-3">
+        <form method="POST" action="{{ route('login.store') }}" class="formAction space-y-6">
             @csrf
-            <div class="mb-6 space-y-3">
+            <div class="mb-6 space-y-6">
                 <x-lareon::editor.input :label="__('username')" name="username" autocomplete="email" :placeholder="__('lareon::global.placeholders.auth.username')" :required="true"/>
                 <div class="">
                     <div class="flex items-center justify-between gap-3 mb-1">
@@ -34,7 +34,7 @@
 
             </div>
             <div class="mb-3">
-                {{--                <x-captcha::load />--}}
+                @captchaField()
             </div>
                 <x-lareon::buttons.simple type="submit" role="submit" :fullWidth="true">
                     {{__('lareon::global.buttons.sign_in')}}

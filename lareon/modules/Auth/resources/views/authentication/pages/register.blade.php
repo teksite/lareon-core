@@ -8,9 +8,7 @@
         <form method="POST" action="{{ route('register') }}" class="formAction space-y-6">
             @csrf
             <div class="mb-6 space-y-6">
-                <div class="grid gap-6 md:grid-cols-2">
                     <x-lareon::editor.input :label="__('name')" name="name" autocomplete="name" :placeholder="__('lareon::global.placeholders.write.one',['attribute'=>__('name')])" :required="true"/>
-                </div>
                 <div class=" space-y-6">
                     <x-lareon::editor.input :label="__('email')" name="email" autocomplete="email" :placeholder="__('lareon::global.placeholders.write.unique.one',['attribute'=>__('email')])" :required="true"/>
                     <x-lareon::editor.input :label="__('phone')" name="phone" autocomplete="phone" :placeholder="__('lareon::global.placeholders.write.unique.one',['attribute'=>__('phone')])" :required="true"/>
@@ -21,7 +19,7 @@
                 </div>
             </div>
             <div class="mb-3">
-                {{--                <x-captcha::load />--}}
+                @captchaField()
             </div>
             <div class="">
                 <x-lareon::buttons.simple type="submit" role="submit" :fullWidth="true">
@@ -30,11 +28,25 @@
             </div>
 
             @if (Route::has('login'))
-                <a href="{{route('register')}}" class="px-3 py-2 bg-blue-300/25 text-blue-600 block text-center mt-12 rounded-2xl font-bold">
-                    {{__('lareon::global.auth.sign_in')}}
-                </a>
+                <div class="w-full text-center">
+                    <a href="{{route('login')}}" class="px-3 py-2 text-blue-600 block text-center rounded-2xl font-bold text-sm">
+                        {{__('lareon::global.auth.sign_in')}}
+                    </a>
+                </div>
             @endif
         </form>
+        <div class="mt-6">
+            <div class="flex items-center gap-3">
+                <hr class="border-slate-300 w-full">
+                <span class="w-fit min-w-fit text-gray-600 font-bold text-sm">
+                   {{__('or')}} {{__('via')}}
+                </span>
+                <hr class="border-slate-300 w-full">
+            </div>
+            <div class="flex items-center gap-3 justify-center mt-3">
+                <x-auth::oauth-ways/>
+            </div>
+        </div>
         @section('footer')
             <section class="">
                 <a href="/" class="text-sm inline-flex items-center gap-1">

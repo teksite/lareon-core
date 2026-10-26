@@ -5,7 +5,7 @@
             {{ $status }}
         </div>
     @endif
-    <form method="POST" action="{{ route('admin.auth.store') }}">
+    <form method="POST" action="{{ route('admin.auth.store') }}" class="space-y-6">
         @csrf
         <!-- Email Address -->
         <div>
@@ -13,19 +13,23 @@
         </div>
 
         <!-- Password -->
-        <div class="mt-4">
+        <div class="">
             <x-lareon::editor.input-password name="password" :label="__('password')" :strength="false" :showConfirm="false" :required="true"/>
         </div>
 
         <!-- Remember Me -->
-        <div class="block mt-4">
+        <div class="block">
             <label for="remember_me" class="inline-flex items-center">
                 <input id="remember_me" type="checkbox" class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800" name="remember">
                 <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __('remember me') }}</span>
             </label>
         </div>
 
-        <div class="flex items-center justify-end mt-4">
+        <div class="">
+            @captchaField()
+        </div>
+
+        <div class="flex items-center justify-end">
             <x-lareon::buttons.simple type="submit" role="submit" :fullWidth="true">
                 {{__('lareon::global.buttons.sign_in')}}
             </x-lareon::buttons.simple>

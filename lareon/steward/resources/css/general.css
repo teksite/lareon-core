@@ -66,4 +66,29 @@
 .animate-toast-progress {
     animation: toast-progress 3000ms linear forwards;
 }
+.captcha-field{
+    display: flex;
+    gap: 0.25rem;
+    border: 1px solid var(--color-line_light);
+    border-radius: .25rem;
 
+}
+.captcha-field [data-captcha-input]{
+    outline: none;
+    width: 100%;
+}
+.captcha-field [data-captcha-input]:focus{
+    border-color: var(--color-second_color_dark);
+
+}
+.captcha-field [data-captcha-image]{
+    cursor: pointer;
+    background-color: var(--color-line_light);
+    min-width: fit-content;
+    width: fit-content;
+
+}
+
+.captcha-field [data-captcha-reload]{
+    display: none;
+}

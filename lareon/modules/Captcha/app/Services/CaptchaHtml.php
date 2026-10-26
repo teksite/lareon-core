@@ -37,8 +37,9 @@ class CaptchaHtml
         $img = $this->tag('img', array_merge([
             'src'                => $challenge['src'],
             'alt'                => __('captcha'),
-            'width'              => $size->width,
-            'height'             => $size->height,
+            'width'              => $size->width ?? 120,
+            'height'             => $size->height ?? 36,
+            'class'              => 'captcha-img',
             'data-captcha-image' => true,
         ], (array)($options['img'] ?? [])));
 
@@ -74,7 +75,7 @@ class CaptchaHtml
             'data-captcha-reload-url'    => $this->service->reloadUrl(),
         ]);
 
-        return new HtmlString("<div {$wrapper}>{$img}{$button}{$token}{$input}</div>");
+        return new HtmlString("<div style='height: 36px' {$wrapper}>{$img}{$button}{$token}{$input}</div>");
     }
 
     /**
@@ -109,6 +110,7 @@ class CaptchaHtml
             + '&old=' + encodeURIComponent(token.value);
 
         box.classList.add('is-loading');
+        img.style.visibility = 'hidden';
         fetch(url, {
             credentials: 'same-origin',
             headers: {'X-Requested-With': 'XMLHttpRequest', 'Accept': 'application/json'}
@@ -120,11 +122,11 @@ class CaptchaHtml
                 if (input) input.value = '';
             })
             .catch(function () {})
-            .then(function () { box.classList.remove('is-loading'); });
+            .then(function () { box.classList.remove('is-loading'); img.style.visibility = 'visible'});
     }
 
     document.addEventListener('click', function (e) {
-        var button = e.target.closest && e.target.closest('[data-captcha-reload]');
+        var button = (e.target.closest && e.target.closest('[data-captcha-reload]')) || (e.target.closest && e.target.closest('[data-captcha-image]'));
         if (!button) return;
         e.preventDefault();
         var box = button.closest('[data-captcha]');
