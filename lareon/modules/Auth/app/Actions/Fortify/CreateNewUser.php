@@ -2,9 +2,11 @@
 
 namespace Lareon\Modules\Auth\App\Actions\Fortify;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
+use Lareon\Modules\Captcha\App\Rules\CaptchaRule;
 use Lareon\Modules\User\App\Logics\UserLogic;
 use Lareon\Modules\User\App\Models\User;
 
@@ -19,11 +21,10 @@ class CreateNewUser implements CreatesNewUsers
      * @throws ValidationException
      * @throws \Throwable
      */
-    public function create(array $input,): ?User
+    public function create(array $input): ?User
     {
-        $data = Validator::make($input, User::rules('create'))->validate();
-
-        $res = (new UserLogic())->create($data);
+        $data = Validator::make($input, array_merge(User::rules('create'), ['captcha' => [new CaptchaRule()]]))->validate();
+        $res = (new UserLogic())->create(Arr::except($data, ['captcha']));
 
         if ($res->success) return $res->result;
 

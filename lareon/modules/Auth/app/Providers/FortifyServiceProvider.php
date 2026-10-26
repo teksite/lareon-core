@@ -18,6 +18,7 @@ use Lareon\Modules\Auth\App\Actions\Fortify\AuthenticationUser;
 use Lareon\Modules\Auth\App\Actions\Fortify\CreateNewUser;
 use Lareon\Modules\Auth\App\Actions\Fortify\ResetUserPassword;
 use Lareon\Modules\Auth\App\Actions\Fortify\UpdateUserPassword;
+use Lareon\Modules\Captcha\App\Action\ValidateLoginCaptcha;
 use Lareon\Modules\User\App\Models\User;
 
 class FortifyServiceProvider extends ServiceProvider
@@ -38,6 +39,7 @@ class FortifyServiceProvider extends ServiceProvider
         $this->configureActions();
         $this->bootViews();
         $this->configureRateLimiting();
+
     }
 
     private function bootViews(): void
@@ -63,7 +65,18 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::confirmPasswordsUsing($this->confirmPassword());
 //        Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
 //        Fortify::confirmPasswordsUsing($this->confirmPassword());
-
+        Fortify::authenticateThrough(function (Request $request) {
+            return array_merge(
+                [ValidateLoginCaptcha::class,],
+                array_filter(
+                    config('fortify.limiters.login') ? [] : [\Laravel\Fortify\Actions\EnsureLoginIsNotThrottled::class,]), [
+                    \Laravel\Fortify\Actions\CanonicalizeUsername::class,
+                    \Laravel\Fortify\Actions\RedirectIfTwoFactorAuthenticatable::class,
+                    \Laravel\Fortify\Actions\AttemptToAuthenticate::class,
+                    \Laravel\Fortify\Actions\PrepareAuthenticatedSession::class,
+                ]
+            );
+        });
 
     }
 
@@ -76,14 +89,10 @@ class FortifyServiceProvider extends ServiceProvider
             $username = trim($request->input('username'));
             $password = $request->input('password');
 
-            $user = User::query()
-                        ->where('email', $username)
-                        ->orWhere('phone', $username)
-                        ->first();
+            $user = User::query()->where('email', $username)->orWhere('phone', $username)->first();
 
-            if ($user && Hash::check($password, $user->password)) {
-                return $user;
-            }
+            if ($user && Hash::check($password, $user->password))  return $user;
+
             return null;
         };
     }
