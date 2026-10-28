@@ -10,6 +10,9 @@ use Teksite\Handler\Services\ServiceWrapper;
 
 class OAuthLogic
 {
+    /**
+     * @throws \Throwable
+     */
     public function getSettings(mixed $fetchData = [],)
     {
         return ServiceWrapper::make(false)

@@ -1,6 +1,5 @@
 <?php
-namespace Lareon\Modules\Ticketing\Database\Factory;
-
+namespace Lareon\Modules\Ticketing\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
