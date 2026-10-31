@@ -12,14 +12,21 @@ trait HasSeo
     use HasMeta, HasSchema, HasSitemap;
 
 
-    public function seo(): array
+    public function seo(string|array $only = ['*']): array
     {
-        return [
+        $data = [
             'meta'    => $this->metaTag,
             'schema'  => $this->schemaStructure,
             'sitemap' => $this->sitemap,
         ];
+
+        $only = (array) $only;
+
+        return in_array('*', $only, true)
+            ? $data
+            : array_intersect_key($data, array_flip($only));
     }
+
 
     public static function seoRules(): array
     {
