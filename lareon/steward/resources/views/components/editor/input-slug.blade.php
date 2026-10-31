@@ -40,11 +40,9 @@
         @endif
 
         <div class="flex items-center gap-2 w-full" dir="ltr">
-            @if($value  && $showUrl)
-                <x-lareon::links.action type="show" :href="$value"/>
-            @endif
-            @if($showSiteUrl)
-                <span class="text-xs font-bold text-gray-600">{{url('/')}}/</span>
+            @if($href  && $showUrl)
+                <x-lareon::links.action type="show" :href="$href"/>
+                <span class="text-xs font-bold text-gray-600">{{substr($href, 0, strrpos($href, '/'))}}/</span>
             @endif
             <x-lareon::inputs.text name="{{$name}}" id="{{$finalId}}" type="text" :value="$consideredValue" :disabled="$disabled" :required="$required" :readonly="$readonly" class="slug-input {{$inputClasses .' ' . $errorStyle}}" dir="ltr" autocomplete="{{$autocomplete}}" placeholder="{{$placeholder}}"/>
 
