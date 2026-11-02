@@ -43,7 +43,6 @@ class ElementsLoader extends Component
      */
     private function loadElements(): array
     {
-
         if ($this->template === null) return [];
         $elementLogic = app(MetaElementLogic::class);
 
@@ -58,6 +57,7 @@ class ElementsLoader extends Component
                     'view' => $elementLogic->getElementView($element->element)->result,
 
                     'props' => [
+                        'templateId' => $this->template->id,
                         'elementId' => $element->id,
                         'name'      => "meta_data[$name]",
                         'title'     => $element->pivot->title,
@@ -71,7 +71,5 @@ class ElementsLoader extends Component
             })
             ->values()
             ->all();
-
-
     }
 }

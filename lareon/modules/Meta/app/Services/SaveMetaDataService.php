@@ -23,17 +23,18 @@ class SaveMetaDataService
 
             $rows = [];
 
+
             foreach ($metaInputs as $key => $value) {
                 if (!isset($value['element_id'])) {
                     Log::error('element_id field is not set in the element', ['instance' => $model, 'inputs' => $metaInputs]);
                     continue;
                 }
 
-                $content = removeNullValues($value['data'] ?? []);
+                $content = removeNullValues($value ?? []);
                 if (empty($content)) continue;
 
-                $content = json_encode(removeNullValues($value['data'] ?? []));
 
+                $content = json_encode(removeNullValues($value ?? []), JSON_THROW_ON_ERROR);
 
                 $rows[] = [
                     'key'         => $key,
