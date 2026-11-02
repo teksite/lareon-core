@@ -3,6 +3,7 @@
 namespace Lareon\Modules\Meta\App\Services;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Lareon\Modules\Meta\App\Models\MetaModel;
@@ -29,10 +30,8 @@ class SaveMetaDataService
                     Log::error('element_id field is not set in the element', ['instance' => $model, 'inputs' => $metaInputs]);
                     continue;
                 }
-
-                $content = removeNullValues($value ?? []);
+                $content = removeNullValues(Arr::except($value , ['template_id' ,'element_id']));
                 if (empty($content)) continue;
-
 
                 $content = json_encode(removeNullValues($value ?? []), JSON_THROW_ON_ERROR);
 
