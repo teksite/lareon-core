@@ -33,7 +33,7 @@ class SaveMetaDataService
                 $content = removeNullValues(Arr::except($value , ['template_id' ,'element_id']));
                 if (empty($content)) continue;
 
-                $content = json_encode(removeNullValues($value ?? []), JSON_THROW_ON_ERROR);
+                $content = json_encode($content,  JSON_THROW_ON_ERROR);
 
                 $rows[] = [
                     'key'         => $key,
