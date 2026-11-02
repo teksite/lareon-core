@@ -1,8 +1,8 @@
 @props(['rules','value'=>[], 'required'=>true ,'open'=>true ,'accordion'=>false] )
-@php($randomItem=rand(100,9999).\Illuminate\Support\Str::random(6).rand(100,9999))
+@php($randomItem=random_int(100,9999).\Illuminate\Support\Str::random(6).random_int(100,9999))
 <div>
     @foreach($value['args']['items'] ?? [] as $key=>$item)
-        @php($rand=\Illuminate\Support\Str::random(6).rand(100,9999))
+        @php($rand=\Illuminate\Support\Str::random(6).random_int(100,9999))
         <div class="dynamicGroup_{{$randomItem}}" id="{{$rand}}-{{$loop->index}}" x-data="{ removeField() { this.$el.parentElement.remove(); }}">
             <div class=" mb-3 flex justify-between items-center gap-6">
                 <div class="w-full">
