@@ -7,7 +7,7 @@
     $elements = $elements ?? [];
 @endphp
 
-<section @class(['space-y-6 y-box', $wrapperClass])>
+<section @class(['space-y-6', $wrapperClass])>
     @forelse ($elements as $element)
         @php
             $props = $element['props'] ?? [];
