@@ -21,7 +21,7 @@ trait HasTemplate
 
     public function getMeta($key, string|array $columns = '*') : mixed
     {
-        $columns = (array)$columns;
+        $columnsArray = (array)$columns;
 
         $record = $this->relationLoaded('metaData')
             ? $this->metaData->firstWhere('key', $key)
@@ -29,8 +29,9 @@ trait HasTemplate
 
         if (!$record) return null;
 
-        if (in_array('*', $columns, true)) return $record;
+        if (in_array('*', $columnsArray, true)) return $record;
 
-        return $record->only($columns);
+        if (is_string($columns)) return $record->{$columns};
+        return $record->only($columnsArray);
     }
 }
