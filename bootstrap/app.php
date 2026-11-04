@@ -3,7 +3,6 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-use Lareon\Modules\Auth\App\Http\Middleware\DecryptAuthenticationTokenMiddleware;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -18,8 +17,8 @@ return Application::configure(basePath: dirname(__DIR__))
             \App\Http\Middleware\ClearCacheDailyMiddleware::class,
             \Teksite\Extralaravel\Middleware\HoneypotMiddleware::class
             ]);
-        $middleware->api(prepend:[DecryptAuthenticationTokenMiddleware::class ]);
-
+        $middleware->api(prepend:[\Lareon\Modules\Auth\App\Http\Middleware\DecryptAuthenticationTokenMiddleware::class ]);
+        $middleware->web(prepend:[\Lareon\Steward\App\Http\Middleware\SetLocale::class ]);
     }
 
     )
