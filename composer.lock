@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ef423ee10dbeef50774880b641ea6b27",
+    "content-hash": "a6bf8db64085298ba7b857b0154fd22b",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -9704,25 +9704,41 @@
         },
         {
             "name": "teksite/systeminfo-laravel",
-            "version": "0.0.1",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/teksite/systeminfo-laravel.git",
-                "reference": "faf1c30846e1963214ba6e8ad0745fe0f005866b"
+                "reference": "3ddd1e2b0ecb3252fbf76e3ecf38b2afe7ae035f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/teksite/systeminfo-laravel/zipball/faf1c30846e1963214ba6e8ad0745fe0f005866b",
-                "reference": "faf1c30846e1963214ba6e8ad0745fe0f005866b",
+                "url": "https://api.github.com/repos/teksite/systeminfo-laravel/zipball/3ddd1e2b0ecb3252fbf76e3ecf38b2afe7ae035f",
+                "reference": "3ddd1e2b0ecb3252fbf76e3ecf38b2afe7ae035f",
                 "shasum": ""
             },
             "require": {
-                "illuminate/support": "^11.0|^12.0|^13.0",
+                "ext-curl": "*",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "illuminate/cache": "^11.0 || ^12.0 || ^13.0",
+                "illuminate/console": "^11.0 || ^12.0 || ^13.0",
+                "illuminate/contracts": "^11.0 || ^12.0 || ^13.0",
+                "illuminate/database": "^11.0 || ^12.0 || ^13.0",
+                "illuminate/http": "^11.0 || ^12.0 || ^13.0",
+                "illuminate/routing": "^11.0 || ^12.0 || ^13.0",
+                "illuminate/support": "^11.0 || ^12.0 || ^13.0",
                 "php": "^8.3"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^9.0 || ^10.0 || ^11.0",
+                "phpunit/phpunit": "^11.0 || ^12.0"
             },
             "type": "library",
             "extra": {
                 "laravel": {
+                    "aliases": {
+                        "SystemInfo": "Teksite\\SystemInfo\\Facades\\SystemInfo"
+                    },
                     "providers": [
                         "Teksite\\SystemInfo\\SystemInformationProvider"
                     ]
@@ -9743,23 +9759,26 @@
                     "email": "sina.zangiband@gmail.com"
                 }
             ],
-            "description": "A Laravel package for collecting system, server, PHP and Laravel runtime information",
+            "description": "Fast, secure system, server, PHP and Laravel runtime information for Laravel - with real-time metrics shaped for Chart.js.",
             "keywords": [
                 "CPU",
+                "Metrics",
+                "chartjs",
                 "disk",
                 "laravel",
                 "laravel-monitor",
                 "monitoring",
                 "php",
                 "ram",
-                "server",
+                "realtime",
+                "server-monitoring",
                 "system-info"
             ],
             "support": {
                 "issues": "https://github.com/teksite/systeminfo-laravel/issues",
-                "source": "https://github.com/teksite/systeminfo-laravel/tree/0.0.1"
+                "source": "https://github.com/teksite/systeminfo-laravel/tree/1.0.1"
             },
-            "time": "2026-06-14T10:11:39+00:00"
+            "time": "2026-11-08T09:38:28+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",

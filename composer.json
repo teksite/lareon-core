@@ -29,7 +29,7 @@
         "teksite/icon-laravel": "^1.0.0",
         "teksite/laravel-filemanager": "^0.2.2",
         "teksite/module": "^3.0",
-        "teksite/systeminfo-laravel": "^0.0.1",
+        "teksite/systeminfo-laravel": "^1.0.1",
         "ext-gd": "*",
         "ext-zip": "*",
         "ext-zlib": "*"
