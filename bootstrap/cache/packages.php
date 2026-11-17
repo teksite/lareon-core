@@ -148,7 +148,7 @@
   array (
     'providers' => 
     array (
-      0 => '\\Teksite\\Authorize\\AuthorizeServiceProvider',
+      0 => 'Teksite\\Authorize\\AuthorizeServiceProvider',
     ),
   ),
   'teksite/extralaravel' => 
