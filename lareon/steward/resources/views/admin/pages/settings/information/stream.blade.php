@@ -1,4 +1,3 @@
-
 <x-lareon::admin-layout>
     @section('title', __('information'))
     @section('description', __('this page is a brief overview of the application and the system it is running on'))
@@ -14,117 +13,149 @@
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
         <script>
-            const api = (path) =>
-                fetch('/system-info/' + path).then(r => {
-                    if (!r.ok) throw new Error('API request failed');
-                    return r.json();
-                });
+            (() => {
+                const CONFIG = {
+                    endpoint: '/system-info/',
+                    interval: 2000,
+                    maxPoints: 60,
+                    canvas: 'system-chart'
+                };
 
-            (async () => {
-                try {
-                    // دریافت اولین اطلاعات برای ساخت Datasetها
-                    const { charts } = await api('metrics?format=chartjs');
+                const api = async (path) => {
+                    const response = await fetch(CONFIG.endpoint + path, {
+                        cache: 'no-store'
+                    });
 
-                    const cpu = charts.cpu;
-                    const memory = charts.memory;
+                    if (!response.ok)throw new Error(`HTTP ${response.status}`);
 
-                    // ساخت Datasetها بدون داده قبلی
-                    const datasets = [
-                        ...cpu.datasets.map(d => ({
-                            ...d,
-                            label: 'CPU - ' + d.label,
-                            data: []
-                        })),
+                    return response.json();
+                };
 
-                        ...memory.datasets.map(d => ({
-                            ...d,
-                            label: 'RAM - ' + d.label,
-                            data: []
-                        }))
-                    ];
+                // Combine CPU and RAM datasets
+                const getDatasets = (charts) => [
+                    ...charts.cpu.datasets.map(d => ({
+                        ...d,
+                        label: 'CPU - ' + d.label,
+                        data: []
+                    })),
 
-                    const chart = new Chart(
-                        document.getElementById('system-chart'),
-                        {
-                            type: 'line',
+                    ...charts.memory.datasets.map(d => ({
+                        ...d,
+                        label: 'RAM - ' + d.label,
+                        data: []
+                    }))
+                ];
 
-                            data: {
-                                labels: [],
-                                datasets
+                // Append one metric point
+                const addPoint = (chart, metrics) => {
+                    const { cpu, memory } = metrics;
+
+                    if (!cpu.labels?.length) return;
+
+                    chart.data.labels.push(cpu.labels[0]);
+
+                    const datasets = [...cpu.datasets, ...memory.datasets];
+
+                    datasets.forEach((dataset, index) => {
+                        chart.data.datasets[index].data.push(dataset.data?.[0] ?? null);
+                    });
+
+                    // Keep only the latest points
+                    if (chart.data.labels.length > CONFIG.maxPoints) {
+                        chart.data.labels.shift();
+
+                        chart.data.datasets.forEach(dataset => {
+                            dataset.data.shift();
+                        });
+                    }
+
+                    chart.update('none');
+                };
+
+                // Create chart
+                const createChart = (metrics) => {
+                    const canvas = document.getElementById(CONFIG.canvas);
+
+                    if (!canvas) return null;
+
+                    // Prevent duplicate chart instances
+                    Chart.getChart(canvas)?.destroy();
+
+                    return new Chart(canvas, {
+                        type: 'line',
+
+                        data: {
+                            labels: [],
+                            datasets: getDatasets(metrics)
+                        },
+
+                        options: {
+                            responsive: true,
+                            animation: false,
+
+                            interaction: {
+                                intersect: false,
+                                mode: 'index'
                             },
 
-                            options: {
-                                responsive: true,
-                                animation: false,
-
-                                interaction: {
-                                    intersect: false,
-                                    mode: 'index'
+                            scales: {
+                                x: {
+                                    display: false
                                 },
 
-                                scales: {
-                                    x: {
-                                        display: false
-                                    },
-
-                                    y: {
-                                        min: 0,
-                                        max: 100,
-                                        title: {
-                                            display: true,
-                                            text: 'Usage (%)'
-                                        }
+                                y: {
+                                    min: 0,
+                                    max: 100,
+                                    title: {
+                                        display: true,
+                                        text: 'Usage (%)'
                                     }
                                 }
                             }
                         }
-                    );
+                    });
+                };
 
-                    // افزودن اولین نقطه
-                    const addPoint = (charts) => {
-                        const cpu = charts.cpu;
-                        const memory = charts.memory;
+                // Main
+                const init = async () => {
+                    let chart;
 
-                        chart.data.labels.push(cpu.labels[0]);
+                    try {
+                        // Initial metrics (no history)
+                        const { charts } = await api('metrics?format=chartjs');
 
-                        cpu.datasets.forEach((d, i) => {
-                            chart.data.datasets[i].data.push(d.data[0]);
-                        });
+                        chart = createChart(charts);
 
-                        memory.datasets.forEach((d, i) => {
-                            chart.data.datasets[cpu.datasets.length + i]
-                                .data.push(d.data[0]);
-                        });
+                        if (!chart) return;
 
-                        // حداکثر ۶۰ نقطه
-                        if (chart.data.labels.length > 60) {
-                            chart.data.labels.shift();
+                        // Show first point immediately
+                        addPoint(chart, charts);
 
-                            chart.data.datasets.forEach(d => {
-                                d.data.shift();
-                            });
-                        }
+                    } catch (error) {
+                        console.error('Chart initialization failed:', error);
+                        return;
+                    }
 
-                        chart.update('none');
-                    };
-
-                    // نمایش اولین اطلاعات
-                    addPoint(charts);
-
-                    // دریافت اطلاعات جدید هر ۲ ثانیه
-                    setInterval(async () => {
+                    // Poll metrics without overlapping requests
+                    const poll = async () => {
                         try {
                             const { charts } = await api('metrics?format=chartjs');
-                            addPoint(charts);
+
+                            addPoint(chart, charts);
 
                         } catch (error) {
                             console.error('Metrics update failed:', error);
-                        }
-                    }, 2000);
 
-                } catch (error) {
-                    console.error('Chart initialization failed:', error);
-                }
+                        } finally {
+                            setTimeout(poll, CONFIG.interval);
+                        }
+                    };
+
+                    setTimeout(poll, CONFIG.interval);
+                };
+
+                init();
+
             })();
         </script>
     @endpush
