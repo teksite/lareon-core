@@ -12,8 +12,11 @@ use Lareon\Steward\App\Http\Controllers\Web\Admin\Settings\SystemInformationCont
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::name('settings.')->prefix('settings')->group(function () {
-    Route::get('/information', [SystemInformationController::class, 'index'])->name('information.index');
 
+    Route::name('information.')->prefix('information')->group(function () {
+        Route::get('/', [SystemInformationController::class, 'index'])->name('index');
+        Route::get('/stream', [SystemInformationController::class, 'stream'])->name('stream');
+    });
     Route::name('cache.')->prefix('caching')->group(function () {
         Route::get('/', [CacheController::class, 'index'])->name('index');
         Route::post('/', [CacheController::class, 'execute'])->name('execute');
@@ -33,4 +36,4 @@ Route::prefix('admins/acl/{admin}')->name('admins.acl.')->group(function () {
     Route::get('/', [AdminsAclController::class, 'edit'])->name('edit');
     Route::patch('/', [AdminsAclController::class, 'update'])->name('update');
 });
-Route::resource('admins' ,AdminsController::class);
+Route::resource('admins', AdminsController::class);

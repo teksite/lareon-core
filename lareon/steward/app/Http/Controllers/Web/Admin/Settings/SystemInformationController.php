@@ -16,7 +16,7 @@ class SystemInformationController extends Controller implements HasMiddleware
     public function __construct() {}
 
 
-    public static function middleware()
+    public static function middleware(): array
     {
         return [
             new Middleware('can:admin.setting.info.read'),
@@ -31,5 +31,10 @@ class SystemInformationController extends Controller implements HasMiddleware
         $sysInfo = DriverResolver::driver()->collector();
 
         return view('lareon::admin.pages.settings.information.index', compact('phpInfo', 'laravelInfo', 'databaseInfo', 'sysInfo'));
+    }
+    public function stream()
+    {
+
+        return view('lareon::admin.pages.settings.information.stream') ;
     }
 }

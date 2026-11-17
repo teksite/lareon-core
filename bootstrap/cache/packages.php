@@ -188,6 +188,10 @@
   ),
   'teksite/systeminfo-laravel' => 
   array (
+    'aliases' => 
+    array (
+      'SystemInfo' => 'Teksite\\SystemInfo\\Facades\\SystemInfo',
+    ),
     'providers' => 
     array (
       0 => 'Teksite\\SystemInfo\\SystemInformationProvider',

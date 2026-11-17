@@ -27,6 +27,8 @@
             </x-lareon::editor.tabs.section>
         </x-lareon::editor.tabs.item>
 
+        <x-lareon::editor.tabs.link title="STREAM" :href="route('admin.settings.information.stream')"/>
+
     </x-lareon::editor.tabs.layout>
 
 </x-lareon::admin-layout>
